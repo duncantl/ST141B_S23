@@ -12,3 +12,6 @@
    + "Contributions by individuals" panel
    + zip file
    + itcont.txt
+   + [Data/FEC/itcont100K.txt](Data/FEC/itcont100K.txt)  - smaller version - 100,000 lines 
+
++ 
