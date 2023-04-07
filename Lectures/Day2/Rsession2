@@ -1,0 +1,507 @@
+]0;FEC~/Classes/Davis/STA141B_22_23/Data/FEC> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 15053 
+Time = 2023-04-06 10:24:40 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Data/FEC 
+1> ll = readLines("itcont.txt", n = 10)
+[48:37] 2> ll
+ [1] "C00817940|T|TER|P|202301239574900262|22Y|IND|HOOD, JOHN|DEL MAR|CA|920143219|||01202023|5000||500241289|1678288|||4012320231720334172"                
+ [2] "C00817940|T|TER|P|202301239574900260|22Y|IND|DUFF, JAMES|LOS ANGELES|CA|900271058|||01192023|800||500241283|1678288|||4012320231720334166"            
+ [3] "C00817940|T|TER|P|202301239574900260|22Y|IND|ROTHMAN, ANDREW|CULVER CITY|CA|902322403|||01192023|250||500241284|1678288|||4012320231720334167"        
+ [4] "C00817940|T|TER|P|202301239574900260|22Y|IND|PELLETT, CLARK|CHICAGO|IL|606114546|||01202023|345||500241285|1678288|||4012320231720334168"             
+ [5] "C00817940|T|TER|P|202301239574900261|22Y|IND|DISNEY, TIMOTHY|ENCINO|CA|914361845|||01192023|615||500241286|1678288|||4012320231720334169"             
+ [6] "C00817940|T|TER|P|202301239574900261|22Y|IND|TRONE, DAVID|POTOMAC|MD|208541640|||01192023|5000||500241287|1678288|||4012320231720334170"              
+ [7] "C00817940|T|TER|P|202301239574900261|22Y|IND|MISCIKOWSKI, CYNTHIA|LOS ANGELES|CA|900251024|||01192023|5000||500241288|1678288|||4012320231720334171"  
+ [8] "C00815316|T|TER|P|202301239574918787|20Y|IND|DANFORTH, JOHN|NEW YORK|NY|10002|||01232023|379827||SB28A.4281|1678556|||4012420231720406200"            
+ [9] "C00806752|T|TER|P2022|202211189546828121|15|CAN|STEEL, DIANE|LAS VEGAS|NV|89110|NONE|RETIRED|06302022|7709||SA11AI.4337|1661961|||4120820221633698139"
+[10] "C00806752|T|TER|P2022|202211189546828120|15|ORG|AURELIA ARNOLD ROBERTS|LAS VEGAS|NV|89107|||04052022|580||SA11AI.4276|1661961|||4120820221633698136"  
+[48:48] 3> strsplit(ll[1], "|")
+[[1]]
+  [1] "C" "0" "0" "8" "1" "7" "9" "4" "0" "|" "T" "|" "T" "E" "R" "|"
+ [17] "P" "|" "2" "0" "2" "3" "0" "1" "2" "3" "9" "5" "7" "4" "9" "0"
+ [33] "0" "2" "6" "2" "|" "2" "2" "Y" "|" "I" "N" "D" "|" "H" "O" "O"
+ [49] "D" "," " " "J" "O" "H" "N" "|" "D" "E" "L" " " "M" "A" "R" "|"
+ [65] "C" "A" "|" "9" "2" "0" "1" "4" "3" "2" "1" "9" "|" "|" "|" "0"
+ [81] "1" "2" "0" "2" "0" "2" "3" "|" "5" "0" "0" "0" "|" "|" "5" "0"
+ [97] "0" "2" "4" "1" "2" "8" "9" "|" "1" "6" "7" "8" "2" "8" "8" "|"
+[113] "|" "|" "4" "0" "1" "2" "3" "2" "0" "2" "3" "1" "7" "2" "0" "3"
+[129] "3" "4" "1" "7" "2"
+
+[49:31] 4> strsplit(ll[1:2], "|")
+[[1]]
+  [1] "C" "0" "0" "8" "1" "7" "9" "4" "0" "|" "T" "|" "T" "E" "R" "|"
+ [17] "P" "|" "2" "0" "2" "3" "0" "1" "2" "3" "9" "5" "7" "4" "9" "0"
+ [33] "0" "2" "6" "2" "|" "2" "2" "Y" "|" "I" "N" "D" "|" "H" "O" "O"
+ [49] "D" "," " " "J" "O" "H" "N" "|" "D" "E" "L" " " "M" "A" "R" "|"
+ [65] "C" "A" "|" "9" "2" "0" "1" "4" "3" "2" "1" "9" "|" "|" "|" "0"
+ [81] "1" "2" "0" "2" "0" "2" "3" "|" "5" "0" "0" "0" "|" "|" "5" "0"
+ [97] "0" "2" "4" "1" "2" "8" "9" "|" "1" "6" "7" "8" "2" "8" "8" "|"
+[113] "|" "|" "4" "0" "1" "2" "3" "2" "0" "2" "3" "1" "7" "2" "0" "3"
+[129] "3" "4" "1" "7" "2"
+
+[[2]]
+  [1] "C" "0" "0" "8" "1" "7" "9" "4" "0" "|" "T" "|" "T" "E" "R" "|"
+ [17] "P" "|" "2" "0" "2" "3" "0" "1" "2" "3" "9" "5" "7" "4" "9" "0"
+ [33] "0" "2" "6" "0" "|" "2" "2" "Y" "|" "I" "N" "D" "|" "D" "U" "F"
+ [49] "F" "," " " "J" "A" "M" "E" "S" "|" "L" "O" "S" " " "A" "N" "G"
+ [65] "E" "L" "E" "S" "|" "C" "A" "|" "9" "0" "0" "2" "7" "1" "0" "5"
+ [81] "8" "|" "|" "|" "0" "1" "1" "9" "2" "0" "2" "3" "|" "8" "0" "0"
+ [97] "|" "|" "5" "0" "0" "2" "4" "1" "2" "8" "3" "|" "1" "6" "7" "8"
+[113] "2" "8" "8" "|" "|" "|" "4" "0" "1" "2" "3" "2" "0" "2" "3" "1"
+[129] "7" "2" "0" "3" "3" "4" "1" "6" "6"
+
+[50:10] 5> strsplit(ll[1:2], "|", fixed = TRUE)
+[[1]]
+ [1] "C00817940"           "T"                   "TER"                
+ [4] "P"                   "202301239574900262"  "22Y"                
+ [7] "IND"                 "HOOD, JOHN"          "DEL MAR"            
+[10] "CA"                  "920143219"           ""                   
+[13] ""                    "01202023"            "5000"               
+[16] ""                    "500241289"           "1678288"            
+[19] ""                    ""                    "4012320231720334172"
+
+[[2]]
+ [1] "C00817940"           "T"                   "TER"                
+ [4] "P"                   "202301239574900260"  "22Y"                
+ [7] "IND"                 "DUFF, JAMES"         "LOS ANGELES"        
+[10] "CA"                  "900271058"           ""                   
+[13] ""                    "01192023"            "800"                
+[16] ""                    "500241283"           "1678288"            
+[19] ""                    ""                    "4012320231720334166"
+
+[52:57] 6> strsplit("a,b,c", ",")
+[[1]]
+[1] "a" "b" "c"
+
+[57:22] 7> strsplit("a,xyz,c", ",")
+[[1]]
+[1] "a"   "xyz" "c"  
+
+[57:31] 8> d = read.table("itcont.txt", header = FALSE, sep = "|", n = 10)
+Error in read.table("itcont.txt", header = FALSE, sep = "|", n = 10) : 
+  argument 4 matches multiple formal arguments
+No suitable frames for recover()
+[57:31] 8> names(formals(read.table))
+ [1] "file"             "header"           "sep"             
+ [4] "quote"            "dec"              "numerals"        
+ [7] "row.names"        "col.names"        "as.is"           
+[10] "tryLogical"       "na.strings"       "colClasses"      
+[13] "nrows"            "skip"             "check.names"     
+[16] "fill"             "strip.white"      "blank.lines.skip"
+[19] "comment.char"     "allowEscapes"     "flush"           
+[22] "stringsAsFactors" "fileEncoding"     "encoding"        
+[25] "text"             "skipNul"         
+[00:23] 9> read.table
+function (file, header = FALSE, sep = "", quote = "\"'", dec = ".", 
+    numerals = c("allow.loss", "warn.loss", "no.loss"), row.names, 
+    col.names, as.is = !stringsAsFactors, tryLogical = TRUE, 
+    na.strings = "NA", colClasses = NA, nrows = -1, skip = 0, 
+    check.names = TRUE, fill = !blank.lines.skip, strip.white = FALSE, 
+    blank.lines.skip = TRUE, comment.char = "#", allowEscapes = FALSE, 
+    flush = FALSE, stringsAsFactors = FALSE, fileEncoding = "", 
+    encoding = "unknown", text, skipNul = FALSE) 
+{
+    if (missing(file) && !missing(text)) {
+        file <- textConnection(text, encoding = "UTF-8")
+        encoding <- "UTF-8"
+        on.exit(close(file))
+    }
+    if (is.character(file)) {
+        file <- if (nzchar(fileEncoding)) 
+            file(file, "rt", encoding = fileEncoding)
+        else file(file, "rt")
+        on.exit(close(file))
+    }
+    if (!inherits(file, "connection")) 
+        stop("'file' must be a character string or connection")
+    if (!isOpen(file, "rt")) {
+        open(file, "rt")
+        on.exit(close(file))
+    }
+    pbEncoding <- if (encoding %in% c("", "bytes", "UTF-8")) 
+        encoding
+    else "bytes"
+    numerals <- match.arg(numerals)
+    if (skip > 0L) 
+        readLines(file, skip)
+    nlines <- n0lines <- if (nrows < 0L) 
+        5
+    else min(5L, (header + nrows))
+    lines <- .External(C_readtablehead, file, nlines, comment.char, 
+        blank.lines.skip, quote, sep, skipNul)
+    if (encoding %in% c("UTF-8", "latin1")) 
+        Encoding(lines) <- encoding
+    nlines <- length(lines)
+    if (!nlines) {
+        if (missing(col.names)) 
+            stop("no lines available in input")
+        rlabp <- FALSE
+        cols <- length(col.names)
+    }
+    else {
+        if (all(!nzchar(lines))) 
+            stop("empty beginning of file")
+        if (nlines < n0lines && file == 0L) {
+            pushBack(c(lines, lines, ""), file, encoding = pbEncoding)
+            on.exit((clearPushBack(stdin())))
+        }
+        else pushBack(c(lines, lines), file, encoding = pbEncoding)
+        first <- scan(file, what = "", sep = sep, quote = quote, 
+            nlines = 1, quiet = TRUE, skip = 0, strip.white = TRUE, 
+            blank.lines.skip = blank.lines.skip, na.strings = character(0), 
+            comment.char = comment.char, allowEscapes = allowEscapes, 
+            encoding = encoding, skipNul = skipNul)
+        col1 <- if (missing(col.names)) 
+            length(first)
+        else length(col.names)
+        col <- numeric(nlines - 1L)
+        if (nlines > 1L) 
+            for (i in seq_along(col)) col[i] <- length(scan(file, 
+                what = "", sep = sep, quote = quote, nlines = 1, 
+                quiet = TRUE, skip = 0, strip.white = strip.white, 
+                blank.lines.skip = blank.lines.skip, comment.char = comment.char, 
+                allowEscapes = allowEscapes, encoding = encoding, 
+                skipNul = skipNul))
+        cols <- max(col1, col)
+        rlabp <- (cols - col1) == 1L
+        if (rlabp && missing(header)) 
+            header <- TRUE
+        if (!header) 
+            rlabp <- FALSE
+        if (header) {
+            .External(C_readtablehead, file, 1L, comment.char, 
+                blank.lines.skip, quote, sep, skipNul)
+            if (missing(col.names)) 
+                col.names <- first
+            else if (length(first) != length(col.names)) 
+                warning("header and 'col.names' are of different lengths")
+        }
+        else if (missing(col.names)) 
+            col.names <- paste0("V", 1L:cols)
+        if (length(col.names) + rlabp < cols) 
+            stop("more columns than column names")
+        if (fill && length(col.names) > cols) 
+            cols <- length(col.names)
+        if (!fill && cols > 0L && length(col.names) > cols) 
+            stop("more column names than columns")
+        if (cols == 0L) 
+            stop("first five rows are empty: giving up")
+    }
+    if (check.names) 
+        col.names <- make.names(col.names, unique = TRUE)
+    if (rlabp) 
+        col.names <- c("row.names", col.names)
+    nmColClasses <- names(colClasses)
+    if (is.null(nmColClasses)) {
+        if (length(colClasses) < cols) 
+            colClasses <- rep_len(colClasses, cols)
+    }
+    else {
+        tmp <- rep_len(NA_character_, cols)
+        names(tmp) <- col.names
+        i <- match(nmColClasses, col.names, 0L)
+        if (any(i <= 0L)) 
+            warning("not all columns named in 'colClasses' exist")
+        tmp[i[i > 0L]] <- colClasses[i > 0L]
+        colClasses <- tmp
+    }
+    what <- rep.int(list(""), cols)
+    names(what) <- col.names
+    colClasses[colClasses %in% c("real", "double")] <- "numeric"
+    known <- colClasses %in% c("logical", "integer", "numeric", 
+        "complex", "character", "raw")
+    what[known] <- lapply(colClasses[known], do.call, list(0))
+    what[colClasses %in% "NULL"] <- list(NULL)
+    keep <- !sapply(what, is.null)
+    data <- scan(file = file, what = what, sep = sep, quote = quote, 
+        dec = dec, nmax = nrows, skip = 0, na.strings = na.strings, 
+        quiet = TRUE, fill = fill, strip.white = strip.white, 
+        blank.lines.skip = blank.lines.skip, multi.line = FALSE, 
+        comment.char = comment.char, allowEscapes = allowEscapes, 
+        flush = flush, encoding = encoding, skipNul = skipNul)
+    nlines <- length(data[[which.max(keep)]])
+    if (cols != length(data)) {
+        warning("cols = ", cols, " != length(data) = ", length(data), 
+            domain = NA)
+        cols <- length(data)
+    }
+    if (is.logical(as.is)) {
+        as.is <- rep_len(as.is, cols)
+    }
+    else if (is.numeric(as.is)) {
+        if (any(as.is < 1 | as.is > cols)) 
+            stop("invalid numeric 'as.is' expression")
+        i <- rep.int(FALSE, cols)
+        i[as.is] <- TRUE
+        as.is <- i
+    }
+    else if (is.character(as.is)) {
+        i <- match(as.is, col.names, 0L)
+        if (any(i <= 0L)) 
+            warning("not all columns named in 'as.is' exist")
+        i <- i[i > 0L]
+        as.is <- rep.int(FALSE, cols)
+        as.is[i] <- TRUE
+    }
+    else if (length(as.is) != cols) 
+        stop(gettextf("'as.is' has the wrong length %d  != cols = %d", 
+            length(as.is), cols), domain = NA)
+    do <- keep & !known
+    if (rlabp) 
+        do[1L] <- FALSE
+    for (i in (1L:cols)[do]) {
+        data[[i]] <- if (is.na(colClasses[i])) 
+            type.convert(data[[i]], as.is = as.is[i], dec = dec, 
+                numerals = numerals, na.strings = character(0L), 
+                tryLogical = tryLogical)
+        else if (colClasses[i] == "factor") 
+            as.factor(data[[i]])
+        else if (colClasses[i] == "Date") 
+            as.Date(data[[i]])
+        else if (colClasses[i] == "POSIXct") 
+            as.POSIXct(data[[i]])
+        else methods::as(data[[i]], colClasses[i])
+    }
+    compactRN <- TRUE
+    if (missing(row.names)) {
+        if (rlabp) {
+            row.names <- data[[1L]]
+            data <- data[-1L]
+            keep <- keep[-1L]
+            compactRN <- FALSE
+        }
+        else row.names <- .set_row_names(as.integer(nlines))
+    }
+    else if (is.null(row.names)) {
+        row.names <- .set_row_names(as.integer(nlines))
+    }
+    else if (is.character(row.names)) {
+        compactRN <- FALSE
+        if (length(row.names) == 1L) {
+            rowvar <- (1L:cols)[match(col.names, row.names, 0L) == 
+                1L]
+            row.names <- data[[rowvar]]
+            data <- data[-rowvar]
+            keep <- keep[-rowvar]
+        }
+    }
+    else if (is.numeric(row.names) && length(row.names) == 1L) {
+        compactRN <- FALSE
+        rlabp <- row.names
+        row.names <- data[[rlabp]]
+        data <- data[-rlabp]
+        keep <- keep[-rlabp]
+    }
+    else stop("invalid 'row.names' specification")
+    data <- data[keep]
+    if (is.object(row.names) || !(is.integer(row.names))) 
+        row.names <- as.character(row.names)
+    if (!compactRN) {
+        if (length(row.names) != nlines) 
+            stop("invalid 'row.names' length")
+        if (anyDuplicated(row.names)) 
+            stop("duplicate 'row.names' are not allowed")
+        if (anyNA(row.names)) 
+            stop("missing values in 'row.names' are not allowed")
+    }
+    class(data) <- "data.frame"
+    attr(data, "row.names") <- row.names
+    data
+}
+<bytecode: 0x136840ba8>
+<environment: namespace:utils>
+[03:46] 10> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10)
+[08:06] 11> class(d)
+[1] "data.frame"
+[08:29] 12> dim(d)
+[1] 10 21
+[08:43] 13> sapply(strsplit(ll[1:2], "|", fixed = TRUE), length)
+[1] 21 21
+[09:17] 14> sapply(d, class)
+         V1          V2          V3          V4          V5 
+"character"   "logical" "character" "character"   "numeric" 
+         V6          V7          V8          V9         V10 
+"character" "character" "character" "character" "character" 
+        V11         V12         V13         V14         V15 
+  "integer" "character" "character"   "integer"   "integer" 
+        V16         V17         V18         V19         V20 
+  "logical" "character"   "integer"   "logical"   "logical" 
+        V21 
+  "numeric" 
+[10:55] 15> ll[1]
+[1] "C00817940|T|TER|P|202301239574900262|22Y|IND|HOOD, JOHN|DEL MAR|CA|920143219|||01202023|5000||500241289|1678288|||4012320231720334172"
+[11:29] 16> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 28 did not have 21 elements
+
+Enter a frame number, or 0 to exit   
+
+1: read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000)
+2: scan(file = file, what = what, sep = sep, quote = quote, dec = de
+
+Selection: 0
+[11:29] 16> ll = readLines("itcont.txt", n = 29)
+[13:59] 17> els = strsplit(ll, "|", fixed = TRUE)
+[14:19] 18> table(sapply(els, length))
+
+21 
+29 
+[14:39] 19> ll[27:28]
+[1] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01122023|7500|H2NY16073|6024505|1679058||IN-KIND: LEGAL AND COMMUNICATION SERVICES|4012520231720493914"      
+[2] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01172023|5000|H2NY16073|6024469|1679058||IN-KIND: ACCOUNTING, FEC, COMPLIANCE CONSULTING|4012520231720493915"
+[16:36] 20> names(formals(read.table))
+ [1] "file"             "header"           "sep"             
+ [4] "quote"            "dec"              "numerals"        
+ [7] "row.names"        "col.names"        "as.is"           
+[10] "tryLogical"       "na.strings"       "colClasses"      
+[13] "nrows"            "skip"             "check.names"     
+[16] "fill"             "strip.white"      "blank.lines.skip"
+[19] "comment.char"     "allowEscapes"     "flush"           
+[22] "stringsAsFactors" "fileEncoding"     "encoding"        
+[25] "text"             "skipNul"         
+[24:15] 21> ll[1:5]
+[1] "C00817940|T|TER|P|202301239574900262|22Y|IND|HOOD, JOHN|DEL MAR|CA|920143219|||01202023|5000||500241289|1678288|||4012320231720334172"        
+[2] "C00817940|T|TER|P|202301239574900260|22Y|IND|DUFF, JAMES|LOS ANGELES|CA|900271058|||01192023|800||500241283|1678288|||4012320231720334166"    
+[3] "C00817940|T|TER|P|202301239574900260|22Y|IND|ROTHMAN, ANDREW|CULVER CITY|CA|902322403|||01192023|250||500241284|1678288|||4012320231720334167"
+[4] "C00817940|T|TER|P|202301239574900260|22Y|IND|PELLETT, CLARK|CHICAGO|IL|606114546|||01202023|345||500241285|1678288|||4012320231720334168"     
+[5] "C00817940|T|TER|P|202301239574900261|22Y|IND|DISNEY, TIMOTHY|ENCINO|CA|914361845|||01192023|615||500241286|1678288|||4012320231720334169"     
+[25:44] 22> names(formals(read.table))
+ [1] "file"             "header"           "sep"             
+ [4] "quote"            "dec"              "numerals"        
+ [7] "row.names"        "col.names"        "as.is"           
+[10] "tryLogical"       "na.strings"       "colClasses"      
+[13] "nrows"            "skip"             "check.names"     
+[16] "fill"             "strip.white"      "blank.lines.skip"
+[19] "comment.char"     "allowEscapes"     "flush"           
+[22] "stringsAsFactors" "fileEncoding"     "encoding"        
+[25] "text"             "skipNul"         
+[26:28] 23> ll[27:28]
+[1] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01122023|7500|H2NY16073|6024505|1679058||IN-KIND: LEGAL AND COMMUNICATION SERVICES|4012520231720493914"      
+[2] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01172023|5000|H2NY16073|6024469|1679058||IN-KIND: ACCOUNTING, FEC, COMPLIANCE CONSULTING|4012520231720493915"
+[28:16] 24> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 27)
+[29:08] 25> d
+*** output flushed ***
+[29:10] 26> dim(d)
+
+[1] 27 21
+[29:16] 27> [29:16] 27> sapply(d, function(x) sum(is.na(x)))
+ V1  V2  V3  V4  V5  V6  V7  V8  V9 V10 V11 V12 V13 V14 V15 V16 V17 
+  0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0 
+V18 V19 V20 V21 
+  0  27   0   0 
+[30:02] 28> strsplit(ll[1:27], "|", fixed = TRUE)
+*** output flushed ***
+[30:52] 29> sapply(strsplit(ll[1:27], "|", fixed = TRUE), function(x) x[19])
+ [1] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+[23] "" "" "" "" ""
+[31:08] 30> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28)
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 28 did not have 21 elements
+
+Enter a frame number, or 0 to exit   
+
+1: read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28)
+2: scan(file = file, what = what, sep = sep, quote = quote, dec = de
+
+Selection: 0
+[31:08] 30> names(formals(read.table))
+ [1] "file"             "header"           "sep"             
+ [4] "quote"            "dec"              "numerals"        
+ [7] "row.names"        "col.names"        "as.is"           
+[10] "tryLogical"       "na.strings"       "colClasses"      
+[13] "nrows"            "skip"             "check.names"     
+[16] "fill"             "strip.white"      "blank.lines.skip"
+[19] "comment.char"     "allowEscapes"     "flush"           
+[22] "stringsAsFactors" "fileEncoding"     "encoding"        
+[25] "text"             "skipNul"         
+[31:34] 31> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28, fill = TRUE)
+[31:54] 32> ll[27:28]
+[1] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01122023|7500|H2NY16073|6024505|1679058||IN-KIND: LEGAL AND COMMUNICATION SERVICES|4012520231720493914"      
+[2] "C00790964|T|TER|P2022|202301249574942305|15C|CAN|CASANOVA, MANUEL I.|NEW ROCHELLE|NY|108044121|NEW YORK'S 16TH CONGRESSIONAL DISTRICT|CANDIDATE|01172023|5000|H2NY16073|6024469|1679058||IN-KIND: ACCOUNTING, FEC, COMPLIANCE CONSULTING|4012520231720493915"
+[32:17] 33> names(formals(read.table))
+ [1] "file"             "header"           "sep"             
+ [4] "quote"            "dec"              "numerals"        
+ [7] "row.names"        "col.names"        "as.is"           
+[10] "tryLogical"       "na.strings"       "colClasses"      
+[13] "nrows"            "skip"             "check.names"     
+[16] "fill"             "strip.white"      "blank.lines.skip"
+[19] "comment.char"     "allowEscapes"     "flush"           
+[22] "stringsAsFactors" "fileEncoding"     "encoding"        
+[25] "text"             "skipNul"         
+[35:52] 34> formals(read.table)$quote
+[1] "\"'"
+[36:34] 35> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28, quote = "")
+[37:22] 36> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000, quote = "")
+Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+  line 2067 did not have 21 elements
+
+Enter a frame number, or 0 to exit   
+
+1: read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000,
+2: scan(file = file, what = what, sep = sep, quote = quote, dec = de
+
+Selection: 0
+[37:22] 36> ll = readLines("itcont.txt", n = 2068)
+[39:39] 37> ll[2066:2068]
+[1] "C00035006|N|M2|P|202302159578313009|15|IND|NELSON, MARK A|SAN RAMON|CA|945832324|CHEVRON CORPORATION|EXECUTIVE VICE PRESIDENT, STRATEGY, PO|01062023|208||202212302299-35|1689016|||4021620231726478871"
+[2] "C00035006|N|M2|P|202302159578313019|15|IND|XU, ELLEN XIAOXIA|SAN RAMON|CA|945832324|CHV NA EXPL'N PROD CO|EARTH SCIENCE CL #36|01202023|125||202301171176-593|1689016|||4021620231726478899"            
+[3] "C00035006|N|M2|P|202302159578313018|15|IND|WILLIAMS, ALBERT J|SAN RAMON|CA|945832324|CHEVRON CORPORATION|VICE PRESIDENT, CORPORATE AFFAIRS|01202023|208||202301171176-68|1689016|||4021620231726478896" 
+[39:45] 38> d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000, quote = "", comment.char = "")
+[41:31] 39> ll = readLines("itcont.txt")
+[42:13] 40> ll2 = sample(ll, 20000)
+[42:55] 41> con = textConnection(ll2)
+[44:44] 42> d2 = read.table(con, header = FALSE, sep = "|", nrow = 10000, quote = "", comment.char = "")
+[45:11] 43> dim(d)
+[1] 10000    21
+[46:06] 44> head(d)
+         V1 V2  V3 V4           V5  V6  V7              V8
+1 C00817940  T TER  P 2.023012e+17 22Y IND      HOOD, JOHN
+2 C00817940  T TER  P 2.023012e+17 22Y IND     DUFF, JAMES
+3 C00817940  T TER  P 2.023012e+17 22Y IND ROTHMAN, ANDREW
+4 C00817940  T TER  P 2.023012e+17 22Y IND  PELLETT, CLARK
+5 C00817940  T TER  P 2.023012e+17 22Y IND DISNEY, TIMOTHY
+6 C00817940  T TER  P 2.023012e+17 22Y IND    TRONE, DAVID
+           V9 V10       V11 V12 V13     V14  V15 V16       V17
+1     DEL MAR  CA 920143219         1202023 5000     500241289
+2 LOS ANGELES  CA 900271058         1192023  800     500241283
+3 CULVER CITY  CA 902322403         1192023  250     500241284
+4     CHICAGO  IL 606114546         1202023  345     500241285
+5      ENCINO  CA 914361845         1192023  615     500241286
+6     POTOMAC  MD 208541640         1192023 5000     500241287
+      V18 V19 V20         V21
+1 1678288         4.01232e+18
+2 1678288         4.01232e+18
+3 1678288         4.01232e+18
+4 1678288         4.01232e+18
+5 1678288         4.01232e+18
+6 1678288         4.01232e+18
+[46:10] 45> sin
+function (x)  .Primitive("sin")
+[56:12] 46> sin(pi)
+[1] 1.224647e-16
+[56:16] 47> find("sin")
+[1] "package:base"
+[56:22] 48> search()
+ [1] ".GlobalEnv"          "package:stats"       "package:graphics"   
+ [4] "package:grDevices"   "package:datasets"    "utility functions"  
+ [7] "package:RShellTools" "package:utils"       "package:methods"    
+[10] "Autoloads"           "package:base"       
+[56:26] 49> 
