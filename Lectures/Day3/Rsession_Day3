@@ -1,0 +1,405 @@
+]0;NCBI~/sta141b/Public/Data/NCBI> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 44012 
+Time = 2023-04-11 09:42:27 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Data/NCBI 
+1> q()
+Save workspace image? [y/n/c]: n
+]0;NCBI~/sta141b/Public/Data/NCBI> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 48644 
+Time = 2023-04-11 10:55:51 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Data/NCBI 
+1> ll = readLines("NCBIQuery.txt")
+[57:46] 2> head(substring(ll, 1, 7), 10)
+ [1] "RID: R6" "Job Tit" "Program" "Databas" "Query #" ""       
+ [7] "Sequenc" "       " "Descrip" "Lepomis"
+[58:25] 3> which(substring(ll, 1, 7) == "Query #")
+[1]    5 2323
+[59:27] 4> grep("Query #", ll)
+[1]    5 2323
+[00:06] 5> tmp = substring(ll, 1, 7) 
+[02:21] 6> head(tmp)
+[1] "RID: R6" "Job Tit" "Program" "Databas" "Query #" ""       
+[02:34] 7> starts = which(substring(ll, 1, 7) == "Query #")
+[03:31] 8> ends = which(substring(ll, 1, 7) == "Alignments:")
+[05:32] 9> ends
+integer(0)
+[05:45] 10> length(ends)
+[1] 0
+[05:50] 11> nchar("Alignments:")
+[1] 11
+[06:42] 12> ends = which(substring(ll, 1, nchar("Alignments:")) == "Alignments:")
+[10:22] 13> ends
+[1]  112 2430
+[10:29] 14> starts[1]
+[1] 5
+[12:26] 15> ll[ starts[1] ]
+[1] "Query #1: Species1 Query ID: lcl|Query_11494 Length: 170"
+[12:32] 16> starts[1]:ends[1]
+  [1]   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+ [17]  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+ [33]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52
+ [49]  53  54  55  56  57  58  59  60  61  62  63  64  65  66  67  68
+ [65]  69  70  71  72  73  74  75  76  77  78  79  80  81  82  83  84
+ [81]  85  86  87  88  89  90  91  92  93  94  95  96  97  98  99 100
+ [97] 101 102 103 104 105 106 107 108 109 110 111 112
+[13:00] 17> ll [ starts[1]:ends[1] ]
+  [1] "Query #1: Species1 Query ID: lcl|Query_11494 Length: 170"                                                                                                                 
+  [2] ""                                                                                                                                                                         
+  [3] "Sequences producing significant alignments:"                                                                                                                              
+  [4] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+  [5] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+  [6] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+  [7] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MH301069.1       "
+  [8] "Lepomis punctatus strain NEFC_F16-205 mitochondrion, complete...  Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MF621732.1       "
+  [9] "Lepomis auritus isolate NEFC F16-237 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301066.1       "
+ [10] "Lepomis auritus isolate NEFC F16-209 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301065.1       "
+ [11] "Lepomis auritus strain NEFC_F16-508 mitochondrion, complete...    Lepomis auritus redbreast su... 201688     270    270   100%  2e-68 95.29  16501      MF621723.1       "
+ [12] "Lepomis gibbosus isolate LG_EVO1 small subunit ribosomal RNA...   Lepomis gibb... pumpkinseed ... 270329     252    252   100%  9e-63 93.53  1098       MH918136.1       "
+ [13] "Lepomis gibbosus voucher NEFC_F16-162 mitochondrion, complete...  Lepomis gibb... pumpkinseed ... 270329     252    252   100%  9e-63 93.53  16503      MF621726.1       "
+ [14] "Lepomis gibbosus voucher NEFC_F16-162 mitochondrion, complete...  Lepomis gibb... pumpkinseed ... 270329     252    252   100%  9e-63 93.53  16503      MF621725.1       "
+ [15] "Lepomis gibbosus strain NEFC_F16-021 mitochondrion, complete...   Lepomis gibb... pumpkinseed ... 270329     252    252   100%  9e-63 93.53  16503      MF621724.1       "
+ [16] "Lepomis gibbosus voucher NEFC F18-021 mitochondrion, complete...  Lepomis gibb... pumpkinseed ... 270329     252    252   100%  9e-63 93.53  16503      MT667250.1       "
+ [17] "Lepomis humilis 12S ribosomal RNA gene, partial sequence;...      Lepomis humilis orangespotte... 255468     252    252   98%   9e-63 94.05  948        AY372810.1       "
+ [18] "Lepomis gibbosus voucher LodgeLab Lgibbosus_1 mitochondrion,...   Lepomis gibb... pumpkinseed ... 270329     241    241   100%  2e-59 92.35  16503      KP013097.1       "
+ [19] "Lepomis macrochirus CBM:ZF:18564 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  168        LC552443.1       "
+ [20] "Lepomis macrochirus CBM:ZF:16156 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  168        LC552442.1       "
+ [21] "Lepomis macrochirus CBM:ZF 19091 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  168        LC421682.1       "
+ [22] "Lepomis macrochirus strain NEFC_F16-067 mitochondrion, complet... Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16490      MF621714.1       "
+ [23] "Lepomis macrochirus strain NEFC_F16-029 mitochondrion, complet... Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16490      MF621713.1       "
+ [24] "Lepomis macrochirus strain NEFC_F16-204 mitochondrion, complet... Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16489      MF621712.1       "
+ [25] "Lepomis macrochirus mitochondrial gene for 12S rRNA, partial...   Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  168        LC049665.1       "
+ [26] "Lepomis macrochirus voucher LodgeLab Lmacrochirus_1...            Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16489      KP013118.1       "
+ [27] "Lepomis macrochirus mitochondrial DNA, complete genome            Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16488      AP005993.1       "
+ [28] "Lepomis macrochirus small subunit ribosomal RNA gene, partial...  Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.77  816        MW630143.1       "
+ [29] "Lepomis macrochirus voucher NNIBR 2017 mitochondrion, complete... Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16489      MK840862.1       "
+ [30] "Lepomis macrochirus mitochondrion, complete genome                Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  16489      JN389795.2       "
+ [31] "Lepomis macrochirus mitochondrial genes for cytochrome b,...      Lepomis macr... bluegill        13106      237    237   97%   2e-58 92.73  1774       AB167815.1       "
+ [32] "Lepomis gulosus isolate NEFC F17-119 mitochondrion, complete...   Lepomis gulosus NA              201690     231    231   97%   1e-56 92.12  16486      MH301068.1       "
+ [33] "Chaenobryttus gulosus isolate NEFC F16-212 mitochondrion,...      Lepomis gulosus NA              201690     231    231   97%   1e-56 92.12  16486      NC_042249.1      "
+ [34] "Lepomis macrochirus mitochondrial gene for 12S rRNA, partial...   Lepomis macr... bluegill        13106      231    231   97%   1e-56 92.12  168        LC277930.1       "
+ [35] "Lepomis cyanellus voucher LodgeLab Lcyanellus_1 mitochondrion,... Lepomis cyan... green sunfish   201691     231    231   97%   1e-56 92.12  16485      KP013087.1       "
+ [36] "Lepomis cyanellus mitochondrion, complete genome                  Lepomis cyan... green sunfish   201691     231    231   97%   1e-56 92.12  16485      KC427094.1       "
+ [37] "Lepomis cyanellus voucher NEFC F19-045 mitochondrion, complete... Lepomis cyan... green sunfish   201691     231    231   97%   1e-56 92.12  16485      MT667253.1       "
+ [38] "Pomoxis nigromaculatus isolate NEFC F17-136 mitochondrion,...     Pomoxis nigr... black crappie   8182       230    230   98%   4e-56 91.62  16496      MH324420.1       "
+ [39] "Pomoxis nigromaculatus isolate NEFC F17-120 mitochondrion,...     Pomoxis nigr... black crappie   8182       230    230   98%   4e-56 91.62  16496      MH324419.1       "
+ [40] "Lepomis megalotis 12S ribosomal RNA gene, partial sequence;...    Lepomis mega... NA              270330     230    230   98%   4e-56 91.62  947        KM370981.1       "
+ [41] "Lepomis gibbosus 12S ribosomal RNA gene, partial sequence;...     Lepomis gibb... pumpkinseed ... 270329     224    224   91%   2e-54 92.90  242        KM282424.1       "
+ [42] "Micropterus salmoides CBM:ZF:19351 mitochondrial gene for 12S...  Micropterus ... largemouth bass 27706      219    219   98%   9e-53 90.42  169        LC474183.1       "
+ [43] "Micropterus salmoides salmoides isolate NEFC F16-158...           Micropterus ... northern lar... 489037     219    219   98%   9e-53 90.42  16486      MH301076.1       "
+ [44] "Micropterus salmoides salmoides voucher NEFC F16-068...           Micropterus ... northern lar... 489037     219    219   98%   9e-53 90.42  16486      MH301075.1       "
+ [45] "Micropterus salmoides salmoides voucher NEFC F16-036...           Micropterus ... northern lar... 489037     219    219   98%   9e-53 90.42  16487      MH301074.1       "
+ [46] "Micropterus salmoides mitochondrial gene for 12S rRNA, partial... Micropterus ... largemouth bass 27706      219    219   98%   9e-53 90.42  169        LC069536.1       "
+ [47] "Micropterus salmoides salmoides mitochondrion, complete genome    Micropterus ... northern lar... 489037     219    219   98%   9e-53 90.42  16486      HQ391896.1       "
+ [48] "Micropterus salmoides mitochondrion, complete genome              Micropterus ... largemouth bass 27706      219    219   98%   9e-53 90.42  16484      DQ536425.1       "
+ [49] "Pomoxis nigromaculatus voucher NEFC F17-193 mitochondrion,...     Pomoxis nigr... black crappie   8182       213    213   98%   4e-51 89.82  16498      MH301081.1       "
+ [50] "Pomoxis nigromaculatus voucher NEFC_F16-162 mitochondrion,...     Pomoxis nigr... black crappie   8182       213    213   98%   4e-51 89.82  16497      MF621719.1       "
+ [51] "Pomoxis nigromaculatus strain NEFC_F16-017 mitochondrion,...      Pomoxis nigr... black crappie   8182       213    213   98%   4e-51 89.82  16496      MF621715.1       "
+ [52] "Pomoxis nigromaculatus voucher LodgeLab Pnigromaculatus_1...      Pomoxis nigr... black crappie   8182       213    213   98%   4e-51 89.82  16496      KP013112.1       "
+ [53] "Lepomis macrochirus 12S ribosomal RNA gene, partial sequence;...  Lepomis macr... bluegill        13106      204    204   88%   3e-48 91.33  241        KM282426.1       "
+ [54] "Lepomis cyanellus 12S ribosomal RNA gene, partial sequence;...    Lepomis cyan... green sunfish   201691     204    204   88%   3e-48 91.33  242        KM282423.1       "
+ [55] "Micropterus punctulatus 12S ribosomal RNA gene, partial...        Micropterus ... spotted bass    225060     202    202   98%   9e-48 88.69  947        KM370980.1       "
+ [56] "Mesopristes cancellatus voucher TeC2 12S ribosomal RNA gene,...   Mesopristes ... tapiroid gru... 1100886    198    198   100%  1e-46 87.72  951        KF999828.1       "
+ [57] "Mesopristes cancellatus voucher TeC1 12S ribosomal RNA gene,...   Mesopristes ... tapiroid gru... 1100886    198    198   100%  1e-46 87.72  951        KF999827.1       "
+ [58] "Mastacembelus moorii 12S ribosomal RNA gene, partial sequence;... Mastacembelu... NA              762267     193    193   99%   5e-45 87.72  909        MN255606.1       "
+ [59] "Lepomis macrochirus voucher KU 25193 12S ribosomal RNA gene,...   Lepomis macr... bluegill        13106      193    193   75%   5e-45 93.80  527        AF150004.1       "
+ [60] "Lactarius lactarius mitochondrion, complete genome                Lactarius la... false trevally  445388     191    191   100%  2e-44 87.13  16642      MN952976.1       "
+ [61] "Hephaestus fuliginosus voucher PY2017 mitochondrion, complete...  Hephaestus f... sooty grunter   1085684    191    191   100%  2e-44 87.06  16770      MH606192.1       "
+ [62] "Malakichthys elegans mitochondrial gene for 12S rRNA, partial...  Malakichthys... NA              223801     191    191   100%  2e-44 87.13  169        LC021234.1       "
+ [63] "Micropterus salmoides 12S ribosomal RNA gene, partial sequence... Micropterus ... largemouth bass 27706      191    191   89%   2e-44 89.47  242        KM282430.1       "
+ [64] "Mastacembelus cunningtoni 12S ribosomal RNA gene, partial...      Mastacembelu... NA              762263     185    185   96%   9e-43 87.35  910        MN255603.1       "
+ [65] "Malakichthys barbatus mitochondrial gene for 12S rRNA, partial... Malakichthys... NA              223800     185    185   100%  9e-43 86.55  169        LC021231.1       "
+ [66] "Malakichthys griseus mitochondrial gene for 12S rRNA, partial...  Malakichthys... NA              223802     185    185   98%   9e-43 86.90  169        LC021230.1       "
+ [67] "Cephalopholis cyanostigma mitochondrial gene for 12S rRNA,...     Cephalopholi... NA              327805     183    183   99%   3e-42 86.47  169        LC340125.1       "
+ [68] "Rhynchopelates oxyrhynchus mitochondrial DNA, complete genome     Rhynchopelat... sharpbeak te... 270585     182    182   100%  1e-41 85.96  16631      AP006811.1       "
+ [69] "Mastacembelus zebratus 12S ribosomal RNA gene, partial sequenc... Mastacembelu... NA              762272     182    182   99%   1e-41 86.47  911        MN255611.1       "
+ [70] "Rhynchopelates oxyrhynchus CBM:ZF:20045 mitochondrial gene for... Rhynchopelat... sharpbeak te... 270585     182    182   100%  1e-41 85.96  170        LC506710.1       "
+ [71] "Terapon theraps mitochondrial gene for 12S rRNA, partial...       Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        LC037039.1       "
+ [72] "Terapon theraps voucher TeE2 12S ribosomal RNA gene, complete...  Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  951        KF999832.1       "
+ [73] "Terapon theraps voucher TeE1 12S ribosomal RNA gene, complete...  Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  951        KF999831.1       "
+ [74] "Terapon theraps voucher SW244 small subunit ribosomal RNA gene... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ605739.1       "
+ [75] "Terapon theraps isolate PearlRE219 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469694.1       "
+ [76] "Terapon theraps isolate PearlRE218 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469693.1       "
+ [77] "Terapon theraps isolate PearlRE217 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469692.1       "
+ [78] "Terapon theraps isolate PearlRE216 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469691.1       "
+ [79] "Terapon theraps isolate PearlRE215 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469690.1       "
+ [80] "Terapon theraps isolate PearlRE214 small subunit ribosomal RNA... Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  170        MZ469689.1       "
+ [81] "Terapon theraps mitochondrion, complete genome                    Terapon theraps largescaled ... 163132     182    182   100%  1e-41 85.96  16587      NC_056114.1      "
+ [82] "Mesopristes argenteus NSMT:P:121150 mitochondrial gene for 12S... Mesopristes ... silver grunter  1161373    182    182   100%  1e-41 85.96  170        LC579133.1       "
+ [83] "Rhynchopelates oxyrhynchus mitochondrial DNA, complete genome     Rhynchopelat... sharpbeak te... 270585     182    182   100%  1e-41 85.96  16631      AP011064.1       "
+ [84] "Elassoma okefenokee mitochondrial gene for 12S rRNA, partial...   Elassoma oke... Okefenokee p... 71678      180    180   96%   4e-41 86.67  168        LC104607.1       "
+ [85] "Elassoma zonatum mitochondrial gene for 12S rRNA, partial...      Elassoma zon... banded pygmy... 71679      180    180   96%   4e-41 86.59  168        LC104606.1       "
+ [86] "Elassoma zonatum mitochondrial DNA, complete genome except for... Elassoma zon... banded pygmy... 71679      180    180   96%   4e-41 86.59  16071      AP006813.1       "
+ [87] "Mastacembelus armatus mitochondrion, complete genome              Mastacembelu... zig-zag eel     205130     178    178   99%   2e-40 85.88  16487      KY609156.1       "
+ [88] "Cephalopholis formosa mitochondrial gene for 12S rRNA, partial... Cephalopholi... NA              306585     178    178   99%   2e-40 85.96  169        LC026635.1       "
+ [89] "Cephalopholis formosa voucher SW58 small subunit ribosomal RNA... Cephalopholi... NA              306585     178    178   99%   2e-40 85.96  169        MZ605553.1       "
+ [90] "Cephalopholis microprion KAUM:I:79887 mitochondrial gene for 1... Cephalopholi... freckled hind   603996     178    178   99%   2e-40 85.88  169        LC579111.1       "
+ [91] "Ophieleotris aporos 12S ribosomal RNA gene, complete sequence;... Giuris marga... snakehead gu... 1095382    178    178   97%   2e-40 86.31  964        AF265364.1       "
+ [92] "Mastacembelus favus mitochondrial DNA, complete genome            Mastacembelu... tire track eel  143340     178    178   99%   2e-40 85.96  16498      AP002946.1       "
+ [93] "Rhynchopelates oxyrhynchus CBM:ZF:20135-2 mitochondrial gene f... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  170        LC519413.1       "
+ [94] "Rhynchopelates oxyrhynchus CBM:ZF:20135-1 mitochondrial gene f... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  170        LC519412.1       "
+ [95] "Mastacembelus plagiostomus 12S ribosomal RNA gene, partial...     Mastacembelu... NA              762269     176    176   99%   5e-40 85.88  904        MN255608.1       "
+ [96] "Mastacembelus flavidus 12S ribosomal RNA gene, partial sequenc... Mastacembelu... NA              762265     176    176   99%   5e-40 85.88  883        MN255601.1       "
+ [97] "Mastacembelus albomaculatus 12S ribosomal RNA gene, partial...    Mastacembelu... NA              762262     176    176   99%   5e-40 85.88  905        MN255600.1       "
+ [98] "Rhynchopelates oxyrhynchus CBM:ZF:19597 mitochondrial gene for... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  170        LC474194.1       "
+ [99] "Etheostoma olmstedi isolate NEFC F17-090 mitochondrion, comple... Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16687      MH301064.1       "
+[100] "Etheostoma olmstedi isolate NEFC F17-089 mitochondrion, comple... Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16707      MH301063.1       "
+[101] "Etheostoma olmstedi isolate NEFC F17-015 mitochondrion, comple... Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16627      MH301062.1       "
+[102] "Rhynchopelates oxyrhynchus CBM:ZF:21451 mitochondrial genes fo... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  1089       LC649129.1       "
+[103] "Leiopotherapon plumbeus voucher SW146 small subunit ribosomal...  Leiopotherap... NA              941982     176    176   100%  5e-40 85.38  170        MZ605641.1       "
+[104] "Etheostoma olmstedi isolate F19-104 mitochondrion, partial genome Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16493      MW856913.1       "
+[105] "Etheostoma olmstedi isolate F19-218 mitochondrion, complete...    Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16639      MW856867.1       "
+[106] ""                                                                                                                                                                         
+[107] ""                                                                                                                                                                         
+[108] "Alignments:"                                                                                                                                                              
+[13:35] 18> tt = ll [ (starts[1]+1):(ends[1]-1) ]
+[15:54] 19> head(tt)
+[1] ""                                                                                                                                                                         
+[2] "Sequences producing significant alignments:"                                                                                                                              
+[3] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+[4] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+[5] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+[6] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MH301069.1       "
+[16:12] 20> tt = ll [ (starts[1]+3):(ends[1]-1) ]
+[16:28] 21> head(tt)
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+[2] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+[3] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+[4] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MH301069.1       "
+[5] "Lepomis punctatus strain NEFC_F16-205 mitochondrion, complete...  Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MF621732.1       "
+[6] "Lepomis auritus isolate NEFC F16-237 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301066.1       "
+[16:30] 22> tail(tt)
+[1] "Rhynchopelates oxyrhynchus CBM:ZF:21451 mitochondrial genes fo... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  1089       LC649129.1       "
+[2] "Leiopotherapon plumbeus voucher SW146 small subunit ribosomal...  Leiopotherap... NA              941982     176    176   100%  5e-40 85.38  170        MZ605641.1       "
+[3] "Etheostoma olmstedi isolate F19-104 mitochondrion, partial genome Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16493      MW856913.1       "
+[4] "Etheostoma olmstedi isolate F19-218 mitochondrion, complete...    Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16639      MW856867.1       "
+[5] ""                                                                                                                                                                         
+[6] ""                                                                                                                                                                         
+[19:50] 23> which(tt == "")
+[1] 103 104
+[20:23] 24> length(tt)
+[1] 104
+[20:28] 25> tt = tt[ tt != "" ]
+[20:50] 26> head(tt)
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+[2] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+[3] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+[4] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MH301069.1       "
+[5] "Lepomis punctatus strain NEFC_F16-205 mitochondrion, complete...  Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MF621732.1       "
+[6] "Lepomis auritus isolate NEFC F16-237 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301066.1       "
+[20:53] 27> tail(tt)
+[1] "Etheostoma olmstedi isolate NEFC F17-089 mitochondrion, comple... Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16707      MH301063.1       "
+[2] "Etheostoma olmstedi isolate NEFC F17-015 mitochondrion, comple... Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16627      MH301062.1       "
+[3] "Rhynchopelates oxyrhynchus CBM:ZF:21451 mitochondrial genes fo... Rhynchopelat... sharpbeak te... 270585     176    176   100%  5e-40 85.38  1089       LC649129.1       "
+[4] "Leiopotherapon plumbeus voucher SW146 small subunit ribosomal...  Leiopotherap... NA              941982     176    176   100%  5e-40 85.38  170        MZ605641.1       "
+[5] "Etheostoma olmstedi isolate F19-104 mitochondrion, partial genome Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16493      MW856913.1       "
+[6] "Etheostoma olmstedi isolate F19-218 mitochondrion, complete...    Etheostoma o... tessallated ... 417934     176    176   97%   5e-40 86.14  16639      MW856867.1       "
+[20:55] 28> tt2  = tt[ tt != "" ]
+[21:42] 29> #CHECK tt2 is what you want
+[21:42] 29> tt[1]
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+[24:36] 30> length(tt[-1])
+[1] 101
+[25:27] 31> colStarts = c(1, 67, 83, 99, 110, 117, 123, 129, 135, 142, 153)
+[28:43] 32> read.fwf
+function (file, widths, header = FALSE, sep = "\t", skip = 0L, 
+    row.names, col.names, n = -1L, buffersize = 2000, fileEncoding = "", 
+    ...) 
+{
+    doone <- function(x) {
+        x <- substring(x, first, last)
+        x[!nzchar(x)] <- NA_character_
+        x
+    }
+    if (is.list(widths)) {
+        recordlength <- length(widths)
+        widths <- do.call(c, widths)
+    }
+    else recordlength <- 1L
+    drop <- (widths < 0L)
+    cwidths <- cumsum(abs(widths))
+    st <- c(1L, 1L + cwidths)
+    first <- st[-length(st)][!drop]
+    last <- cwidths[!drop]
+    outsep <- c(rep_len(sep, length(first) - 1L), "\n")
+    buffersize <- (buffersize%/%recordlength) * recordlength
+    FILENAME <- tempfile("Rfwf.")
+    on.exit(unlink(FILENAME))
+    FILE <- file(FILENAME, "a")
+    on.exit(close(FILE), add = TRUE)
+    if (is.character(file)) {
+        file <- if (nzchar(fileEncoding)) 
+            file(file, "rt", encoding = fileEncoding)
+        else file(file, "rt")
+        on.exit(close(file), add = TRUE)
+    }
+    else if (!isOpen(file)) {
+        open(file, "rt")
+        on.exit(close(file), add = TRUE)
+    }
+    if (skip) 
+        readLines(file, n = skip)
+    if (header) {
+        headerline <- readLines(file, n = 1L)
+        starts = cumsum(c(1, widths[-length(widths)]))
+        headerline = paste(substring(headerline, starts, starts + 
+            widths - 1L), collapse = sep)
+        cat(file = FILE, headerline, "\n")
+    }
+    repeat ({
+        if (n == 0L) 
+            break
+        thisblock <- if (n == -1L) 
+            buffersize
+        else min(buffersize, n * recordlength)
+        raw <- readLines(file, n = thisblock)
+        nread <- length(raw)
+        if (recordlength > 1L && nread%%recordlength) {
+            raw <- raw[1L:(nread - nread%%recordlength)]
+            warning(sprintf(ngettext(nread%%recordlength, "last record incomplete, %d line discarded", 
+                "last record incomplete, %d lines discarded"), 
+                nread%%recordlength), domain = NA)
+        }
+        if (recordlength > 1L) {
+            raw <- matrix(raw, nrow = recordlength)
+            raw <- apply(raw, 2L, paste, collapse = "")
+        }
+        cat(file = FILE, sapply(raw, doone, USE.NAMES = FALSE), 
+            sep = outsep)
+        if (nread < thisblock) 
+            break
+        if (n > 0L) 
+            n <- n - length(raw)
+    })
+    close(FILE)
+    FILE <- file(FILENAME, "r")
+    read.table(file = FILE, header = header, sep = sep, row.names = row.names, 
+        col.names = col.names, quote = "", ...)
+}
+<bytecode: 0x148a75258>
+<environment: namespace:utils>
+[28:55] 33> colStarts = c(1, 67, 83, 99, 110, 117, 123, 129, 135, 142, 153)
+[29:56] 34> diff(colStarts)
+ [1] 66 16 16 11  7  6  6  6  7 11
+[30:49] 35> length(diff(colStarts))
+[1] 10
+[31:43] 36> nchar(tt)
+  [1] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [17] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [33] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [49] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [65] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [81] 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169 169
+ [97] 169 169 169 169 169 169
+[33:05] 37> all(nchar(tt) == 169)
+[1] TRUE
+[33:36] 38> length(unique(nchar(tt)))
+[1] 1
+[34:09] 39> diff(c(colStarts, nchar(tt[1])))
+ [1] 66 16 16 11  7  6  6  6  7 11 16
+[34:45] 40> widths = diff(c(colStarts, nchar(tt[1])))
+[35:17] 41> head(tt[-(1:2)])
+[1] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+[2] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MH301069.1       "
+[3] "Lepomis punctatus strain NEFC_F16-205 mitochondrion, complete...  Lepomis punc... spotted sunfish 270332     281    281   100%  1e-71 96.47  16512      MF621732.1       "
+[4] "Lepomis auritus isolate NEFC F16-237 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301066.1       "
+[5] "Lepomis auritus isolate NEFC F16-209 mitochondrion, complete...   Lepomis auritus redbreast su... 201688     276    276   100%  5e-70 95.88  16500      MH301065.1       "
+[6] "Lepomis auritus strain NEFC_F16-508 mitochondrion, complete...    Lepomis auritus redbreast su... 201688     270    270   100%  2e-68 95.29  16501      MF621723.1       "
+[36:31] 42> dataLines = tt[-(1:2)]
+[36:44] 43> con = textConnection(dataLines)
+[38:03] 44> ans = read.fwf(con, widths)
+[39:47] 45> class(ans)
+[1] "data.frame"
+[40:10] 46> dim(ans)
+[1] 100  11
+[40:13] 47> length(ans)
+[1] 11
+[40:15] 48> head(ans[[1]])
+[1] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     "
+[2] "Lepomis punctatus isolate NEFC F17-229 mitochondrion, complete... "
+[3] "Lepomis punctatus strain NEFC_F16-205 mitochondrion, complete...  "
+[4] "Lepomis auritus isolate NEFC F16-237 mitochondrion, complete...   "
+[5] "Lepomis auritus isolate NEFC F16-209 mitochondrion, complete...   "
+[6] "Lepomis auritus strain NEFC_F16-508 mitochondrion, complete...    "
+[40:29] 49> sapply(ans, class)
+         V1          V2          V3          V4          V5 
+"character" "character" "character"   "numeric"   "numeric" 
+         V6          V7          V8          V9         V10 
+  "numeric" "character"   "numeric"   "numeric"   "numeric" 
+        V11 
+"character" 
+[40:34] 50> head(ans[[7]])
+[1] "100%  " "100%  " "100%  " "100%  " "100%  " "100%  "
+[41:40] 51> head(ans[[6]])
+[1] 292 281 281 276 276 270
+[41:54] 52> h = read.fwf(textConnect(tt[2]), widths)
+Error in textConnect(tt[2]) : could not find function "textConnect"
+
+Enter a frame number, or 0 to exit   
+
+1: read.fwf(textConnect(tt[2]), widths)
+
+Selection: 0
+[41:54] 52> h = read.fwf(textConnection(tt[2]), widths)
+[46:38] 53> h
+                                                                  V1
+1 Description                                                       
+                V2               V3          V4      V5     V6     V7
+1 Name             Name             Taxid       Score   Score  cover 
+      V8      V9         V10              V11
+1 Value  Ident   Len         Accession       
+[46:39] 54> as.character(h)
+ [1] "Description                                                       "
+ [2] "Name            "                                                  
+ [3] "Name            "                                                  
+ [4] "Taxid      "                                                       
+ [5] "Score  "                                                           
+ [6] "Score "                                                            
+ [7] "cover "                                                            
+ [8] "Value "                                                            
+ [9] "Ident  "                                                           
+[10] "Len        "                                                       
+[11] "Accession       "                                                  
+[46:46] 55> trimws(as.character(h))
+ [1] "Description" "Name"        "Name"        "Taxid"      
+ [5] "Score"       "Score"       "cover"       "Value"      
+ [9] "Ident"       "Len"         "Accession"  
+[46:53] 56> names(ans) = trimws(as.character(h))
+[46:56] 57> 
