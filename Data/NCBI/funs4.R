@@ -5,10 +5,16 @@ readTableData =
     #
 function(txt, columnStarts)
 {
+    # convert the column starts to column widths.
+    # Assumes columnStarts contains the end of the line so we can compute
+    # the width of the last column.
     widths = diff(columnStarts)
+
+    # Read the data
     con = textConnection(txt)
     ans = read.fwf(con, widths = widths)
 
+    # Get rid of the trailing space for the character variables/columns
     w = sapply(ans, is.character)
     ans[w] = lapply(ans[w], trimws)
 
@@ -26,12 +32,11 @@ function(txt, columnStarts)
 readTable =
     #
     # high-level function to read the NCBI table.
-    # Assumes
     #
-    # Expects the header line
-    #  readTable(tt[-1])
+    # Now expects the first two elements of tt are the two header lines
+    # giving the column/variable names
     #
-function(txt, header = txt[1], columnStarts = findColumnStarts(header))
+function(txt, header = txt[2], columnStarts = findColumnStarts(header))
 {
     # read the data part
     dataLines = txt[-(1:2)]
@@ -40,11 +45,20 @@ function(txt, header = txt[1], columnStarts = findColumnStarts(header))
     headers = lapply(txt[1:2], function(line)
         read.fwf(textConnection(line), widths = diff(columnStarts)))
 
-    # tmp = lapply(headers, as.character)
     tmp = lapply(headers, function(x) trimws(as.character(x)))
+
+    # For the first line of the header, replace "NA" with ""
+    # corresponding to columns which no text in this row.
     w = tmp[[1]] == "NA"
     tmp[[1]][w] = ""
+
+    # combine the first and second row text for each column into a column name
     vars = paste(tmp[[1]], tmp[[2]], sep = " ")
+
+
+    # no longer need to trimws() here as we did in the earlier versions of this
+    # function when only dealing with one row of the header.  But doesn't hurt
+    # to leave trimws() call here.
     names(ans) = trimws(vars)
     ans
 }
@@ -52,21 +66,28 @@ function(txt, header = txt[1], columnStarts = findColumnStarts(header))
 # One more top-level function to read all the tables in the NCBI file
 
 readNCBITables =
+    #
+    # Read all the tables in the given file
+    #
 function(file, lines = readLines(file))
 {
+    # Find the starting and ending identifier surrounding each table. 
     starts = grep("Query #", lines)
     ends = grep("Alignments:", lines)
     mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lines), SIMPLIFY = FALSE)
 }
 
 readNCBITable =
+    #
+    # Read a single table given the start and end line index/positions 
+    # and all the lines in the file
+    # 
 function(start, end, lines)
 {
     txt = lines[(start + 3):(end - 1)]
     txt = txt[ txt != "" ]
     readTable(txt, columnStarts = findColumnStarts(txt[2]))
 }
-
 
 
 findColumnStarts =
