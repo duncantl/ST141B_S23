@@ -22,12 +22,12 @@
 
 
 ## Day 3
-+ [R Session]((Lectures/Day3/Rsession_Day3)
++ [R Session](Lectures/Day3/Rsession_Day3)
 + Code in [Data/NCBI](Data/NCBI)
 + [Strategy](Data/NCBI/README.md)
 + Different versions of functions
    + test.R - run the functions
    + funs0.R, funs1.R, funs2.R
-   + funs3.R - problems
+   + funs3.R - problems/bugs
    + funs4.R - improvements on funs3.R
 + [Debugging funs3.R](Data/NCBI/Debugging.md)

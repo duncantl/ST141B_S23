@@ -16,7 +16,7 @@
 + [funs3.R](funs3.R)
    + attempt to make the functions read both header lines to get the full variable names, i.e.,
      "Scientific Name" and "Common Name" rather than just "Name" and "Name"
-   + this has problems we need to debug
+   + this has problems/errors and  we need to debug this. 
 
 + [Debugging.md](Debugging.md)
    + process of debugging funs3.R to get to funs4.R
@@ -155,7 +155,14 @@ We want to make a function to read the table as we have a second one in this fil
 and many more from different query results.
 
 
-See funs0.R, funs1.R, funs2.R.
+See 
++ [funs0.R](funs0.R), 
++ [funs1.R](funs1.R), 
++ [funs2.R](funs2.R)
++ [funs3.R](funs3.R) - broken code
++ [funs4.R](funs4.R) - fixed version of funs3.R
+
+for evolving versions of the code.
 
 
 

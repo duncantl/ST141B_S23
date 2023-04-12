@@ -108,3 +108,16 @@ function(h)
     st = chars[w - 1] == " "
     sort(c(i, w[st], nchar(h)))
 }
+
+
+findColumnStarts2 =
+    #
+    # This version finds the locations of capital letters or lower-case letters preceded by a space
+    # This uses look-behind in the regular expression.
+    #
+function(h)
+{
+   c(gregexpr("[A-Z]|(?<= )[a-z]", h, perl = TRUE)[[1]], nchar(h))
+}
+
+             
