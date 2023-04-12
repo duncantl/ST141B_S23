@@ -15,3 +15,19 @@
    + [Data/FEC/itcont100K.txt](Data/FEC/itcont100K.txt)  - smaller version - 100,000 lines 
 
 + 
+
+## Day 2
++ [Exploring reading the FEC Data](Lectures/Day2/Explore.md)
++ [R Session]((Lectures/Day2/Rsession2)
+
+
+## Day 3
++ [R Session]((Lectures/Day3/Rsession_Day3)
++ Code in [Data/NCBI](Data/NCBI)
++ [Strategy](README.md)
++ Different versions of functions
+   + test.R - run the functions
+   + funs0.R, funs1.R, funs2.R
+   + funs3.R - problems
+   + funs4.R - improvements on funs3.R
++ [Debugging funs3.R](Data/NCBI/Debugging.md)
