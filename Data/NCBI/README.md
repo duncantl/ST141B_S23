@@ -1,6 +1,6 @@
 # Files
 
-+ [README.md](README.md)
++ README.md (this file)
    + A strategy for reading tables nested in the NCBIQuery.txt file.
    
 + [test.R](test.R)
