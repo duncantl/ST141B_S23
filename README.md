@@ -24,7 +24,7 @@
 ## Day 3
 + [R Session]((Lectures/Day3/Rsession_Day3)
 + Code in [Data/NCBI](Data/NCBI)
-+ [Strategy](README.md)
++ [Strategy](Data/NCBI/README.md)
 + Different versions of functions
    + test.R - run the functions
    + funs0.R, funs1.R, funs2.R
