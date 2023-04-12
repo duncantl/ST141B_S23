@@ -1,3 +1,18 @@
+
++ test.R 
+    + code to user our functions and check they work.
++ funs2.R
+    + pretty good version that reads all the tables in the NCBI file
+	   + converts the cover variable from x% to a numeric vector of percentage values
+	   + 
++ funs3.R
+   + attempt to make the functions read both header lines to get the full variable names
+   + this has problems we need to debug
++ funs4.R
+
+# Strategy for Problem Solving
+## Interactively Developing the Code to Read a Table
+
 Read the tables in the NCBI query results
 
 2 steps
