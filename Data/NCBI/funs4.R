@@ -39,7 +39,12 @@ function(txt, header = txt[1], columnStarts = findColumnStarts(header))
     # get the column names from the first line.
     headers = lapply(txt[1:2], function(line)
         read.fwf(textConnection(line), widths = diff(columnStarts)))
-    browser()
+
+    # tmp = lapply(headers, as.character)
+    tmp = lapply(headers, function(x) trimws(as.character(x)))
+    w = tmp[[1]] == "NA"
+    tmp[[1]][w] = ""
+    vars = paste(tmp[[1]], tmp[[2]], sep = " ")
     names(ans) = trimws(vars)
     ans
 }
@@ -59,7 +64,7 @@ function(start, end, lines)
 {
     txt = lines[(start + 3):(end - 1)]
     txt = txt[ txt != "" ]
-    readTable(txt)
+    readTable(txt, columnStarts = findColumnStarts(txt[2]))
 }
 
 
