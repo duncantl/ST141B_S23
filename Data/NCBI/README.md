@@ -1,27 +1,27 @@
 # Files
 
-+ README.md
++ [README.md](README.md)
    + A strategy for reading tables nested in the NCBIQuery.txt file.
    
-+ test.R 
++ [test.R](test.R)
     + code to user our functions and check they work.
-+ funs0.R 
++ [funs0.R](funs0.R)
    + start of functions from 
-+ funs1.R
++ [funs1.R](funs1.R)
    + refinement of funs0.R
    
-+ funs2.R
++ [funs2.R](funs2.R)
     + pretty good version that reads all the tables in the NCBI file
 	   + converts the cover variable from x% to a numeric vector of percentage values
-+ funs3.R
++ [funs3.R](funs3.R)
    + attempt to make the functions read both header lines to get the full variable names, i.e.,
      "Scientific Name" and "Common Name" rather than just "Name" and "Name"
    + this has problems we need to debug
 
-+ Debugging.md
++ [Debugging.md](Debugging.md)
    + process of debugging funs3.R to get to funs4.R
    
-+ funs4.R
++ [funs4.R](funs4.R)
 
 # Strategy for Problem Solving
 ## Interactively Developing the Code to Read a Table
