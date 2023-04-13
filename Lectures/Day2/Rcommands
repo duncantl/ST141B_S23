@@ -1,0 +1,47 @@
+ll = readLines("itcont.txt", n = 10)
+ll
+strsplit(ll[1], "|")
+strsplit(ll[1:2], "|")
+strsplit(ll[1:2], "|", fixed = TRUE)
+strsplit("a,b,c", ",")
+strsplit("a,xyz,c", ",")
+names(formals(read.table))
+d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10)
+class(d)
+dim(d)
+sapply(strsplit(ll[1:2], "|", fixed = TRUE), length)
+sapply(d, class)
+ll[1]
+ll = readLines("itcont.txt", n = 29)
+els = strsplit(ll, "|", fixed = TRUE)
+table(sapply(els, length))
+ll[27:28]
+names(formals(read.table))
+ll[1:5]
+names(formals(read.table))
+ll[27:28]
+d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 27)
+d
+dim(d)
+strsplit(ll[1:27], "|", fixed = TRUE)
+sapply(strsplit(ll[1:27], "|", fixed = TRUE), function(x) x[19])
+names(formals(read.table))
+d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28, fill = TRUE)
+ll[27:28]
+names(formals(read.table))
+formals(read.table)$quote
+d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 28, quote = "")
+ll = readLines("itcont.txt", n = 2068)
+ll[2066:2068]
+d = read.table("itcont.txt", header = FALSE, sep = "|", nrow = 10000, quote = "", comment.char = "")
+ll = readLines("itcont.txt")
+ll2 = sample(ll, 20000)
+con = textConnection(ll2)
+d2 = read.table(con, header = FALSE, sep = "|", nrow = 10000, quote = "", comment.char = "")
+dim(d)
+head(d)
+sin
+sin(pi)
+find("sin")
+search()
+
