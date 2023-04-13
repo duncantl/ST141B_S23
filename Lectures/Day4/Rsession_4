@@ -1,0 +1,239 @@
+]0;Day3~/sta141b/Public/Lectures/Day3> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 95705 
+Time = 2023-04-13 10:45:02 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day3 
+1> source("essentialCommands.R")
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'essentialCommands.R': No such file or directory
+
+Enter a frame number, or 0 to exit   
+
+1: source("essentialCommands.R")
+2: file(filename, "r", encoding = encoding)
+
+Selection: 0
+1> source("essentialRcommands.R")
+Error in file(con, "r") : cannot open the connection
+In addition: Warning message:
+In file(con, "r") :
+  cannot open file 'NCBIQuery.txt': No such file or directory
+
+Enter a frame number, or 0 to exit   
+
+1: source("essentialRcommands.R")
+2: withVisible(eval(ei, envir))
+3: eval(ei, envir)
+4: eval(ei, envir)
+5: essentialRcommands.R#4: readLines("NCBIQuery.txt")
+6: file(con, "r")
+
+Selection: 0
+1> dir = "../../Data/NCBI"
+[47:25] 2> file.exist(dir)
+Error in file.exist(dir) : could not find function "file.exist"
+No suitable frames for recover()
+[47:25] 2> file.exists(dir)
+[1] TRUE
+[47:31] 3> file.exists(file.path(dir, "NCBIQuery.txt"))
+[1] TRUE
+[47:43] 4> source("essentialRcommands.R")
+[49:15] 5> starts
+[1]    5 2323
+[59:54] 6> ends
+[1]  112 2430
+[59:55] 7> letters[1:3]
+[1] "a" "b" "c"
+[12:05] 8> LETTERS[1:3]
+[1] "A" "B" "C"
+[12:11] 9> mapply(function(x, y, lines = NULL) {  browser()} , letters[1:3], LETTERS[1:3])
+Called from: (function(x, y, lines = NULL) {  browser()})(dots[[1L]][[1L]], 
+    dots[[2L]][[1L]])
+Browse[1]> ls()
+[1] "lines" "x"     "y"    
+Browse[1]> x
+[1] "a"
+Browse[1]> y
+[1] "A"
+Browse[1]> lines
+NULL
+Browse[1]> c
+Called from: (function(x, y, lines = NULL) {  browser()})(dots[[1L]][[2L]], 
+    dots[[2L]][[2L]])
+Browse[1]> x
+[1] "b"
+Browse[1]> y
+[1] "B"
+Browse[1]> Q
+[14:28] 15> mapply(function(x, y, lines = NULL) {  browser()} , letters[1:3], LETTERS[1:3], MoreArgs = 1:10)
+Error in mapply(function(x, y, lines = NULL) { : 
+  argument 'MoreArgs' of 'mapply' is not a list or pairlist
+
+Enter a frame number, or 0 to exit   
+
+1: mapply(function(x, y, lines = NULL) {
+    browser()
+}, letters[1:3]
+
+Selection: 0
+[14:28] 15> mapply(function(x, y, lines = NULL) {  browser()} , letters[1:3], LETTERS[1:3], MoreArgs = list(1:10))
+Called from: (function(x, y, lines = NULL) {  browser()})(dots[[1L]][[1L]], 
+    dots[[2L]][[1L]], 1:10)
+Browse[1]> x
+[1] "a"
+Browse[1]> y
+[1] "A"
+Browse[1]> lines
+ [1]  1  2  3  4  5  6  7  8  9 10
+Browse[1]> c
+Called from: (function(x, y, lines = NULL) {  browser()})(dots[[1L]][[2L]], 
+    dots[[2L]][[2L]], 1:10)
+Browse[1]> x
+[1] "b"
+Browse[1]> lines
+ [1]  1  2  3  4  5  6  7  8  9 10
+Browse[1]> Q
+[15:56] 20> readNCBITable =
+function(file)
+{
+    ll = readLines(file)
+    mapply(readTableBetween, starts, ends, MoreArgs = list(ll), SIMPLIFY = FALSE)
+}
++ + + + + [28:55] 21> codetools::findGlobals(readNCBITable, FALSE)
+$functions
+[1] "{"         "="         "list"      "mapply"    "readLines"
+
+$variables
+[1] "ends"             "readTableBetween" "starts"          
+
+[30:23] 22> source('bob.R')
+Error in file(filename, "r", encoding = encoding) : 
+  cannot open the connection
+In addition: Warning message:
+In file(filename, "r", encoding = encoding) :
+  cannot open file 'bob.R': No such file or directory
+
+Enter a frame number, or 0 to exit   
+
+1: source("bob.R")
+2: file(filename, "r", encoding = encoding)
+
+Selection: 0
+[30:23] 22> source('bob.R')
+Error in source("bob.R") : bob.R:19:17: unexpected '!'
+18:     tt =  lines[ (startIndex +3): (endIndex - 1)]
+19:     tt = tt[ tt !
+                    ^
+
+Enter a frame number, or 0 to exit   
+
+1: source("bob.R")
+
+Selection: 0
+[30:23] 22> source('bob.R')
+[38:46] 23> lapply(list(readTableBetween, readNCBITables, readTableData), codetools::findGlobals, FALSE)
+[[1]]
+[[1]]$functions
+[1] "-"             ":"             "!="            "("            
+[5] "["             "{"             "+"             "="            
+[9] "readTableData"
+
+[[1]]$variables
+[1] "ll"
+
+
+[[2]]
+[[2]]$functions
+[1] "{"         "="         "=="        "list"      "mapply"   
+[6] "nchar"     "readLines" "substring" "which"    
+
+[[2]]$variables
+[1] "readTableBetween"
+
+
+[[3]]
+[[3]]$functions
+ [1] "-"              ":"              "("             
+ [4] "["              "{"              "="             
+ [7] "c"              "diff"           "nchar"         
+[10] "read.fwf"       "textConnection"
+
+[[3]]$variables
+character(0)
+
+
+[39:54] 24> readNCBITables
+function(file)
+{
+    ll = readLines(file)
+    starts = which(substring(ll, 1, 7) == "Query #")
+    ends = which(substring(ll, 1, nchar("Alignments:")) == "Alignments:")    
+    mapply(readTableBetween, starts, ends, MoreArgs = list(ll), SIMPLIFY = FALSE)
+}
+[40:32] 25> ans = readNCBITables(file.path(dir, "NCBIQuery.txt"))
+[40:47] 26> class(ans)
+[1] "list"
+[41:05] 27> length(ans)
+[1] 2
+[41:06] 28> sapply(ans, class)
+[1] "data.frame" "data.frame"
+[41:11] 29> sapply(ans, dim)
+     [,1] [,2]
+[1,]  100  100
+[2,]   11   11
+[41:25] 30> source('bob.R')
+[45:42] 31> lapply(list(readTableBetween, readNCBITables, readTableData), codetools::findGlobals, FALSE)
+[[1]]
+[[1]]$functions
+ [1] "-"              ":"              "!="            
+ [4] "("              "["              "{"             
+ [7] "+"              "="              "as.character"  
+[10] "names<-"        "read.fwf"       "readTableData" 
+[13] "textConnection" "trimws"        
+
+[[1]]$variables
+[1] "ll"     "widths"
+
+
+[[2]]
+[[2]]$functions
+[1] "{"         "="         "=="        "list"      "mapply"   
+[6] "nchar"     "readLines" "substring" "which"    
+
+[[2]]$variables
+[1] "readTableBetween"
+
+
+[[3]]
+[[3]]$functions
+ [1] "-"              ":"              "("             
+ [4] "["              "{"              "="             
+ [7] "c"              "diff"           "nchar"         
+[10] "read.fwf"       "textConnection"
+
+[[3]]$variables
+character(0)
+
+
+[45:49] 32> 
