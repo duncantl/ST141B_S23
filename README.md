@@ -31,3 +31,12 @@
    + funs3.R - problems/bugs
    + funs4.R - improvements on funs3.R
 + [Debugging funs3.R](Data/NCBI/Debugging.md)
+
+
+## Day 4
+
++ [Day 4 R Session](Lectures/Day4/Rsession_4)
+
++ [bob.R](Lectures/Day4/bob.R)
+  + The functions we wrote.
+  + Also see funs3.R and funs4.R from Day3 (above)
