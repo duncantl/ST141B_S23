@@ -1,0 +1,821 @@
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> diff funs2.R funs3.R 
+24a25
+> 
+36c37,38
+<     ans = readTableData(txt[-1], columnStarts)
+---
+>     dataLines = txt[-(1:2)]
+>     ans = readTableData(dataLines, columnStarts)
+38c40,42
+<     vars = read.fwf(textConnection(header), widths = diff(columnStarts))
+---
+>     headers = lapply(txt[1:2], function(line)
+>         read.fwf(textConnection(line), widths = diff(columnStarts)))
+> 
+58c62
+<     readTable(txt[-1])
+---
+>     readTable(txt)
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> 
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 58147 
+Time = 2023-04-18 11:17:00 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Data/NCBI 
+1> source("funs3.R")
+tbls = readNCBITables("NCBIQuery.txt")
+[17:06] 2> Error in is.factor(x) : object 'vars' not found
+In addition: Warning message:
+In readTableData(dataLines, columnStarts) : NAs introduced by coercion
+
+Enter a frame number, or 0 to exit   
+
+ 1: readNCBITables("NCBIQuery.txt")
+ 2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(l
+ 3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end -
+ 4: funs3.R#62: readTable(txt)
+ 5: funs3.R#43: trimws(vars)
+ 6: mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"
+ 7: sub(re, "", x, perl = TRUE)
+ 8: is.factor(x)
+ 9: mysub(paste0("^", whitespace, "+"), x)
+10: sub(re, "", x, perl = TRUE)
+11: is.factor(x)
+
+Selection: 0
+[17:06] 2> q()
+Save workspace image? [y/n/c]: n
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> R --vanilla
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> source("funs3.R")
+
+source("funs3.R")
+> 
+> ls()
+[1] "findColumnStarts" "readNCBITable"    "readNCBITables"   "readTable"       
+[5] "readTableData"   
+> tbls = readNCBITables("NCBIQuery.txt")
+Error in is.factor(x) : object 'vars' not found
+In addition: Warning message:
+In readTableData(dataLines, columnStarts) : NAs introduced by coercion
+> tbls
+Error: object 'tbls' not found
+> options(error = recover)
+> tbls = readNCBITables("NCBIQuery.txt")
+Error in trimws(vars) : object 'vars' not found
+In addition: Warning message:
+In readTableData(dataLines, columnStarts) : NAs introduced by coercion
+
+Enter a frame number, or 0 to exit   
+
+ 1: readNCBITables("NCBIQuery.txt")
+ 2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+ 3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+ 4: funs3.R#62: readTable(txt)
+ 5: funs3.R#43: trimws(vars)
+ 6: mysub(paste0(whitespace, "+$"), mysub(paste0("^", whitespace, "+"), x))
+ 7: sub(re, "", x, perl = TRUE)
+ 8: is.factor(x)
+ 9: mysub(paste0("^", whitespace, "+"), x)
+10: sub(re, "", x, perl = TRUE)
+11: is.factor(x)
+
+Selection: 4
+Called from: is.factor(x)
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "dataLines"    "header"       "headers"     
+[6] "txt"         
+Browse[1]> body()
+{
+    dataLines = txt[-(1:2)]
+    ans = readTableData(dataLines, columnStarts)
+    headers = lapply(txt[1:2], function(line) read.fwf(textConnection(line), 
+        widths = diff(columnStarts)))
+    names(ans) = trimws(vars)
+    ans
+}
+Browse[1]> headers
+[[1]]
+  V1 V2 V3 V4 V5   V6      V7                          V8
+1 NA NA NA NA NA   Sc ientifi c      Common              
+
+[[2]]
+                V1 V2 V3 V4 V5   V6      V7                          V8
+1 Description      NA NA NA NA   Na me             Name            Taxi
+
+Browse[1]> txt[1:2]
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+[2] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+Browse[1]> ans
+*** output flushed ***
+Browse[1]> ans
+*** output flushed ***
+Browse[1]> class(ans)
+[1] "data.frame"
+Browse[1]> dim(ans)
+[1] 100   8
+Browse[1]> dataLines[1]
+[1] "Lepomis miniatus 12S ribosomal RNA gene, partial sequence;...     Lepomis mini... redspotted s... 225390     292    292   100%  5e-75 97.65  948        KM370987.1       "
+Browse[1]> header
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+Browse[1]> headers
+[[1]]
+  V1 V2 V3 V4 V5   V6      V7                          V8
+1 NA NA NA NA NA   Sc ientifi c      Common              
+
+[[2]]
+                V1 V2 V3 V4 V5   V6      V7                          V8
+1 Description      NA NA NA NA   Na me             Name            Taxi
+
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "dataLines"    "header"       "headers"     
+[6] "txt"         
+Browse[1]> length(txt)
+[1] 102
+Browse[1]> columnWidths
+Error during wrapup: object 'columnWidths' not found
+Error: no more error handlers available (recursive errors?); invoking 'abort' restart
+Browse[1]> columnStarts
+[1]  67  83 110 117 123 131 135 142 169
+Browse[1]> findColumnStarts(header)
+[1]  67  83 110 117 123 131 135 142 169
+Browse[1]> txt[2]
+[1] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+Browse[1]> findColumnStarts(txt[2])
+ [1]   1  67  83  99 110 117 123 129 135 142 153 169
+Browse[1]> length(findColumnStarts(txt[2]))
+[1] 12
+Browse[1]> txt[1]
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+Browse[1]> Q
+> source("funs3.R")
+> tbls = readNCBITables("NCBIQuery.txt")
+Called from: readTableData(dataLines, columnStarts)
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "con"          "txt"          "widths"      
+Browse[1]> widths
+[1] 16 27  7  6  8  4  7 27
+Browse[1]> ans
+                  V1                          V2      V3     V4       V5   V6
+1   Lepomis miniatus  12S ribosomal RNA gene, pa rtial s equenc e;...      Le
+2   Lepomis punctatu s isolate NEFC F17-229 mito chondri on, co mplete.. . Le
+3   Lepomis punctatu s strain NEFC_F16-205 mitoc hondrio n, com plete...   Le
+4   Lepomis auritus  isolate NEFC F16-237 mitoch ondrion , comp lete...    Le
+5   Lepomis auritus  isolate NEFC F16-209 mitoch ondrion , comp lete...    Le
+6   Lepomis auritus  strain NEFC_F16-508 mitocho ndrion,  compl ete...     Le
+7   Lepomis gibbosus  isolate LG_EVO1 small subu nit rib osomal  RNA...    Le
+8   Lepomis gibbosus  voucher NEFC_F16-162 mitoc hondrio n, com plete...   Le
+9   Lepomis gibbosus  voucher NEFC_F16-162 mitoc hondrio n, com plete...   Le
+10  Lepomis gibbosus  strain NEFC_F16-021 mitoch ondrion , comp lete...    Le
+11  Lepomis gibbosus  voucher NEFC F18-021 mitoc hondrio n, com plete...   Le
+12  Lepomis humilis  12S ribosomal RNA gene, par tial se quence ;...       Le
+13  Lepomis gibbosus  voucher LodgeLab Lgibbosus _1 mito chondr ion,...    Le
+14  Lepomis macrochi rus CBM:ZF:18564 mitochondr ial gen e for  12S...     Le
+15  Lepomis macrochi rus CBM:ZF:16156 mitochondr ial gen e for  12S...     Le
+16  Lepomis macrochi rus CBM:ZF 19091 mitochondr ial gen e for  12S...     Le
+17  Lepomis macrochi rus strain NEFC_F16-067 mit ochondr ion, c omplet.. . Le
+18  Lepomis macrochi rus strain NEFC_F16-029 mit ochondr ion, c omplet.. . Le
+19  Lepomis macrochi rus strain NEFC_F16-204 mit ochondr ion, c omplet.. . Le
+20  Lepomis macrochi rus mitochondrial gene for  12S rRN A, par tial...    Le
+21  Lepomis macrochi rus voucher LodgeLab Lmacro chirus_ 1...              Le
+22  Lepomis macrochi rus mitochondrial DNA, comp lete ge nome              Le
+23  Lepomis macrochi rus small subunit ribosomal  RNA ge ne, pa rtial...   Le
+24  Lepomis macrochi rus voucher NNIBR 2017 mito chondri on, co mplete.. . Le
+25  Lepomis macrochi rus mitochondrion, complete  genome                   Le
+26  Lepomis macrochi rus mitochondrial genes for  cytoch rome b ,...       Le
+27  Lepomis gulosus  isolate NEFC F17-119 mitoch ondrion , comp lete...    Le
+28  Chaenobryttus gu losus isolate NEFC F16-212  mitocho ndrion ,...       Le
+29  Lepomis macrochi rus mitochondrial gene for  12S rRN A, par tial...    Le
+30  Lepomis cyanellu s voucher LodgeLab Lcyanell us_1 mi tochon drion,.. . Le
+31  Lepomis cyanellu s mitochondrion, complete g enome                     Le
+32  Lepomis cyanellu s voucher NEFC F19-045 mito chondri on, co mplete.. . Le
+33  Pomoxis nigromac ulatus isolate NEFC F17-136  mitoch ondrio n,...      Po
+34  Pomoxis nigromac ulatus isolate NEFC F17-120  mitoch ondrio n,...      Po
+35  Lepomis megaloti s 12S ribosomal RNA gene, p artial  sequen ce;...     Le
+36  Lepomis gibbosus  12S ribosomal RNA gene, pa rtial s equenc e;...      Le
+37  Micropterus salm oides CBM:ZF:19351 mitochon drial g ene fo r 12S...   Mi
+38  Micropterus salm oides salmoides isolate NEF C F16-1 58...             Mi
+39  Micropterus salm oides salmoides voucher NEF C F16-0 68...             Mi
+40  Micropterus salm oides salmoides voucher NEF C F16-0 36...             Mi
+41  Micropterus salm oides mitochondrial gene fo r 12S r RNA, p artial.. . Mi
+42  Micropterus salm oides salmoides mitochondri on, com plete  genome     Mi
+43  Micropterus salm oides mitochondrion, comple te geno me                Mi
+44  Pomoxis nigromac ulatus voucher NEFC F17-193  mitoch ondrio n,...      Po
+45  Pomoxis nigromac ulatus voucher NEFC_F16-162  mitoch ondrio n,...      Po
+46  Pomoxis nigromac ulatus strain NEFC_F16-017  mitocho ndrion ,...       Po
+47  Pomoxis nigromac ulatus voucher LodgeLab Pni gromacu latus_ 1...       Po
+48  Lepomis macrochi rus 12S ribosomal RNA gene,  partia l sequ ence;...   Le
+49  Lepomis cyanellu s 12S ribosomal RNA gene, p artial  sequen ce;...     Le
+50  Micropterus punc tulatus 12S ribosomal RNA g ene, pa rtial. ..         Mi
+51  Mesopristes canc ellatus voucher TeC2 12S ri bosomal  RNA g ene,...    Me
+52  Mesopristes canc ellatus voucher TeC1 12S ri bosomal  RNA g ene,...    Me
+53  Mastacembelus mo orii 12S ribosomal RNA gene , parti al seq uence;.. . Ma
+54  Lepomis macrochi rus voucher KU 25193 12S ri bosomal  RNA g ene,...    Le
+55  Lactarius lactar ius mitochondrion, complete  genome                   La
+56  Hephaestus fulig inosus voucher PY2017 mitoc hondrio n, com plete...   He
+57  Malakichthys ele gans mitochondrial gene for  12S rR NA, pa rtial...   Ma
+58  Micropterus salm oides 12S ribosomal RNA gen e, part ial se quence.. . Mi
+59  Mastacembelus cu nningtoni 12S ribosomal RNA  gene,  partia l...       Ma
+60  Malakichthys bar batus mitochondrial gene fo r 12S r RNA, p artial.. . Ma
+61  Malakichthys gri seus mitochondrial gene for  12S rR NA, pa rtial...   Ma
+62  Cephalopholis cy anostigma mitochondrial gen e for 1 2S rRN A,...      Ce
+63  Rhynchopelates o xyrhynchus mitochondrial DN A, comp lete g enome      Rh
+64  Mastacembelus ze bratus 12S ribosomal RNA ge ne, par tial s equenc.. . Ma
+65  Rhynchopelates o xyrhynchus CBM:ZF:20045 mit ochondr ial ge ne for.. . Rh
+66  Terapon theraps  mitochondrial gene for 12S  rRNA, p artial ...        Te
+67  Terapon theraps  voucher TeE2 12S ribosomal  RNA gen e, com plete...   Te
+68  Terapon theraps  voucher TeE1 12S ribosomal  RNA gen e, com plete...   Te
+69  Terapon theraps  voucher SW244 small subunit  riboso mal RN A gene.. . Te
+70  Terapon theraps  isolate PearlRE219 small su bunit r ibosom al RNA.. . Te
+71  Terapon theraps  isolate PearlRE218 small su bunit r ibosom al RNA.. . Te
+72  Terapon theraps  isolate PearlRE217 small su bunit r ibosom al RNA.. . Te
+73  Terapon theraps  isolate PearlRE216 small su bunit r ibosom al RNA.. . Te
+74  Terapon theraps  isolate PearlRE215 small su bunit r ibosom al RNA.. . Te
+75  Terapon theraps  isolate PearlRE214 small su bunit r ibosom al RNA.. . Te
+76  Terapon theraps  mitochondrion, complete gen ome                       Te
+77  Mesopristes arge nteus NSMT:P:121150 mitocho ndrial  gene f or 12S.. . Me
+78  Rhynchopelates o xyrhynchus mitochondrial DN A, comp lete g enome      Rh
+79  Elassoma okefeno kee mitochondrial gene for  12S rRN A, par tial...    El
+80  Elassoma zonatum  mitochondrial gene for 12S  rRNA,  partia l...       El
+81  Elassoma zonatum  mitochondrial DNA, complet e genom e exce pt for.. . El
+82  Mastacembelus ar matus mitochondrion, comple te geno me                Ma
+83  Cephalopholis fo rmosa mitochondrial gene fo r 12S r RNA, p artial.. . Ce
+84  Cephalopholis fo rmosa voucher SW58 small su bunit r ibosom al RNA.. . Ce
+85  Cephalopholis mi croprion KAUM:I:79887 mitoc hondria l gene  for 1.. . Ce
+86  Ophieleotris apo ros 12S ribosomal RNA gene,  comple te seq uence;.. . Gi
+87  Mastacembelus fa vus mitochondrial DNA, comp lete ge nome              Ma
+88  Rhynchopelates o xyrhynchus CBM:ZF:20135-2 m itochon drial  gene f.. . Rh
+89  Rhynchopelates o xyrhynchus CBM:ZF:20135-1 m itochon drial  gene f.. . Rh
+90  Mastacembelus pl agiostomus 12S ribosomal RN A gene,  parti al...      Ma
+91  Mastacembelus fl avidus 12S ribosomal RNA ge ne, par tial s equenc.. . Ma
+92  Mastacembelus al bomaculatus 12S ribosomal R NA gene , part ial...     Ma
+93  Rhynchopelates o xyrhynchus CBM:ZF:19597 mit ochondr ial ge ne for.. . Rh
+94  Etheostoma olmst edi isolate NEFC F17-090 mi tochond rion,  comple.. . Et
+95  Etheostoma olmst edi isolate NEFC F17-089 mi tochond rion,  comple.. . Et
+96  Etheostoma olmst edi isolate NEFC F17-015 mi tochond rion,  comple.. . Et
+97  Rhynchopelates o xyrhynchus CBM:ZF:21451 mit ochondr ial ge nes fo.. . Rh
+98  Leiopotherapon p lumbeus voucher SW146 small  subuni t ribo somal...   Le
+99  Etheostoma olmst edi isolate F19-104 mitocho ndrion,  parti al genom e Et
+100 Etheostoma olmst edi isolate F19-218 mitocho ndrion,  compl ete...     Et
+         V7                          V8
+1   pomis m ini... redspotted s... 2253
+2   pomis p unc... spotted sunfish 2703
+3   pomis p unc... spotted sunfish 2703
+4   pomis a uritus redbreast su... 2016
+5   pomis a uritus redbreast su... 2016
+6   pomis a uritus redbreast su... 2016
+7   pomis g ibb... pumpkinseed ... 2703
+8   pomis g ibb... pumpkinseed ... 2703
+9   pomis g ibb... pumpkinseed ... 2703
+10  pomis g ibb... pumpkinseed ... 2703
+11  pomis g ibb... pumpkinseed ... 2703
+12  pomis h umilis orangespotte... 2554
+13  pomis g ibb... pumpkinseed ... 2703
+14  pomis m acr... bluegill        1310
+15  pomis m acr... bluegill        1310
+16  pomis m acr... bluegill        1310
+17  pomis m acr... bluegill        1310
+18  pomis m acr... bluegill        1310
+19  pomis m acr... bluegill        1310
+20  pomis m acr... bluegill        1310
+21  pomis m acr... bluegill        1310
+22  pomis m acr... bluegill        1310
+23  pomis m acr... bluegill        1310
+24  pomis m acr... bluegill        1310
+25  pomis m acr... bluegill        1310
+26  pomis m acr... bluegill        1310
+27  pomis g ulosus NA              2016
+28  pomis g ulosus NA              2016
+29  pomis m acr... bluegill        1310
+30  pomis c yan... green sunfish   2016
+31  pomis c yan... green sunfish   2016
+32  pomis c yan... green sunfish   2016
+33  moxis n igr... black crappie   8182
+34  moxis n igr... black crappie   8182
+35  pomis m ega... NA              2703
+36  pomis g ibb... pumpkinseed ... 2703
+37  cropter us ... largemouth bass 2770
+38  cropter us ... northern lar... 4890
+39  cropter us ... northern lar... 4890
+40  cropter us ... northern lar... 4890
+41  cropter us ... largemouth bass 2770
+42  cropter us ... northern lar... 4890
+43  cropter us ... largemouth bass 2770
+44  moxis n igr... black crappie   8182
+45  moxis n igr... black crappie   8182
+46  moxis n igr... black crappie   8182
+47  moxis n igr... black crappie   8182
+48  pomis m acr... bluegill        1310
+49  pomis c yan... green sunfish   2016
+50  cropter us ... spotted bass    2250
+51  soprist es ... tapiroid gru... 1100
+52  soprist es ... tapiroid gru... 1100
+53  stacemb elu... NA              7622
+54  pomis m acr... bluegill        1310
+55  ctarius  la... false trevally  4453
+56  phaestu s f... sooty grunter   1085
+57  lakicht hys... NA              2238
+58  cropter us ... largemouth bass 2770
+59  stacemb elu... NA              7622
+60  lakicht hys... NA              2238
+61  lakicht hys... NA              2238
+62  phaloph oli... NA              3278
+63  ynchope lat... sharpbeak te... 2705
+64  stacemb elu... NA              7622
+65  ynchope lat... sharpbeak te... 2705
+66  rapon t heraps largescaled ... 1631
+67  rapon t heraps largescaled ... 1631
+68  rapon t heraps largescaled ... 1631
+69  rapon t heraps largescaled ... 1631
+70  rapon t heraps largescaled ... 1631
+71  rapon t heraps largescaled ... 1631
+72  rapon t heraps largescaled ... 1631
+73  rapon t heraps largescaled ... 1631
+74  rapon t heraps largescaled ... 1631
+75  rapon t heraps largescaled ... 1631
+76  rapon t heraps largescaled ... 1631
+77  soprist es ... silver grunter  1161
+78  ynchope lat... sharpbeak te... 2705
+79  assoma  oke... Okefenokee p... 7167
+80  assoma  zon... banded pygmy... 7167
+81  assoma  zon... banded pygmy... 7167
+82  stacemb elu... zig-zag eel     2051
+83  phaloph oli... NA              3065
+84  phaloph oli... NA              3065
+85  phaloph oli... freckled hind   6039
+86  uris ma rga... snakehead gu... 1095
+87  stacemb elu... tire track eel  1433
+88  ynchope lat... sharpbeak te... 2705
+89  ynchope lat... sharpbeak te... 2705
+90  stacemb elu... NA              7622
+91  stacemb elu... NA              7622
+92  stacemb elu... NA              7622
+93  ynchope lat... sharpbeak te... 2705
+94  heostom a o... tessallated ... 4179
+95  heostom a o... tessallated ... 4179
+96  heostom a o... tessallated ... 4179
+97  ynchope lat... sharpbeak te... 2705
+98  iopothe rap... NA              9419
+99  heostom a o... tessallated ... 4179
+100 heostom a o... tessallated ... 4179
+Browse[1]> n
+debug at funs3.R#12: w = sapply(ans, is.character)
+Browse[2]> 
+debug at funs3.R#13: ans[w] = lapply(ans[w], trimws)
+Browse[2]> 
+debug at funs3.R#19: ans[[7]] = as.numeric(substring(ans[[7]], 1, nchar(ans[[7]]) - 
+    1))
+Browse[2]> 
+debug at funs3.R#21: ans
+Warning message:
+In readTableData(dataLines, columnStarts) : NAs introduced by coercion
+Browse[2]> ans
+                  V1                          V2      V3     V4       V5   V6
+1   Lepomis miniatus  12S ribosomal RNA gene, pa rtial s equenc    e;...   Le
+2   Lepomis punctatu s isolate NEFC F17-229 mito chondri on, co mplete.. . Le
+3   Lepomis punctatu s strain NEFC_F16-205 mitoc hondrio n, com plete...   Le
+4    Lepomis auritus isolate NEFC F16-237 mitoch ondrion , comp  lete...   Le
+5    Lepomis auritus isolate NEFC F16-209 mitoch ondrion , comp  lete...   Le
+6    Lepomis auritus strain NEFC_F16-508 mitocho ndrion,  compl   ete...   Le
+7   Lepomis gibbosus  isolate LG_EVO1 small subu nit rib osomal   RNA...   Le
+8   Lepomis gibbosus  voucher NEFC_F16-162 mitoc hondrio n, com plete...   Le
+9   Lepomis gibbosus  voucher NEFC_F16-162 mitoc hondrio n, com plete...   Le
+10  Lepomis gibbosus  strain NEFC_F16-021 mitoch ondrion , comp  lete...   Le
+11  Lepomis gibbosus  voucher NEFC F18-021 mitoc hondrio n, com plete...   Le
+12   Lepomis humilis 12S ribosomal RNA gene, par tial se quence     ;...   Le
+13  Lepomis gibbosus  voucher LodgeLab Lgibbosus _1 mito chondr  ion,...   Le
+14  Lepomis macrochi rus CBM:ZF:18564 mitochondr ial gen  e for   12S...   Le
+15  Lepomis macrochi rus CBM:ZF:16156 mitochondr ial gen  e for   12S...   Le
+16  Lepomis macrochi rus CBM:ZF 19091 mitochondr ial gen  e for   12S...   Le
+17  Lepomis macrochi rus strain NEFC_F16-067 mit ochondr ion, c omplet.. . Le
+18  Lepomis macrochi rus strain NEFC_F16-029 mit ochondr ion, c omplet.. . Le
+19  Lepomis macrochi rus strain NEFC_F16-204 mit ochondr ion, c omplet.. . Le
+20  Lepomis macrochi  rus mitochondrial gene for 12S rRN A, par  tial...   Le
+21  Lepomis macrochi rus voucher LodgeLab Lmacro chirus_   1...            Le
+22  Lepomis macrochi rus mitochondrial DNA, comp lete ge   nome            Le
+23  Lepomis macrochi rus small subunit ribosomal  RNA ge ne, pa rtial...   Le
+24  Lepomis macrochi rus voucher NNIBR 2017 mito chondri on, co mplete.. . Le
+25  Lepomis macrochi rus mitochondrion, complete  genome                   Le
+26  Lepomis macrochi rus mitochondrial genes for  cytoch rome b     ,...   Le
+27   Lepomis gulosus isolate NEFC F17-119 mitoch ondrion , comp  lete...   Le
+28  Chaenobryttus gu  losus isolate NEFC F16-212 mitocho ndrion     ,...   Le
+29  Lepomis macrochi  rus mitochondrial gene for 12S rRN A, par  tial...   Le
+30  Lepomis cyanellu s voucher LodgeLab Lcyanell us_1 mi tochon drion,.. . Le
+31  Lepomis cyanellu s mitochondrion, complete g   enome                   Le
+32  Lepomis cyanellu s voucher NEFC F19-045 mito chondri on, co mplete.. . Le
+33  Pomoxis nigromac ulatus isolate NEFC F17-136  mitoch ondrio    n,...   Po
+34  Pomoxis nigromac ulatus isolate NEFC F17-120  mitoch ondrio    n,...   Po
+35  Lepomis megaloti s 12S ribosomal RNA gene, p  artial sequen   ce;...   Le
+36  Lepomis gibbosus  12S ribosomal RNA gene, pa rtial s equenc    e;...   Le
+37  Micropterus salm oides CBM:ZF:19351 mitochon drial g ene fo r 12S...   Mi
+38  Micropterus salm oides salmoides isolate NEF C F16-1  58...            Mi
+39  Micropterus salm oides salmoides voucher NEF C F16-0  68...            Mi
+40  Micropterus salm oides salmoides voucher NEF C F16-0  36...            Mi
+41  Micropterus salm oides mitochondrial gene fo r 12S r RNA, p artial.. . Mi
+42  Micropterus salm oides salmoides mitochondri on, com  plete   genome   Mi
+43  Micropterus salm oides mitochondrion, comple te geno     me            Mi
+44  Pomoxis nigromac ulatus voucher NEFC F17-193  mitoch ondrio    n,...   Po
+45  Pomoxis nigromac ulatus voucher NEFC_F16-162  mitoch ondrio    n,...   Po
+46  Pomoxis nigromac  ulatus strain NEFC_F16-017 mitocho ndrion     ,...   Po
+47  Pomoxis nigromac ulatus voucher LodgeLab Pni gromacu latus_     1...   Po
+48  Lepomis macrochi rus 12S ribosomal RNA gene,  partia l sequ ence;...   Le
+49  Lepomis cyanellu s 12S ribosomal RNA gene, p  artial sequen   ce;...   Le
+50  Micropterus punc tulatus 12S ribosomal RNA g ene, pa rtial.       ..   Mi
+51  Mesopristes canc ellatus voucher TeC2 12S ri bosomal  RNA g  ene,...   Me
+52  Mesopristes canc ellatus voucher TeC1 12S ri bosomal  RNA g  ene,...   Me
+53  Mastacembelus mo orii 12S ribosomal RNA gene , parti al seq uence;.. . Ma
+54  Lepomis macrochi rus voucher KU 25193 12S ri bosomal  RNA g  ene,...   Le
+55  Lactarius lactar ius mitochondrion, complete  genome                   La
+56  Hephaestus fulig inosus voucher PY2017 mitoc hondrio n, com plete...   He
+57  Malakichthys ele gans mitochondrial gene for  12S rR NA, pa rtial...   Ma
+58  Micropterus salm oides 12S ribosomal RNA gen e, part ial se quence.. . Mi
+59  Mastacembelus cu nningtoni 12S ribosomal RNA   gene, partia     l...   Ma
+60  Malakichthys bar batus mitochondrial gene fo r 12S r RNA, p artial.. . Ma
+61  Malakichthys gri seus mitochondrial gene for  12S rR NA, pa rtial...   Ma
+62  Cephalopholis cy anostigma mitochondrial gen e for 1 2S rRN    A,...   Ce
+63  Rhynchopelates o xyrhynchus mitochondrial DN A, comp lete g    enome   Rh
+64  Mastacembelus ze bratus 12S ribosomal RNA ge ne, par tial s equenc.. . Ma
+65  Rhynchopelates o xyrhynchus CBM:ZF:20045 mit ochondr ial ge ne for.. . Rh
+66   Terapon theraps  mitochondrial gene for 12S rRNA, p artial      ...   Te
+67   Terapon theraps  voucher TeE2 12S ribosomal RNA gen e, com plete...   Te
+68   Terapon theraps  voucher TeE1 12S ribosomal RNA gen e, com plete...   Te
+69   Terapon theraps voucher SW244 small subunit  riboso mal RN A gene.. . Te
+70   Terapon theraps isolate PearlRE219 small su bunit r ibosom al RNA.. . Te
+71   Terapon theraps isolate PearlRE218 small su bunit r ibosom al RNA.. . Te
+72   Terapon theraps isolate PearlRE217 small su bunit r ibosom al RNA.. . Te
+73   Terapon theraps isolate PearlRE216 small su bunit r ibosom al RNA.. . Te
+74   Terapon theraps isolate PearlRE215 small su bunit r ibosom al RNA.. . Te
+75   Terapon theraps isolate PearlRE214 small su bunit r ibosom al RNA.. . Te
+76   Terapon theraps mitochondrion, complete gen     ome                   Te
+77  Mesopristes arge nteus NSMT:P:121150 mitocho  ndrial gene f or 12S.. . Me
+78  Rhynchopelates o xyrhynchus mitochondrial DN A, comp lete g    enome   Rh
+79  Elassoma okefeno  kee mitochondrial gene for 12S rRN A, par  tial...   El
+80  Elassoma zonatum  mitochondrial gene for 12S   rRNA, partia     l...   El
+81  Elassoma zonatum  mitochondrial DNA, complet e genom e exce pt for.. . El
+82  Mastacembelus ar matus mitochondrion, comple te geno     me            Ma
+83  Cephalopholis fo rmosa mitochondrial gene fo r 12S r RNA, p artial.. . Ce
+84  Cephalopholis fo rmosa voucher SW58 small su bunit r ibosom al RNA.. . Ce
+85  Cephalopholis mi croprion KAUM:I:79887 mitoc hondria l gene  for 1.. . Ce
+86  Ophieleotris apo ros 12S ribosomal RNA gene,  comple te seq uence;.. . Gi
+87  Mastacembelus fa vus mitochondrial DNA, comp lete ge   nome            Ma
+88  Rhynchopelates o xyrhynchus CBM:ZF:20135-2 m itochon  drial gene f.. . Rh
+89  Rhynchopelates o xyrhynchus CBM:ZF:20135-1 m itochon  drial gene f.. . Rh
+90  Mastacembelus pl agiostomus 12S ribosomal RN A gene,  parti    al...   Ma
+91  Mastacembelus fl avidus 12S ribosomal RNA ge ne, par tial s equenc.. . Ma
+92  Mastacembelus al bomaculatus 12S ribosomal R NA gene , part   ial...   Ma
+93  Rhynchopelates o xyrhynchus CBM:ZF:19597 mit ochondr ial ge ne for.. . Rh
+94  Etheostoma olmst edi isolate NEFC F17-090 mi tochond  rion, comple.. . Et
+95  Etheostoma olmst edi isolate NEFC F17-089 mi tochond  rion, comple.. . Et
+96  Etheostoma olmst edi isolate NEFC F17-015 mi tochond  rion, comple.. . Et
+97  Rhynchopelates o xyrhynchus CBM:ZF:21451 mit ochondr ial ge nes fo.. . Rh
+98  Leiopotherapon p lumbeus voucher SW146 small  subuni t ribo somal...   Le
+99  Etheostoma olmst edi isolate F19-104 mitocho ndrion,  parti al genom e Et
+100 Etheostoma olmst edi isolate F19-218 mitocho ndrion,  compl   ete...   Et
+    V7                          V8
+1   NA ini... redspotted s... 2253
+2   NA unc... spotted sunfish 2703
+3   NA unc... spotted sunfish 2703
+4   NA uritus redbreast su... 2016
+5   NA uritus redbreast su... 2016
+6   NA uritus redbreast su... 2016
+7   NA ibb... pumpkinseed ... 2703
+8   NA ibb... pumpkinseed ... 2703
+9   NA ibb... pumpkinseed ... 2703
+10  NA ibb... pumpkinseed ... 2703
+11  NA ibb... pumpkinseed ... 2703
+12  NA umilis orangespotte... 2554
+13  NA ibb... pumpkinseed ... 2703
+14  NA acr... bluegill        1310
+15  NA acr... bluegill        1310
+16  NA acr... bluegill        1310
+17  NA acr... bluegill        1310
+18  NA acr... bluegill        1310
+19  NA acr... bluegill        1310
+20  NA acr... bluegill        1310
+21  NA acr... bluegill        1310
+22  NA acr... bluegill        1310
+23  NA acr... bluegill        1310
+24  NA acr... bluegill        1310
+25  NA acr... bluegill        1310
+26  NA acr... bluegill        1310
+27  NA ulosus NA              2016
+28  NA ulosus NA              2016
+29  NA acr... bluegill        1310
+30  NA yan... green sunfish   2016
+31  NA yan... green sunfish   2016
+32  NA yan... green sunfish   2016
+33  NA igr... black crappie   8182
+34  NA igr... black crappie   8182
+35  NA ega... NA              2703
+36  NA ibb... pumpkinseed ... 2703
+37  NA us ... largemouth bass 2770
+38  NA us ... northern lar... 4890
+39  NA us ... northern lar... 4890
+40  NA us ... northern lar... 4890
+41  NA us ... largemouth bass 2770
+42  NA us ... northern lar... 4890
+43  NA us ... largemouth bass 2770
+44  NA igr... black crappie   8182
+45  NA igr... black crappie   8182
+46  NA igr... black crappie   8182
+47  NA igr... black crappie   8182
+48  NA acr... bluegill        1310
+49  NA yan... green sunfish   2016
+50  NA us ... spotted bass    2250
+51  NA es ... tapiroid gru... 1100
+52  NA es ... tapiroid gru... 1100
+53  NA elu... NA              7622
+54  NA acr... bluegill        1310
+55  NA  la... false trevally  4453
+56  NA s f... sooty grunter   1085
+57  NA hys... NA              2238
+58  NA us ... largemouth bass 2770
+59  NA elu... NA              7622
+60  NA hys... NA              2238
+61  NA hys... NA              2238
+62  NA oli... NA              3278
+63  NA lat... sharpbeak te... 2705
+64  NA elu... NA              7622
+65  NA lat... sharpbeak te... 2705
+66  NA heraps largescaled ... 1631
+67  NA heraps largescaled ... 1631
+68  NA heraps largescaled ... 1631
+69  NA heraps largescaled ... 1631
+70  NA heraps largescaled ... 1631
+71  NA heraps largescaled ... 1631
+72  NA heraps largescaled ... 1631
+73  NA heraps largescaled ... 1631
+74  NA heraps largescaled ... 1631
+75  NA heraps largescaled ... 1631
+76  NA heraps largescaled ... 1631
+77  NA es ... silver grunter  1161
+78  NA lat... sharpbeak te... 2705
+79  NA oke... Okefenokee p... 7167
+80  NA zon... banded pygmy... 7167
+81  NA zon... banded pygmy... 7167
+82  NA elu... zig-zag eel     2051
+83  NA oli... NA              3065
+84  NA oli... NA              3065
+85  NA oli... freckled hind   6039
+86  NA rga... snakehead gu... 1095
+87  NA elu... tire track eel  1433
+88  NA lat... sharpbeak te... 2705
+89  NA lat... sharpbeak te... 2705
+90  NA elu... NA              7622
+91  NA elu... NA              7622
+92  NA elu... NA              7622
+93  NA lat... sharpbeak te... 2705
+94  NA a o... tessallated ... 4179
+95  NA a o... tessallated ... 4179
+96  NA a o... tessallated ... 4179
+97  NA lat... sharpbeak te... 2705
+98  NA rap... NA              9419
+99  NA a o... tessallated ... 4179
+100 NA a o... tessallated ... 4179
+Browse[2]> Q
+> source("funs3.R")
+> options(warn = 2)
+> tbls = readNCBITables("NCBIQuery.txt")
+Error in readTableData(dataLines, columnStarts) : 
+  (converted from warning) NAs introduced by coercion
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+6: funs3.R#19: .signalSimpleWarning("NAs introduced by coercion", base::quote(
+7: withRestarts({
+    .Internal(.signalCondition(simpleWarning(msg, call), msg,
+8: withOneRestart(expr, restarts[[1]])
+9: doWithOneRestart(return(expr), restart)
+
+Selection: 0
+> source("funs4.R")
+> tbls = readNCBITables("NCBIQuery.txt")
+Called from: readTable(txt, columnStarts = findColumnStarts(txt[2]))
+Browse[1]> headers
+[[1]]
+  V1               V2               V3 V4      V5     V6     V7     V8      V9
+1 NA Scientific       Common           NA Max     Total  Query    E    Per.   
+          V10 V11
+1 Acc.         NA
+
+[[2]]
+                                                                  V1
+1 Description                                                       
+                V2               V3          V4      V5     V6     V7     V8
+1 Name             Name             Taxid       Score   Score  cover  Value 
+       V9         V10              V11
+1 Ident   Len         Accession       
+
+Browse[1]> lapply(headers, as.character)
+[[1]]
+ [1] "NA"               "Scientific      " "Common          " "NA"              
+ [5] "Max    "          "Total "           "Query "           "  E   "          
+ [9] "Per.   "          "Acc.       "      "NA"              
+
+[[2]]
+ [1] "Description                                                       "
+ [2] "Name            "                                                  
+ [3] "Name            "                                                  
+ [4] "Taxid      "                                                       
+ [5] "Score  "                                                           
+ [6] "Score "                                                            
+ [7] "cover "                                                            
+ [8] "Value "                                                            
+ [9] "Ident  "                                                           
+[10] "Len        "                                                       
+[11] "Accession       "                                                  
+
+Browse[1]> c
+Called from: readTable(txt, columnStarts = findColumnStarts(txt[2]))
+Browse[1]> c
+> names(tbls[[1]])
+ [1] "Description"     "Scientific Name" "Common Name"     "Taxid"          
+ [5] "Max Score"       "Total Score"     "Query cover"     "E Value"        
+ [9] "Per. Ident"      "Acc. Len"        "Accession"      
+> tbls = readNCBITables("NCBIQuery.txt")
+Called from: readTable(txt, columnStarts = findColumnStarts(txt[2]))
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "dataLines"    "header"       "headers"     
+[6] "tmp"          "txt"         
+Browse[1]> txt[1]
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+Browse[1]> findColumnStarts
+function(h)    
+{
+    chars = strsplit(h, "")[[1]]
+    i = which(chars %in% LETTERS)
+    w = which(chars %in% letters)
+    st = chars[w - 1] == " "
+    sort(c(i, w[st], nchar(h)))
+}
+<bytecode: 0x1191714d0>
+Browse[1]> findColumnStarts(txt[1])
+[1]  67  83 110 117 123 131 135 142 169
+Browse[1]> findColumnStarts(txt[2])
+ [1]   1  67  83  99 110 117 123 129 135 142 153 169
+Browse[1]> txt[2]
+[1] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+Browse[1]>txt[1] 
+debug at funs4.R#52: w = tmp[[1]] == "NA"
+Browse[2]> txt[1]
+[1] "                                                                  Scientific      Common                     Max    Total Query   E   Per.   Acc.                        "
+Browse[2]> Q
+> source("funs3.R")
+> tbls = readNCBITables("NCBIQuery.txt")
+Called from: readTableData(dataLines, columnStarts)
+Browse[1]> where
+*** output flushed ***
+Browse[1]> sys.calls()
+*** output flushed ***
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "con"          "txt"          "widths"      
+Browse[1]> dim(ans)
+[1] 100   8
+Browse[1]> columnStarts
+[1]  67  83 110 117 123 131 135 142 169
+Browse[1]> Q()
+Error in Q() : could not find function "Q"
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+
+Selection: 0
+Browse[1]> Q
+> source("funs3.R")
+> tbls = readNCBITables("NCBIQuery.txt")
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+
+Selection: 5
+Called from: recover()
+Browse[1]> ls()
+[1] "ans"          "columnStarts" "con"          "txt"          "widths"      
+Browse[1]> 
+debug: which <- menu(calls, title = "\nEnter a frame number, or 0 to exit  ")
+Browse[2]> 
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+
+Selection: 1
+debug: if (which) eval(substitute(browser(skipCalls = skip), list(skip = 7 - 
+    which)), envir = sys.frame(which)) else break
+Browse[2]> ls()
+[1] "calli"  "calls"  "fname"  "from"   "i"      "n"      "tState" "which" 
+Browse[2]> 
+debug: eval(substitute(browser(skipCalls = skip), list(skip = 7 - which)), 
+    envir = sys.frame(which))
+Browse[2]> c
+Called from: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lines), 
+    SIMPLIFY = FALSE)
+Browse[1]> ls()
+[1] "ends"   "file"   "lines"  "starts"
+Browse[1]> c
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+
+Selection: 0
+Error in readTableData(dataLines, columnStarts) : 
+  (converted from warning) NAs introduced by coercion
+
+Enter a frame number, or 0 to exit   
+
+1: readNCBITables("NCBIQuery.txt")
+2: funs3.R#54: mapply(readNCBITable, starts, ends, MoreArgs = list(lines = lin
+3: (function (start, end, lines) 
+{
+    txt = lines[(start + 3):(end - 1)]
+    tx
+4: funs3.R#62: readTable(txt)
+5: funs3.R#38: readTableData(dataLines, columnStarts)
+6: funs3.R#19: .signalSimpleWarning("NAs introduced by coercion", base::quote(
+7: withRestarts({
+    .Internal(.signalCondition(simpleWarning(msg, call), msg,
+8: withOneRestart(expr, restarts[[1]])
+9: doWithOneRestart(return(expr), restart)
+
+Selection: 0
+> 
