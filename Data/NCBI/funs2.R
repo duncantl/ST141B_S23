@@ -22,7 +22,6 @@ function(txt, columnStarts)
 }
 
 
-
 readTable =
     #
     # high-level function to read the NCBI table.
