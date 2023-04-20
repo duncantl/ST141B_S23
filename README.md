@@ -40,3 +40,8 @@
 + [bob.R](Lectures/Day4/bob.R)
   + The functions we wrote.
   + Also see funs3.R and funs4.R from Day3 (above)
+
+## Day 5
+
++ [Day 5 R Session](Lectures/Day5/Ression5)
+  + See [Debugging funs3.R](Data/NCBI/Debugging.md) for the narrative of this debugging session.
