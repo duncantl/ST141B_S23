@@ -7,14 +7,6 @@ function(txt, columnStarts)
 }
 
 
-
-
-
-
-
-
-
-
 readTable =
     #
     # Expects the header line
