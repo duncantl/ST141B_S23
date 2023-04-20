@@ -1,0 +1,131 @@
+]0;Day6~/sta141b/Public/Lectures/Day6> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 94186 
+Time = 2023-04-20 10:50:57 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day6 
+1> txt = readLines("~/sta141b/Public/Data/NCBI/NCBIQuery.txt")
+[52:02] 2> txt[1:5]
+[1] "RID: R69MU8R7016\t"                                      
+[2] "Job Title:2 sequences (Species1)\t\t\t\t"                
+[3] "Program: BLASTN "                                        
+[4] "Database: nt Nucleotide collection (nt)"                 
+[5] "Query #1: Species1 Query ID: lcl|Query_11494 Length: 170"
+[52:05] 3> substring(txt[5], 1, 7)
+[1] "Query #"
+[52:45] 4> w = substring(txt, 1, 7) == "Query #"
+[52:58] 5> head(substring(txt, 1, 7)
++ )
+[1] "RID: R6" "Job Tit" "Program" "Databas" "Query #" ""       
+[53:29] 6> substring(txt, 1, 7) == "Query #"
+*** output flushed ***
+[53:59] 7> w = substring(txt, 1, 7) == "Query #"
+[54:07] 8> table(w)
+w
+FALSE  TRUE 
+ 4649     2 
+[54:09] 9> w2 = grepl("^Query #", txt)
+[54:28] 10> table(w2)
+w2
+FALSE  TRUE 
+ 4649     2 
+[54:30] 11> w2 = grepl("^Query #[0-9]+", txt)
+[56:34] 12> table(w2)
+w2
+FALSE  TRUE 
+ 4649     2 
+[56:37] 13> x = c(" a string with 12345 numbers", "1001", "no digits")
+[18:03] 14> grepl("[0-9]", x)
+[1]  TRUE  TRUE FALSE
+[18:57] 15> grep("[0-9]", x)
+[1] 1 2
+[19:03] 16> grep("(0|1|2|3|4|5|6|7|8|9)", x)
+[1] 1 2
+[21:05] 17> month.abb
+ [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov"
+[12] "Dec"
+[25:26] 18> paste(month.abb, collapse = "|")
+[1] "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
+[25:57] 19> sprintf("(%s)", paste(month.abb, collapse = "|"))
+[1] "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
+[26:14] 20> rx = sprintf("(%s)", paste(month.abb, collapse = "|"))
+[26:34] 21> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)"
+[28:07] 22> #grep(rx, txt)
+[28:07] 22> Sys.Date()
+[1] "2023-04-20"
+[29:24] 23> format(Sys.Date(), "%b %d %Y")
+[1] "Apr 20 2023"
+[29:33] 24> xx = format(Sys.Date(), "%b %d %Y")
+[29:41] 25> xx
+[1] "Apr 20 2023"
+[29:42] 26> xx = c("Start of file", format(Sys.Date(), "%b %d %Y"), " end of file")
+[30:05] 27> xx
+[1] "Start of file" "Apr 20 2023"   " end of file" 
+[30:06] 28> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9][0-9]"
+[33:08] 29> grep(rx, xx)
+[1] 2
+[33:12] 30> grepl(rx, xx)
+[1] FALSE  TRUE FALSE
+[33:17] 31> xx = c("Start of file", format(Sys.Date(), "%b %d %Y"), " end of file", "Mar 2")
+[33:39] 32> grepl(rx, xx)
+[1] FALSE  TRUE FALSE FALSE
+[33:45] 33> xx = c("Start of file", "Apr 20 2023", " end of file", "Mar 2")
+[36:31] 34> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([1-9]|[12][0-9]|3[0-1])"
+[37:01] 35> grepl(rx, xx)
+[1] FALSE  TRUE FALSE  TRUE
+[37:03] 36> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9][0-9]?
++ c  C-c C-c^C
+No suitable frames for recover()
+[37:03] 36> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9][0-9]?"
+[38:09] 37> grepl(rx, xx)
+[1] FALSE  TRUE FALSE  TRUE
+[38:11] 38> rx = "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [0-9]{1,2}"
+[45:21] 39> rx2 = "([a-z]+) \\1"
+[46:00] 40> grep(rx2, c("this is ok", "this is is not", "the the word"))
+[1] 1 2 3
+[46:55] 41> gregexpr(rx2, c("this is ok", "this is is not", "the the word"))
+[[1]]
+[1] 3
+attr(,"match.length")
+[1] 5
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+
+[[2]]
+[1] 3
+attr(,"match.length")
+[1] 5
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+
+[[3]]
+[1] 1
+attr(,"match.length")
+[1] 7
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+
+[47:20] 42> 

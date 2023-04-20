@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>STA141B Spring 2023 - Day 6 Regular Expressions </title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# STA141B Spring 2023
+
+## Day 6 - Regular Expressions
+
+### Duncan Temple Lang
+### Professor, Statistics
+
+
+<div style="clear: both"/>
+
+<!-- <hr width="50%"/> -->
+
+---
+layout: true
+<div style="float:right"><i>STA141B-S23</i></div>
+
+---
+# Regular Expressions
+
++ Pattern matching in text.
++ Very common in data manipulation
+  + Typically small part of a larger step
+  + But essential tool & skill
+  
++ Use them in 
+  + R, Python, Perl, MATLAB, ...  
+  + (UNIX) shell
+
+---
+# Conceptual Operations & R Functions
+
++ Find lines/records containing a specific pattern  - `grep()` & `grepl()`
++ Find where in a string the pattern is located - `gregexpr()`
++ extract the matching patterns  - `regmatches()`
++ replace/substitute  - `sub()` & `gsub()`
++ split a string with a pattern as the separator - `strsplit()`
+
+---
+# Pattern and Character Vector
+
++ Most of these functions take
+  + the pattern to look for
+  + a character vector 
++ Vectorized functions so process each element of character vector separately
+  + give results for entire vector,
+    + i.e., corresponding to each element of character vector.
+
+---
+# Specifying Pattern
+
++ Can be a simple literal string to find, e.g.
+   + `grep("cat", c("catalog", "two cats", "concatenate"))`
+   + `grep("#", readLines("offline"))`
+
+---
+# More Flexible, Precise Pattern
+
++ But we want more precise description of concepts  in pattern
+   + match any character  - `.`
+   + match one of several characters  - `[a&#]`  & character classes (e.g. [[:digits:]]
+      + ranges - `[0-5]`, `[a-zA-Z]`
+      + negation - not in this set of characters  - `[^0-9]
+      + named character classes, e.g. `[[:space:]]`, `[01[:alpha:]]`
+	    + adapts to alphabet of the computer being used.
+   + match either pattern.A or pattern.B at the same place  - `(ABC|other)`   (ABC|something else|everything)
+   + match at the start of the string - `^`
+   + match at the end of the string  - `$`
+   + match the pattern a certain number of times - quantifier
+      + optionally - can be be present or not - `?`
+      + zero or more times - `*`
+      + at least once   - `+`
+      + exactly n times   - `{n}`   .{10}   [0-9]+[.]0{2}  "[0-9]+\\.0{2}"   123.00  123a00
+	  + more than n times - `{n,}`
+	  + between m and n times (inclusive) - `{m,n}`
+---
+# Continued
+
++ back-references () as "capture group" and then references via \\\1, \\\2
+   
++ meta-characters - ., ^, $, *, ?, +, {, }, [, ], <, >, (, ), | and \
+
++ escaping special/meta characters
+   + Use \\\ before special character, e.g., "\\\$"
+
+---
+# Ubiquity
+   
++ These core features are in every regular expression language 
++ Also high-level descriptions of, e.g., word boundary, digit, ...
++ Additional features in different dialects, e.g. the perl dialect built into R.
+   + Can be useful but not necessary to master.
+
++ There are many web sites with short summaries/cheat-sheets of the language.
+   + e.g., [https://cheatography.com/davechild/cheat-sheets/regular-expressions/](https://cheatography.com/davechild/cheat-sheets/regular-expressions/)
+
+
+---
+# Greedy matching
+
++ By default, a regular expression will match as far as it can.
++ Each term will match as much as it can
+  + doesn't give back characters to allow subsequet terms in regular expression to match more.
+
+---
+# AND in Regular Expressions
++  match pattern that has pattern1  AND pattern2.
+  + in that order, i.e. pattern1 followed somewhere later in the string by pattern2
+```
+grep("pattern1.*pattern2", x)
+```
+  + to do this in either order
+```
+grep("(pattern1.*pattern2|pattern2.*pattern1)", x)
+```
+
+  + Or perhaps better (but different)
+```
+grepl("pattern1", x) & grepl("pattern2", x)
+```
+    + this is slightly different
+      grep("cd|de", abcdef")
+
+
+---
+# Contains specific words
++ Can deal with word boundaries in the pattern
+```
+grep("cat\\b", c("catalog", "a cat on a mat"))
+```
+
++ But
+```
+x = c("catalog", "a cat on a mat", "c() stands for concat", "a cat, dog, bird")
+grep("cat\\b", x)
+```
+  + does match end of string - good
+  + but also matches `cat` in `concat`
+```
+gregexpr("cat\\b", x[3])
+```
+
++ So use word boundary before and after
+```
+grep("\\bcat\\b", x)
+```
+
++ For a collection of several words
+```
+grep("\\b(cat|dog|mouse)\\b", c("catalog", "a cat on a mat", "a mouse tail"))
+```
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
+
