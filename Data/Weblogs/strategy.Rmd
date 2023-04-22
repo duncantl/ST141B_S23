@@ -1,0 +1,565 @@
+## Reading a Web Log File 
+
+We have a file eeyore.log that contains log messages from a Web server
+about requests it received. Each line provides information
+about a single request for a document. 
+There are 8548 lines in the file.
+
+
+Each line is of the form
+```
+114.188.183.88 - - [01/Nov/2015:03:41:50 -0800] "GET /stat141/Code/Session1.txt HTTP/1.1" \
+404 223 "https://www.google.co.jp/" \
+"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
+```
+(Note that I have split this across 3 lines for formatting reasons. It is a single line in the
+file.)
+
+Each line contains the following features/elements
+
++ IP address of the machine requesting the document - 114.188.183.88
++ optionl remote logname - `-`
++ an optional login, here given as `-`, i.e., not provided
++ date-time stamp - 01/Nov/2015:03:41:50 -0800
++ a quoted triple
+  + HTTP operation/command - GET
+  + path to the document being requestion /stat141/Code/Session1.txt
+  + protocol and version HTTP/1.1
++ operation status - 404 for Not Found
++ number of bytes returned - 223
++ referral URL 
++ user browser information from which the request was made
+
+
+We start by reading the lines from the file into a character vector in R:
+```{r}
+ll = readLines('eeyore.log')
+```
+
+Our strategy is to incrementally build a regular expression that
+matches each entire line and uses capture groups to match the different features/elements
+lised above. We can then use gregexpr and the capture information to extract those elements
+for each line and construct a data.frame with those variables.
+
+To probably simplify the process, we'll extract entire elements such as the quoted triple
+and then in a second step extract its sub-elements.
+We could do this all in one step, but the regular expression will get slightly more complex,
+but not much more so.  So, in fact, we'll probably do the simpler case first and then
+enhance the regular expression to do it all in one go, having "banked" the simpler version.
+
+We could write the entire regular expression in one go, but it is often better to incrementally
+grow it, checking at each step that it matches all of the lines.
+If we wrote the full regular expression and it didn't match, we would have a hard time determining
+why. So the incremental construction helps identify what didn't match as we know which part we added
+most recently that caused it to stop matching.
+
+So we will start by capturing the IP address and the two - characters corresponding to the login
+names.
+We'll use grepl() to see what elements of `ll` the regular expression matched and did not match.
+We'll move to gregexpr() later when we want to see what parts matched and where the subpatterns
+matched within each string. But for now we are focused on matching each entire line or not:
+```{r}
+w = grepl("^[0-9.]+ - -", ll)
+```
+Next we check all matched:
+```{r}
+table(w)
+```
+161 of the ~ 8500 didn't.
+Let's examine some of these and see why the regular expression didn't match those:
+```{r,eval=FALSE}
+head(ll[!w])
+```
+These start wit
+```
+"67.166.147.49 - kcolson [01......."
+```
+So the second - could actually be a regular login name, not always a -.
+So let's change the regular expression to allow for a - OR a sequence of one or more lower case letters:
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z]+)", ll)
+table(w)
+```
+This matches all of them.
+
+We could now move on to also matching the date-time stamp.
+However, we'll see that we still have a slight problem with matching the first login.
+Quick summary: we should add the trailing space after the second login to our regular expression
+to make certain that we matched the entire login. If it contained a number or an underscore _,
+our regexp would match but not all of the login word.
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z]+) ", ll)
+table(w)
+```
+We didn't match 35 of the ~ 8500 lines
+Again, we examine these and see
+```
+"108.213.78.140 - rickyt1 [02
+```
+So we need to allow for numbers in the login:
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z0-9]+) ", ll)
+table(w)
+```
+This matches all of our lines.
+
+
+If we had moved on to matching the date-time stamp before checking we matched
+the entire login text, we would be debugging 2 things - the different login
+name AND the complex date-time stamp text.  So try to complete on one element
+entirely before moving onto the next.
+
+
+
+The date-time stamp is enclosed with a `[ ]` pair. These are the same 
+characters we use to identify a character class in a regular expression.
+So we have to escape each of these to have them be treated as literal values.
+We try
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z]+) \\[^]+\\]", ll)
+table(w)
+```
+This doesn't match any line.
+So time to debug.
+
+What we are trying to do here is say
+
++ find the literal `[`
++ then one or more characters that is not `]`
++ followed by the literal `]` character
+
+This is a common idiom - start character, one or more of anything but the end character, the end character.
+We use this a lot for getting text in quotes - start quote, anything but that quote, that quote to
+end the sequence.
+
+What we wrote above is just wrong as a regular expression but we didn't get an error. 
+It was not actually wrong, but it certainly wasn't what we meant.
+We can try to use `perl = TRUE` to see if it raises an error,
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z]+) \\[^]+\\]", ll)
+```
+but it doesn't either.
+
+It would be easier to read if we could put spaces between the elements
+but then these would part of the text to match.
+But let's do this as a thought experiment.
+We have
+```
+ \\[  ^]+ \\]
+```
+The middle part is along the lines of what we want but incorrect.
+We want
+```
+ \\[  [^]]+ \\]
+```
+That is, the middle part should be a character set/class so enclosed within `[ ]`
+and what we want within the set is "any character except ]"
+We indicate this with `^]` so we should have `[^]]`
+We may need to escape the `]` within the `[ ]`
+
+
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z]+) \\[[^\\]]+\\]", ll)
+table(w)
+```
+We should add the 0-9 for the login part, but that is not what is 
+causing not match at all.
+We'll also use the `perl = TRUE`
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z0-9]+) \\[[^\\]]+\\]", ll, perl = TRUE)
+table(w)
+```
+This matches all the lines.
+We could also  not escape the `]` within the character set markers, i.e.,
+and use either `perl = TRUE` or FALSE:
+```{r}
+w = grepl("^[0-9.]+ - (-|[a-z0-9]+) \\[[^]]+\\]", ll)
+table(w)
+```
+This is slightly confusing. While it is more typing, it is probably a good idea to use `perl = TRUE` throughout.
+
+
+We now move onto the next element which is the
+```
+"GET /stat141/Code/Session1.txt HTTP/1.1"
+```
+We could read the GET and the file and the HTTP and the 1.1. However, as we mentioned earlier,
+we are going to get the entire item in quotes and post-process it later to extract the elements.
+
+So we  match 
+
++ ", 
++ one or more characters that are not "
++ a "
+
+We do this with `"[^"]+"`.
+We add this to the end of our regular expression.
+We also enclose the part within the "" pair via () to capture the group.
+So we have 
+```{r}
+w = grepl('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ', ll)
+table(w)
+```
+Note that we also add the following space based on what we learned from only matching part of the login.
+
+The next two fields are the status and the number of bytes and should be integers. 
+```{r}
+w = grepl('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) ([0-9]+)', ll)
+table(w)
+```
+So again, let's look at what didn't match.
+```{r}
+head(ll[!w])
+```
+We see that the "number of bytes" term may be `-`, so we add that as a possibility
+```{r}
+w = grepl('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) (-|[0-9]+)', ll)
+table(w)
+```
+Note that it is either - or a sequence of digits. We don't add the - to the character set of digits
+which would match -123 or 1-23.
+
+Now we match all lines again. We capture the last two terms which are both enclosed/surrounded by
+quotes,
+like the fifth term (the operation, file and protocol).
+
+```{r}
+w = grepl('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) (-|[0-9]+) "([^"]+)" "([^"]+)"', ll)
+table(w)
+```
+This matches all but one line:
+```{r}
+ll[!w]
+```
+
+After some thinking, we find the issue is that the referer term is empty, i.e., `""`.
+Our (sub)pattern is `"([^"]+)"` which requires one or more characters between the `""`.
+We can change this to zero-or-more by replacing the `+` with `*`:
+```{r}
+w = grepl('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) (-|[0-9]+) "([^"]*)" "([^"]+)"', ll)
+table(w)
+```
+
+Now we seem to match all lines.
+While we probably have the correct matches, this is not guaranteed yet.
+We may match the entire line, but not the correct sub-patterns to the correct content in all lines.
+So now we turn to extracting the matches for the subpatterns using gregexpr().
+```{r}
+m = gregexpr('^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) (-|[0-9]+) "([^"]*)" "([^"]+)"', ll, perl = TRUE)
+```
+
+We check how many matches there are for each line
+```{r}
+table(sapply(m, length))
+```
+So all have length 1.
+The value is the starting position for each match and it should be 1, the start of the string.
+Let's confirm this
+```{r}
+table(sapply(m, `[`, 1) == 1)
+```
+
+Let's also verify that the length of the entire match is the number of characters in each string/line:
+```{r}
+mlen = sapply(m, function(x) attr(x, "match.length"))
+table(mlen)
+table(mlen == nchar(ll))
+```
+
+Now let's look at the subpatterns and where they start and end within each line
+and extract their values.
+
+Looking at the first element of `m`, we see
+```{r}
+m[[1]]
+```
+Note the attributes capture.start and capture.length.
+These give us the start of each capture group matched in the string
+and the number of characters matched for that capture group match.
+
+We can use substring to get these, e.g.,
+```{r}
+s = attr(m[[1]], "capture.start")
+substring(ll[1], s, s + attr(m[[1]], "capture.length"))
+```
+Where is the remote login field?
+We didn't capture that field as it is `-` in all fields.
+
+We can loop over each pair of `ll` and `m` and extract the substrings for the capture groups:
+```{r}
+caps = mapply(function(str, match) {
+                s = attr(match, "capture.start")
+                substring(str, s, s + attr(match, "capture.length"))
+        	  }, ll, m)
+```
+This returns a matrix with dimensions 8 rows and 8548 columns.
+We can transpose it and convert it to a data.frame
+```{r}
+caps2 = as.data.frame(t(caps))
+```
+
+We wrote a function getCaptures() to do this:
+```{r}
+source("getCaptures.R")
+getCaptures
+```
+
+```{r}
+rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([^"]+)" ([0-9]+) (-|[0-9]+) "([^"]*)" "([^"]+)"'
+caps = getCaptures(rx, ll, row.names = NULL)
+```
+
+We check the dimensions
+```{r}
+dim(caps)
+```
+and that the number of rows is the same as the number of lines in our log file:
+```{r}
+length(ll)
+stopifnot(nrow(caps) == length(ll))
+```
+
+What are the column names?
+```{r}
+names(caps)
+```
+
+Let's change our regular expression to name each capture group
+```{r}
+rx = '^(?P<ip>[0-9.]+) - (?P<who>-|[a-z0-9]+) \\[(?P<time>[^]]+)\\] "(?P<operation>[^"]+)" (?P<status>[0-9]+) (?P<bytes>-|[0-9]+) "(?P<referer>[^"]*)" "(?P<useragent>[^"]+)"'
+caps = getCaptures(rx, ll, row.names = NULL)
+```
+
+Now, getCaptures() puts these names on the columns of the resulting data.frame:
+```{r}
+names(caps)
+```
+
+
+Now let's check the values.
+Are all the values in the bytes column numbers?
+```{r}
+table(grepl("^[0-9]+$", caps$bytes ))
+```
+That number should be familiar. It corresponds to the number
+of lines that have `-` as the value for bytes. But let's verify this:
+```{r}
+w2 = grepl("^[0-9]+$", caps$bytes )
+length(unique(caps$bytes[!w2]))
+unique(caps$bytes[!w2])
+```
+
+So we can convert this column to integer values and this will convert 
+the - values to NAs which is fine.
+```{r}
+caps$bytes = as.integer(caps$bytes)
+```
+
+```{r}
+summary(caps$bytes)
+```
+The values look reasonable, but a) a density plot would be more 
+informative, and b) the minimum of 1 is curious, and likewise the maximum value.
+So we'll explore these:
+```{r}
+plot(density(caps$bytes[!is.na(caps$bytes)]), xlab = "number of bytes", main = "")
+```
+We don't see much as the range of the horizontal scale is so large due to very large maximum.
+Let's examine this
+```{r}
+caps[which.max(caps$bytes),]
+```
+That is a large file, but legitimately large.
+
+What about the minimum
+```{r}
+caps[which.min(caps$bytes),]
+```
+This doesn't look right - an assignment document with only 1 byte.
+What does the status value 206 mean?
+Looking at
+[documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#successful_responses),
+we see this is `206 Partial Content` and 
+"is used when the Range header is sent from the client to request only part of a resource."
+So it too is legitimate.
+
+
+
+
+## Date-time stamp
+
+Now let's look at the time column:
+```{r}
+head(caps$time)
+```
+
+We can convert this to a POSIXct vector:
+```{r}
+caps$timestamp = as.POSIXct(strptime(caps$time, "%d/%b/%Y:%H:%M:%S %T"))
+table(is.na(caps$timestamp))
+```
+It is always important to check if we introduced NAs during this type of conversion.
+Ours are all NAs. So we got the formatting string wrong. Let's remove the %T:
+```{r}
+caps$timestamp = as.POSIXct(strptime(caps$time, "%d/%b/%Y:%H:%M:%S"))
+table(is.na(caps$timestamp))
+```
+Now we have not NAs, but let's look at the first few values along with the original `time` strings:
+```{r}
+head(caps[, c("time", "timestamp")])
+```
+These look correct.
+
+
+```{r}
+length(unique(caps$ip))
+```
+
+```{r}
+table(caps$status)
+```
+
+## Separating the Operation, File and Protocol Version
+
+```{r}
+head(caps$operation)
+```
+
+Are all the protocol versions 1.1
+```{r}
+w = grepl("HTTP/1.1$", caps$operation)
+table(w)
+```
+Some are 1.0, so we check
+```{r}
+w = grepl("HTTP/1.[01]$", caps$operation)
+table(w)
+```
+
+We now can use capture groups on these strings to extract the HTTP action/operation,
+the file path and the version.
+Again, we'll use named capture groups:
+```{r}
+w = grepl("^(?P<action>[A-Z]+) (?P<file>.*) HTTP/1.(?P<version>[10])$", caps$operation, perl = TRUE)
+table(w)
+```
+And now we can call getCaptures
+```{r}
+ops = getCaptures("^(?P<action>[A-Z]+) (?P<file>.*) HTTP/1.(?P<version>[10])$", caps$operation, row.names = NULL)
+dim(ops)
+names(ops)
+```
+This looks fine, so we append this data.frame with the entire `caps` data.frame:
+```{r}
+caps2 = cbind(caps, ops)
+```
+
+# What are the Login Names
+
+```{r}
+sort(table(caps2$who), decreasing = TRUE)
+```
+
+## UserAgent, Web browser, Operating System
+
+How any different user agents are there?
+```{r}
+length(unique(caps2$useragent))
+```
+
+We'll take a look at a few of these:
+```{r}
+head(unique(caps2$useragent))
+```
+
+How many start with "Mozilla/5.0"?
+```{r}
+table(grepl("^Mozilla/5.0", caps2$useragent))
+```
+
+Or with "Mozilla"?
+```{r}
+w = grepl("^Mozilla", caps2$useragent)
+table(w)
+```
+
+What about the ones that don't start with "Mozilla"
+```{r}
+head(caps2$useragent[!w])
+```
+So some blank ones ("-") and others starting with Safari, the Mac browser.
+
+So let's look at the ones that rest, i.e., that don't start with Safari or Mozilla:
+```{r}
+w = grepl("^(Safari|Mozilla)", caps2$useragent)
+table(w)
+```
+
+```{r}
+head(caps2$useragent[!w])
+```
+So we have "R", "Google favicon"
+
+```{r}
+tt = sort(table(caps2$useragent[!w]), decreasing = TRUE)
+tt[ tt > 5]
+```
+How many start with R
+```{r}
+table(grepl("^R \\(", caps2$useragent)))
+```
+
+
+Let's look at the requests/lines where the 
+user agent is "Google favicon"
+
+```{r}
+idx = grep("Google favicon", ll)
+head(ll[idx])
+```
+
+## When did the Request Occur
+
+```{r}
+plot(density(as.numeric(caps2$timestamp)))
+```
+
+```{r}
+rug(as.numeric(caps2$timestamp))
+```
+
+
+## HTTP Operations
+
+What are the HTTP operations
+```{r}
+table(caps2$action)
+```
+
+## HTTP Version and Useragent
+```{r}
+table(caps2$version)
+```
+
+```{r}
+table(caps$useragent, caps2$version)
+```
+
+## Referer Pages/URLs
+
+```{r}
+length(unique(caps2$referer))
+```
+
+```{r}
+showCounts(dsort(table(caps2$referer)))
+```
+
+## Spaces in the File Paths
+
+Do any of the file paths contain spaces?
+```{r}
+grep(" ", caps2$file)
+```
+
+
