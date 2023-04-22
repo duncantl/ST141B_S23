@@ -1,4 +1,8 @@
-## Reading a Web Log File 
+# Reading a Web Log File 
+## Strategy for Reading Data via Regular Expressions
+### Duncan Temple Lang
+### STA141B Spring 2023
+
 
 We have a file eeyore.log that contains log messages from a Web server
 about requests it received. Each line provides information
@@ -506,7 +510,7 @@ tt[ tt > 5]
 ```
 How many start with R
 ```{r}
-table(grepl("^R \\(", caps2$useragent)))
+table(grepl("^R \\(", caps2$useragent))
 ```
 
 
@@ -518,13 +522,14 @@ idx = grep("Google favicon", ll)
 head(ll[idx])
 ```
 
-## When did the Request Occur
+
+We can extract the operating system (OS) from the useragent field and
+see which OSes are most common.
+
+## When did the Request Occur?
 
 ```{r}
 plot(density(as.numeric(caps2$timestamp)))
-```
-
-```{r}
 rug(as.numeric(caps2$timestamp))
 ```
 
@@ -541,7 +546,7 @@ table(caps2$action)
 table(caps2$version)
 ```
 
-```{r}
+```{r,eval=FALSE}
 table(caps$useragent, caps2$version)
 ```
 
@@ -551,8 +556,8 @@ table(caps$useragent, caps2$version)
 length(unique(caps2$referer))
 ```
 
-```{r}
-showCounts(dsort(table(caps2$referer)))
+```{r,eval=FALSE}
+dsort(table(caps2$referer))
 ```
 
 ## Spaces in the File Paths
