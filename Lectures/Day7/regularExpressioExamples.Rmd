@@ -1,0 +1,332 @@
++ solar location names
++ NCBI data
+  + Computing Column Widths
+  + Finding the tables
+  + Cleaning the text
++ Reading Web logs. (Data/Weblogs/strategy.Rmd)
+
+
+## Case Study - Solar station location names
+
+Consider the names of the files in the ZIP files from assignment 1.
+
+We want more human-readable text for the locations for the .stat files.
+
+First, we have to find the .stat files i.e., end in .stat 
+
+```r
+fnames = grep("\\.stat$", list.files(DataDir), value = TRUE)
+fnames = list.files(DataDir, pattern = "\\.stat$")
+```
+
+Or
+```r
+w = tools::file_ext(list.files(DataDir)) == "stat"
+fnames = list.files(DataDir)[w]
+```
+Look at the implementation of  tools::file_ext - regexpr.
+
+
+So we have 
+```r
+fnames
+```
+```
+[1] "USA_CA_Fairfield-San.Francisco.Bay.Reserve.998011_TMYx.2007-2021.stat"
+[2] "USA_CA_Marin.County.AP-Gnoss.Field.720406_TMYx.2007-2021.stat"        
+[3] "USA_CA_Napa.County.AP.724955_TMYx.2007-2021.stat"                     
+[4] "USA_CA_Point.Reyes.Lighthouse.724959_TMYx.2007-2021.stat"             
+[5] "USA_CA_UC-Davis-University.AP.720576_TMYx.2007-2021.stat"             
+```
+
+We want 
++ remove the USA_CA_
++ remove the TMYx.2007-2021.stat
++ remove the 6 digit number
++ remove the AP if it precedes the 6 digit number
+
+
+```r
+ids = gsub("USA_CA_|TMYx.2007-2021.stat|(AP\\.)?[0-9]{6}_", "", fnames)
+```
+
+Don't want the . at the end.
++ either remove now
+  ids = gsub("\\.$", "", ids)
++ or in the original gsub()
+
+```r
+ids = gsub("USA_CA_|TMYx.2007-2021.stat|\\.(AP\\.)?[0-9]{6}_", "", fnames)
+```
+
+Replace . with space
+```r
+gsub("\\.", " ", ids)
+```
+```
+[1] "Fairfield-San Francisco Bay Reserve" "Marin County AP-Gnoss Field"        
+[3] "Napa County"                         "Point Reyes Lighthouse"             
+[5] "UC-Davis-University"                
+```
+
+----------
+
+Let's go back to the NCBI data.
+
+We'll see how to use regular expressions in several different ways
+for several different steps in reading the two tables
+
++ finding the tables
++ cleaning the values before we call read.fwf()
+   + specifically, removing the % in the cover column so that read.fwf() will convert the values to
+     a numeric vector and we don't have to post process the column.
++ finding the starting location of each column so we can compute the column widths
+
+
+## Computing the Column Widths
+
+How can we  find the column widths
+I showed a technique in funs2.R using strsplit() and matching characters.
+
+The idea was
++ Take the header line start with Description
++ find the positions in the line that
+   + start with a capital letter
+   + lower case letter but are preceded by a space, i.e., " c"
+
+Let's get the column header line
+```r
+h = txt2[1]
+```
+
+We want to find positions in the string `h` corresponding to patterns we want to match.
+So we use gregexpr(), not grep() which finds indices in vectors, not within strings.
+
+We'll build up our regular expression/pattern to match iteratively, testing it each step of the way.
+
+We start by finding the capital letters.
+We can use a character class for that `[A-Z]`
+
+```r
+pos = gregexpr("[A-Z]", h, perl = TRUE)[[1]]
+length(pos)
+pos
+```
+
+All matches have match.length 1
+
+
+What about adding lower case letters
+```r
+pos = gregexpr("[A-Za-z]", h, perl = TRUE)[[1]]
+length(pos)
+```
+We got way too many, of course!
+We matched every lower case letter in each of the column name text.
+
+
+What about just 'c'
+```r
+pos = gregexpr("[A-Zc]", h, perl = TRUE)[[1]]
+length(pos)
+```
++ Matches c in cover - good
++ Matches c in Accession - twice - bad
+
+
+We need to be more specific
+
+It is EITHER
++ a capital letter
++ OR
++ a space followed by a lower case letter
+
+```r
+pos = gregexpr("([A-Z]| c)", h, perl = TRUE)[[1]]
+length(pos)
+```
+
+
+Looks good, but this tells us the start of the cover column is at 122, but it should be 123.
+The match starts at the space, not at c.
+
+The match has length 2, while the others have length 1.
+
+We could adjust by the length of the match.
++ If it is length 1, add nothing.
++ If it is length 2, add 1
+
+```r
+pos2 = pos + attr(pos, "match.length") - 1L
+```
+Check this gives us what we expect
+```r
+substring(h, pos2, pos2)
+```
+
+
+We can be a little fancier if we didn't count the space preceding the c as part of the match,
+but just require it to be there.
+
+If we could match a lower case letter and then look-behind/back at the previous character(s) for a pattern, that would do it.
+We'd match the c and not the space as the start of our match.
+
+We can specify a lookbehind via
+```r
+(?<=pattern)
+```
+Note, we need perl = TRUE in the call to grep/gsub/gregexpr to use lookbehinds.
+
+So our full pattern is 
+```r
+(?<= )c
+    ^
+  space
+```
+
+Putting this all together, we have
+```
+pos3 = gregexpr("[A-Z]|(?<= )[a-z]", h, perl = TRUE)[[1]]
+```
+
+Now we are ready to compute the column widths and call read.fwf()
+```
+widths = diff(c(pos3, nchar(h)))
+
+d3 = read.fwf(textConnection(txt2[-1]), widths)
+```
+
+---
+
+
+
+## Finding the Tables
+
+```{r}
+nc = readLines("~/sta141b/Data/NCBI/NCBIQuery.txt")
+```
+
+Let's find the lines that contain the word Description
+```{r}
+idx = grep("Description", nc)
+txt = grep("Description", nc, value = TRUE)
+w = grepl("Description", nc)
+```
+So grep() can give the positions in the vector that had a match, or return the actual matching
+values.
+
+And grepl() returns a logical vector of TRUE and FALSE values indicating which matched.
+
+
+
+Next we'll match the lines that start with Description or that are blank, i.e., the start is
+followed by the end of the line.
+
+```{r}
+w = grepl("(^Description|^$)", nc)
+```
+This is equivalent to 
+```{r}
+w2 = grepl("^Description", nc) | grepl("^$", nc)
+table(w, w2)
+```
+
+Now, here comes a useful trick.
+We have a logical vector in which TRUE values mark the start of a "section"
+or the start of the next section.
+
+A line starting with Description identifies the start of a table.
+A blank line identifies the start of the next section after a table, or just   a blank line.
+
+We can compute the cumulative sum of the TRUE and FALSE values.
+Whenever there is a TRUE, the cumsum increases by 1. For the FALSE values, the cumsum stays the
+same.
+So the cumsum changes for each point of interest.
+So we will end up with something like
+```{r}
+0,0,0, 1, 1, 1, 1, ..., 1, 2, 2, 2, ....
+```
+These identify which group each line is in and we can split by group identifier with
+```{r}
+g = split(nc, cumsum(w))
+```
+
+There are lot of these, but we only want the tables, i.e., the one whose first
+element is the line that starts with (or contains) Description
+
+```{r}
+isTbl = sapply(g, function(x) grepl("Description", x[1]))
+table(isTbl)
+tbls = g[isTbl]
+```
+
+Let's look at the first table
+```{r}
+tbls[[1]]
+```
+
+
+## Cleaning the Text
+
+Let's clean the numeric values *before* passing to read.fwf().
+Specifically, remove the % after a numeric value so read.fwf() can convert the column to numbers if possible.
+
+```{r}
+txt = tbls[[1]]
+```
+
+We'll use gsub() to remove %.
+We could do it everywhere, but we want to replace it only when
+it is immediately after digits/numbers.
+We match the pattern and then specify what the new content should be to replace the specific 
+match.
+We want to match 1 or more digits then followed by a %.
+
+We could use
+"(0|1|2|3|4|5|6|7|8|9)+%"
+which is 
++ any of these 10 digits and then 
++ 1 or more of these 
++ followed by the literal %
+
+We can use a character class to avoid the lengthy "(0|1|2|3|4|5|6|7|8|9)"
+Specifically, we can use  `[0-9]` or `[[:digits:]]` or
+
+```
+rx = "[0-9]+%"
+```
+
+We don't need the () as the quantifier + applies to the preceding subpattern `[0-9]`.
+However, we put () around the `[0-9]+` to "capture" the matched pattern.
+We do this so we can refer to it in the pattern we use to specify how to transform the match, i.e.,
+
+```
+rx = "([0-9]+)%"
+```
+
+The % is not in the () because we want to reference only the number part of each match.
+
+We can reference the number part of each match with \\1 in the second argument of 
+
+```{r}
+txt2 = gsub(rx, "\\1", txt)
+```
+
+If these contained decimal values, we would allow a .
+
+txt2 = gsub("([0-9.]+)%", "\\1", txt)
+
+Try it on some sample data.
+gsub("([0-9.]+)%", "\\1", c("100%", "98.756%", "50"))
+
+
+
+
+Having cleaned the text, we can pass it to read.fwf()
+But we need the column widths
+```
+read.fwf(textConnection(txt2), widths = ???)
+```
+
+
+
