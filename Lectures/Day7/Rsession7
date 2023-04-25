@@ -1,0 +1,296 @@
+]0;Day7~/sta141b/Public/Lectures/Day7> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 81663 
+Time = 2023-04-25 10:59:25 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day7 
+1> DataDir = '~/sta141b/Data/Solar/ZIP/Files"
++   C-c C-c^C
+No suitable frames for recover()
+1> DataDir = '~/sta141b/Data/Solar/ZIP/Files'
+[00:22] 2> file.exists(DataDir)
+[1] TRUE
+[00:26] 3> fnames = list.files(DataDir, pattern = "\\.stat$")
+[00:33] 4> fnames
+[1] "USA_CA_Fairfield-San.Francisco.Bay.Reserve.998011_TMYx.2007-2021.stat"
+[2] "USA_CA_Marin.County.AP-Gnoss.Field.720406_TMYx.2007-2021.stat"        
+[3] "USA_CA_Napa.County.AP.724955_TMYx.2007-2021.stat"                     
+[4] "USA_CA_Point.Reyes.Lighthouse.724959_TMYx.2007-2021.stat"             
+[5] "USA_CA_UC-Davis-University.AP.720576_TMYx.2007-2021.stat"             
+[00:36] 5> fnames
+[1] "USA_CA_Fairfield-San.Francisco.Bay.Reserve.998011_TMYx.2007-2021.stat"
+[2] "USA_CA_Marin.County.AP-Gnoss.Field.720406_TMYx.2007-2021.stat"        
+[3] "USA_CA_Napa.County.AP.724955_TMYx.2007-2021.stat"                     
+[4] "USA_CA_Point.Reyes.Lighthouse.724959_TMYx.2007-2021.stat"             
+[5] "USA_CA_UC-Davis-University.AP.720576_TMYx.2007-2021.stat"             
+[04:53] 6> ids = gsub("USA_CA_|TMYx.2007-2021.stat|(AP\\.)?[0-9]{6}_", "", fnames)
+[05:03] 7> ids
+[1] "Fairfield-San.Francisco.Bay.Reserve."
+[2] "Marin.County.AP-Gnoss.Field."        
+[3] "Napa.County."                        
+[4] "Point.Reyes.Lighthouse."             
+[5] "UC-Davis-University."                
+[05:05] 8> gsub(".", "",  ids)
+[1] "" "" "" "" ""
+[08:27] 9> gsub(".", "",  ids, fixed = TRUE)
+[1] "Fairfield-SanFranciscoBayReserve"
+[2] "MarinCountyAP-GnossField"        
+[3] "NapaCounty"                      
+[4] "PointReyesLighthouse"            
+[5] "UC-Davis-University"             
+[09:01] 10> gsub("\\.", " ",  ids)
+[1] "Fairfield-San Francisco Bay Reserve "
+[2] "Marin County AP-Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC-Davis-University "                
+[09:09] 11> gsub("\\.|-", " ",  ids)
+[1] "Fairfield San Francisco Bay Reserve "
+[2] "Marin County AP Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC Davis University "                
+[09:30] 12> gsub("[\\.-]", " ",  ids)
+[1] "Fairfield San Francisco Bay Reserve "
+[2] "Marin County AP Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC Davis University "                
+[10:33] 13> gsub("[.-]", " ",  ids)
+[1] "Fairfield San Francisco Bay Reserve "
+[2] "Marin County AP Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC Davis University "                
+[10:39] 14> gsub("[.-]", " ",  ids, perl = TRUE)
+[1] "Fairfield San Francisco Bay Reserve "
+[2] "Marin County AP Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC Davis University "                
+[10:59] 15> gsub("[\\.\\-]", " ",  ids, perl = TRUE)
+[1] "Fairfield San Francisco Bay Reserve "
+[2] "Marin County AP Gnoss Field "        
+[3] "Napa County "                        
+[4] "Point Reyes Lighthouse "             
+[5] "UC Davis University "                
+[12:19] 16> pos = gregexpr("[A-Z]", h, perl = TRUE)
+Error in is.factor(text) : object 'h' not found
+
+Enter a frame number, or 0 to exit   
+
+1: gregexpr("[A-Z]", h, perl = TRUE)
+2: is.factor(text)
+
+Selection: 0
+[12:19] 16> h  = "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+[21:57] 17> pos = gregexpr("[A-Z]", h, perl = TRUE)
+[22:01] 18> pos
+[[1]]
+ [1]   1  67  83  99 110 117 129 135 142 153
+attr(,"match.length")
+ [1] 1 1 1 1 1 1 1 1 1 1
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+
+[22:03] 19> pos = gregexpr("[A-Z]| [a-z]", h, perl = TRUE)[[1]]
+[24:22] 20> pos
+ [1]   1  67  83  99 110 117 122 129 135 142 153
+attr(,"match.length")
+ [1] 1 1 1 1 1 1 2 1 1 1 1
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+[24:24] 21> pos = gregexpr("[A-Z]|(?= )[a-z]", h, perl = TRUE)[[1]]
+[27:12] 22> pos
+ [1]   1  67  83  99 110 117 129 135 142 153
+attr(,"match.length")
+ [1] 1 1 1 1 1 1 1 1 1 1
+attr(,"index.type")
+[1] "chars"
+attr(,"useBytes")
+[1] TRUE
+[27:13] 23> txt = readLines("~/sta141b/Data/NCBI/NCBIQuery.txt")
+[33:40] 24> length(txt)
+[1] 4651
+[33:43] 25> grep("Description")
+Error in is.factor(x) : argument "x" is missing, with no default
+
+Enter a frame number, or 0 to exit   
+
+1: grep("Description")
+2: is.factor(x)
+
+Selection: grep("Description", txt)
+Enter an item from the menu, or 0 to exit
+Selection: 0
+[33:43] 25> grep("Description", txt)
+[1]    9 2327
+[34:29] 26> grepl("Description", txt)
+*** output flushed ***
+[34:50] 27> grep("Description|^$", txt)
+*** output flushed ***
+[35:11] 28> w = grepl("Description|^$", txt)
+[35:47] 29> head(which(w))
+[1]   6   9 110 111 113 117
+[36:32] 30> g = cumsum(w)
+[37:04] 31> cumsum(c(2, 5, 8))
+[1]  2  7 15
+[37:35] 32> unique(g)
+*** output flushed ***
+[38:10] 33> gtxt = split(txt, g)
+[40:10] 34> length(gtxt)
+[1] 1617
+[40:13] 35> gtxt[[3]]
+*** output flushed ***
+[40:21] 36> w2 = sapply(gtxt, function(x) grepl("Description", x[1]))
+[41:00] 37> table(w2)
+w2
+FALSE  TRUE 
+ 1615     2 
+[41:03] 38> tbls = gtxt[w2]
+[41:47] 39> fnames
+[1] "USA_CA_Fairfield-San.Francisco.Bay.Reserve.998011_TMYx.2007-2021.stat"
+[2] "USA_CA_Marin.County.AP-Gnoss.Field.720406_TMYx.2007-2021.stat"        
+[3] "USA_CA_Napa.County.AP.724955_TMYx.2007-2021.stat"                     
+[4] "USA_CA_Point.Reyes.Lighthouse.724959_TMYx.2007-2021.stat"             
+[5] "USA_CA_UC-Davis-University.AP.720576_TMYx.2007-2021.stat"             
+[43:18] 40> file.path(DataDir, fnames)[1[
++   C-c C-c^C
+No suitable frames for recover()
+[43:18] 40> file.path(DataDir, fnames)[1]
+[1] "~/sta141b/Data/Solar/ZIP/Files/USA_CA_Fairfield-San.Francisco.Bay.Reserve.998011_TMYx.2007-2021.stat"
+[43:32] 41> ll = readLines(file.path(DataDir, fnames)[1])
+[43:42] 42> tbls[[2]]
+  [1] "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
+  [2] "Micropterus salmoides CBM:ZF:19351 mitochondrial gene for 12S...  Micropterus ... largemouth bass 27706      313    313   100%  4e-81 100.00 169        LC474183.1       "
+  [3] "Micropterus salmoides salmoides isolate NEFC F16-158...           Micropterus ... northern lar... 489037     313    313   100%  4e-81 100.00 16486      MH301076.1       "
+  [4] "Micropterus salmoides salmoides voucher NEFC F16-068...           Micropterus ... northern lar... 489037     313    313   100%  4e-81 100.00 16486      MH301075.1       "
+  [5] "Micropterus salmoides salmoides voucher NEFC F16-036...           Micropterus ... northern lar... 489037     313    313   100%  4e-81 100.00 16487      MH301074.1       "
+  [6] "Micropterus salmoides mitochondrial gene for 12S rRNA, partial... Micropterus ... largemouth bass 27706      313    313   100%  4e-81 100.00 169        LC069536.1       "
+  [7] "Micropterus salmoides salmoides mitochondrion, complete genome    Micropterus ... northern lar... 489037     313    313   100%  4e-81 100.00 16486      HQ391896.1       "
+  [8] "Micropterus salmoides mitochondrion, complete genome              Micropterus ... largemouth bass 27706      307    307   100%  2e-79 99.41  16484      DQ536425.1       "
+  [9] "Micropterus floridanus isolate NEFC F17-244 mitochondrion,...     Micropterus ... Florida bass    225391     296    296   100%  4e-76 98.22  16480      MH301072.1       "
+ [10] "Micropterus floridanus isolate NEFC F17-239 mitochondrion,...     Micropterus ... Florida bass    225391     296    296   100%  4e-76 98.22  16480      MH301071.1       "
+ [11] "Micropterus floridanus isolate NEFC F17-235 mitochondrion,...     Micropterus ... Florida bass    225391     296    296   100%  4e-76 98.22  16480      MH301070.1       "
+ [12] "Micropterus salmoides mitochondrial DNA, almost complete genome   Micropterus ... largemouth bass 27706      296    296   100%  4e-76 98.22  16165      AP014537.1       "
+ [13] "Micropterus floridanus mitochondrion, complete genome             Micropterus ... Florida bass    225391     296    296   100%  4e-76 98.22  16479      HQ391897.1       "
+ [14] "Micropterus salmoides 12S ribosomal RNA gene, partial sequence... Micropterus ... largemouth bass 27706      285    285   91%   9e-73 100.00 242        KM282430.1       "
+ [15] "Micropterus dolomieu voucher NEFC_F16-162 mitochondrion,...       Micropterus ... smallmouth bass 147949     279    279   100%  4e-71 96.45  16487      MF621711.1       "
+ [16] "Micropterus dolomieu strain NEFC_F16-140 mitochondrion, comple... Micropterus ... smallmouth bass 147949     279    279   100%  4e-71 96.45  16486      MF621710.1       "
+ [17] "Micropterus dolomieu CBM:ZF:19569 mitochondrial gene for 12S...   Micropterus ... smallmouth bass 147949     274    274   100%  2e-69 95.86  169        LC474184.1       "
+ [18] "Micropterus dolomieu mitochondrial gene for 12S rRNA, partial...  Micropterus ... smallmouth bass 147949     274    274   100%  2e-69 95.86  169        LC069537.1       "
+ [19] "Micropterus punctulatus 12S ribosomal RNA gene, partial...        Micropterus ... spotted bass    225060     274    274   100%  2e-69 95.86  947        KM370980.1       "
+ [20] "Micropterus dolomieu mitochondrial DNA, complete genome,...       Micropterus ... smallmouth bass 147949     274    274   100%  2e-69 95.86  16488      AB378750.1       "
+ [21] "Micropterus dolomieu mitochondrial DNA, complete genome,...       Micropterus ... smallmouth bass 147949     274    274   100%  2e-69 95.86  16488      AB378749.1       "
+ [22] "Pomoxis nigromaculatus isolate NEFC F17-136 mitochondrion,...     Pomoxis nigr... black crappie   8182       252    252   100%  9e-63 93.49  16496      MH324420.1       "
+ [23] "Pomoxis nigromaculatus isolate NEFC F17-120 mitochondrion,...     Pomoxis nigr... black crappie   8182       252    252   100%  9e-63 93.49  16496      MH324419.1       "
+ [24] "Micropterus salmoides isolate B2 12S ribosomal RNA genes,...      Micropterus ... largemouth bass 27706      252    252   82%   9e-63 99.28  649        AH013021.2       "
+ [25] "Micropterus dolomieu 12S ribosomal RNA gene, partial sequence;... Micropterus ... smallmouth bass 147949     246    246   91%   4e-61 95.45  242        KM282429.1       "
+ [26] "Stereolepis doederleini CBM:ZF:20013 mitochondrial gene for 12... Stereolepis ... NA              223804     243    243   98%   5e-60 92.81  169        LC506630.1       "
+ [27] "Serranidae sp. JL-2015 mitochondrion, complete genome             Serranidae s... NA              1735696    243    243   98%   5e-60 92.81  16512      KT373795.1       "
+ [28] "Stereolepis doederleini mitochondrial gene for 12S rRNA, parti... Stereolepis ... NA              223804     243    243   98%   5e-60 92.81  169        AB974539.1       "
+ [29] "Stereolepis doederleini voucher JBRI-F-01 mitochondrion,...       Stereolepis ... NA              223804     243    243   98%   5e-60 92.81  16513      MT083886.1       "
+ [30] "Ambloplites rupestris mitochondrion, complete genome              Ambloplites ... NA              109273     237    237   98%   2e-58 92.22  16659      KY660677.1       "
+ [31] "Ambloplites rupestris voucher FMNH:ICHTHY:118371 12S ribosomal... Ambloplites ... NA              109273     237    237   98%   2e-58 92.22  882        KY815235.1       "
+ [32] "Stereolepis doederleini mitochondrial gene for 12S rRNA, parti... Stereolepis ... NA              223804     237    237   98%   2e-58 92.22  169        LC049667.1       "
+ [33] "Siniperca scherzeri isolate wx4 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     231    231   97%   1e-56 92.07  840        MF966982.1       "
+ [34] "Siniperca scherzeri isolate js20 12S ribosomal RNA gene, parti... Siniperca sc... leopard mand... 228252     231    231   97%   1e-56 92.07  840        MF966980.1       "
+ [35] "Siniperca scherzeri isolate js1 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     231    231   97%   1e-56 92.07  840        MF966978.1       "
+ [36] "Labracoglossa argentiventris mitochondrial gene for 12S rRNA,...  Labracogloss... yellowstripe... 163139     231    231   98%   1e-56 91.67  170        LC037028.1       "
+ [37] "Ambloplites ariommus 12S ribosomal RNA gene, partial sequence;... Ambloplites ... NA              270327     231    231   98%   1e-56 91.62  948        KM370985.1       "
+ [38] "Oplegnathus woodwardi isolate NZ_001 collection-date 29-Nov-20... Oplegnathus ... knifejaw        334880     231    231   98%   1e-56 91.62  4029       KC136482.1       "
+ [39] "Labracoglossa argenteiventris WMNH:PIS:11719 mitochondrial gen... Labracogloss... yellowstripe... 163139     231    231   98%   1e-56 91.67  1081       LC645304.1       "
+ [40] "Labracoglossa argenteiventris CBM:ZF:12633 mitochondrial gene...  Labracogloss... yellowstripe... 163139     231    231   98%   1e-56 91.67  547        LC579391.1       "
+ [41] "Labracoglossa argentiventris mitochondrial DNA, complete genome   Labracogloss... yellowstripe... 163139     231    231   98%   1e-56 91.67  16492      AP011062.1       "
+ [42] "Siniperca scherzeri isolate yh1 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     226    226   97%   5e-55 91.46  840        MF966985.1       "
+ [43] "Siniperca scherzeri isolate wx18 12S ribosomal RNA gene, parti... Siniperca sc... leopard mand... 228252     226    226   97%   5e-55 91.46  840        MF966984.1       "
+ [44] "Siniperca scherzeri isolate wx9 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     226    226   97%   5e-55 91.46  840        MF966983.1       "
+ [45] "Siniperca scherzeri isolate wx1 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     226    226   97%   5e-55 91.46  840        MF966981.1       "
+ [46] "Siniperca scherzeri isolate js6 12S ribosomal RNA gene, partia... Siniperca sc... leopard mand... 228252     226    226   97%   5e-55 91.46  840        MF966979.1       "
+ [47] "Microcanthus strigatus CBM:ZF:20430 mitochondrial gene for 12S... Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  169        LC552506.1       "
+ [48] "Microcanthus strigatus CBM:ZF:17304 mitochondrial gene for 12S... Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  169        LC506676.1       "
+ [49] "Microcanthus strigatus CBM:ZF 18871 mitochondrial gene for 12S... Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  169        LC421698.1       "
+ [50] "Microcanthus strigatus CBM:ZF 18025 mitochondrial gene for 12S... Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  169        LC421697.1       "
+ [51] "Microcanthus strigatus mitochondrial gene for 12S rRNA, partia... Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  169        AB972198.1       "
+ [52] "Oplegnathus fasciatus mitochondrial gene for 12S rRNA, partial... Oplegnathus ... barred knifejaw 163134     220    220   98%   2e-53 90.42  169        AB972189.1       "
+ [53] "Coreoperca herzi mitochondrion, complete genome                   Coreoperca h... NA              228251     220    220   97%   2e-53 90.85  16495      KR075132.1       "
+ [54] "Siniperca scherzeri mitochondrial DNA, complete genome            Siniperca sc... leopard mand... 228252     220    220   97%   2e-53 90.85  16501      AP014527.1       "
+ [55] "Oplegnathus fasciatus CBM:ZF:20621 mitochondrial gene for 12S...  Oplegnathus ... barred knifejaw 163134     220    220   98%   2e-53 90.42  910        LC605002.1       "
+ [56] "Oplegnathus fasciatus mitochondrial DNA, complete genome          Oplegnathus ... barred knifejaw 163134     220    220   98%   2e-53 90.42  16513      AP006010.1       "
+ [57] "Microcanthus strigatus mitochondrial DNA, complete genome         Microcanthus... stripey         163146     220    220   98%   2e-53 90.48  16531      AP006009.1       "
+ [58] "Oplegnathus fasciatus mitochondrion, complete genome              Oplegnathus ... barred knifejaw 163134     220    220   98%   2e-53 90.42  16511      DQ872160.1       "
+ [59] "Parabembras curta KAUM:I:110232 mitochondrial gene for 12S rRN... Parabembras ... NA              2608453    219    219   98%   9e-53 90.48  169        LC499190.1       "
+ [60] "Banjos banjos mitochondrion, complete genome                      Banjos banjos   NA              490309     219    219   98%   9e-53 90.36  16485      KT345965.1       "
+ [61] "Banjos banjos mitochondrial gene for 12S rRNA, partial sequenc... Banjos banjos   NA              490309     219    219   98%   9e-53 90.36  169        AB974541.1       "
+ [62] "Oplegnathus conwayi mitochondrial gene for 12S rRNA, partial...   Oplegnathus ... Cape knifejaw   1003765    215    215   98%   1e-51 89.82  169        LC037041.1       "
+ [63] "Lepomis megalotis 12S ribosomal RNA gene, partial sequence;...    Lepomis mega... NA              270330     215    215   98%   1e-51 89.82  947        KM370981.1       "
+ [64] "Microcanthus strigatus isolate Tw_001 collection-date...          Microcanthus... stripey         163146     215    215   98%   1e-51 89.88  4033       KC136483.1       "
+ [65] "Siniperca undulata mitochondrion, complete genome                 Siniperca un... NA              358388     215    215   97%   1e-51 90.24  16504      KF815977.1       "
+ [66] "Coreoperca whiteheadi mitochondrion, complete genome              Coreoperca w... NA              228250     215    215   97%   1e-51 90.30  16483      KJ149811.1       "
+ [67] "Microcanthus strigatus 12S ribosomal RNA gene, partial sequenc... Microcanthus... stripey         163146     215    215   98%   1e-51 89.88  884        EF616892.1       "
+ [68] "Lepomis macrochirus CBM:ZF:18564 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  168        LC552443.1       "
+ [69] "Lepomis macrochirus CBM:ZF:16156 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  168        LC552442.1       "
+ [70] "Lepomis macrochirus CBM:ZF 19091 mitochondrial gene for 12S...    Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  168        LC421682.1       "
+ [71] "Istiophorus platypterus voucher UMass F 11144 12S ribosomal RN... Istiophorus ... Indo-Pacific... 13575      213    213   100%  4e-51 89.35  665        MH248185.1       "
+ [72] "Kajikia albida isolate G voucher KAAL0001 mitochondrion,...       Kajikia albida  Atlantic whi... 13719      213    213   100%  4e-51 89.35  16528      KU315127.1       "
+ [73] "Kajikia audax isolate F voucher KAAU0001 mitochondrion, comple... Kajikia audax   striped marlin  13721      213    213   100%  4e-51 89.35  16515      KU315126.1       "
+ [74] "Tetrapturus angustirostris isolate G voucher TEAN0001...          Tetrapturus ... shortbill sp... 13720      213    213   100%  4e-51 89.35  16508      KU315125.1       "
+ [75] "Istiophorus platypterus isolate E voucher ISPL mitochondrion,...  Istiophorus ... Indo-Pacific... 13575      213    213   100%  4e-51 89.35  16523      KU315124.1       "
+ [76] "Tetrapturus georgii isolate D voucher TEGE0001 mitochondrion,...  Tetrapturus ... roundscale s... 401699     213    213   100%  4e-51 89.35  16500      KU315123.1       "
+ [77] "Tetrapturus belone isolate C voucher TEBE0001 mitochondrion,...   Tetrapturus ... Mediterranea... 13722      213    213   100%  4e-51 89.35  16509      KU315122.1       "
+ [78] "Tetrapturus pfluegeri isolate B voucher TEPF0001 mitochondrion... Tetrapturus ... longbill spe... 13723      213    213   100%  4e-51 89.35  16508      KU315121.1       "
+ [79] "Makaira nigricans isolate A voucher MANI0001 mitochondrion,...    Makaira nigr... Atlantic blu... 13604      213    213   100%  4e-51 89.35  16533      KU315120.1       "
+ [80] "Lepomis macrochirus mitochondrial gene for 12S rRNA, partial...   Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  168        LC049665.1       "
+ [81] "Lepomis macrochirus voucher LodgeLab Lmacrochirus_1...            Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  16489      KP013118.1       "
+ [82] "Kajikia audax mitochondrial gene for 12S rRNA, partial sequenc... Kajikia audax   striped marlin  13721      213    213   100%  4e-51 89.35  169        AB972112.1       "
+ [83] "Siniperca chuatsi x Siniperca scherzeri, complete genome          Siniperca ch... NA              1443077    213    213   98%   4e-51 89.76  16498      KF746198.1       "
+ [84] "Siniperca chuatsi x Siniperca knerii mitochondrion, complete...   Siniperca ch... NA              1550065    213    213   98%   4e-51 89.76  16493      KJ960194.1       "
+ [85] "Siniperca chuatsi x Siniperca scherzeri mitochondrion, complet... Siniperca ch... NA              1443077    213    213   98%   4e-51 89.76  16497      KJ907732.1       "
+ [86] "Lepomis macrochirus mitochondrial DNA, complete genome            Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  16488      AP005993.1       "
+ [87] "Istiompax indica voucher ISIN1005 mitochondrion, complete genome  Istiompax in... black marlin    13603      213    213   100%  4e-51 89.35  16532      KJ510417.1       "
+ [88] "Istiompax indica voucher ISIN1100 mitochondrion, complete genome  Istiompax in... black marlin    13603      213    213   100%  4e-51 89.35  16531      KJ510416.1       "
+ [89] "Tetrapturus sp. OCNSW245 voucher SW245 small subunit ribosomal... Tetrapturus ... NA              2859053    213    213   100%  4e-51 89.35  169        MZ605740.1       "
+ [90] "Makaira nigricans voucher FLMOO041 small subunit ribosomal RNA... Makaira nigr... Atlantic blu... 13604      213    213   100%  4e-51 89.35  169        MZ597890.1       "
+ [91] "Istiophorus albicans mitochondrial DNA, complete genome           Istiophorus ... Atlantic sai... 215398     213    213   100%  4e-51 89.35  16514      AP006035.1       "
+ [92] "Siniperca obscura isolate BG mitochondrion, complete genome       Siniperca ob... NA              358390     213    213   98%   4e-51 89.76  16492      KC567664.1       "
+ [93] "Istiompax indica NSTP:DNA 17116 mitochondrial gene for 12S rRN... Istiompax in... black marlin    13603      213    213   100%  4e-51 89.35  169        LC579328.1       "
+ [94] "Lepomis macrochirus voucher NNIBR 2017 mitochondrion, complete... Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  16489      MK840862.1       "
+ [95] "Lepomis macrochirus mitochondrion, complete genome                Lepomis macr... bluegill        13106      213    213   97%   4e-51 90.24  16489      JN389795.2       "
+ [96] "Siniperca knerii isolate DYG mitochondrion, complete genome       Siniperca kn... big-eye mand... 214812     213    213   98%   4e-51 89.76  17002      JN378751.1       "
+ [97] "Siniperca chuatsi mitochondrion, complete genome                  Siniperca ch... mandarin fish   119488     213    213   98%   4e-51 89.76  16496      JF972568.1       "
+ [98] "Makaira mazara mitochondrial DNA, complete genome                 Makaira mazara  Indo-Pacific... 384371     213    213   100%  4e-51 89.35  16534      AB470304.1       "
+ [99] "Tetrapturus angustirostris mitochondrial DNA, complete genome     Tetrapturus ... shortbill sp... 13720      213    213   100%  4e-51 89.35  16509      AB470303.1       "
+[100] "Tetrapturus audax mitochondrial DNA, complete genome              Kajikia audax   striped marlin  13721      213    213   100%  4e-51 89.35  16526      AB470302.1       "
+[101] "Istiophorus platypterus mitochondrial DNA, complete genome        Istiophorus ... Indo-Pacific... 13575      213    213   100%  4e-51 89.35  16524      AB470306.1       "
+[45:43] 43> gsub("%", "", tbls[[2]])
+*** output flushed ***
+[47:23] 44> w = grepl"( [0-9.]+)%", tbls[[2]][-1])
+Error: unexpected string constant in "w = grepl"( [0-9.]+)%""
+No suitable frames for recover()
+[47:23] 44> w = grepl("( [0-9.]+)%", tbls[[2]][-1])
+[48:30] 45> table(w)
+w
+TRUE 
+ 100 
+[48:32] 46> w = gsub("( [0-9.]+)%", "\\1", tbls[[2]][-1])

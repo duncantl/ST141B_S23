@@ -15,10 +15,13 @@ We want more human-readable text for the locations for the .stat files.
 First, we have to find the .stat files i.e., end in .stat 
 
 ```r
-fnames = grep("\\.stat$", list.files(DataDir), value = TRUE)
 fnames = list.files(DataDir, pattern = "\\.stat$")
 ```
 
+Other ways, but no gain:
+```
+fnames = grep("\\.stat$", list.files(DataDir), value = TRUE)
+```
 Or
 ```r
 w = tools::file_ext(list.files(DataDir)) == "stat"
@@ -71,6 +74,9 @@ gsub("\\.", " ", ids)
 
 ----------
 
+## NCBI Data Again
+
+
 Let's go back to the NCBI data.
 
 We'll see how to use regular expressions in several different ways
@@ -97,6 +103,7 @@ The idea was
 Let's get the column header line
 ```r
 h = txt2[1]
+h  = "Description                                                       Name            Name            Taxid      Score  Score cover Value Ident  Len        Accession        "
 ```
 
 We want to find positions in the string `h` corresponding to patterns we want to match.
@@ -190,13 +197,13 @@ pos3 = gregexpr("[A-Z]|(?<= )[a-z]", h, perl = TRUE)[[1]]
 ```
 
 Now we are ready to compute the column widths and call read.fwf()
-```
+```{r}
 widths = diff(c(pos3, nchar(h)))
 
 d3 = read.fwf(textConnection(txt2[-1]), widths)
 ```
 
----
+-----
 
 
 
