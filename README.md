@@ -64,4 +64,7 @@
 ## Day 8 (Thu 4/27)
 
 + [Day 8 R Session](Lectures/Day8/Rsession8)
-
+   + reading the web logs
+     + using read.table() and fixing the results
+	 + start of reading via regular expressions and capture groups as described in 
+       the [Web log case study](Data/Weblogs/strategy.pdf).
