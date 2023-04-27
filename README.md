@@ -3,7 +3,7 @@
 ## Instructor:Duncan Temple Lang
 
 
-## Day 1
+## Day 1 (4/4)
 
 + Slides - [Full Pages](Lectures/Day1/Day1_fullpage.pdf), [4-per page](Lectures/Day1/Day1.pdf)
 
@@ -16,12 +16,12 @@
 
 + 
 
-## Day 2
+## Day 2 (4/6)
 + [Exploring reading the FEC Data](Lectures/Day2/Explore.md)
 + [R Session]((Lectures/Day2/Rsession2)
 
 
-## Day 3
+## Day 3 (4/11)
 + [R Session](Lectures/Day3/Rsession_Day3)
 + Code in [Data/NCBI](Data/NCBI)
 + [Strategy](Data/NCBI/README.md)
@@ -33,7 +33,7 @@
 + [Debugging funs3.R](Data/NCBI/Debugging.md)
 
 
-## Day 4
+## Day 4 (4/13)
 
 + [Day 4 R Session](Lectures/Day4/Rsession_4)
 
@@ -41,7 +41,27 @@
   + The functions we wrote.
   + Also see funs3.R and funs4.R from Day3 (above)
 
-## Day 5
+## Day 5 (4/18)
 
 + [Day 5 R Session](Lectures/Day5/Ression5)
   + See [Debugging funs3.R](Data/NCBI/Debugging.md) for the narrative of this debugging session.
+
+
+## Day 6 (4/20)
+
++ [slides on regular expressions](Lectures/Day6/slides.html)
++ [R session Day 6](Lectures/Day6/Rsession6)
+   + [R commands from session Day 6](Lectures/Day6/Rcommands)
+
+## Day 7 (4/25)
+
++ [Recap of Regular Expression Language](Lectures/Day7/Reminder.md)
++ [Case studies](Lectures/Day7/regularExpressionExamples.md)
++ [Web log case study](Data/Weblogs/strategy.pdf)
++ [getCaptures() function](Data/Weblogs/getCaptures.R)
+
+
+## Day 8 (Thu 4/27)
+
++ [Day 8 R Session](Lectures/Day8/Rsession8)
+
