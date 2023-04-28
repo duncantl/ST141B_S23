@@ -70,5 +70,5 @@
        the [Web log case study](Data/Weblogs/strategy.pdf).
 
 + [code for read.table() and cleanup approach ](Data/Weblogs/readTableApproach.R)
-+ [code for regular expression & getCaptures() approach ](Data/Weblogs/retexApproach.R)
++ [code for regular expression & getCaptures() approach ](Data/Weblogs/regexApproach.R)
 
