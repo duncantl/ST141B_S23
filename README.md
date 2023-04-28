@@ -68,3 +68,7 @@
      + using read.table() and fixing the results
 	 + start of reading via regular expressions and capture groups as described in 
        the [Web log case study](Data/Weblogs/strategy.pdf).
+
++ [code for read.table() and cleanup approach ](Data/Weblogs/readTableApproach.R)
++ [code for regular expression & getCaptures() approach ](Data/Weblogs/retexApproach.R)
+
