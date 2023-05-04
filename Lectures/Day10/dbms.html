@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Relational Databases</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Relational Databases
+
+
+### Duncan Temple Lang
+
+<div style="clear: both"/>
+
+<!-- <hr width="50%"/> -->
+
+---
+#  Goals
+
++ Understand essential ideas of Relational Databases
++ Be able to interact with Relational database to get data from it.
+    + Essentials of Structured Query Language - SQL
++ Perform computations in the database and then process the results in R.
++ Be able to read and write SQL code and understand what it is doing.
++ Understand when using a database is a good idea.
+
+
+---
+# *Relational* Database Management Systems - DBMS
+
++ Widely used in industry, academia
++ Data repository for an institution, company, project, etc.
+   + Often multiple databases for different purposes.
+
++ Each database is many inter-connected tables containing data for different *entities*
+   + e.g., student, faculty, course, ...
+
+---
+
+# Efficient, Large Data
+
++ Databases capable of handling very large data
+
++ Efficient computational model to query and combine data
+
++ Efficient storage
+   +  Minimize redundancies of repeating the same value.
+
++ Only stores and provides data
+   + Limited additional computations can be done in database.
+   + Need to bring subset of the data back to the client to do application specific analysis.
+---
+# Client-Server 
+
++ Many (most) databases use a client-server model
+
++ Single centralized database running on a machine.
+  + Many client applications (e.g., Excel, R, SAS, Python, Web browser) can simultaneously
+           query the database.
+  + From many different machines
+
++ Updating of data done centrally.
+     + Only need to update in a single place
+     + Next time an application queries the DBMS, get the new, updated data.
+     + All applications need to "wait" to ensure getting correct data.
+         + blocked until data is synchronized
+
++ Database handles many "simultaneous" transactions
+   + synchronize updates of data and queries of current data.
+
+---
+# Key Concepts
+
++ One database made up of one or more tables.
+
++ Merge records/rows across one or more tables to create new tables/*views*.
+
+---
+# Tabular Data
+
++ A database is made up of multiple related tables
+
++ Each table is rectangular
+
+   + has rows and columns
+
+   + like a data frame in R
+
+   + rows/observations are called tuples
+
+   + columns are called attributes
+
++ Order of the rows should/does not matter.
+
+---
+# Schema
+
++ Each table created with a SCHEMA
+
++ Columns have specified types
+
+   + TEXT/VARCHAR, INTEGER, REAL, BOOL, BINARY, BLOB
+
++ Indicator for whether NA/NULL values are allowed
+
+
+---
+# Creating Databases
+
++ Simple to do basics
+
++ But need careful design to create efficient, flexible databases
+
++ Typically, statisticians &amp; data scientists  work with existing databases
+
+   + extract data
+
+   + less frequently insert data
+
+   + much less common to design/build databases
+
+
+---
+# Avoiding Duplication in a Table.
+
++ Consider a University.
+
++ Students
+
++ Course
+
++ Instructors
+
++ Grades
+
+---
+# Student
+
++ First Name
+
++ Last Name
+
++ Major
+
++ Address1, Address2, Address3
+
+   + street, city, state/country
+
++ Date enrolled
+
++ Date graduated
+
+---
+# Course
+
++ Subject  (e.g. STA)
+
++ Number  (e.g. 141B)
+
++ Instructor
+
++ Lecture Time
+
++ Title
+
++ Description
+
+---
+# Avoid Redundancy
+
++ Don't want to have
+
+  + Student details repeated in each course
+
+  + instructor name repeated for each student in the course
+
+  + title and description repeated for each offering the same course across years
+
+---
+# Avoid Redundancy (ctd.)
+
++ Put information in different tables
+  + Student Metadata: Student ID, Name, Major, ...
+
+  + Instructor Metadata: Instructor ID (IID), Name, Department, ...
+
+  + Course Metadata: CourseMeta ID (CID), title and description, subject, number
+      + each offering has different  location and time(s)
+
+  + Course Offerings:  CID, CourseMeta ID, IID, year, quarter
+
+  + Specific Coursed: tuples of  student-ID, Course-ID
+
+  + Rooms: tuples of CID, RoomID, Start & End times
+
+  + Room Metadata:  RoomID, name, building, number, capacity
+
+<!--
++ Instead of repeating, e.g., "Exact Duplicate", "Off-topic" etc. in millions of rows
+  + Use index/category number
+  + Exactly the same as factor() in R
+   -->
+
+
+---
+# SQL
+
++ Pronounced sequel or spell out SQL
+
++ Language for querying the database
+
+  + Domain Specific Language
+      + analogous to regular expressions for pattern matching in text.
+
++ Declarative language
+
+   + Say what you want to have happen
+
+   + Not how to do it.
+
+   + Not a regular programming language.
+
++ International Standard
+
+  + Common core syntax, functionality.
+
+  + However, each implementation/dialect has own additions
+
+---
+# SQLite
+
++ Standalone and embeded database
+
++ Stores all database tables in a single file
+
++ Not a client-server model
+
+  + Only single user at a time
+
++ Used in many applications, e.g. Firefox, Google Chrome, OSX, ...
+
++ Downoad most recent version of sqlite to use interactively
+
+---
+# SQLite in the Shell
+
++ Can use SQLite from terminal, or R (or Python, ...)
+
++ Example of using directly from terminal.
+   + Issue SQL commands directly.
+
++ I am using the cookies from my Firefox browser
+```
+~/Library/Application Support/Firefox/profiles/qszunwne.default/cookies.sqlite
+```
+  + Copied since it is locked when Firefox is running
+<!--  + I'll give you other databases to explore. -->
+
+
++ Shell/terminal command to run sqlite3
+```shell
+sqlite3 cookies.sqlite
+```
+
++ [Examples and Information](https://support.moonpoint.com/network/web/browser/firefox/sqlite_cookies.php)
+
+---
+# List tables
+```
+SQLite version 3.38.5 2022-05-06 15:25:27
+Enter ".help" for usage hints.
+sqlite>
+```
+
++ Issue command
+```
+.tables
+```
+```
+moz_cookies
+```
+
+---
+# Show the Table Schema
+
+```
+.schema moz_cookies
+```
+```sql
+CREATE TABLE moz_cookies(id INTEGER PRIMARY KEY,
+                         originAttributes TEXT NOT NULL DEFAULT '',
+                         name TEXT,
+                         value TEXT,
+                         host TEXT,
+                         path TEXT,
+                         expiry INTEGER,
+                         lastAccessed INTEGER,
+                         creationTime INTEGER,
+                         isSecure INTEGER,
+                         isHttpOnly INTEGER,
+                         inBrowserElement INTEGER DEFAULT 0,
+                         sameSite INTEGER DEFAULT 0,
+                         rawSameSite INTEGER DEFAULT 0,
+                         schemeMap INTEGER DEFAULT 0,
+                       CONSTRAINT moz_uniqueid UNIQUE
+                                   (name, host, path, originAttributes));
+```
+
++ lists the names of the columns and their types
+
++ SQL command to create the table.
+
+---
+# SQL Queries directly (not from R)
+
++ SELECT is the primary operation
+
++ We'll find the number of rows
+```sql
+SELECT COUNT(*) FROM moz_cookies;
+```
+
++ SELECT
+   + the variable(s)
+   + FROM
+   + table name
+
+
++ COUNT is an example of an aggregate function
+  + Processes all the rows and combines the values across rows to end up with a single row.
+  + MIN, MAX, AVG
+
++ Note the ending `;`
+
+---
+# Rows
+
++ Get all rows for all columns/attributes in table
+```sql
+SELECT * FROM moz_cookies;
+```
+
++ Get all rows for single column
+```sql
+SELECT host FROM moz_cookies;
+```
+
++ Get unique/distinct entries in host
+```sql
+SELECT DISTINCT host FROM moz_cookies ;
+```
+
++ Filter/Condition rows
+```sql
+SELECT * FROM moz_cookies WHERE host = "www.nytimes.com";
+```
+```
+399||_cb_ls|1|www.nytimes.com|/|1662868228|1651537452882104|1628740228812044|0|0|0|0|0|2
+4208110||_cb|C1JdiXD_6CfJCTs7hT|www.nytimes.com|/|1666304694|1651537452882104|1628740228821310|0|0|0|0|0|2
+4208111||_chartbeat2|.1628097019569.1632176694287.0000000000001001.BRuLckklgMiD4OaDBCeBKXlDNj4Q1.1|www.nytimes.com|/|1666304694|1651537452882104|1628740228821487|0|0|0|0|0|2
+```
+
+---
+#  LIMIT
+
++ Like the head() function, want to see only the first n rows in the result.
+
++ Use LIMIT
+```sql
+SELECT COUNT(*) FROM moz_cookies LIMIT 20;
+```
+
+
+---
+# ORDER BY
+
+```sql
+SELECT host FROM moz_cookies
+  ORDER BY host;
+```
+
++ In descending order
+```sql
+SELECT host FROM moz_cookies
+  ORDER BY host DESC;
+```
+
+---
+## Multiple Columns & Transforming Variables
+
+```sql
+SELECT datetime(expiry, 'unixepoch'), host FROM moz_cookies
+ORDER BY expiry DESC LIMIT 20;
+```
+
+---
+## GROUP BY
+
++ Get counts for each host
+```sql
+SELECT host, COUNT(*) FROM moz_cookies GROUP BY host;
+```
+
+
+---
+# SQL and R
+
++ **Install** the DBI and RSQLite packages.
++ DBI provides a common interface to multiple database servers/engines
+   + Same commands but implemented differently for different DBMS engines
+
++  Load the package
+```r
+library(RSQLite)
+```
+
++ Connect to the database
+```r
+db = dbConnect(SQLite(), "cookies.sqlite")
+```
+
+---
+# dbListTables() & dbListFields()
+
++ Names of the tables in the database
+```r
+dbListTables(db)
+```
+
++ Names of the fields in a table
+```r
+dbListFields(db, "moz_cookies")
+```
+  + names of columns in table
+
+
++ Generally, list fields all tables
+```r
+lapply(dbListTables(db), function(tbl) dbListFields(db, tbl))
+```
+
+
+---
+# SELECT Query
+### Number of rows
+
+
++ R Command dbGetQuery()
+```r
+dbGetQuery(db, "SELECT COUNT(*) FROM moz_cookies")
+```
+
++ 1st Argument - Connection to the database
+  + Created one time
+```r
+db = dbConnect(SQLite(), "/path/to/sqlite/database/file")
+db = dbConnect(SQLite(), "cookies.sqlite")
+```
+
++ 2nd Argument is SQL command as a string
+  + Analogous to regular expression in `grep(rx, str)`
+     + interpreted by regular expression engine.
+     + not interpreted by R
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
