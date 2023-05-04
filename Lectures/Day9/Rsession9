@@ -1,0 +1,252 @@
+]0;Day9~/Classes/Davis/STA141B_22_23/Public/Lectures/Day9> cd ../..
+]0;Public~/Classes/Davis/STA141B_22_23/Public> cd Data/Weblogs/
+]0;Weblogs~/Classes/Davis/STA141B_22_23/Public/Data/Weblogs> ls
+GNUmakefile  getCaptures.R                readTableApproach.R     regexApproach.R~
+Rsession     mergedAuthLog_read.table.R   readTableApproach.Rmd~  strategy.Rmd
+eeyore.log   mergedAuthLog_read.table.R~  regexApproach.R         strategy.pdf
+]0;Weblogs~/Classes/Davis/STA141B_22_23/Public/Data/Weblogs> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 20834 
+Time = 2023-05-02 10:09:35 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Data/Weblogs 
+1> ll  = readLines("eeyore.log")
+rx = "^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "
+[09:39] 2> [09:39] 3> w = grepl(rx, ll)
+[09:42] 4> table(w)
+w
+TRUE 
+8548 
+[09:44] 5> 
+[09:58] 6> ll[1]
+[1] "114.188.183.88 - - [01/Nov/2015:03:41:50 -0800] \"GET /stat141/Code/Session1.txt HTTP/1.1\" 404 223 \"https://www.google.co.jp/\" \"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36\""
+[19:21] 7> rx = "^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "
+[19:28] 8> w = grepl(rx, ll)
+[19:31] 9> table(w)
+w
+TRUE 
+8548 
+[19:33] 10> getCaptures(rx, ll[1:10], row.names =FALSE)
+Error in `.rowNamesDF<-`(x, value = value) : invalid 'row.names' length
+
+Enter a frame number, or 0 to exit   
+
+1: getCaptures(rx, ll[1:10], row.names = FALSE)
+2: getCaptures.R#70: `rownames<-`(`*tmp*`, value = row.names)
+3: `row.names<-`(`*tmp*`, value = value)
+4: `row.names<-.data.frame`(`*tmp*`, value = value)
+5: `.rowNamesDF<-`(x, value = value)
+
+Selection: getCaptures(rx, ll[1:10], row.names = NULL)
+Enter an item from the menu, or 0 to exit
+Selection: 
+Enter an item from the menu, or 0 to exit
+Selection: 0
+[19:33] 10> getCaptures(rx, ll[1:10], row.names = NULL)
+               V1 V2                         V3
+1  114.188.183.88  - 01/Nov/2015:03:41:50 -0800
+2  114.188.183.88  - 01/Nov/2015:03:41:50 -0800
+3  114.188.183.88  - 01/Nov/2015:03:42:10 -0800
+4  114.188.183.88  - 01/Nov/2015:03:42:12 -0800
+5  114.188.183.88  - 01/Nov/2015:03:42:13 -0800
+6  114.188.183.88  - 01/Nov/2015:03:42:13 -0800
+7  114.188.183.88  - 01/Nov/2015:03:42:13 -0800
+8  114.188.183.88  - 01/Nov/2015:03:42:14 -0800
+9  114.188.183.88  - 01/Nov/2015:03:42:14 -0800
+10   107.0.114.18  - 01/Nov/2015:04:03:58 -0800
+[23:52] 11> w = grepl('^[^"]+([^ ]+) .*', ll)
+[30:51] 12> table(w)
+w
+TRUE 
+8548 
+[30:53] 13> w = grepl('^[^"]+"([^ ]+) .*', ll)
+[32:03] 14> table(w)
+w
+TRUE 
+8548 
+[32:04] 15> head(gsub('^[^"]+"([^ ]+) .*', '\\1', ll))
+[1] "GET" "GET" "GET" "GET" "GET" "GET"
+[32:59] 16> table(gsub('^[^"]+"([^ ]+) .*', '\\1', ll))
+
+   GET HBESPY   HEAD   POST WFZWXO 
+  8457      1     84      5      1 
+[33:08] 17> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])'
+[37:23] 18> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])'
+[39:00] 19> w = grepl(rx, ll)
+[39:02] 20> table(w)
+w
+TRUE 
+8548 
+[39:06] 21> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01]) ([0-9]+) ([0-9]+)'
+w = grepl(rx, ll)
+[41:53] 22> [41:53] 23> table(w)
+w
+FALSE 
+ 8548 
+[41:55] 24> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) ([0-9]+)'
+w = grepl(rx, ll)x
+[42:33] 25> Error: unexpected symbol in "w = grepl(rx, ll)x"
+No suitable frames for recover()
+[42:33] 25> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) ([0-9]+)'
+[42:36] 26> w = grepl(rx, ll)
+[42:43] 27> table(w)
+w
+FALSE  TRUE 
+ 2537  6011 
+[42:45] 28> head(ll[!w])
+[1] "68.180.229.48 - - [01/Nov/2015:05:17:05 -0800] \"GET /stat242/data/covtype.info HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)\""                                                                
+[2] "68.180.229.48 - - [01/Nov/2015:05:19:19 -0800] \"GET /stat242/Maak_d.R HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)\""                                                                         
+[3] "68.180.229.48 - - [01/Nov/2015:06:18:53 -0800] \"GET /stat242/Lectures/Lec16 HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)\""                                                                   
+[4] "137.208.57.141 - - [01/Nov/2015:06:37:16 -0800] \"HEAD /cgi-bin/testForm1.pl HTTP/1.1\" 404 - \"-\" \"-\""                                                                                                                                                     
+[5] "98.238.243.161 - - [01/Nov/2015:08:05:33 -0800] \"GET /stat141/Class.css HTTP/1.1\" 304 - \"http://eeyore.ucdavis.edu/stat141/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56\""     
+[6] "98.238.243.161 - - [01/Nov/2015:08:05:45 -0800] \"GET /stat141/Homeworks.html HTTP/1.1\" 304 - \"http://eeyore.ucdavis.edu/stat141/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56\""
+[42:58] 29> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) (-|[0-9]+)'
+[44:01] 30> w = grepl(rx, ll)
+[44:03] 31> table(w)
+w
+TRUE 
+8548 
+[44:05] 32> bad = "98.238.243.161 - - [01/Nov/2015:08:05:33 -0800] \"GET /stat141/Class.css HTTP/1.1\" 304 - \"http://eeyore.ucdavis.edu/stat141/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56\""
+[44:54] 33> bad
+[1] "98.238.243.161 - - [01/Nov/2015:08:05:33 -0800] \"GET /stat141/Class.css HTTP/1.1\" 304 - \"http://eeyore.ucdavis.edu/stat141/\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56\""
+[44:55] 34> cat(x)
+Error in cat(x) : object 'x' not found
+
+Enter a frame number, or 0 to exit   
+
+1: cat(x)
+
+Selection: 0
+[44:55] 34> cat(bad)
+98.238.243.161 - - [01/Nov/2015:08:05:33 -0800] "GET /stat141/Class.css HTTP/1.1" 304 - "http://eeyore.ucdavis.edu/stat141/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56"[45:11] 35> 
+[45:11] 35> 
+[45:11] 35> cat("abc\n")
+abc
+[47:11] 36> "abc\n"
+[1] "abc\n"
+[47:16] 37> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) (-|[0-9]+) "([^"]+)"'
+[49:34] 38> w = grepl(rx, ll)
+[49:36] 39> table(w)
+w
+FALSE  TRUE 
+    1  8547 
+[49:38] 40> ll[!w]
+[1] "41.220.68.249 - - [03/Nov/2015:02:41:58 -0800] \"GET /stat141/Lectures/Day1.pdf HTTP/1.1\" 200 116340 \"\" \"Mozilla/5.0 (Linux; Android 4.2.2; en-us; SAMSUNG GT-I9192 Build/JDQ39) AppleWebKit/535.19 (KHTML, like Gecko) Version/1.0 Chrome/18.0.1025.308 Mobile Safari/535.19\""
+[49:45] 41> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) (-|[0-9]+) "([^"]*)"'
+[50:44] 42> w = grepl(rx, ll)
+[50:46] 43> table(w)
+w
+TRUE 
+8548 
+[50:48] 44> rx = '^([0-9.]+) - (-|[a-z0-9]+) \\[([^]]+)\\] "([A-Z]+) ([^ ]+) HTTP/(1\\.[01])" ([0-9]+) (-|[0-9]+) "([^"]*)" "([^"]*)"'
+[54:53] 45> w = grepl(rx, ll)
+[54:55] 46> table(w)
+w
+TRUE 
+8548 
+[54:56] 47> getCaptures
+*** output flushed ***
+[55:02] 48> df = getCaptures(rx, ll)
+Error in `.rowNamesDF<-`(x, value = value) : 
+  duplicate 'row.names' are not allowed
+In addition: Warning message:
+non-unique values when setting 'row.names': ‘104.230.149.90 - - [03/Nov/2015:16:05:29 -0800] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 230 "-" "Safari/10601.2.7.2 CFNetwork/720.5.7 Darwin/14.5.0 (x86_64)"’, ‘104.230.149.90 - - [03/Nov/2015:16:05:29 -0800] "GET /favicon.ico HTTP/1.1" 404 209 "-" "Safari/10601.2.7.2 CFNetwork/720.5.7 Darwin/14.5.0 (x86_64)"’, ‘104.230.149.90 - - [03/Nov/2015:16:05:30 -0800] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 230 "-" "Safari/10601.2.7.2 CFNetwork/720.5.7 Darwin/14.5.0 (x86_64)"’, ‘104.230.149.90 - - [03/Nov/2015:16:05:30 -0800] "GET /apple-touch-icon.png HTTP/1.1" 404 218 "-" "Safari/10601.2.7.2 CFNetwork/720.5.7 Darwin/14.5.0 (x86_64)"’, ‘104.230.149.90 - - [03/Nov/2015:16:05:31 -0800] "GET /apple-touch-icon.png HTTP/1.1" 404 218 "-" "Safari/10601.2.7.2 CFNetwork/720.5.7 Darwin/14.5.0 (x86_64)"’, ‘107.0.114.138 - - [02/Nov/2015:13:19:09 -0800] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 230 "-"  [... truncated] 
+
+Enter a frame number, or 0 to exit   
+
+1: getCaptures(rx, ll)
+2: getCaptures.R#70: `rownames<-`(`*tmp*`, value = row.names)
+3: `row.names<-`(`*tmp*`, value = value)
+4: `row.names<-.data.frame`(`*tmp*`, value = value)
+5: `.rowNamesDF<-`(x, value = value)
+
+Selection: 0
+[55:02] 48> df = getCaptures(rx, ll, row.names = NULL)
+[55:17] 49> head(df)
+              V1 V2                         V3  V4
+1 114.188.183.88  - 01/Nov/2015:03:41:50 -0800 GET
+2 114.188.183.88  - 01/Nov/2015:03:41:50 -0800 GET
+3 114.188.183.88  - 01/Nov/2015:03:42:10 -0800 GET
+4 114.188.183.88  - 01/Nov/2015:03:42:12 -0800 GET
+5 114.188.183.88  - 01/Nov/2015:03:42:13 -0800 GET
+6 114.188.183.88  - 01/Nov/2015:03:42:13 -0800 GET
+                          V5  V6  V7   V8
+1 /stat141/Code/Session1.txt 1.1 404  223
+2               /favicon.ico 1.1 404  209
+3             /stat141/Code/ 1.1 404  211
+4                  /stat141/ 1.1 200 4176
+5         /stat141/Class.css 1.1 200 1973
+6     /stat141/OmegaTech.css 1.1 200 5221
+                                                   V9
+1                           https://www.google.co.jp/
+2 http://eeyore.ucdavis.edu/stat141/Code/Session1.txt
+3                                                   -
+4                                                   -
+5                  http://eeyore.ucdavis.edu/stat141/
+6                  http://eeyore.ucdavis.edu/stat141/
+                                                                                                           V10
+1 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+2 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+3 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+4 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+5 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+6 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36
+[55:20] 50> names(df) = c("IP", "login", "date", "operation", "path", "HTTPVersion", "status", "bytes", "referrer", "useragent")
+[56:33] 51> w2 = grepl("^[0-9]+$", df$bytes)
+[57:04] 52> table(w2)
+w2
+FALSE  TRUE 
+ 2537  6011 
+[57:05] 53> table(df$bytes[w2])
+*** output flushed ***
+[57:20] 54> table(df$bytes[!w2])
+
+   - 
+2537 
+[57:29] 55> table(df$status, w2)
+     w2
+      FALSE TRUE
+  200   239 4553
+  206     0   68
+  301     0   74
+  302     0   62
+  304  2291    0
+  403     0   12
+  404     7 1242
+[58:10] 56> names(df) = c("IP", "login", "datetime", "operation", "path", "HTTPVersion", "status", "bytes", "referrer", "useragent")
+[00:00] 57> tmp = as.POSIXct(strptime(df$datetime, "%d/%b/%Y:%H:%M:%S"))
+[00:03] 58> table(is.na(tmp))
+
+FALSE 
+ 8548 
+[00:10] 59> head(df$datetime)
+[1] "01/Nov/2015:03:41:50 -0800" "01/Nov/2015:03:41:50 -0800"
+[3] "01/Nov/2015:03:42:10 -0800" "01/Nov/2015:03:42:12 -0800"
+[5] "01/Nov/2015:03:42:13 -0800" "01/Nov/2015:03:42:13 -0800"
+[00:19] 60> head(tmp)
+[1] "2015-11-01 03:41:50 PST" "2015-11-01 03:41:50 PST"
+[3] "2015-11-01 03:42:10 PST" "2015-11-01 03:42:12 PST"
+[5] "2015-11-01 03:42:13 PST" "2015-11-01 03:42:13 PST"
+[00:30] 61> df$datetime = tmp
+[01:11] 62> table(df$status)
+
+ 200  206  301  302  304  403  404 
+4792   68   74   62 2291   12 1249 
+[01:11] 63> 
