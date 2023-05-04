@@ -72,3 +72,15 @@
 + [code for read.table() and cleanup approach ](Data/Weblogs/readTableApproach.R)
 + [code for regular expression & getCaptures() approach ](Data/Weblogs/regexApproach.R)
 
+
+## Day 9 (Thu 5/2)
+
++ [Day 9 R Session](Lectures/Day9/Rsession9)
+   + reading the web logs
+      + regular expressions and capture groups
+	  + Variation of the approach in [Web log case study](Data/Weblogs/strategy.pdf).
+	    + specifically, getting the GET, file path and HTTP version  at the same time as all of the
+          other columns/capture groups.
+
++ [Some code to get the data as data.frame and cleanup the variables](Lectures/Day9/Start)
+
