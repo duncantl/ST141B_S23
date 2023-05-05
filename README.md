@@ -73,7 +73,7 @@
 + [code for regular expression & getCaptures() approach ](Data/Weblogs/regexApproach.R)
 
 
-## Day 9 (Thu 5/2)
+## Day 9 (Tue 5/2)
 
 + [Day 9 R Session](Lectures/Day9/Rsession9)
    + reading the web logs
@@ -84,6 +84,7 @@
    + [Some code to get the data as data.frame and cleanup the variables](Lectures/Day9/Start)
 
 
+## Day 10 (Thu 5/4)
 + [Day 10 Databases and SQL](Lectures/Day10/SQLiteSession)
   + [slides on relational databases, SQL](Lectures/Day10/dbms.html)
   
