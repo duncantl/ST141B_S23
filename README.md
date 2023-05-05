@@ -81,6 +81,9 @@
 	  + Variation of the approach in [Web log case study](Data/Weblogs/strategy.pdf).
 	    + specifically, getting the GET, file path and HTTP version  at the same time as all of the
           other columns/capture groups.
+   + [Some code to get the data as data.frame and cleanup the variables](Lectures/Day9/Start)
 
-+ [Some code to get the data as data.frame and cleanup the variables](Lectures/Day9/Start)
 
++ [Day 10 Databases and SQL](Lectures/Day10/SQLiteSession)
+  + [slides on relational databases, SQL](Lectures/Day10/dbms.html)
+  
