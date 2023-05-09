@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Relational Databases 2</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Relational Databases - 2
+
+
+### Duncan Temple Lang
+
+<div style="clear: both"/>
+
+<!-- <hr width="50%"/> -->
+
+---
+# Previously.....
+
++ Motivation for relational databases
++ sqlite3 command line in shell/terminal
++ DBI and RSQLite packages in R
++ dbConnect()
++ `SELECT  variables FROM table`
++ dbGetQuery()
+
+
+
+---
+# dbListTables() & dbListFields()
+
++ Names of the tables in the database
+```
+dbListTables(db)
+```
+
++ Names of the fields in a table
+```
+dbListFields(db, "moz_cookies")
+```
+  + name of table
+
+
++ List fields of all tables
+```
+lapply(dbListTables(db), function(tbl) dbListFields(db, tbl))
+```
+
+
+---
+# SELECT Query - number of rows
+
+
++ R Command dbGetQuery()
+```
+dbGetQuery(db, "SELECT COUNT(*) FROM moz_cookies")
+```
+
++ 1st Argument - Connection to the database
+  + Created one time
+```
+db = dbConnect(SQLite(), "/path/to/sqlite/database/file")
+```
+
++ 2nd Argument is SQL command as a string
+  + Analogous to regular expression in `grep(rx, str)`
+     + interpreted by regular expression engine.
+     + not interpreted by R
+
+
+---
+# Single Table versus Two or more tables
+
++ Today we'll start with one table and build up the elements of SQL
+
++ Then move  to 2+ tables.
+
+
+---
+# Subsetting
+
++  WHERE
+```sql
+SELECT * FROM moz_cookies WHERE expiry > 1632529635
+```
+
++ equality operator `=`
+```sql
+SELECT * FROM moz_cookies WHERE host = 'www.nytimes.com'
+```
+
++ Also `<`, `<=`, `>=`, etc.
+
++ Also !=, but can also use NOT
+```sql
+SELECT COUNT(*) FROM moz_cookies WHERE host != 'www.nytimes.com' 
+```
+
++ But there is a more general NOT operator
+```sql
+SELECT count(*) FROM moz_cookies WHERE NOT host = 'www.nytimes.com' 
+```
+
+---
+# Other Predicate Tests
+
++ `BETWEEN val1 AND  val2`
+```sql
+SELECT * FROM moz_cookies
+    WHERE expiry BETWEEN 1000000 AND 2000000
+```
+
++ ` IN (val, val, ...)`
+```sql
+SELECT * FROM moz_cookies
+   WHERE host IN ('www.nytimes.com', 'www.washingtonpost.com')
+```
+
++ IS NULL
+   + for detecting values that are NULL or empty.
+
++ `WHERE host LIKE '%.org'`
+
+---
+# Simple Pattern Matching - LIKE
+
++  `LIKE 'pattern'`
+
++ Different from regular expressions
+
+  + Some DBMS provide regular expression functions.
+
+    + built-in or via extensions
+
++  _ - matches any character
+
++  % - matches 0 or more (any) characters 
+
++ e.g. host values that end with .org
+```sql
+SELECT host FROM moz_cookies
+            WHERE  host LIKE '%.org'
+```
+
++ e.g. host name that starts with `www.`, ends with `.com` and has three characters in between
+```sql
+SELECT host FROM moz_cookies
+            WHERE  host LIKE 'www.___.com'
+```
+
+
+---
+# NOT
+
++ With these operators beyond =, we need NOT as more general version than !=
+
+```sql
+WHERE NOT expiry BETWEEN 1000000 AND 2000000
+
+WHERE NOT host IN ('www.nytimes.com', 'www.washingtonpost.com')
+
+WHERE NOT host LIKE ('%.org')
+```
+
+
+---
+# Combining Conditions
+
++ Combine logical tests/predicates
+  + AND, OR
+```sql
+SELECT *
+FROM moz_cookies
+WHERE  host = 'www.nytimes.com'
+	OR
+      host = 'www.washingtonpost.com'
+```
+
+---
+# Naming Columns in the Result - `AS`
+
++ Sometimes names of columns are inconvenient
+```sql
+a = dbGetQuery(con, "SELECT host, COUNT(*) FROM moz_cookies GROUP BY host")
+names(a)
+```
+  + second coulmn's name is `"COUNT(*)"`
+
+
++ Use AS keyword in query to map name to column in results
+
+  + Only in the results, not in the original table(s) in the DBMS.
+
+```sql
+SELECT  var  AS name
+FROM table;
+```
+```sql
+SELECT  COUNT(*) AS num
+FROM table;
+```
+
+<!--
+```
+a = dbGetQuery(con, "SELECT host, COUNT(*) AS num FROM moz_cookies GROUP BY host")
+names(a)
+```
+-->
+
+---
+# Operations on Columns
+
++ Can transform  variables with functions and arithmetic
+```sql
+SELECT age / 10, log (weight), weight/height, substr(IPAddress, 1, 3)
+  FROM table;
+```
++ NOTE:  SQLite has very few built-in math functions
+
++ These work tuple by tuple and return a value for each tuple
+
+  + Scalar functions
+
+  + Different from aggregate functions such as COUNT(), MIN(), MAX(), AVG()
+
+    + operate one tuple at a time but only return a single result, not per tuple.
+
+---
+# Operations on Columns (ctd.)
+
++ Use AS to rename these columns, as desired
+
++ Can also use the new variable name  in the WHERE clause
+```sql
+SELECT DISTINCT host, length(host) AS Len
+FROM moz_cookies
+WHERE Len > 10
+```
+
++ `COUNT (DISTINCT var)`
+```r
+ dbGetQuery(con, "SELECT COUNT(name) AS Num FROM moz_cookies ")
+ dbGetQuery(con, "SELECT COUNT( DISTINCT host) AS Num FROM moz_cookies ")
+```
+---
+# Subset based on value computed from table
+
++ Suppose we want to get the rows that have a value of expiry greater than the log of the mean of expiry
+
++ In R
+```r
+df[ df$expiry > mean(log(df$expiry)), ]
+```
+or
+```
+expiry.mean = mean(log(df$expiry))
+df[ df$expiry > expiry.mean, ]
+```
+
++ Tempting to do in SQL similarly as
+
+```
+dbGetQuery(con, "SELECT * FROM moz_cookies WHERE log(expiry) > AVG(log(expiry))")
+```
+
++ Doesn't work - get an error message.
+```
+Parse error: misuse of aggregate function AVG()
+  SELECT * FROM moz_cookies WHERE log(expiry) > AVG(log(expiry));
+                                  error here ---^
+```
+
+---
+# Nested Queries
+
++  Instead
+```
+SELECT * FROM moz_cookies
+  WHERE log(expiry) > (SELECT AVG(log(expiry)) from moz_cookies)
+```
+
++ Another approach is 2 queries from R
+
+   + Get the mean
+
+   + Insert that value into a second query
+
+```{r}
+expiry.mean = dbGetQuery(con, "SELECT AVG(log(expiry)) FROM moz_cookies")[1, 1]
+qry = sprintf("SELECT * FROM moz_cookies WHERE log(expiry) > %lf", expiry.mean)
+ans = dbGetQuery(con, qry)
+```
+
+---
+# Grouping 
+
++ Want to operate separately on groups of rows group by one or more variables
+
++ Like tapply(), by(), aggregate() in R
+
++ Not just want the rows from the DBMS arranged by this grouping variable
+   + Then just use ORDER BY to arrange the rows
+
+
++ `GROUP BY`
+```sql
+SELECT COUNT(host)
+FROM moz_cookies
+GROUP BY host;
+```
+
++  Almost always also want the group label/value in the result
+```
+dbGetQuery(con, "SELECT host, COUNT( host) AS Num FROM moz_cookies GROUP BY host")
+```
+
+---
+# `ORDER BY`
+
++ And often want to order the results
+  + could do it in R, but also in DBMS
+
+```sql
+SELECT host, COUNT( host) AS Num
+FROM moz_cookies
+GROUP BY host
+ORDER BY Num;
+```
+
++ Control order
+```sql
+SELECT host, COUNT( host) AS Num
+FROM moz_cookies
+GROUP BY host
+ORDER BY Num DESC;
+```
+---
+# Subsetting the Groups
+
++ Can limit to a subset of the grouping values
+
++ Can subset/post-process the results in R.
+
++ In SQL, can use nested SELECT
+```sql
+SELECT host, COUNT(*)
+   FROM
+      (SELECT * FROM moz_cookies
+                WHERE
+                   host IN ('www.nytimes.com',
+                            'www.washingtonpost.com',
+                            '.wikipedia.org'))
+   GROUP BY host
+```
+
+or
+```sql
+SELECT host, COUNT(*)
+FROM moz_cookies
+WHERE host IN ('www.nytimes.com',
+               'www.washingtonpost.com',
+               '.wikipedia.org'))
+GROUP BY host
+```
+---
+# HAVING
+
++ Can't always subset the original table with WHERE, but instead need to
+  subset the result of the GROUP BY
+
++ Subset the results based on a dynamic/data-based value
+  + e.g. groups where the count > 10 or average count
+
+```sql
+# WRONG 
+SELECT host, COUNT(*) As Num
+FROM moz_cookies
+GROUP BY host
+WHERE Num > 10
+```
+  + Syntax error
+
++ WHERE needs to apply to the rows created via the SELECT-FROM
+
++ Instead, use HAVING for subsetting the results of GROUP BY
+
+```sql
+SELECT host, COUNT(*) As Num
+FROM moz_cookies
+GROUP BY host
+HAVING Num > 10
+```
+
+---
+# HAVING clause
+
++ Often use HAVING on COUNT() which has aggregated the records in a sub-group to a single tuple
+
++ However, HAVING works row by row within each sub-group
+  + COUNT() is a special case where only one tuple in each sub-group.
+
++ See havingEg.sql
+
+
+---
+# Test Database
+
++ Create database with a table
+```sql
+CREATE TABLE Foo (
+ g INTEGER,
+ age  INTEGER
+);
+```
+
++ Populate with sample values
+```sql
+INSERT INTO Foo VALUES
+(1, 20),
+(1, 30),
+(1, 10),
+(2, 55),
+(2, 27);
+```
+
++ Test query
+```sql
+select * FROM Foo
+GROUP BY g
+HAVING age = MIN(age);
+1|10
+2|27
+```
+
+
+
+---
+# Working in Chunks
+
++ Query that generates large amount of data
+
+   + Don't want to have it all in R at the same time
+
++ Or want to process each group and do something with related other data
+
++ Or want to work asynchronously
+
+   + Have database work on query while we continue do something else (in R session) as we wait
+
+   + Check back with the database to 
+
++ `rs = dbSendQuery(db, sql)`
+
+   + Send query and immediately return to R
+
+   + don't wait for the result
+
+---
+# Working with Chunks (ctd.)
+
++ Returned object from `dbSendQuery()` is a `result set`
+
+   + Can query it to see if there are rows available
+
+   + read `n` of those rows.
+
+
++ `df = dbFetch(rs, n)`
+
++ Repeat and consume rows in blocks
+
+
+
+---
+# VIEW
+
++ Ordinarily, the result set disappears after query.
+
++ Sometimes we want to operate on the result set with several subsequent queries on that temporary result set.
+
++ Use a VIEW - virtual table that wasn't in defined in the original DBMS
+
+   + Will disappear when we disconnect from the DBMS
+
+```sql
+CREATE VIEW OrgCookies
+ AS SELECT * FROM moz_cookies WHERE host LIKE '%.org';
+
+SELECT COUNT(*) FROM OrgCookies;
+```
+
++  Can explicitly discard view with `DROP VIEW`
+
+```sql
+DROP VIEW OrgCookies
+```
+
+
+---
+# Relational Databases
+## Multiple Tables and JOIN
+
++ *Thanks to Nick Ulle and Clark Fitzgerald for examples.*
+
++ Simple example
+
++ 2 tables
+
++ Company name, stock ticker string, income and SIC code(?)
+
+  + `fang_info`
+```
+	      ticker   company_name sic_code  net_income
+1   AMZN AMAZON COM INC     5961  2371000000
+2 GOOGLE  ALPHABET INC.     7370 19478000000
+3     FB   FACEBOOK INC     7370 10188000000
+4   NFLX    NETFLIX INC     7841   186678000
+```
+
+---
+
++ SIC code is a Standard Industrial Classification for an industry
+
++ Table of SIC codes and descriptions
+
+   + fang_sic
+
+```
+   SIC                            Description
+1 3292                       Abestos Products
+2 5182 Wine and Distilled Alcoholic Beverages
+3 5961          Catalog and Mail-Order Houses
+4 7841                      Video Tape Rental
+```
+
+---
+# Goal
+
++ For each row in fang_info, get the corresponding Description value from fang_sic
+
++ Different possible outcomes
+
++ Only the rows where there is a match on the SIC code in the two tables
+```
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+   + Dropped the two rows in fang_info with sic_code value 7370 since not in fang_sic
+   + matched the sic_code to SIC and got Description
+   + **INNER JOIN**
+
+---
+# Alternative, may want
+```
+   ticker   company_name sic_code  net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961  2371000000 5961 Catalog and Mail-Order Houses
+2 GOOGLE  ALPHABET INC.     7370 19478000000   NA                            NA
+3     FB   FACEBOOK INC     7370 10188000000   NA                            NA
+4   NFLX    NETFLIX INC     7841   186678000 7841             Video Tape Rental
+```
+   + all rows from fang_info
+
+   + Description and SIC from fang_sic when they match
+
+   + NULL (or missing values  in R) when no match
+
+   + ** LEFT JOIN**
+
+---
+# Cartesian Product - OUTER JOIN
+```
+   ticker   company_name sic_code  net_income  SIC                            Description
+1    AMZN AMAZON COM INC     5961  2371000000 3292                       Abestos Products
+2    AMZN AMAZON COM INC     5961  2371000000 5182 Wine and Distilled Alcoholic Beverages
+3    AMZN AMAZON COM INC     5961  2371000000 5961          Catalog and Mail-Order Houses
+4    AMZN AMAZON COM INC     5961  2371000000 7841                      Video Tape Rental
+5  GOOGLE  ALPHABET INC.     7370 19478000000 3292                       Abestos Products
+6  GOOGLE  ALPHABET INC.     7370 19478000000 5182 Wine and Distilled Alcoholic Beverages
+7  GOOGLE  ALPHABET INC.     7370 19478000000 5961          Catalog and Mail-Order Houses
+8  GOOGLE  ALPHABET INC.     7370 19478000000 7841                      Video Tape Rental
+9      FB   FACEBOOK INC     7370 10188000000 3292                       Abestos Products
+10     FB   FACEBOOK INC     7370 10188000000 5182 Wine and Distilled Alcoholic Beverages
+11     FB   FACEBOOK INC     7370 10188000000 5961          Catalog and Mail-Order Houses
+12     FB   FACEBOOK INC     7370 10188000000 7841                      Video Tape Rental
+13   NFLX    NETFLIX INC     7841   186678000 3292                       Abestos Products
+14   NFLX    NETFLIX INC     7841   186678000 5182 Wine and Distilled Alcoholic Beverages
+15   NFLX    NETFLIX INC     7841   186678000 5961          Catalog and Mail-Order Houses
+16   NFLX    NETFLIX INC     7841   186678000 7841                      Video Tape Rental
+```
+
++ Obtain with
+```sql
+SELECT * FROM fang_info
+JOIN fang_sic
+```
+
+---
+# Queries with 2 or More Tables
+
++ Specify the tables after the FROM
+   + comma-separated list
++ Refer to the columns/variables with `tableName.columnName`
+   + e.g.  fang_info.sic_code
+
++  Example 
+```sql
+SELECT * FROM fang_info, fang_sic
+    WHERE fang_info.sic_code = fang_sic.SIC;
+
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+
+---
+
++ Can drop tableName in tableName.columnName if unambiguous
+   + i.e. name not in two or more tables
+```sql
+SELECT * FROM fang_info, fang_sic 
+    WHERE sic_code = SIC;
+```
+
++ Can also use AS to give short name for table
+```sql
+SELECT * FROM fang_info AS fi, fang_sic AS sic
+    WHERE fi.sic_code = sic.SIC;
+```
+
+
+---
+# INNER JOIN
+
++ Want
+```sql
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+
+
+```sql
+SELECT * FROM fang_info
+  INNER JOIN fang_sic
+  ON fang_info.sic_code = fang_sic.SIC;
+```
+
++ Same as
+```sql
+SELECT * FROM fang_info, fang_sic
+    WHERE fang_info.sic_code = fang_sic.SIC;
+```
+
+---
+# LEFT JOIN
+
++ Result has a row for each row in the left table
+  + NULL values when no match in the right table
+```sql
+SELECT * FROM fang_info
+  LEFT JOIN fang_sic
+  ON fang_info.sic_code = fang_sic.SIC;
+```
+
+
+---
+# Tuple Matches Many Tuples
+
++ Matches don't have to match one tuple to a single tuple
+
+
++ 3rd table  fang_prices
+```
+	   ticker       date    high
+1    AMZN 2018-02-07 1460.99
+2      FB 2018-02-07  185.08
+3  GOOGLE 2018-02-07 1086.53
+4    NFLX 2018-02-07  272.45
+5    AMZN 2018-02-06 1443.99
+6      FB 2018-02-06  185.77
+7  GOOGLE 2018-02-06 1087.38
+8    NFLX 2018-02-06  266.70
+9    AMZN 2018-02-05 1458.98
+10     FB 2018-02-05  190.61
+```
+
+```
+SELECT * FROM fang_info AS i
+   INNER JOIN fang_prices AS p
+           ON i.ticker = p.ticker;
+```
+---
+# Result
+```
+    ticker   company_name sic_code  net_income ticker       date    high
+1    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-05 1458.98
+2    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-06 1443.99
+3    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-07 1460.99
+4  GOOGLE  ALPHABET INC.     7370 19478000000 GOOGLE 2018-02-06 1087.38
+5  GOOGLE  ALPHABET INC.     7370 19478000000 GOOGLE 2018-02-07 1086.53
+6      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-05  190.61
+7      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-06  185.77
+8      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-07  185.08
+9    NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-06  266.70
+10   NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-07  272.45
+```
+
+```sql
+SELECT *
+FROM fang_info AS i,
+     fang_prices AS p
+WHERE i.ticker = p.ticker;
+```
+
+---
+# Note
+
++ 
+```sql
+SELECT * FROM fang_info AS i
+   INNER JOIN fang_prices AS p
+           ON i.ticker = p.ticker;
+```
++ Note the use of AS for the table names
+
++ The need to differentiate the two ticker columns
+
++ The result contains two columns named ticker
+```
+    ticker   company_name sic_code  net_income ticker       date    high
+```
+
+---
+# Order of Evaluation of SQL Query
+
++ Understanding how the different elements of a query are evaluated helps to reason and debug
+
++ Consider the stackexchange data
+
+```sql
+SELECT  PostTypeId, value, COUNT(PostTypeId) 
+ FROM Posts AS p, PostTypeIdMap AS m  
+ WHERE PostTypeId = m.Id 
+   AND value IN ('Question', 'Answer')
+ GROUP BY PostTypeId 
+```
+
+
+
+---
+# Evaluation Order
+
+
++ FROM or JOIN 
+
++ WHERE - selects the rows to be operated on.
+   + executed before both the aggregate functions and the SELECT statement.
+
++ GROUP BY
+   + any grouping levels eliminated by the WHERE will not appear as groups.
+
++ HAVING evaluated after the aggregation functions
+
++ SELECT - creates a new table with columns specified and the rows produced by the clauses before
+
++ DISTINCT - after SELECT has created a new table
+
++ ORDER BY 
+
++ LIMIT 
+
+---
+# What about Nested Queries?
+
++ They are evaluated according to the same order as above.
+
++ Whatever step in which the nested query occurs
+
+
+
+
+---
+# Reasoning about JOINs
+
++ Two tables <!-- - A and B -->
++ Compatible columns in each x and y
+
+```sql
+select * FROM fang_info;
+
+AMZN|AMAZON COM INC|5961|2371000000.0
+GOOGLE|ALPHABET INC.|7370|19478000000.0
+FB|FACEBOOK INC|7370|10188000000.0
+NFLX|NETFLIX INC|7841|186678000.0
+```
+
+```sql
+select * FROM fang_sic;
+
+3292|Abestos Products
+5182|Wine and Distilled Alcoholic Beverages
+5961|Catalog and Mail-Order Houses
+7841|Video Tape Rental
+```
+
+---
+# TIMES/Cartesian Product/CROSS JOIN
+
++ Consider all possible pairs of tuples between the two tables
+
+```sql
+SELECT * FROM fang_info CROSS JOIN fang_sic;
+
+AMZN|AMAZON COM INC|5961|2371000000.0|3292|Abestos Products
+AMZN|AMAZON COM INC|5961|2371000000.0|5182|Wine and Distilled Alcoholic Beverages
+AMZN|AMAZON COM INC|5961|2371000000.0|5961|Catalog and Mail-Order Houses
+AMZN|AMAZON COM INC|5961|2371000000.0|7841|Video Tape Rental
+GOOGLE|ALPHABET INC.|7370|19478000000.0|3292|Abestos Products
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5182|Wine and Distilled Alcoholic Beverages
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5961|Catalog and Mail-Order Houses
+GOOGLE|ALPHABET INC.|7370|19478000000.0|7841|Video Tape Rental
+FB|FACEBOOK INC|7370|10188000000.0|3292|Abestos Products
+FB|FACEBOOK INC|7370|10188000000.0|5182|Wine and Distilled Alcoholic Beverages
+FB|FACEBOOK INC|7370|10188000000.0|5961|Catalog and Mail-Order Houses
+FB|FACEBOOK INC|7370|10188000000.0|7841|Video Tape Rental
+NFLX|NETFLIX INC|7841|186678000.0|3292|Abestos Products
+NFLX|NETFLIX INC|7841|186678000.0|5182|Wine and Distilled Alcoholic Beverages
+NFLX|NETFLIX INC|7841|186678000.0|5961|Catalog and Mail-Order Houses
+NFLX|NETFLIX INC|7841|186678000.0|7841|Video Tape Rental
+```
+
+---
+# WHERE 
+
++ INNER JOIN
++ Keep only the rows where sic_code = sic
+
+
+<pre>
+AMZN|AMAZON COM INC|5961|2371000000.0|3292|Abestos Products
+AMZN|AMAZON COM INC|5961|2371000000.0|5182|Wine and Distilled Alcoholic Beverages
+<a style="color:red">AMZN|AMAZON COM INC|5961|2371000000.0|5961|Catalog and Mail-Order Houses</a>
+AMZN|AMAZON COM INC|5961|2371000000.0|7841|Video Tape Rental
+GOOGLE|ALPHABET INC.|7370|19478000000.0|3292|Abestos Products
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5182|Wine and Distilled Alcoholic Beverages
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5961|Catalog and Mail-Order Houses
+GOOGLE|ALPHABET INC.|7370|19478000000.0|7841|Video Tape Rental
+FB|FACEBOOK INC|7370|10188000000.0|3292|Abestos Products
+FB|FACEBOOK INC|7370|10188000000.0|5182|Wine and Distilled Alcoholic Beverages
+FB|FACEBOOK INC|7370|10188000000.0|5961|Catalog and Mail-Order Houses
+FB|FACEBOOK INC|7370|10188000000.0|7841|Video Tape Rental
+NFLX|NETFLIX INC|7841|186678000.0|3292|Abestos Products
+NFLX|NETFLIX INC|7841|186678000.0|5182|Wine and Distilled Alcoholic Beverages
+NFLX|NETFLIX INC|7841|186678000.0|5961|Catalog and Mail-Order Houses
+<a style="color:red">NFLX|NETFLIX INC|7841|186678000.0|7841|Video Tape Rental</a>
+</pre>
+
+
+
+---
+# LEFT JOIN
+
++ Same as INNER JOIN
+   + THEN
++ Append the rows/tuples that had no match with the second/right table
+  + rows from left/first table
+  + NULL values for all the columns  from second/right table.
+  
+
+
+---
+# Cumulative Sum
+
++ How to compute the cumulative sum in SQL?
+  + across rows/tuples,
+  + but not a single answer
+
++ Let's make a simple table for exploring
+
+```sql
+CREATE TABLE A (
+  year INTEGER,
+  val INTEGER
+);
+INSERT INTO A VALUES
+(2004, 2), (2003, 12), (2002, 3), (2005, 5);
+
+2004|2
+2003|12
+2002|3
+2005|5
+```
+
++ Want to compute  cumulative sum across years of val
+```
+year a  cumulativeSum
+2002|3 |3
+2003|12|15
+2004|2 |17
+2005|5 |22
+```
+
+---
+# Window functions and the OVER operator
+
++ aggregate functions (e.g. SUM, MIN, AVG) compute over all tuples in a group or entire table.
+  + typically reduce to one result
+
++ Window functions work on one or more  rows,
+   + but returns a value for each tuple.
+
+```sql
+SELECT year, val, SUM(val) OVER (ORDER BY year DESC)
+FROM A;
+```
+
++ Order the result (not the window function) by year
+
+```sql
+SELECT year, val, SUM(val) OVER (ORDER BY year DESC)
+FROM A
+ORDER BY year;
+```
+
++   Or can "name" the window, creating it later in the query
+
+```sql
+SELECT a, SUM(a) OVER win
+FROM A
+WINDOW win AS (ORDER BY a DESC);
+```
+
+
+---
+# Compute differences between values
+
++ Differences between years
+   + e.g. 2003's value - 2002's value,
+   + 2005's value - 2004's value
+
++ Let's add a new year
+```sql
+INSERT INTO A VALUES (2010, 32);
+```
+
++ Want to get
+```
+2002|
+2003|1
+2004|1
+2005|1
+2010|5
+```
+
+---
+# Refer to previous row
+
++ lag() function
+
+```sql
+select year,  year - lag(year) OVER win
+FROM A
+WINDOW win AS (ORDER BY year);
+```
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>

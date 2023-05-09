@@ -333,7 +333,8 @@ CREATE TABLE moz_cookies(id INTEGER PRIMARY KEY,
 
 + We'll find the number of rows
 ```sql
-SELECT COUNT(*) FROM moz_cookies;
+SELECT COUNT(*)
+FROM moz_cookies;
 ```
 
 + SELECT
@@ -353,22 +354,27 @@ SELECT COUNT(*) FROM moz_cookies;
 
 + Get all rows for all columns/attributes in table
 ```sql
-SELECT * FROM moz_cookies;
+SELECT *
+FROM moz_cookies;
 ```
 
 + Get all rows for single column
 ```sql
-SELECT host FROM moz_cookies;
+SELECT host
+FROM moz_cookies;
 ```
 
 + Get unique/distinct entries in host
 ```sql
-SELECT DISTINCT host FROM moz_cookies ;
+SELECT DISTINCT host
+FROM moz_cookies ;
 ```
 
 + Filter/Condition rows
 ```sql
-SELECT * FROM moz_cookies WHERE host = "www.nytimes.com";
+SELECT *
+FROM moz_cookies
+WHERE host = "www.nytimes.com";
 ```
 ```
 399||_cb_ls|1|www.nytimes.com|/|1662868228|1651537452882104|1628740228812044|0|0|0|0|0|2
@@ -383,7 +389,9 @@ SELECT * FROM moz_cookies WHERE host = "www.nytimes.com";
 
 + Use LIMIT
 ```sql
-SELECT COUNT(*) FROM moz_cookies LIMIT 20;
+SELECT COUNT(*)
+FROM moz_cookies
+LIMIT 20;
 ```
 
 
@@ -391,22 +399,26 @@ SELECT COUNT(*) FROM moz_cookies LIMIT 20;
 # ORDER BY
 
 ```sql
-SELECT host FROM moz_cookies
-  ORDER BY host;
+SELECT host
+FROM moz_cookies
+ORDER BY host;
 ```
 
 + In descending order
 ```sql
-SELECT host FROM moz_cookies
-  ORDER BY host DESC;
+SELECT host
+FROM moz_cookies
+ORDER BY host DESC;
 ```
 
 ---
 ## Multiple Columns & Transforming Variables
 
 ```sql
-SELECT datetime(expiry, 'unixepoch'), host FROM moz_cookies
-ORDER BY expiry DESC LIMIT 20;
+SELECT datetime(expiry, 'unixepoch'), host
+FROM moz_cookies
+ORDER BY expiry DESC
+LIMIT 20;
 ```
 
 ---
@@ -414,7 +426,9 @@ ORDER BY expiry DESC LIMIT 20;
 
 + Get counts for each host
 ```sql
-SELECT host, COUNT(*) FROM moz_cookies GROUP BY host;
+SELECT host, COUNT(*)
+FROM moz_cookies
+GROUP BY host;
 ```
 
 
