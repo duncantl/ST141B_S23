@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Relational Databases 2</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Relational Databases - 3
+
+
+### Duncan Temple Lang
+
+<div style="clear: both"/>
+
+<!-- <hr width="50%"/> -->
+
+---
+
++ [Baseball databases](https://github. com/WebucatorTraining/lahman-baseball-mysql/raw/master/lahmansbaseballdb.sqlite.)  Up to 2013
++ Data compiled by Sean Lahman
++ [Documentation](http://seanlahman.com/files/database/readme2013.txt)
+
+---
+
+```sh
+sqlite3 lahman2013.sqlite
+```
+
+```sql
+sqlite> .tables
+AllstarFull          FieldingOF           Schools            
+Appearances          FieldingPost         SchoolsPlayers     
+AwardsManagers       HallOfFame           SeriesPost         
+AwardsPlayers        Managers             Teams              
+AwardsShareManagers  ManagersHalf         TeamsFranchises    
+AwardsSharePlayers   Master               TeamsHalf          
+Batting              Pitching             temp               
+BattingPost          PitchingPost       
+Fielding             Salaries           
+```
+
+
+---
+# In 2003, what were the three highest salaries?
+ Who were the players receiving these salaries?
+<!-- Q10 -->
+
++ Salaries table
+
+```sql
+.schema Salaries
+```
+```
+CREATE TABLE Salaries (
+yearID INTEGER,
+teamID TEXT,
+lgID TEXT,
+playerID TEXT,
+salary REAL
+);
+```
+
+---
+# Query
+
+```sql
+SELECT salary 
+FROM Salaries 
+WHERE yearID = 2003 
+ORDER BY salary DESC
+LIMIT 3;
+```
+```
+22000000.0
+20000000.0
+18700000.0
+```
+
+--
++ This just gives the salaries
+
++ Can also get the other columns in the Salaries table.
+
+  + But doesn't have the player names.
+  + Team names
+  + Which league.
+
++ Need to merge with other table(s)
+
+---
+# Getting the player information for these salaries
+
++ Join with the Master table
+
+```sql
+.schema Master
+```
+```
+CREATE TABLE Master (
+playerID TEXT,   birthYear INTEGER,
+birthMonth INTEGER, birthDay INTEGER,
+birthCountry TEXT, birthState TEXT,
+birthCity TEXT, deathYear INTEGER,
+deathMonth INTEGER, deathDay INTEGER,
+deathCountry TEXT, deathState TEXT,
+deathCity TEXT, nameFirst TEXT,
+nameLast TEXT, nameGiven TEXT,
+weight INTEGER, height REAL,
+bats TEXT, throws TEXT,
+debut NUMERIC, finalGame NUMERIC,
+retroID TEXT, bbrefID TEXT
+);
+```
+
+---
+# Getting the player information for these salaries
+
+```sql  
+SELECT * 
+FROM Salaries AS A, Master AS B 
+WHERE yearID = 2003 
+  AND A.playerID = B.playerID 
+ORDER BY salary DESC
+LIMIT 3;
+```
+
+
++ Same as
+```sql
+SELECT *
+FROM Salaries AS A
+INNER JOIN Master AS B
+ON A.playerID = B.playerID 
+WHERE yearID = 2003 
+ORDER BY salary DESC
+LIMIT 3;
+```
+
+---
+# Getting only the columns we want
+
+```sql
+SELECT   nameFirst || ' ' || nameLast AS Name,
+         yearID,
+         debut,
+         salary,
+         teamID,
+         lgID
+FROM Salaries AS A, Master AS B 
+WHERE yearID = 2003 
+  AND A.playerID = B.playerID 
+ORDER BY salary DESC
+LIMIT 3;
+```
+
++ Concatenate/paste the first and last name into a single string
+
+---
+# How do we include the name of the team
+
+--
+
++ Need to join with Teams table
+
+```
+CREATE TABLE Teams (
+yearID INTEGER, lgID TEXT, teamID TEXT,
+franchID TEXT, divID TEXT, Rank INTEGER,
+G INTEGER, Ghome INTEGER, W INTEGER,
+L INTEGER, DivWin TEXT, WCWin TEXT,
+LgWin TEXT, WSWin TEXT, R INTEGER,
+AB INTEGER, H INTEGER, "2B" INTEGER,
+"3B" INTEGER, HR INTEGER, BB INTEGER,
+SO INTEGER, SB INTEGER, CS INTEGER,
+HBP INTEGER, SF INTEGER, RA INTEGER,
+ER INTEGER, ERA REAL, CG INTEGER,
+SHO INTEGER, SV INTEGER, IPouts INTEGER,
+HA INTEGER, HRA INTEGER, BBA INTEGER,
+SOA INTEGER, E INTEGER, DP INTEGER,
+FP REAL, name TEXT, park TEXT,
+attendance INTEGER, BPF INTEGER,
+PPF INTEGER, teamIDBR TEXT,
+teamIDlahman45 TEXT, teamIDretro TEXT
+);
+```
+
+---
+# Join with Teams Table
+
++ Caution: Not correct
+
+```sql
+SELECT   nameFirst || ' ' || nameLast AS Name,
+         yearID,
+         debut,
+         salary,
+         teamID,
+         lgID,
+         name
+FROM Salaries AS A, Master AS B, Teams AS T
+WHERE A.yearID = 2003 
+  AND A.playerID = B.playerID
+  AND T.teamID = A.teamID
+ORDER BY salary DESC
+LIMIT 3;
+```
+```
+Parse error: ambiguous column name: yearID
+```
+
++ What's the problem(s)?
+
+
+<!--
+
+# From R
+
+```r
+library(RSQLite)
+db = dbConnect(SQLite(), "lahman2016.sqlite")
+z = dbGetQuery(db, "SELECT   nameFirst || ' ' || nameLast AS Name,
+         yearID,
+         debut,
+         salary,
+         teamID,
+         lgID,
+         name
+FROM Salaries AS A, Master AS B, Teams AS T
+WHERE A.yearID = 2003 
+  AND A.playerID = B.playerID
+  AND T.teamID = A.teamID
+ORDER BY salary DESC
+LIMIT 3;")
+```
+-->
+
+---
+# Caution: Not correct
+
+```sql
+SELECT   nameFirst || ' ' || nameLast AS Name,
+         A.yearID,
+         debut,
+         salary,
+         A.teamID,
+         A.lgID,
+         T.name
+FROM Salaries AS A, Master AS B, Teams AS T
+WHERE A.yearID = 2003 
+  AND A.playerID = B.playerID
+  AND T.teamID = A.teamID
+ORDER BY salary DESC
+LIMIT 3;
+```
+
+```
+Name            yearID  debut       salary      teamID  lgID  name         
+--------------  ------  ----------  ----------  ------  ----  -------------
+Alex Rodriguez  2003    1994-07-08  22000000.0  TEX     AL    Texas Rangers
+Alex Rodriguez  2003    1994-07-08  22000000.0  TEX     AL    Texas Rangers
+Alex Rodriguez  2003    1994-07-08  22000000.0  TEX     AL    Texas Rangers
+```
+
++ What's wrong?
+
+---
+# Adding the Name of Team
+
+--
+
++ Multiple rows in Teams for each team, but different years.
+
++ Confirm?
+```sql
+SELECT COUNT(*)
+FROM Teams
+WHERE teamID = "TEX";
+
+SELECT DISTINCT yearID
+FROM Teams
+WHERE teamID = "TEX";
+
+SELECT yearID, COUNT(*)
+FROM Teams
+WHERE teamID = "TEX"
+GROUP BY yearID;
+```
+
+  + So T.teamID = A.teamID matches multiple rows for each year.
+
+  + Need to restrict to `T.yearID = 2003`
+
+     +   or equivalently  `T.yearID = A.yearID`
+
+---
+# Joing with Teams for given yearId
+
+```sql
+SELECT   nameFirst || ' ' || nameLast AS Name,
+         A.yearID,
+         debut,
+         salary,
+         A.teamID,
+         A.lgID,
+         T.name
+FROM Salaries AS A, Master AS B, Teams AS T
+WHERE A.yearID = 2003
+  AND T.yearID = A.yearID                <---------
+  AND A.playerID = B.playerID
+  AND T.teamID = A.teamID
+ORDER BY salary DESC
+LIMIT 3;
+```
+
+---
+# Finding **all** the players with these salaries
+
++ In case of ties for salary, there may be more than three.
+
++ To get all of the players with these 3 salaries, we can use a nested query
+
+```sql
+SELECT nameFirst, nameLast, salary, teamID, yearID, birthYear 
+FROM  Salaries AS A, Master AS B  
+WHERE yearID = 2003
+  AND A.playerID = B.playerID 
+  AND salary IN (SELECT salary 
+                   FROM Salaries 
+	           WHERE yearID = 2003 
+	  	   ORDER BY salary DESC
+                   LIMIT 3);
+```
+
+---
+# What team *won* the World Series each year?
+
++ include the name of the team, league and division.
+
++ Which tables?
+
+--
+   + SeriesPost
+```
+CREATE TABLE SeriesPost (
+yearID INTEGER,
+round TEXT,
+teamIDwinner TEXT,
+lgIDwinner TEXT,
+teamIDloser TEXT,
+lgIDloser TEXT,
+wins INTEGER,
+losses INTEGER,
+ties INTEGER
+);
+```
+
+---
+# Explore SeriesPost
+
+```sql
+SELECT DISTINCT round FROM SeriesPost;
+```
+```
+round
+-----
+WS   
+CS   
+ALCS 
+NLCS 
+AEDIV
+AWDIV
+NEDIV
+NWDIV
+ALDS1
+ALDS2
+NLDS1
+NLDS2
+ALWC 
+NLWC 
+```
+
+--
++ Simple approach with only SeriesPost table
+
+```sql
+SELECT *
+FROM SeriesPost
+WHERE round = 'WS' LIMIT 10;
+```
+
++ Just the winners
+```
+SELECT yearID, teamIDwinner, lgIDwinner, wins
+FROM SeriesPost
+WHERE round = 'WS'
+ORDER BY yearID DESC
+LIMIT 10;
+```
+
+---
+# Want the Team Name, etc.
+
++ Join on Teams
+
+```sql
+SELECT t.yearID, t.name, t.lgID, t.divID, s.teamIDloser
+FROM SeriesPost AS s, 
+     Teams AS t
+WHERE s.yearID = t.yearID 
+  AND s.round = 'WS'  
+  AND s.teamIDwinner = t.teamID
+ORDER BY t.yearID DESC
+```
+
++ We included the ID of the losing team.
+  + Want the Name of that team.
+
+
+---
+# Compute the table that has both the winner and runner-up for the World Series in each
+tuple/row for all years
+
++ Include
+  + the name of the team,
+  + league and division,
+  + the number of games the losing team won in the series.
+
+<!-- Q8  -->
+
+The result should look something like
+
+```
+yearID  name                    lgID  divID  name                    lgID  divID  losses
+------  ----------------------  ----  -----  ----------------------  ----  -----  ------
+2013    Boston Red Sox          AL    E      St. Louis Cardinals     NL    C      3     
+2012    San Francisco Giants    NL    W      Detroit Tigers          AL    C      0     
+2011    St. Louis Cardinals     NL    C      Texas Rangers           AL    W      3     
+2010    San Francisco Giants    NL    W      Texas Rangers           AL    W      1     
+2009    New York Yankees        AL    E      Philadelphia Phillies   NL    E      2     
+2008    Philadelphia Phillies   NL    E      Tampa Bay Rays          AL    E      1     
+```
+
++ How do we go about doing this?
+
+---
+# Adding the losing team name
+
++ Join SeriesPost with Teams and Teams
+  + Using Teams twice to get the details for the winning team and then the losing team
+
+
+```sql
+SELECT s.yearID, w.name, w.lgID, w.divID, 
+                 l.name, l.lgID, l.divID, s.losses
+FROM SeriesPost AS s, Teams AS w, Teams AS l
+WHERE s.round = 'WS'
+  AND s.yearID = w.yearID
+  AND s.yearID = l.yearID  
+  AND w.teamID = s.teamIDWinner
+  AND l.teamID = s.teamIDLoser
+ORDER BY s.yearID DESC;  
+```
+
++ Think of the Cartesian Product of tuples and then the WHERE filtering/subsetting
+  the tuples
+
+---
+# Has the distribution of home runs for players increased over the years?
+
++ Maximum number of home runs by a single player?
+
++ Total number of home runs by all players?
+
++ See Batting table
+--
+
+```sql
+SELECT yearID, MAX(HR) AS maxHR
+FROM Batting
+GROUP BY yearID
+ORDER BY maxHR DESC;
+```
+
+---
+# Total number of Home Runs by Year
+
++ Add up all the home runs for each year
+
+```sql
+SELECT yearID, SUM(HR) AS maxHR
+FROM Batting
+GROUP BY yearID
+ORDER BY maxHR DESC;
+```
+
+
+---
+# Total Team Salary by Year
+
++ Start simple
+
+  + Look at the Salaries table
+  + Group by teamID
+  + Sum the salaries
+
++ Caution: Wrong
+```sql
+SELECT SUM(salary) AS payroll, yearID, teamID
+FROM Salaries
+GROUP BY teamID;
+```
+
+---
+# Group by yearID and teamID
+
++ Wrong since summing across all years for a given team
+
+```sql
+SELECT SUM(salary) AS payroll, yearID, teamID
+FROM Salaries
+GROUP BY teamID;
+```
+
++ Group by yearID and teamID to get Payrol for each year for each team
+
+```sql
+SELECT SUM(salary) AS payroll, yearID, teamID
+FROM Salaries
+GROUP BY teamID
+ORDER BY yearID DESC, payroll DESC;
+```
+
+---
+# Want the team name, the league (NL or AL)
+
++ Approach
+
+--
+
++ Join with the Teams table.
+
+```sql
+SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID
+FROM Salaries AS s,
+     Teams AS t
+WHERE s.yearID = t.yearID
+  AND t.teamID = s.teamID
+GROUP BY s.teamID, s.yearID
+ORDER BY s.yearID DESC, payroll DESC;
+```
+
+---
+# Challenge
+
++ Add a column indicating whether won the world series or not
+
+
+<!--
+
+     Not correct Red Sox counted 3 times.
+     
+```sql
+SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID, p.teamIDwinner
+FROM Salaries AS s
+LEFT JOIN Teams AS t
+     ON s.yearID = t.yearID
+     AND t.teamID = s.teamID
+LEFT JOIN SeriesPost AS p
+     ON p.teamIDwinner = s.teamID
+     AND p.yearID = s.yearID
+GROUP BY s.teamID, s.yearID
+ORDER BY s.yearID DESC, payroll DESC;
+```
+
+
+     SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, SeriesPost as p WHERE s.yearID = '2013' AND s.teamID = 'BOS' and s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;
+
+SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, SeriesPost as p WHERE s.yearID = '2013' AND d s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;     
+
+     SELECT s.yearId, s.teamID, name, SUM(salary) AS payroll
+     FROM Salaries AS s, Teams AS t, SeriesPost as p
+     WHERE s.yearID = '2013'
+     AND d s.teamID = t.teamID
+     AND s.yearID = t.yearID
+     AND p.yearID = s.yearID
+     AND p.round = 'WS'
+     GROUP BY s.yearId, s.teamID
+     ORDER BY payroll;     
+     
+   -->
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>

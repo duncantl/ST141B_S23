@@ -621,9 +621,11 @@ JOIN fang_sic
 
 +  Example 
 ```sql
-SELECT * FROM fang_info, fang_sic
-    WHERE fang_info.sic_code = fang_sic.SIC;
-
+SELECT *
+FROM fang_info, fang_sic
+WHERE fang_info.sic_code = fang_sic.SIC;
+```
+```
   ticker   company_name sic_code net_income  SIC                   Description
 1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
 2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
@@ -634,22 +636,23 @@ SELECT * FROM fang_info, fang_sic
 + Can drop tableName in tableName.columnName if unambiguous
    + i.e. name not in two or more tables
 ```sql
-SELECT * FROM fang_info, fang_sic 
-    WHERE sic_code = SIC;
+SELECT *
+FROM fang_info, fang_sic 
+WHERE sic_code = SIC;
 ```
 
 + Can also use AS to give short name for table
 ```sql
-SELECT * FROM fang_info AS fi, fang_sic AS sic
-    WHERE fi.sic_code = sic.SIC;
+SELECT *
+FROM fang_info AS fi, fang_sic AS sic
+WHERE fi.sic_code = sic.SIC;
 ```
-
 
 ---
 # INNER JOIN
 
 + Want
-```sql
+```
   ticker   company_name sic_code net_income  SIC                   Description
 1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
 2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
@@ -657,26 +660,29 @@ SELECT * FROM fang_info AS fi, fang_sic AS sic
 
 
 ```sql
-SELECT * FROM fang_info
-  INNER JOIN fang_sic
-  ON fang_info.sic_code = fang_sic.SIC;
+SELECT *
+FROM fang_info
+INNER JOIN fang_sic
+ON fang_info.sic_code = fang_sic.SIC;
 ```
 
 + Same as
 ```sql
-SELECT * FROM fang_info, fang_sic
-    WHERE fang_info.sic_code = fang_sic.SIC;
+SELECT *
+FROM fang_info, fang_sic
+WHERE fang_info.sic_code = fang_sic.SIC;
 ```
 
 ---
 # LEFT JOIN
 
 + Result has a row for each row in the left table
-  + NULL values when no match in the right table
+  + NULL values for columns from right table when no match in the right table
 ```sql
-SELECT * FROM fang_info
-  LEFT JOIN fang_sic
-  ON fang_info.sic_code = fang_sic.SIC;
+SELECT *
+FROM fang_info
+LEFT JOIN fang_sic
+ON fang_info.sic_code = fang_sic.SIC;
 ```
 
 
@@ -686,7 +692,7 @@ SELECT * FROM fang_info
 + Matches don't have to match one tuple to a single tuple
 
 
-+ 3rd table  fang_prices
++ Consider table fang_prices
 ```
 	   ticker       date    high
 1    AMZN 2018-02-07 1460.99
@@ -701,10 +707,13 @@ SELECT * FROM fang_info
 10     FB 2018-02-05  190.61
 ```
 
++ Join fang_info with fang_prices to merge each company with several stock prices for that company
+
 ```
-SELECT * FROM fang_info AS i
-   INNER JOIN fang_prices AS p
-           ON i.ticker = p.ticker;
+SELECT *
+FROM fang_info AS i
+INNER JOIN fang_prices AS p
+        ON i.ticker = p.ticker;
 ```
 ---
 # Result
@@ -721,6 +730,8 @@ SELECT * FROM fang_info AS i
 9    NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-06  266.70
 10   NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-07  272.45
 ```
+
++ Same result as
 
 ```sql
 SELECT *
@@ -800,11 +811,13 @@ SELECT  PostTypeId, value, COUNT(PostTypeId)
 # Reasoning about JOINs
 
 + Two tables <!-- - A and B -->
-+ Compatible columns in each x and y
++ Compatible columns allowing us to link/join rows
 
 ```sql
-select * FROM fang_info;
-
+select *
+FROM fang_info;
+```
+```
 AMZN|AMAZON COM INC|5961|2371000000.0
 GOOGLE|ALPHABET INC.|7370|19478000000.0
 FB|FACEBOOK INC|7370|10188000000.0
@@ -812,8 +825,10 @@ NFLX|NETFLIX INC|7841|186678000.0
 ```
 
 ```sql
-select * FROM fang_sic;
-
+select *
+FROM fang_sic;
+```
+```
 3292|Abestos Products
 5182|Wine and Distilled Alcoholic Beverages
 5961|Catalog and Mail-Order Houses
@@ -826,7 +841,9 @@ select * FROM fang_sic;
 + Consider all possible pairs of tuples between the two tables
 
 ```sql
-SELECT * FROM fang_info CROSS JOIN fang_sic;
+SELECT *
+FROM fang_info
+CROSS JOIN fang_sic;
 
 AMZN|AMAZON COM INC|5961|2371000000.0|3292|Abestos Products
 AMZN|AMAZON COM INC|5961|2371000000.0|5182|Wine and Distilled Alcoholic Beverages
@@ -845,6 +862,17 @@ NFLX|NETFLIX INC|7841|186678000.0|5182|Wine and Distilled Alcoholic Beverages
 NFLX|NETFLIX INC|7841|186678000.0|5961|Catalog and Mail-Order Houses
 NFLX|NETFLIX INC|7841|186678000.0|7841|Video Tape Rental
 ```
+
++ Most of these mix apples and oranges
+   + rows that don't correspond to same entity/unit
+
++ BTW, equivalent to 
+```
+SELECT *
+FROM fang_info, fang_sic;
+```
+
+
 
 ---
 # WHERE 
@@ -907,8 +935,11 @@ INSERT INTO A VALUES
 2002|3
 2005|5
 ```
+---
+# Cumulative Sum
 
-+ Want to compute  cumulative sum across years of val
++ Want to compute  cumulative sum across years of val, to get
+
 ```
 year a  cumulativeSum
 2002|3 |3
@@ -927,14 +958,16 @@ year a  cumulativeSum
    + but returns a value for each tuple.
 
 ```sql
-SELECT year, val, SUM(val) OVER (ORDER BY year DESC)
+SELECT year, val, SUM(val)
+OVER (ORDER BY year DESC)
 FROM A;
 ```
 
 + Order the result (not the window function) by year
 
 ```sql
-SELECT year, val, SUM(val) OVER (ORDER BY year DESC)
+SELECT year, val, SUM(val)
+OVER (ORDER BY year DESC)
 FROM A
 ORDER BY year;
 ```
@@ -979,8 +1012,6 @@ select year,  year - lag(year) OVER win
 FROM A
 WINDOW win AS (ORDER BY year);
 ```
-
-
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js">

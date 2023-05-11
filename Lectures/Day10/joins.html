@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Relational Databases 2</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Relational Databases - 3
+## Joins
+
+---
+# Relational Databases
+## Multiple Tables and JOIN
+
++ *Thanks to Nick Ulle and Clark Fitzgerald for examples.*
+
++ Simple example
+
++ 3 tables
+
++ Company name, stock ticker string, income and SIC code(?)
+
+  + `fang_info`
+```
+	      ticker   company_name sic_code  net_income
+1   AMZN AMAZON COM INC     5961  2371000000
+2 GOOGLE  ALPHABET INC.     7370 19478000000
+3     FB   FACEBOOK INC     7370 10188000000
+4   NFLX    NETFLIX INC     7841   186678000
+```
+
+---
+
++ SIC code is a Standard Industrial Classification for an industry
+
++ Table of SIC codes and descriptions
+
+   + fang_sic
+
+```
+   SIC                            Description
+1 3292                       Abestos Products
+2 5182 Wine and Distilled Alcoholic Beverages
+3 5961          Catalog and Mail-Order Houses
+4 7841                      Video Tape Rental
+```
+
+---
+# Goal
+
++ For each row in fang_info, combine with the **corresponding** Description value from fang_sic
+
++ Match each row's `sic_code` in `fang_info` and `SIC` in `fang_sic`
+
++ Different possible outcomes
+
++ Only the rows where there is a match on the SIC code in the two tables
+```
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+   + Dropped the two rows in fang_info with sic_code value 7370 since not in fang_sic
+   + matched the sic_code to SIC and got Description
+   + **INNER JOIN**
+
+---
+# Alternative, may want
+```
+   ticker   company_name sic_code  net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961  2371000000 5961 Catalog and Mail-Order Houses
+2 GOOGLE  ALPHABET INC.     7370 19478000000   NA                            NA
+3     FB   FACEBOOK INC     7370 10188000000   NA                            NA
+4   NFLX    NETFLIX INC     7841   186678000 7841             Video Tape Rental
+```
+   + all rows from fang_info
+
+   + `Description` and `SIC` from fang_sic when they match
+
+   + NULL (or missing values  in R) when no match
+
+   + ** LEFT JOIN**
+
+---
+# Cartesian Product - OUTER JOIN
+```
+   ticker   company_name sic_code  net_income  SIC                            Description
+1    AMZN AMAZON COM INC     5961  2371000000 3292                       Abestos Products
+2    AMZN AMAZON COM INC     5961  2371000000 5182 Wine and Distilled Alcoholic Beverages
+3    AMZN AMAZON COM INC     5961  2371000000 5961          Catalog and Mail-Order Houses
+4    AMZN AMAZON COM INC     5961  2371000000 7841                      Video Tape Rental
+5  GOOGLE  ALPHABET INC.     7370 19478000000 3292                       Abestos Products
+6  GOOGLE  ALPHABET INC.     7370 19478000000 5182 Wine and Distilled Alcoholic Beverages
+7  GOOGLE  ALPHABET INC.     7370 19478000000 5961          Catalog and Mail-Order Houses
+8  GOOGLE  ALPHABET INC.     7370 19478000000 7841                      Video Tape Rental
+9      FB   FACEBOOK INC     7370 10188000000 3292                       Abestos Products
+10     FB   FACEBOOK INC     7370 10188000000 5182 Wine and Distilled Alcoholic Beverages
+11     FB   FACEBOOK INC     7370 10188000000 5961          Catalog and Mail-Order Houses
+12     FB   FACEBOOK INC     7370 10188000000 7841                      Video Tape Rental
+13   NFLX    NETFLIX INC     7841   186678000 3292                       Abestos Products
+14   NFLX    NETFLIX INC     7841   186678000 5182 Wine and Distilled Alcoholic Beverages
+15   NFLX    NETFLIX INC     7841   186678000 5961          Catalog and Mail-Order Houses
+16   NFLX    NETFLIX INC     7841   186678000 7841                      Video Tape Rental
+```
+
++ Obtain with
+```sql
+SELECT * FROM fang_info
+JOIN fang_sic
+```
+
+or
+```sql
+SELECT *
+FROM fang_info, fang_sic;
+```
+
+---
+# Syntax for Queries with 2 or More Tables
+
++ Specify the tables after the FROM
+   + comma-separated list
++ Refer to the columns/variables with `tableName.columnName`
+   + e.g.  fang_info.sic_code
+
++  Example 
+```sql
+SELECT *
+FROM fang_info, fang_sic
+WHERE fang_info.sic_code = fang_sic.SIC;
+```
+```
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+
+---
+
++ Can drop tableName in tableName.columnName if unambiguous
+   + i.e. name not in two or more tables
+```sql
+SELECT *
+FROM fang_info, fang_sic 
+WHERE sic_code = SIC;
+```
+
++ Can also use AS to give short name for table
+```sql
+SELECT *
+FROM fang_info AS fi, fang_sic AS sic
+WHERE fi.sic_code = sic.SIC;
+```
+
+---
+# INNER JOIN
+
++ Want
+```
+  ticker   company_name sic_code net_income  SIC                   Description
+1   AMZN AMAZON COM INC     5961 2371000000 5961 Catalog and Mail-Order Houses
+2   NFLX    NETFLIX INC     7841  186678000 7841             Video Tape Rental
+```
+
+
+```sql
+SELECT *
+FROM fang_info
+INNER JOIN fang_sic
+ON fang_info.sic_code = fang_sic.SIC;
+```
+
++ Same as
+```sql
+SELECT *
+FROM fang_info, fang_sic
+WHERE fang_info.sic_code = fang_sic.SIC;
+```
+
+---
+# LEFT JOIN
+
++ Result has a row for each row in the left table
+  + NULL values for columns from right table when no match in the right table
+```sql
+SELECT *
+FROM fang_info
+LEFT JOIN fang_sic
+ON fang_info.sic_code = fang_sic.SIC;
+```
+
+---
+# RIGHT JOIN
+
++ Can achieve with LEFT JOIN and reverse the order of the tables
+
+---
+# Reasoning about JOINs
+
++ Two tables <!-- - A and B -->
++ Compatible columns allowing us to link/join rows
+
+```sql
+select *
+FROM fang_info;
+```
+```
+AMZN|AMAZON COM INC|5961|2371000000.0
+GOOGLE|ALPHABET INC.|7370|19478000000.0
+FB|FACEBOOK INC|7370|10188000000.0
+NFLX|NETFLIX INC|7841|186678000.0
+```
+
+```sql
+select *
+FROM fang_sic;
+```
+```
+3292|Abestos Products
+5182|Wine and Distilled Alcoholic Beverages
+5961|Catalog and Mail-Order Houses
+7841|Video Tape Rental
+```
+
+---
+# TIMES/Cartesian Product/CROSS JOIN
+
++ Consider all possible pairs of tuples between the two tables
+
+```sql
+SELECT *
+FROM fang_info
+CROSS JOIN fang_sic;
+
+AMZN|AMAZON COM INC|5961|2371000000.0|3292|Abestos Products
+AMZN|AMAZON COM INC|5961|2371000000.0|5182|Wine and Distilled Alcoholic Beverages
+AMZN|AMAZON COM INC|5961|2371000000.0|5961|Catalog and Mail-Order Houses
+AMZN|AMAZON COM INC|5961|2371000000.0|7841|Video Tape Rental
+GOOGLE|ALPHABET INC.|7370|19478000000.0|3292|Abestos Products
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5182|Wine and Distilled Alcoholic Beverages
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5961|Catalog and Mail-Order Houses
+GOOGLE|ALPHABET INC.|7370|19478000000.0|7841|Video Tape Rental
+FB|FACEBOOK INC|7370|10188000000.0|3292|Abestos Products
+FB|FACEBOOK INC|7370|10188000000.0|5182|Wine and Distilled Alcoholic Beverages
+FB|FACEBOOK INC|7370|10188000000.0|5961|Catalog and Mail-Order Houses
+FB|FACEBOOK INC|7370|10188000000.0|7841|Video Tape Rental
+NFLX|NETFLIX INC|7841|186678000.0|3292|Abestos Products
+NFLX|NETFLIX INC|7841|186678000.0|5182|Wine and Distilled Alcoholic Beverages
+NFLX|NETFLIX INC|7841|186678000.0|5961|Catalog and Mail-Order Houses
+NFLX|NETFLIX INC|7841|186678000.0|7841|Video Tape Rental
+```
+
++ Most of these mix apples and oranges
+   + rows that don't correspond to same entity/unit
+
++ BTW, equivalent to 
+```
+SELECT *
+FROM fang_info, fang_sic;
+```
+
+
+
+---
+# WHERE 
+
++ INNER JOIN
++ Keep only the rows where sic_code = sic
+
+
+<pre>
+AMZN|AMAZON COM INC|5961|2371000000.0|3292|Abestos Products
+AMZN|AMAZON COM INC|5961|2371000000.0|5182|Wine and Distilled Alcoholic Beverages
+<a style="color:red">AMZN|AMAZON COM INC|5961|2371000000.0|5961|Catalog and Mail-Order Houses</a>
+AMZN|AMAZON COM INC|5961|2371000000.0|7841|Video Tape Rental
+GOOGLE|ALPHABET INC.|7370|19478000000.0|3292|Abestos Products
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5182|Wine and Distilled Alcoholic Beverages
+GOOGLE|ALPHABET INC.|7370|19478000000.0|5961|Catalog and Mail-Order Houses
+GOOGLE|ALPHABET INC.|7370|19478000000.0|7841|Video Tape Rental
+FB|FACEBOOK INC|7370|10188000000.0|3292|Abestos Products
+FB|FACEBOOK INC|7370|10188000000.0|5182|Wine and Distilled Alcoholic Beverages
+FB|FACEBOOK INC|7370|10188000000.0|5961|Catalog and Mail-Order Houses
+FB|FACEBOOK INC|7370|10188000000.0|7841|Video Tape Rental
+NFLX|NETFLIX INC|7841|186678000.0|3292|Abestos Products
+NFLX|NETFLIX INC|7841|186678000.0|5182|Wine and Distilled Alcoholic Beverages
+NFLX|NETFLIX INC|7841|186678000.0|5961|Catalog and Mail-Order Houses
+<a style="color:red">NFLX|NETFLIX INC|7841|186678000.0|7841|Video Tape Rental</a>
+</pre>
+
+
+
+---
+# LEFT JOIN
+
++ Same as INNER JOIN
+   + THEN
++ Append the rows/tuples that had no match with the second/right table
+  + rows from left/first table
+  + NULL values for all the columns  from second/right table.
+  
+---
+# Tuple Matches Many Tuples
+
++ Matches don't have to match one tuple to a single tuple
+
++ Consider table fang_prices
+```
+	   ticker       date    high
+1    AMZN 2018-02-07 1460.99
+2      FB 2018-02-07  185.08
+3  GOOGLE 2018-02-07 1086.53
+4    NFLX 2018-02-07  272.45
+5    AMZN 2018-02-06 1443.99
+6      FB 2018-02-06  185.77
+7  GOOGLE 2018-02-06 1087.38
+8    NFLX 2018-02-06  266.70
+9    AMZN 2018-02-05 1458.98
+10     FB 2018-02-05  190.61
+```
+
++ Join fang_info with fang_prices to merge each company with several stock prices for that company
+
+```sql
+SELECT *
+FROM fang_info AS i
+INNER JOIN fang_prices AS p
+        ON i.ticker = p.ticker;
+```
+---
+# Result
+```
+    ticker   company_name sic_code  net_income ticker       date    high
+1    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-05 1458.98
+2    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-06 1443.99
+3    AMZN AMAZON COM INC     5961  2371000000   AMZN 2018-02-07 1460.99
+4  GOOGLE  ALPHABET INC.     7370 19478000000 GOOGLE 2018-02-06 1087.38
+5  GOOGLE  ALPHABET INC.     7370 19478000000 GOOGLE 2018-02-07 1086.53
+6      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-05  190.61
+7      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-06  185.77
+8      FB   FACEBOOK INC     7370 10188000000     FB 2018-02-07  185.08
+9    NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-06  266.70
+10   NFLX    NETFLIX INC     7841   186678000   NFLX 2018-02-07  272.45
+```
+
++ Same result as
+
+```sql
+SELECT *
+FROM fang_info AS i,
+     fang_prices AS p
+WHERE i.ticker = p.ticker;
+```
+
+---
+# Note
+
++ 
+```sql
+SELECT * FROM fang_info AS i
+   INNER JOIN fang_prices AS p
+           ON i.ticker = p.ticker;
+```
++ Note the use of AS for the table names
+
++ The result contains two columns named ticker
+```
+    ticker   company_name sic_code  net_income ticker       date    high
+```
+
+  + could omit one since the same value (used to JOIN)
+  + or rename using AS
+
+---
+# Order of Evaluation of SQL Query
+
++ Understanding how the different elements of a query are evaluated helps to reason and debug
+
++ Consider the stackexchange data
+
+```sql
+SELECT  PostTypeId, value, COUNT(PostTypeId) 
+ FROM Posts AS p, PostTypeIdMap AS m  
+ WHERE PostTypeId = m.Id 
+   AND value IN ('Question', 'Answer')
+ GROUP BY PostTypeId 
+```
+
+
+
+---
+# Evaluation Order
+
+
++ FROM or JOIN 
+
++ WHERE - selects the rows to be operated on.
+   + executed before both the aggregate functions and the SELECT statement.
+
++ GROUP BY
+   + any grouping levels eliminated by the WHERE will not appear as groups.
+
++ HAVING evaluated after the aggregation functions
+
++ SELECT - creates a new table with columns specified and the rows produced by the clauses before
+
++ DISTINCT - after SELECT has created a new table
+
++ ORDER BY 
+
++ LIMIT 
+
+---
+# What about Nested Queries?
+
++ They are evaluated according to the same order as above.
+
++ Whatever step the nested query occurs in, (conceptually) the database executes that query separately.
+
+
+
+
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
