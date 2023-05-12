@@ -542,7 +542,7 @@ GROUP BY teamID;
 ```sql
 SELECT SUM(salary) AS payroll, yearID, teamID
 FROM Salaries
-GROUP BY teamID
+GROUP BY teamID, yearID
 ORDER BY yearID DESC, payroll DESC;
 ```
 
@@ -586,7 +586,22 @@ LEFT JOIN SeriesPost AS p
      AND p.yearID = s.yearID
 GROUP BY s.teamID, s.yearID
 ORDER BY s.yearID DESC, payroll DESC;
-```
+     ```
+
+
+ , NOT IS NULL(p.teamIDWinner)
+     
+SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID, p.teamIDwinner = t.teamID
+FROM Salaries AS s
+LEFT JOIN Teams AS t
+     ON s.yearID = t.yearID
+     AND t.teamID = s.teamID
+LEFT JOIN SeriesPost AS p
+     ON p.teamIDwinner = s.teamID
+     AND p.yearID = s.yearID
+     AND p.round = 'WS'
+GROUP BY s.teamID, s.yearID
+ORDER BY s.yearID DESC, payroll DESC;     
 
 
      SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, SeriesPost as p WHERE s.yearID = '2013' AND s.teamID = 'BOS' and s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;
@@ -596,7 +611,7 @@ SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, Ser
      SELECT s.yearId, s.teamID, name, SUM(salary) AS payroll
      FROM Salaries AS s, Teams AS t, SeriesPost as p
      WHERE s.yearID = '2013'
-     AND d s.teamID = t.teamID
+     AND s.teamID = t.teamID
      AND s.yearID = t.yearID
      AND p.yearID = s.yearID
      AND p.round = 'WS'
