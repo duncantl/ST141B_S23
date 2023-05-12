@@ -1,0 +1,2162 @@
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> git push
+Everything up-to-date
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 fang.sqlite 
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> .tables
+fang_info    fang_prices  fang_sic   
+sqlite> exit
+   ...>
+   ...> 
+Parse error: near "exit": syntax error
+  exit 
+  ^--- error here
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .exit
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 .help
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> ^D
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> rm .help 
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+Connected to a transient in-memory database.
+Use ".open FILENAME" to reopen on a persistent database.
+sqlite> .help
+.archive ...             Manage SQL archives
+.auth ON|OFF             Show authorizer callbacks
+.backup ?DB? FILE        Backup DB (default "main") to FILE
+.bail on|off             Stop after hitting an error.  Default OFF
+.binary on|off           Turn binary output on or off.  Default OFF
+.cd DIRECTORY            Change the working directory to DIRECTORY
+.changes on|off          Show number of rows changed by SQL
+.check GLOB              Fail if output since .testcase does not match
+.clone NEWDB             Clone data into NEWDB from the existing database
+.connection [close] [#]  Open or close an auxiliary database connection
+.databases               List names and files of attached databases
+.dbconfig ?op? ?val?     List or change sqlite3_db_config() options
+.dbinfo ?DB?             Show status information about the database
+.dump ?OBJECTS?          Render database content as SQL
+.echo on|off             Turn command echo on or off
+.eqp on|off|full|...     Enable or disable automatic EXPLAIN QUERY PLAN
+.excel                   Display the output of next command in spreadsheet
+.exit ?CODE?             Exit this program with return-code CODE
+.expert                  EXPERIMENTAL. Suggest indexes for queries
+.explain ?on|off|auto?   Change the EXPLAIN formatting mode.  Default: auto
+.filectrl CMD ...        Run various sqlite3_file_control() operations
+.fullschema ?--indent?   Show schema and the content of sqlite_stat tables
+.headers on|off          Turn display of headers on or off
+.help ?-all? ?PATTERN?   Show help text for PATTERN
+.import FILE TABLE       Import data from FILE into TABLE
+.imposter INDEX TABLE    Create imposter table TABLE on index INDEX
+.indexes ?TABLE?         Show names of indexes
+.limit ?LIMIT? ?VAL?     Display or change the value of an SQLITE_LIMIT
+.lint OPTIONS            Report potential schema issues.
+.load FILE ?ENTRY?       Load an extension library
+.log FILE|off            Turn logging on or off.  FILE can be stderr/stdout
+.mode MODE ?OPTIONS?     Set output mode
+.nonce STRING            Suspend safe mode for one command if nonce matches
+.nullvalue STRING        Use STRING in place of NULL values
+.once ?OPTIONS? ?FILE?   Output for the next SQL command only to FILE
+.open ?OPTIONS? ?FILE?   Close existing database and reopen FILE
+.output ?FILE?           Send output to FILE or stdout if FILE is omitted
+.parameter CMD ...       Manage SQL parameter bindings
+.print STRING...         Print literal STRING
+.progress N              Invoke progress handler after every N opcodes
+.prompt MAIN CONTINUE    Replace the standard prompts
+.quit                    Stop interpreting input stream, exit if primary.
+.read FILE               Read input from FILE or command output
+.recover                 Recover as much data as possible from corrupt db.
+.restore ?DB? FILE       Restore content of DB (default "main") from FILE
+.save ?OPTIONS? FILE     Write database to FILE (an alias for .backup ...)
+.scanstats on|off|est    Turn sqlite3_stmt_scanstatus() metrics on or off
+.schema ?PATTERN?        Show the CREATE statements matching PATTERN
+.selftest ?OPTIONS?      Run tests defined in the SELFTEST table
+.separator COL ?ROW?     Change the column and row separators
+.sha3sum ...             Compute a SHA3 hash of database content
+.shell CMD ARGS...       Run CMD ARGS... in a system shell
+.show                    Show the current values for various settings
+.stats ?ARG?             Show stats or turn stats on or off
+.system CMD ARGS...      Run CMD ARGS... in a system shell
+.tables ?TABLE?          List names of tables matching LIKE pattern TABLE
+.testcase NAME           Begin redirecting output to 'testcase-out.txt'
+.testctrl CMD ...        Run various sqlite3_test_control() operations
+.timeout MS              Try opening locked tables for MS milliseconds
+.timer on|off            Turn SQL timer on or off
+.trace ?OPTIONS?         Output each SQL statement as it is run
+.version                 Show source, library and compiler versions
+.vfsinfo ?AUX?           Information about the top-level VFS
+.vfslist                 List all available VFSes
+.vfsname ?AUX?           Print the name of the VFS stack
+.width NUM1 NUM2 ...     Set minimum column widths for columnar output
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ORDER BY Num DESC;
+Parse error: no such table: moz_cookies
+sqlite> .tables
+sqlite> ^D
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 cookies.sqlite
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ORDER BY Num DESC;
+.washingtonpost.com|30
+.ucdavis.edu|26
+.intuit.com|25
+.wsj.com|23
+.cbssports.com|23
+.realtor.com|20
+.epson.com|20
+.zoom.us|19
+.youtube.com|19
+.linode.com|19
+.google.com|19
+.eventbrite.com|18
+.peacocktv.com|17
+.nytimes.com|17
+.bankofamerica.com|17
+www.macworld.com|16
+.pcworld.com|16
+.macworld.com|16
+.golf.com|16
+.amazon.com|16
+.bestbuy.com|15
+.bbc.com|15
+www.pcworld.com|14
+.sidetrak.com|14
+.intentiq.com|14
+.elastic.co|14
+.docs.google.com|14
+www.realtor.com|13
+.satechi.net|13
+.ugreen.com|12
+.prebid.a-mo.net|12
+.politico.com|12
+.ibm.com|12
+.cdw.com|12
+.bhphotovideo.com|12
+ucdavis365-my.sharepoint.com|11
+.slack.com|11
+.nba.com|11
+.latimes.com|11
+.ieee.org|11
+satechi.net|10
+.sonicwall.com|10
+.linkedin.com|10
+.carmax.com|10
+.bobvila.com|10
+.autodesk.com|10
+www.sfchronicle.com|9
+golf.com|9
+epson.com|9
+.myvisualiq.net|9
+www.pvsyst.com|8
+www.programmingr.com|8
+www.goodhousekeeping.com|8
+sp.nba.com|8
+sidetrak.com|8
+exchange.mediavine.com|8
+.zdnet.com|8
+.www.linkedin.com|8
+.ubc.ca|8
+.thesafersearch.com|8
+.smartsheet.com|8
+.progress.com|8
+.poshmark.com|8
+.paypal.com|8
+.neodatagroup.com|8
+.nautil.us|8
+.box.com|8
+www.ugreen.com|7
+www.oreilly.com|7
+www.netsurion.com|7
+www.google.com|7
+www.cbssports.com|7
+www.beyondtrust.com|7
+www.abebooks.com|7
+natashaskitchen.com|7
+mail.google.com|7
+.theguardian.com|7
+.theatlantic.com|7
+.politico.eu|7
+.onetag-sys.com|7
+.netflix.com|7
+.mlb.com|7
+.leevalley.com|7
+.kqed.org|7
+.irishtimes.com|7
+.insidehighered.com|7
+.goodhousekeeping.com|7
+.finehomebuilding.com|7
+.brentozar.com|7
+.beyondtrust.com|7
+.berkeley.edu|7
+.alibabacloud.com|7
+www.statology.org|6
+.woodcraft.com|6
+.teuteuf.fr|6
+.sourceforge.net|6
+.sfchronicle.com|6
+.sciencedirect.com|6
+.reddit.com|6
+.oreilly.com|6
+.essentialsql.com|6
+.datadoghq.com|6
+.barnesandnoble.com|6
+.apple.com|6
+.ad.gt|6
+.a-mo.net|6
+www.vox.com|5
+www.leevalley.com|5
+www.ibm.com|5
+www.brentozar.com|5
+weather.com|5
+uc.sumtotal.host|5
+poshmark.com|5
+piazza.com|5
+drive.google.com|5
+chat.google.com|5
+accounts.google.com|5
+.weather.com|5
+.vt.edu|5
+.ucla.edu|5
+.storysaverhd.io|5
+.stackoverflow.com|5
+.sportradarserving.com|5
+.motionpoint.com|5
+.microsoft.com|5
+.masters.com|5
+.imdb.com|5
+.facebook.com|5
+.deliciousbrains.com|5
+.datacamp.com|5
+.codecademy.com|5
+.chegg.com|5
+.ca.gov|5
+.6sc.co|5
+www.sqlitetutorial.net|4
+www.myagecalculator.com|4
+www.irishtimes.com|4
+www.guidingtech.com|4
+www.essentialsql.com|4
+ucdavis.app.box.com|4
+statisticsglobe.com|4
+meta.wikimedia.org|4
+login.wikimedia.org|4
+login.chronicle.com|4
+github.com|4
+en.wiktionary.org|4
+elb.the-ozone-project.com|4
+cheatography.com|4
+auth0.openai.com|4
+.w3schools.com|4
+.universityofcalifornia.edu|4
+.unb.ca|4
+.twitter.com|4
+.trkn.us|4
+.smilewanted.com|4
+.pardot.com|4
+.opensource.com|4
+.nih.gov|4
+.newscgp.com|4
+.netsurion.com|4
+.minitool.com|4
+.loggly.com|4
+.ip2location.com|4
+.geeksforgeeks.org|4
+.fordham.edu|4
+.fivethirtyeight.com|4
+.ed.gov|4
+.dpmsrv.com|4
+.codeproject.com|4
+.chronicle.com|4
+.chatgptonline.io|4
+.census.gov|4
+www.wikidata.org|3
+www.theverge.com|3
+www.politico.com|3
+www.nytimes.com|3
+www.nba.com|3
+www.loggly.com|3
+www.enterprisestorageforum.com|3
+www.census.gov|3
+www.barnesandnoble.com|3
+support.bostondynamics.com|3
+secure.bankofamerica.com|3
+nytrng.com|3
+nautil.us|3
+login.microsoftonline.com|3
+en.wikipedia.org|3
+create.leadid.com|3
+commons.wikimedia.org|3
+calendar.google.com|3
+assets.espn.go.com|3
+armdintl-my.sharepoint.com|3
+api-d8acc878.duosecurity.com|3
+a.nytimes.com|3
+.www.realtor.com|3
+.vroom.com|3
+.uscis.gov|3
+.unsw.edu.au|3
+.ucsf.edu|3
+.ucsc.edu|3
+.theverge.com|3
+.superuser.com|3
+.substack.com|3
+.statology.org|3
+.stanford.edu|3
+.stackexchange.com|3
+.sportsdata.io|3
+.solvusoft.com|3
+.programmingr.com|3
+.practical365.com|3
+.openai.com|3
+.nsf.gov|3
+.nrel.gov|3
+.natashaskitchen.com|3
+.login.microsoftonline.com|3
+.javatpoint.com|3
+.irs.gov|3
+.ieee-dataport.org|3
+.github.com|3
+.davisenterprise.com|3
+.competitionlawinsight.com|3
+.ccgateway.net|3
+.broadcom.com|3
+.bfmio.com|3
+.baylor.edu|3
+.app.box.com|3
+.aliexpress.com|3
+.affirm.com|3
+.affirm.ca|3
+.adtelligent.com|3
+.9to5mac.com|3
+.4dex.io|3
+xproxy.api.bbc.com|2
+www2.appian.com|2
+www.zdnet.com|2
+www.woodcraft.com|2
+www.w3schools.com|2
+www.vroom.com|2
+www.timeanddate.com|2
+www.sonicwall.com|2
+www.solocheck.ie|2
+www.politico.eu|2
+www.motionpoint.com|2
+www.mlb.com|2
+www.javatpoint.com|2
+www.ip2location.com|2
+www.g2.com|2
+www.elastic.co|2
+www.datomic.com|2
+www.concurrences.com|2
+www.codecademy.com|2
+www.bobvila.com|2
+www.bhphotovideo.com|2
+worldle.teuteuf.fr|2
+uk-script.dotmetrics.net|2
+ucdavis.zoom.us|2
+turbotaxonline.app.intuit.com|2
+towardsdatascience.com|2
+support.microsoft.com|2
+sourceforge.net|2
+service.force.com|2
+sam.nrel.gov|2
+recommender.scarabresearch.com|2
+qvdt3feo.com|2
+push.piazza.com|2
+practical365.com|2
+photorosters.ucdavis.edu|2
+p2.gcprivacy.com|2
+mfp.intuit.com|2
+forms.goepson.com|2
+edigitalsurvey.com|2
+docs.appian.com|2
+discord.com|2
+dblp.org|2
+dailynous.com|2
+content.motionpoint.com|2
+checkout.getbread.com|2
+blog.datomic.com|2
+beacon.lynx.cognitivlabs.com|2
+asis.ucdavis.edu|2
+apply.grad.ucdavis.edu|2
+app.smartsheet.com|2
+app.getreplybox.com|2
+ai.ocelotbot.com|2
+ads.samba.tv|2
+77251.global.siteimproveanalytics.io|2
+10709.global.siteimproveanalytics.io|2
+.www.usenix.org|2
+.www.researchgate.net|2
+.www.myagecalculator.com|2
+.www.codecademy.com|2
+.www.barnesandnoble.com|2
+.webopedia.com|2
+.vox.com|2
+.ucd.ie|2
+.ucanr.edu|2
+.tsheets.com|2
+.trusteyman.com|2
+.treasury.gov|2
+.timeanddate.com|2
+.thepeoplehistory.com|2
+.the-ozone-project.com|2
+.tavianator.com|2
+.t.co|2
+.sumologic.com|2
+.stability.ai|2
+.sqlitetutorial.net|2
+.spot.im|2
+.solocheck.ie|2
+.sda.fyi|2
+.sciencex.com|2
+.ros.org|2
+.rewards.zoom.us|2
+.researchgate.net|2
+.rdrr.io|2
+.quickbooksconnect.com|2
+.quantamagazine.org|2
+.qualtrics.com|2
+.pimbook.org|2
+.phys.org|2
+.optinadserving.com|2
+.openbase.com|2
+.open5gs.org|2
+.noaa.gov|2
+.ninthdecimal.com|2
+.narrativ.com|2
+.mpio.io|2
+.mindmajix.com|2
+.medium.com|2
+.mediawallahscript.com|2
+.mdpi.com|2
+.matteomanferdini.com|2
+.maththinking.com|2
+.marinwildfire.org|2
+.londonreviewbookshop.co.uk|2
+.logan.ai|2
+.loc.gov|2
+.lenfestinstitute.org|2
+.kaggle.com|2
+.jamesthorne.com|2
+.iu.edu|2
+.hercjobs.org|2
+.guidingtech.com|2
+.globallegalpost.com|2
+.gladstone.org|2
+.giphy.com|2
+.ghostscript.com|2
+.getpublica.com|2
+.gatech.edu|2
+.force.com|2
+.firmofthefuture.com|2
+.fiftyt.com|2
+.et.nytimes.com|2
+.enterprisestorageforum.com|2
+.engageya.com|2
+.dotmetrics.net|2
+.doodle.com|2
+.dhs.gov|2
+.defensiblespacereport.org|2
+.d41.co|2
+.craigslist.org|2
+.corecursive.com|2
+.cityofdavis.org|2
+.chinesescholarshipcouncil.com|2
+.cheatography.com|2
+.carrickmines.com|2
+.bibliocommons.com|2
+.betterexplained.com|2
+.beltiblibrary.org|2
+.augmental.tech|2
+.attentivemobile.com|2
+.archive.org|2
+.appian.com|2
+.amazon-adsystem.com|2
+.allcaliforniaattorneys.com|2
+.admanmedia.com|2
+.adentifi.com|2
+.acenet.edu|2
+.a-mx.com|2
+.3blue1brown.com|2
+zoom.us|1
+www.xe.com|1
+www.webopedia.com|1
+www.waze.com|1
+www.thepeoplehistory.com|1
+www.stratosphereips.org|1
+www.solvusoft.com|1
+www.reddit.com|1
+www.progress.com|1
+www.peacocktv.com|1
+www.ncbi.nlm.nih.gov|1
+www.mdpi.com|1
+www.linode.com|1
+www.lawyer.com|1
+www.latimes.com|1
+www.kaggle.com|1
+www.imdb.com|1
+www.hardieboysinc.com|1
+www.gov.uk|1
+www.googleadservices.com|1
+www.ghostscript.com|1
+www.fec.gov|1
+www.cro.ie|1
+www.codeproject.com|1
+www.chronicle.com|1
+www.chegg.com|1
+www.cdw.com|1
+www.bis.doc.gov|1
+www.bbc.com|1
+www.bankofamerica.com|1
+www.autodesk.com|1
+www.amievenabee.com|1
+www.amazon.com|1
+www.allcaliforniaattorneys.com|1
+www-api.ibm.com|1
+ws.cs.1worldsync.com|1
+us-west-2.turbotaxonline.intuit.com|1
+ucpath.universityofcalifornia.edu|1
+twitter.com|1
+tracking.g2crowd.com|1
+topic.alibabacloud.com|1
+tiny.superpinkday.com|1
+techdocs.broadcom.com|1
+tasks-pa.clients6.google.com|1
+sync.aniview.com|1
+subscription.sfchronicle.com|1
+stats.ftb.ca.gov|1
+stability.ai|1
+sso.canvaslms.com|1
+sportsdata.io|1
+sofa.bankofamerica.com|1
+snowplow.mediavine.com|1
+slack.com|1
+shop.pe|1
+scout.salesloft.com|1
+sciencex.com|1
+sc-static.net|1
+sayingless.substack.com|1
+sailplay.net|1
+read.amazon.com|1
+r.3gl.net|1
+q777.sfchronicle.com|1
+presspassnow.one|1
+pr8cvqvq.micpn.com|1
+pixel.mtrcs.samba.tv|1
+phys.org|1
+pbs.at.cbsi.com|1
+ogs.google.com|1
+obseu.ytwohlcq.telerik.com|1
+myturbotax.intuit.com|1
+mi.barnesandnoble.com|1
+mevarabon.com|1
+medium.com|1
+marinet.bibliocommons.com|1
+mail-attachment.googleusercontent.com|1
+mail-ads.google.com|1
+m.stripe.com|1
+lists.wikimedia.org|1
+kepplir.com|1
+intent.pcworld.com|1
+intent.macworld.com|1
+info-savvy.com|1
+imgs.signifyd.com|1
+ieeexplore.ieee.org|1
+gitlab.gnome.org|1
+gitlab.com|1
+ghtorrent.org|1
+fivethirtyeight.com|1
+docs.google.com|1
+deliciousbrains.com|1
+data.abebooks.com|1
+contacts.google.com|1
+chat.openai.com|1
+callink.berkeley.edu|1
+calendarsuggest.clients6.google.com|1
+calendar-pa.clients6.google.com|1
+c950.chronicle.com|1
+c.wa.autodesk.com|1
+assets.leevalley.com|1
+appswaldo-pa.clients6.google.com|1
+app.grow.me|1
+api.xtremepush.com|1
+adfs.ucdavis.edu|1
+a.clickcertain.com|1
+.youvisit.com|1
+.xe.com|1
+.www.zdnet.com|1
+.www.vox.com|1
+.www.ugdturner.com|1
+.www.solvusoft.com|1
+.www.r-bloggers.com|1
+.www.nytimes.com|1
+.www.loggly.com|1
+.www.leevalley.com|1
+.www.cro.ie|1
+.www.cbssports.com|1
+.www.beyondtrust.com|1
+.www.beal-planet.com|1
+.www.bbc.com|1
+.www.abebooks.com|1
+.wiktionary.org|1
+.wikipedia.org|1
+.wikidata.org|1
+.when2meet.com|1
+.waze.com|1
+.voxmedia.com|1
+.ucr.edu|1
+.ucop.edu|1
+.tribl.io|1
+.trendmd.com|1
+.thrtle.com|1
+.target.bankofamerica.com|1
+.statisticsglobe.com|1
+.springeropen.com|1
+.solarwinds.com|1
+.smadex.com|1
+.simonsezit.com|1
+.sec.okta.com|1
+.scholar.google.com|1
+.reviews.llvm.org|1
+.pubble.io|1
+.pub.network|1
+.primis.tech|1
+.prfct.co|1
+.pointmediatracker.com|1
+.plesk.com|1
+.platform.latimes.com|1
+.paperlike.com|1
+.myaccount.nytimes.com|1
+.mrtnsvr.com|1
+.motionpoint.mpeasylink.com|1
+.mmstat.com|1
+.makecleanandmake.com|1
+.lytics.io|1
+.insurads.com|1
+.instructure.com|1
+.influ2.com|1
+.imtwjwoasak.com|1
+.idmsa.apple.com|1
+.hm.baidu.com|1
+.help.proofpoint.com|1
+.hardieboysinc.com|1
+.gstatic.com|1
+.golfchannel.com|1
+.goepson.com|1
+.globalcompetitionreview.com|1
+.getbread.com|1
+.gammaplatform.com|1
+.ftb.ca.gov|1
+.flowtype.press|1
+.fbot.me|1
+.dnacdn.net|1
+.die.net|1
+.dfa.ie|1
+.deviceid.trueleadid.com|1
+.cxx.rs|1
+.csync.loopme.me|1
+.csc.edu.cn|1
+.console.adtarget.com.tr|1
+.connectad.io|1
+.cohesionapps.com|1
+.cloud.ibm.com|1
+.chat.openai.com|1
+.cbe.capturehighered.net|1
+.associates-amazon.com|1
+.arxiv.org|1
+.app.link|1
+.aniview.com|1
+.amzn.to|1
+.aliyun.com|1
+.advanced-web-analytics.com|1
+.adpushup.com|1
+.a.usbrowserspeed.com|1
+.a.nytimes.com|1
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ORDER BY Num DESC WHERE Num > 1;
+Parse error: near "WHERE": syntax error
+   FROM moz_cookies GROUP BY host ORDER BY Num DESC WHERE Num > 1;
+                                      error here ---^
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies  WHERE Num > 1 GROUP BY host ORDER BY Num DESC;
+Parse error: misuse of aggregate: COUNT()
+  select host, COUNT(*) AS Num FROM moz_cookies  WHERE Num > 1 GROUP BY host ORD
+               ^--- error here
+sqlite> 
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ORDER BY Num DESC HAVING Num > 1;
+Parse error: near "HAVING": syntax error
+   FROM moz_cookies GROUP BY host ORDER BY Num DESC HAVING Num > 1;
+                                      error here ---^
+sqlite> select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host  HAVING Num > 1 ORDER BY Num DESC;
+.washingtonpost.com|30
+.ucdavis.edu|26
+.intuit.com|25
+.wsj.com|23
+.cbssports.com|23
+.realtor.com|20
+.epson.com|20
+.zoom.us|19
+.youtube.com|19
+.linode.com|19
+.google.com|19
+.eventbrite.com|18
+.peacocktv.com|17
+.nytimes.com|17
+.bankofamerica.com|17
+www.macworld.com|16
+.pcworld.com|16
+.macworld.com|16
+.golf.com|16
+.amazon.com|16
+.bestbuy.com|15
+.bbc.com|15
+www.pcworld.com|14
+.sidetrak.com|14
+.intentiq.com|14
+.elastic.co|14
+.docs.google.com|14
+www.realtor.com|13
+.satechi.net|13
+.ugreen.com|12
+.prebid.a-mo.net|12
+.politico.com|12
+.ibm.com|12
+.cdw.com|12
+.bhphotovideo.com|12
+ucdavis365-my.sharepoint.com|11
+.slack.com|11
+.nba.com|11
+.latimes.com|11
+.ieee.org|11
+satechi.net|10
+.sonicwall.com|10
+.linkedin.com|10
+.carmax.com|10
+.bobvila.com|10
+.autodesk.com|10
+www.sfchronicle.com|9
+golf.com|9
+epson.com|9
+.myvisualiq.net|9
+www.pvsyst.com|8
+www.programmingr.com|8
+www.goodhousekeeping.com|8
+sp.nba.com|8
+sidetrak.com|8
+exchange.mediavine.com|8
+.zdnet.com|8
+.www.linkedin.com|8
+.ubc.ca|8
+.thesafersearch.com|8
+.smartsheet.com|8
+.progress.com|8
+.poshmark.com|8
+.paypal.com|8
+.neodatagroup.com|8
+.nautil.us|8
+.box.com|8
+www.ugreen.com|7
+www.oreilly.com|7
+www.netsurion.com|7
+www.google.com|7
+www.cbssports.com|7
+www.beyondtrust.com|7
+www.abebooks.com|7
+natashaskitchen.com|7
+mail.google.com|7
+.theguardian.com|7
+.theatlantic.com|7
+.politico.eu|7
+.onetag-sys.com|7
+.netflix.com|7
+.mlb.com|7
+.leevalley.com|7
+.kqed.org|7
+.irishtimes.com|7
+.insidehighered.com|7
+.goodhousekeeping.com|7
+.finehomebuilding.com|7
+.brentozar.com|7
+.beyondtrust.com|7
+.berkeley.edu|7
+.alibabacloud.com|7
+www.statology.org|6
+.woodcraft.com|6
+.teuteuf.fr|6
+.sourceforge.net|6
+.sfchronicle.com|6
+.sciencedirect.com|6
+.reddit.com|6
+.oreilly.com|6
+.essentialsql.com|6
+.datadoghq.com|6
+.barnesandnoble.com|6
+.apple.com|6
+.ad.gt|6
+.a-mo.net|6
+www.vox.com|5
+www.leevalley.com|5
+www.ibm.com|5
+www.brentozar.com|5
+weather.com|5
+uc.sumtotal.host|5
+poshmark.com|5
+piazza.com|5
+drive.google.com|5
+chat.google.com|5
+accounts.google.com|5
+.weather.com|5
+.vt.edu|5
+.ucla.edu|5
+.storysaverhd.io|5
+.stackoverflow.com|5
+.sportradarserving.com|5
+.motionpoint.com|5
+.microsoft.com|5
+.masters.com|5
+.imdb.com|5
+.facebook.com|5
+.deliciousbrains.com|5
+.datacamp.com|5
+.codecademy.com|5
+.chegg.com|5
+.ca.gov|5
+.6sc.co|5
+www.sqlitetutorial.net|4
+www.myagecalculator.com|4
+www.irishtimes.com|4
+www.guidingtech.com|4
+www.essentialsql.com|4
+ucdavis.app.box.com|4
+statisticsglobe.com|4
+meta.wikimedia.org|4
+login.wikimedia.org|4
+login.chronicle.com|4
+github.com|4
+en.wiktionary.org|4
+elb.the-ozone-project.com|4
+cheatography.com|4
+auth0.openai.com|4
+.w3schools.com|4
+.universityofcalifornia.edu|4
+.unb.ca|4
+.twitter.com|4
+.trkn.us|4
+.smilewanted.com|4
+.pardot.com|4
+.opensource.com|4
+.nih.gov|4
+.newscgp.com|4
+.netsurion.com|4
+.minitool.com|4
+.loggly.com|4
+.ip2location.com|4
+.geeksforgeeks.org|4
+.fordham.edu|4
+.fivethirtyeight.com|4
+.ed.gov|4
+.dpmsrv.com|4
+.codeproject.com|4
+.chronicle.com|4
+.chatgptonline.io|4
+.census.gov|4
+www.wikidata.org|3
+www.theverge.com|3
+www.politico.com|3
+www.nytimes.com|3
+www.nba.com|3
+www.loggly.com|3
+www.enterprisestorageforum.com|3
+www.census.gov|3
+www.barnesandnoble.com|3
+support.bostondynamics.com|3
+secure.bankofamerica.com|3
+nytrng.com|3
+nautil.us|3
+login.microsoftonline.com|3
+en.wikipedia.org|3
+create.leadid.com|3
+commons.wikimedia.org|3
+calendar.google.com|3
+assets.espn.go.com|3
+armdintl-my.sharepoint.com|3
+api-d8acc878.duosecurity.com|3
+a.nytimes.com|3
+.www.realtor.com|3
+.vroom.com|3
+.uscis.gov|3
+.unsw.edu.au|3
+.ucsf.edu|3
+.ucsc.edu|3
+.theverge.com|3
+.superuser.com|3
+.substack.com|3
+.statology.org|3
+.stanford.edu|3
+.stackexchange.com|3
+.sportsdata.io|3
+.solvusoft.com|3
+.programmingr.com|3
+.practical365.com|3
+.openai.com|3
+.nsf.gov|3
+.nrel.gov|3
+.natashaskitchen.com|3
+.login.microsoftonline.com|3
+.javatpoint.com|3
+.irs.gov|3
+.ieee-dataport.org|3
+.github.com|3
+.davisenterprise.com|3
+.competitionlawinsight.com|3
+.ccgateway.net|3
+.broadcom.com|3
+.bfmio.com|3
+.baylor.edu|3
+.app.box.com|3
+.aliexpress.com|3
+.affirm.com|3
+.affirm.ca|3
+.adtelligent.com|3
+.9to5mac.com|3
+.4dex.io|3
+xproxy.api.bbc.com|2
+www2.appian.com|2
+www.zdnet.com|2
+www.woodcraft.com|2
+www.w3schools.com|2
+www.vroom.com|2
+www.timeanddate.com|2
+www.sonicwall.com|2
+www.solocheck.ie|2
+www.politico.eu|2
+www.motionpoint.com|2
+www.mlb.com|2
+www.javatpoint.com|2
+www.ip2location.com|2
+www.g2.com|2
+www.elastic.co|2
+www.datomic.com|2
+www.concurrences.com|2
+www.codecademy.com|2
+www.bobvila.com|2
+www.bhphotovideo.com|2
+worldle.teuteuf.fr|2
+uk-script.dotmetrics.net|2
+ucdavis.zoom.us|2
+turbotaxonline.app.intuit.com|2
+towardsdatascience.com|2
+support.microsoft.com|2
+sourceforge.net|2
+service.force.com|2
+sam.nrel.gov|2
+recommender.scarabresearch.com|2
+qvdt3feo.com|2
+push.piazza.com|2
+practical365.com|2
+photorosters.ucdavis.edu|2
+p2.gcprivacy.com|2
+mfp.intuit.com|2
+forms.goepson.com|2
+edigitalsurvey.com|2
+docs.appian.com|2
+discord.com|2
+dblp.org|2
+dailynous.com|2
+content.motionpoint.com|2
+checkout.getbread.com|2
+blog.datomic.com|2
+beacon.lynx.cognitivlabs.com|2
+asis.ucdavis.edu|2
+apply.grad.ucdavis.edu|2
+app.smartsheet.com|2
+app.getreplybox.com|2
+ai.ocelotbot.com|2
+ads.samba.tv|2
+77251.global.siteimproveanalytics.io|2
+10709.global.siteimproveanalytics.io|2
+.www.usenix.org|2
+.www.researchgate.net|2
+.www.myagecalculator.com|2
+.www.codecademy.com|2
+.www.barnesandnoble.com|2
+.webopedia.com|2
+.vox.com|2
+.ucd.ie|2
+.ucanr.edu|2
+.tsheets.com|2
+.trusteyman.com|2
+.treasury.gov|2
+.timeanddate.com|2
+.thepeoplehistory.com|2
+.the-ozone-project.com|2
+.tavianator.com|2
+.t.co|2
+.sumologic.com|2
+.stability.ai|2
+.sqlitetutorial.net|2
+.spot.im|2
+.solocheck.ie|2
+.sda.fyi|2
+.sciencex.com|2
+.ros.org|2
+.rewards.zoom.us|2
+.researchgate.net|2
+.rdrr.io|2
+.quickbooksconnect.com|2
+.quantamagazine.org|2
+.qualtrics.com|2
+.pimbook.org|2
+.phys.org|2
+.optinadserving.com|2
+.openbase.com|2
+.open5gs.org|2
+.noaa.gov|2
+.ninthdecimal.com|2
+.narrativ.com|2
+.mpio.io|2
+.mindmajix.com|2
+.medium.com|2
+.mediawallahscript.com|2
+.mdpi.com|2
+.matteomanferdini.com|2
+.maththinking.com|2
+.marinwildfire.org|2
+.londonreviewbookshop.co.uk|2
+.logan.ai|2
+.loc.gov|2
+.lenfestinstitute.org|2
+.kaggle.com|2
+.jamesthorne.com|2
+.iu.edu|2
+.hercjobs.org|2
+.guidingtech.com|2
+.globallegalpost.com|2
+.gladstone.org|2
+.giphy.com|2
+.ghostscript.com|2
+.getpublica.com|2
+.gatech.edu|2
+.force.com|2
+.firmofthefuture.com|2
+.fiftyt.com|2
+.et.nytimes.com|2
+.enterprisestorageforum.com|2
+.engageya.com|2
+.dotmetrics.net|2
+.doodle.com|2
+.dhs.gov|2
+.defensiblespacereport.org|2
+.d41.co|2
+.craigslist.org|2
+.corecursive.com|2
+.cityofdavis.org|2
+.chinesescholarshipcouncil.com|2
+.cheatography.com|2
+.carrickmines.com|2
+.bibliocommons.com|2
+.betterexplained.com|2
+.beltiblibrary.org|2
+.augmental.tech|2
+.attentivemobile.com|2
+.archive.org|2
+.appian.com|2
+.amazon-adsystem.com|2
+.allcaliforniaattorneys.com|2
+.admanmedia.com|2
+.adentifi.com|2
+.acenet.edu|2
+.a-mx.com|2
+.3blue1brown.com|2
+sqlite> SELECT * FROM (select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ) WHERE Num > 1;
+.3blue1brown.com|2
+.4dex.io|3
+.6sc.co|5
+.9to5mac.com|3
+.a-mo.net|6
+.a-mx.com|2
+.acenet.edu|2
+.ad.gt|6
+.adentifi.com|2
+.admanmedia.com|2
+.adtelligent.com|3
+.affirm.ca|3
+.affirm.com|3
+.alibabacloud.com|7
+.aliexpress.com|3
+.allcaliforniaattorneys.com|2
+.amazon-adsystem.com|2
+.amazon.com|16
+.app.box.com|3
+.appian.com|2
+.apple.com|6
+.archive.org|2
+.attentivemobile.com|2
+.augmental.tech|2
+.autodesk.com|10
+.bankofamerica.com|17
+.barnesandnoble.com|6
+.baylor.edu|3
+.bbc.com|15
+.beltiblibrary.org|2
+.berkeley.edu|7
+.bestbuy.com|15
+.betterexplained.com|2
+.beyondtrust.com|7
+.bfmio.com|3
+.bhphotovideo.com|12
+.bibliocommons.com|2
+.bobvila.com|10
+.box.com|8
+.brentozar.com|7
+.broadcom.com|3
+.ca.gov|5
+.carmax.com|10
+.carrickmines.com|2
+.cbssports.com|23
+.ccgateway.net|3
+.cdw.com|12
+.census.gov|4
+.chatgptonline.io|4
+.cheatography.com|2
+.chegg.com|5
+.chinesescholarshipcouncil.com|2
+.chronicle.com|4
+.cityofdavis.org|2
+.codecademy.com|5
+.codeproject.com|4
+.competitionlawinsight.com|3
+.corecursive.com|2
+.craigslist.org|2
+.d41.co|2
+.datacamp.com|5
+.datadoghq.com|6
+.davisenterprise.com|3
+.defensiblespacereport.org|2
+.deliciousbrains.com|5
+.dhs.gov|2
+.docs.google.com|14
+.doodle.com|2
+.dotmetrics.net|2
+.dpmsrv.com|4
+.ed.gov|4
+.elastic.co|14
+.engageya.com|2
+.enterprisestorageforum.com|2
+.epson.com|20
+.essentialsql.com|6
+.et.nytimes.com|2
+.eventbrite.com|18
+.facebook.com|5
+.fiftyt.com|2
+.finehomebuilding.com|7
+.firmofthefuture.com|2
+.fivethirtyeight.com|4
+.force.com|2
+.fordham.edu|4
+.gatech.edu|2
+.geeksforgeeks.org|4
+.getpublica.com|2
+.ghostscript.com|2
+.giphy.com|2
+.github.com|3
+.gladstone.org|2
+.globallegalpost.com|2
+.golf.com|16
+.goodhousekeeping.com|7
+.google.com|19
+.guidingtech.com|2
+.hercjobs.org|2
+.ibm.com|12
+.ieee-dataport.org|3
+.ieee.org|11
+.imdb.com|5
+.insidehighered.com|7
+.intentiq.com|14
+.intuit.com|25
+.ip2location.com|4
+.irishtimes.com|7
+.irs.gov|3
+.iu.edu|2
+.jamesthorne.com|2
+.javatpoint.com|3
+.kaggle.com|2
+.kqed.org|7
+.latimes.com|11
+.leevalley.com|7
+.lenfestinstitute.org|2
+.linkedin.com|10
+.linode.com|19
+.loc.gov|2
+.logan.ai|2
+.loggly.com|4
+.login.microsoftonline.com|3
+.londonreviewbookshop.co.uk|2
+.macworld.com|16
+.marinwildfire.org|2
+.masters.com|5
+.maththinking.com|2
+.matteomanferdini.com|2
+.mdpi.com|2
+.mediawallahscript.com|2
+.medium.com|2
+.microsoft.com|5
+.mindmajix.com|2
+.minitool.com|4
+.mlb.com|7
+.motionpoint.com|5
+.mpio.io|2
+.myvisualiq.net|9
+.narrativ.com|2
+.natashaskitchen.com|3
+.nautil.us|8
+.nba.com|11
+.neodatagroup.com|8
+.netflix.com|7
+.netsurion.com|4
+.newscgp.com|4
+.nih.gov|4
+.ninthdecimal.com|2
+.noaa.gov|2
+.nrel.gov|3
+.nsf.gov|3
+.nytimes.com|17
+.onetag-sys.com|7
+.open5gs.org|2
+.openai.com|3
+.openbase.com|2
+.opensource.com|4
+.optinadserving.com|2
+.oreilly.com|6
+.pardot.com|4
+.paypal.com|8
+.pcworld.com|16
+.peacocktv.com|17
+.phys.org|2
+.pimbook.org|2
+.politico.com|12
+.politico.eu|7
+.poshmark.com|8
+.practical365.com|3
+.prebid.a-mo.net|12
+.programmingr.com|3
+.progress.com|8
+.qualtrics.com|2
+.quantamagazine.org|2
+.quickbooksconnect.com|2
+.rdrr.io|2
+.realtor.com|20
+.reddit.com|6
+.researchgate.net|2
+.rewards.zoom.us|2
+.ros.org|2
+.satechi.net|13
+.sciencedirect.com|6
+.sciencex.com|2
+.sda.fyi|2
+.sfchronicle.com|6
+.sidetrak.com|14
+.slack.com|11
+.smartsheet.com|8
+.smilewanted.com|4
+.solocheck.ie|2
+.solvusoft.com|3
+.sonicwall.com|10
+.sourceforge.net|6
+.sportradarserving.com|5
+.sportsdata.io|3
+.spot.im|2
+.sqlitetutorial.net|2
+.stability.ai|2
+.stackexchange.com|3
+.stackoverflow.com|5
+.stanford.edu|3
+.statology.org|3
+.storysaverhd.io|5
+.substack.com|3
+.sumologic.com|2
+.superuser.com|3
+.t.co|2
+.tavianator.com|2
+.teuteuf.fr|6
+.the-ozone-project.com|2
+.theatlantic.com|7
+.theguardian.com|7
+.thepeoplehistory.com|2
+.thesafersearch.com|8
+.theverge.com|3
+.timeanddate.com|2
+.treasury.gov|2
+.trkn.us|4
+.trusteyman.com|2
+.tsheets.com|2
+.twitter.com|4
+.ubc.ca|8
+.ucanr.edu|2
+.ucd.ie|2
+.ucdavis.edu|26
+.ucla.edu|5
+.ucsc.edu|3
+.ucsf.edu|3
+.ugreen.com|12
+.unb.ca|4
+.universityofcalifornia.edu|4
+.unsw.edu.au|3
+.uscis.gov|3
+.vox.com|2
+.vroom.com|3
+.vt.edu|5
+.w3schools.com|4
+.washingtonpost.com|30
+.weather.com|5
+.webopedia.com|2
+.woodcraft.com|6
+.wsj.com|23
+.www.barnesandnoble.com|2
+.www.codecademy.com|2
+.www.linkedin.com|8
+.www.myagecalculator.com|2
+.www.realtor.com|3
+.www.researchgate.net|2
+.www.usenix.org|2
+.youtube.com|19
+.zdnet.com|8
+.zoom.us|19
+10709.global.siteimproveanalytics.io|2
+77251.global.siteimproveanalytics.io|2
+a.nytimes.com|3
+accounts.google.com|5
+ads.samba.tv|2
+ai.ocelotbot.com|2
+api-d8acc878.duosecurity.com|3
+app.getreplybox.com|2
+app.smartsheet.com|2
+apply.grad.ucdavis.edu|2
+armdintl-my.sharepoint.com|3
+asis.ucdavis.edu|2
+assets.espn.go.com|3
+auth0.openai.com|4
+beacon.lynx.cognitivlabs.com|2
+blog.datomic.com|2
+calendar.google.com|3
+chat.google.com|5
+cheatography.com|4
+checkout.getbread.com|2
+commons.wikimedia.org|3
+content.motionpoint.com|2
+create.leadid.com|3
+dailynous.com|2
+dblp.org|2
+discord.com|2
+docs.appian.com|2
+drive.google.com|5
+edigitalsurvey.com|2
+elb.the-ozone-project.com|4
+en.wikipedia.org|3
+en.wiktionary.org|4
+epson.com|9
+exchange.mediavine.com|8
+forms.goepson.com|2
+github.com|4
+golf.com|9
+login.chronicle.com|4
+login.microsoftonline.com|3
+login.wikimedia.org|4
+mail.google.com|7
+meta.wikimedia.org|4
+mfp.intuit.com|2
+natashaskitchen.com|7
+nautil.us|3
+nytrng.com|3
+p2.gcprivacy.com|2
+photorosters.ucdavis.edu|2
+piazza.com|5
+poshmark.com|5
+practical365.com|2
+push.piazza.com|2
+qvdt3feo.com|2
+recommender.scarabresearch.com|2
+sam.nrel.gov|2
+satechi.net|10
+secure.bankofamerica.com|3
+service.force.com|2
+sidetrak.com|8
+sourceforge.net|2
+sp.nba.com|8
+statisticsglobe.com|4
+support.bostondynamics.com|3
+support.microsoft.com|2
+towardsdatascience.com|2
+turbotaxonline.app.intuit.com|2
+uc.sumtotal.host|5
+ucdavis.app.box.com|4
+ucdavis.zoom.us|2
+ucdavis365-my.sharepoint.com|11
+uk-script.dotmetrics.net|2
+weather.com|5
+worldle.teuteuf.fr|2
+www.abebooks.com|7
+www.barnesandnoble.com|3
+www.beyondtrust.com|7
+www.bhphotovideo.com|2
+www.bobvila.com|2
+www.brentozar.com|5
+www.cbssports.com|7
+www.census.gov|3
+www.codecademy.com|2
+www.concurrences.com|2
+www.datomic.com|2
+www.elastic.co|2
+www.enterprisestorageforum.com|3
+www.essentialsql.com|4
+www.g2.com|2
+www.goodhousekeeping.com|8
+www.google.com|7
+www.guidingtech.com|4
+www.ibm.com|5
+www.ip2location.com|2
+www.irishtimes.com|4
+www.javatpoint.com|2
+www.leevalley.com|5
+www.loggly.com|3
+www.macworld.com|16
+www.mlb.com|2
+www.motionpoint.com|2
+www.myagecalculator.com|4
+www.nba.com|3
+www.netsurion.com|7
+www.nytimes.com|3
+www.oreilly.com|7
+www.pcworld.com|14
+www.politico.com|3
+www.politico.eu|2
+www.programmingr.com|8
+www.pvsyst.com|8
+www.realtor.com|13
+www.sfchronicle.com|9
+www.solocheck.ie|2
+www.sonicwall.com|2
+www.sqlitetutorial.net|4
+www.statology.org|6
+www.theverge.com|3
+www.timeanddate.com|2
+www.ugreen.com|7
+www.vox.com|5
+www.vroom.com|2
+www.w3schools.com|2
+www.wikidata.org|3
+www.woodcraft.com|2
+www.zdnet.com|2
+www2.appian.com|2
+xproxy.api.bbc.com|2
+sqlite> SELECT * FROM (select host, COUNT(*) AS Num FROM moz_cookies GROUP BY host ) WHERE Num > 1;
+.3blue1brown.com|2
+.4dex.io|3
+.6sc.co|5
+.9to5mac.com|3
+.a-mo.net|6
+.a-mx.com|2
+.acenet.edu|2
+.ad.gt|6
+.adentifi.com|2
+.admanmedia.com|2
+.adtelligent.com|3
+.affirm.ca|3
+.affirm.com|3
+.alibabacloud.com|7
+.aliexpress.com|3
+.allcaliforniaattorneys.com|2
+.amazon-adsystem.com|2
+.amazon.com|16
+.app.box.com|3
+.appian.com|2
+.apple.com|6
+.archive.org|2
+.attentivemobile.com|2
+.augmental.tech|2
+.autodesk.com|10
+.bankofamerica.com|17
+.barnesandnoble.com|6
+.baylor.edu|3
+.bbc.com|15
+.beltiblibrary.org|2
+.berkeley.edu|7
+.bestbuy.com|15
+.betterexplained.com|2
+.beyondtrust.com|7
+.bfmio.com|3
+.bhphotovideo.com|12
+.bibliocommons.com|2
+.bobvila.com|10
+.box.com|8
+.brentozar.com|7
+.broadcom.com|3
+.ca.gov|5
+.carmax.com|10
+.carrickmines.com|2
+.cbssports.com|23
+.ccgateway.net|3
+.cdw.com|12
+.census.gov|4
+.chatgptonline.io|4
+.cheatography.com|2
+.chegg.com|5
+.chinesescholarshipcouncil.com|2
+.chronicle.com|4
+.cityofdavis.org|2
+.codecademy.com|5
+.codeproject.com|4
+.competitionlawinsight.com|3
+.corecursive.com|2
+.craigslist.org|2
+.d41.co|2
+.datacamp.com|5
+.datadoghq.com|6
+.davisenterprise.com|3
+.defensiblespacereport.org|2
+.deliciousbrains.com|5
+.dhs.gov|2
+.docs.google.com|14
+.doodle.com|2
+.dotmetrics.net|2
+.dpmsrv.com|4
+.ed.gov|4
+.elastic.co|14
+.engageya.com|2
+.enterprisestorageforum.com|2
+.epson.com|20
+.essentialsql.com|6
+.et.nytimes.com|2
+.eventbrite.com|18
+.facebook.com|5
+.fiftyt.com|2
+.finehomebuilding.com|7
+.firmofthefuture.com|2
+.fivethirtyeight.com|4
+.force.com|2
+.fordham.edu|4
+.gatech.edu|2
+.geeksforgeeks.org|4
+.getpublica.com|2
+.ghostscript.com|2
+.giphy.com|2
+.github.com|3
+.gladstone.org|2
+.globallegalpost.com|2
+.golf.com|16
+.goodhousekeeping.com|7
+.google.com|19
+.guidingtech.com|2
+.hercjobs.org|2
+.ibm.com|12
+.ieee-dataport.org|3
+.ieee.org|11
+.imdb.com|5
+.insidehighered.com|7
+.intentiq.com|14
+.intuit.com|25
+.ip2location.com|4
+.irishtimes.com|7
+.irs.gov|3
+.iu.edu|2
+.jamesthorne.com|2
+.javatpoint.com|3
+.kaggle.com|2
+.kqed.org|7
+.latimes.com|11
+.leevalley.com|7
+.lenfestinstitute.org|2
+.linkedin.com|10
+.linode.com|19
+.loc.gov|2
+.logan.ai|2
+.loggly.com|4
+.login.microsoftonline.com|3
+.londonreviewbookshop.co.uk|2
+.macworld.com|16
+.marinwildfire.org|2
+.masters.com|5
+.maththinking.com|2
+.matteomanferdini.com|2
+.mdpi.com|2
+.mediawallahscript.com|2
+.medium.com|2
+.microsoft.com|5
+.mindmajix.com|2
+.minitool.com|4
+.mlb.com|7
+.motionpoint.com|5
+.mpio.io|2
+.myvisualiq.net|9
+.narrativ.com|2
+.natashaskitchen.com|3
+.nautil.us|8
+.nba.com|11
+.neodatagroup.com|8
+.netflix.com|7
+.netsurion.com|4
+.newscgp.com|4
+.nih.gov|4
+.ninthdecimal.com|2
+.noaa.gov|2
+.nrel.gov|3
+.nsf.gov|3
+.nytimes.com|17
+.onetag-sys.com|7
+.open5gs.org|2
+.openai.com|3
+.openbase.com|2
+.opensource.com|4
+.optinadserving.com|2
+.oreilly.com|6
+.pardot.com|4
+.paypal.com|8
+.pcworld.com|16
+.peacocktv.com|17
+.phys.org|2
+.pimbook.org|2
+.politico.com|12
+.politico.eu|7
+.poshmark.com|8
+.practical365.com|3
+.prebid.a-mo.net|12
+.programmingr.com|3
+.progress.com|8
+.qualtrics.com|2
+.quantamagazine.org|2
+.quickbooksconnect.com|2
+.rdrr.io|2
+.realtor.com|20
+.reddit.com|6
+.researchgate.net|2
+.rewards.zoom.us|2
+.ros.org|2
+.satechi.net|13
+.sciencedirect.com|6
+.sciencex.com|2
+.sda.fyi|2
+.sfchronicle.com|6
+.sidetrak.com|14
+.slack.com|11
+.smartsheet.com|8
+.smilewanted.com|4
+.solocheck.ie|2
+.solvusoft.com|3
+.sonicwall.com|10
+.sourceforge.net|6
+.sportradarserving.com|5
+.sportsdata.io|3
+.spot.im|2
+.sqlitetutorial.net|2
+.stability.ai|2
+.stackexchange.com|3
+.stackoverflow.com|5
+.stanford.edu|3
+.statology.org|3
+.storysaverhd.io|5
+.substack.com|3
+.sumologic.com|2
+.superuser.com|3
+.t.co|2
+.tavianator.com|2
+.teuteuf.fr|6
+.the-ozone-project.com|2
+.theatlantic.com|7
+.theguardian.com|7
+.thepeoplehistory.com|2
+.thesafersearch.com|8
+.theverge.com|3
+.timeanddate.com|2
+.treasury.gov|2
+.trkn.us|4
+.trusteyman.com|2
+.tsheets.com|2
+.twitter.com|4
+.ubc.ca|8
+.ucanr.edu|2
+.ucd.ie|2
+.ucdavis.edu|26
+.ucla.edu|5
+.ucsc.edu|3
+.ucsf.edu|3
+.ugreen.com|12
+.unb.ca|4
+.universityofcalifornia.edu|4
+.unsw.edu.au|3
+.uscis.gov|3
+.vox.com|2
+.vroom.com|3
+.vt.edu|5
+.w3schools.com|4
+.washingtonpost.com|30
+.weather.com|5
+.webopedia.com|2
+.woodcraft.com|6
+.wsj.com|23
+.www.barnesandnoble.com|2
+.www.codecademy.com|2
+.www.linkedin.com|8
+.www.myagecalculator.com|2
+.www.realtor.com|3
+.www.researchgate.net|2
+.www.usenix.org|2
+.youtube.com|19
+.zdnet.com|8
+.zoom.us|19
+10709.global.siteimproveanalytics.io|2
+77251.global.siteimproveanalytics.io|2
+a.nytimes.com|3
+accounts.google.com|5
+ads.samba.tv|2
+ai.ocelotbot.com|2
+api-d8acc878.duosecurity.com|3
+app.getreplybox.com|2
+app.smartsheet.com|2
+apply.grad.ucdavis.edu|2
+armdintl-my.sharepoint.com|3
+asis.ucdavis.edu|2
+assets.espn.go.com|3
+auth0.openai.com|4
+beacon.lynx.cognitivlabs.com|2
+blog.datomic.com|2
+calendar.google.com|3
+chat.google.com|5
+cheatography.com|4
+checkout.getbread.com|2
+commons.wikimedia.org|3
+content.motionpoint.com|2
+create.leadid.com|3
+dailynous.com|2
+dblp.org|2
+discord.com|2
+docs.appian.com|2
+drive.google.com|5
+edigitalsurvey.com|2
+elb.the-ozone-project.com|4
+en.wikipedia.org|3
+en.wiktionary.org|4
+epson.com|9
+exchange.mediavine.com|8
+forms.goepson.com|2
+github.com|4
+golf.com|9
+login.chronicle.com|4
+login.microsoftonline.com|3
+login.wikimedia.org|4
+mail.google.com|7
+meta.wikimedia.org|4
+mfp.intuit.com|2
+natashaskitchen.com|7
+nautil.us|3
+nytrng.com|3
+p2.gcprivacy.com|2
+photorosters.ucdavis.edu|2
+piazza.com|5
+poshmark.com|5
+practical365.com|2
+push.piazza.com|2
+qvdt3feo.com|2
+recommender.scarabresearch.com|2
+sam.nrel.gov|2
+satechi.net|10
+secure.bankofamerica.com|3
+service.force.com|2
+sidetrak.com|8
+sourceforge.net|2
+sp.nba.com|8
+statisticsglobe.com|4
+support.bostondynamics.com|3
+support.microsoft.com|2
+towardsdatascience.com|2
+turbotaxonline.app.intuit.com|2
+uc.sumtotal.host|5
+ucdavis.app.box.com|4
+ucdavis.zoom.us|2
+ucdavis365-my.sharepoint.com|11
+uk-script.dotmetrics.net|2
+weather.com|5
+worldle.teuteuf.fr|2
+www.abebooks.com|7
+www.barnesandnoble.com|3
+www.beyondtrust.com|7
+www.bhphotovideo.com|2
+www.bobvila.com|2
+www.brentozar.com|5
+www.cbssports.com|7
+www.census.gov|3
+www.codecademy.com|2
+www.concurrences.com|2
+www.datomic.com|2
+www.elastic.co|2
+www.enterprisestorageforum.com|3
+www.essentialsql.com|4
+www.g2.com|2
+www.goodhousekeeping.com|8
+www.google.com|7
+www.guidingtech.com|4
+www.ibm.com|5
+www.ip2location.com|2
+www.irishtimes.com|4
+www.javatpoint.com|2
+www.leevalley.com|5
+www.loggly.com|3
+www.macworld.com|16
+www.mlb.com|2
+www.motionpoint.com|2
+www.myagecalculator.com|4
+www.nba.com|3
+www.netsurion.com|7
+www.nytimes.com|3
+www.oreilly.com|7
+www.pcworld.com|14
+www.politico.com|3
+www.politico.eu|2
+www.programmingr.com|8
+www.pvsyst.com|8
+www.realtor.com|13
+www.sfchronicle.com|9
+www.solocheck.ie|2
+www.sonicwall.com|2
+www.sqlitetutorial.net|4
+www.statology.org|6
+www.theverge.com|3
+www.timeanddate.com|2
+www.ugreen.com|7
+www.vox.com|5
+www.vroom.com|2
+www.w3schools.com|2
+www.wikidata.org|3
+www.woodcraft.com|2
+www.zdnet.com|2
+www2.appian.com|2
+xproxy.api.bbc.com|2
+sqlite> ^D
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> ls
+Outline        baseball.html   cookies.sqlite-shm  cookies2.sqlite-shm  dbms2.html   joins.html
+SQL            baseball.html~  cookies.sqlite-wal  cookies2.sqlite-wal  f1.sqlite    joins.html~
+SQLiteSession  cookies.sqlite  cookies2.sqlite     dbms.html            fang.sqlite
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> locate lahman
+/Users/duncan/Books/NextLevelComputationalReasoning/SampleCode/github/baseball_etl/mysql/lahman_import.R
+/Users/duncan/CRAN2/Pkgs/Lahman/demo/lahman-dplyr.R
+/Users/duncan/CRAN2/Pkgs/Lahman/inst/scripts/lahman-compare.R
+/Users/duncan/CRAN2/Pkgs/dbplyr/R/data-lahman.R
+/Users/duncan/CRAN2/Pkgs/dbplyr/man/lahman.Rd
+/Users/duncan/Classes/Davis/STA141B_22_23/Assignments/DBMS/lahman_1871-2022.sqlite
+/Users/duncan/Classes/Davis/stat242-Spr15/Web/Data/lahman2013.sqlite
+/Users/duncan/Data/baseball-archive-sqlite/lahman2013.sqlite
+/Users/duncan/Data/baseball-archive-sqlite/lahman2014.sqlite
+/Users/duncan/Data/baseball-archive-sqlite/lahman2015.sqlite
+/Users/duncan/Data/baseball-archive-sqlite/lahman2016.sqlite
+/Users/duncan/Data/lahman2013.sqlite
+/Users/duncan/Projects/CaseStudies/Baseball/Data/lahman2012-csv.zip
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 /Users/duncan/Data/lahman2013.sqlite
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> .schema Salaries
+CREATE TABLE Salaries (
+yearID INTEGER,
+teamID TEXT,
+lgID TEXT,
+playerID TEXT,
+salary REAL
+);
+CREATE UNIQUE INDEX Salaries_Index_E5568031_00FA_49CA on Salaries (yearID, teamID, lgID, playerID);
+sqlite> SELECT playerID, salary FROM Salaries WHERE yearID = 2003 ORDER BY salary DESC LIMIT 3;
+playerID   salary    
+---------  ----------
+rodrial01  22000000.0
+ramirma02  20000000.0
+delgaca01  18700000.0
+sqlite> SELECT playerID, salary, lgID FROM Salaries WHERE yearID = 2003 ORDER BY salary DESC LIMIT 3;
+playerID   salary      lgID
+---------  ----------  ----
+rodrial01  22000000.0  AL  
+ramirma02  20000000.0  AL  
+delgaca01  18700000.0  AL  
+sqlite> .schema Master
+CREATE TABLE Master (
+playerID TEXT,
+birthYear INTEGER,
+birthMonth INTEGER,
+birthDay INTEGER,
+birthCountry TEXT,
+birthState TEXT,
+birthCity TEXT,
+deathYear INTEGER,
+deathMonth INTEGER,
+deathDay INTEGER,
+deathCountry TEXT,
+deathState TEXT,
+deathCity TEXT,
+nameFirst TEXT,
+nameLast TEXT,
+nameGiven TEXT,
+weight INTEGER,
+height REAL,
+bats TEXT,
+throws TEXT,
+debut NUMERIC,
+finalGame NUMERIC,
+retroID TEXT,
+bbrefID TEXT
+);
+CREATE INDEX Master_bbrefID on Master (bbrefID);
+CREATE INDEX Master_playerID on Master (playerID);
+CREATE UNIQUE INDEX Master_PrimaryKey on Master (playerID);
+CREATE INDEX Master_retroID on Master (retroID);
+sqlite> .schema Teams
+CREATE TABLE Teams (
+yearID INTEGER,
+lgID TEXT,
+teamID TEXT,
+franchID TEXT,
+divID TEXT,
+Rank INTEGER,
+G INTEGER,
+Ghome INTEGER,
+W INTEGER,
+L INTEGER,
+DivWin TEXT,
+WCWin TEXT,
+LgWin TEXT,
+WSWin TEXT,
+R INTEGER,
+AB INTEGER,
+H INTEGER,
+"2B" INTEGER,
+"3B" INTEGER,
+HR INTEGER,
+BB INTEGER,
+SO INTEGER,
+SB INTEGER,
+CS INTEGER,
+HBP INTEGER,
+SF INTEGER,
+RA INTEGER,
+ER INTEGER,
+ERA REAL,
+CG INTEGER,
+SHO INTEGER,
+SV INTEGER,
+IPouts INTEGER,
+HA INTEGER,
+HRA INTEGER,
+BBA INTEGER,
+SOA INTEGER,
+E INTEGER,
+DP INTEGER,
+FP REAL,
+name TEXT,
+park TEXT,
+attendance INTEGER,
+BPF INTEGER,
+PPF INTEGER,
+teamIDBR TEXT,
+teamIDlahman45 TEXT,
+teamIDretro TEXT
+);
+CREATE INDEX Teams_divID on Teams (divID);
+CREATE INDEX Teams_franchID on Teams (franchID);
+CREATE UNIQUE INDEX Teams_Index_285058F1_D841_4142 on Teams (yearID, lgID, teamID);
+sqlite> .schema Salaries
+CREATE TABLE Salaries (
+yearID INTEGER,
+teamID TEXT,
+lgID TEXT,
+playerID TEXT,
+salary REAL
+);
+CREATE UNIQUE INDEX Salaries_Index_E5568031_00FA_49CA on Salaries (yearID, teamID, lgID, playerID);
+sqlite> SELECT playerID, salary, lgID, name
+FROM Salaries, Teams
+WHERE yearID = 2003
+     AND Salaries.teamID = Teams.teamID
+ORDER BY salary
+DESC LIMIT 3;
+SELECT playerID, salary, lgID, name
+   ...> FROM Salaries, Teams
+   ...> WHERE yearID = 2003
+   ...>      AND Salaries.teamID = Teams.teamID
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+Parse error: ambiguous column name: lgID
+  SELECT playerID, salary, lgID, name FROM Salaries, Teams WHERE yearID = 2003  
+             error here ---^
+sqlite> SELECT playerID, salary, Salaries.lgID, name
+FROM Salaries, Teams
+WHERE yearID = 2003
+     AND Salaries.teamID = Teams.teamID
+ORDER BY salary
+DESC LIMIT 3;
+SELECT playerID, salary, Salaries.lgID, name
+   ...> FROM Salaries, Teams
+   ...> WHERE yearID = 2003
+   ...>      AND Salaries.teamID = Teams.teamID
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+Parse error: ambiguous column name: yearID
+  y, Salaries.lgID, name FROM Salaries, Teams WHERE yearID = 2003      AND Salar
+                                      error here ---^
+sqlite> SELECT playerID, salary, Salaries.lgID, name
+FROM Salaries, Teams
+WHERE Salaries.yearID = 2003
+     AND Salaries.teamID = Teams.teamID
+ORDER BY salary
+DESC LIMIT 3;
+SELECT playerID, salary, Salaries.lgID, name
+   ...> FROM Salaries, Teams
+   ...> WHERE Salaries.yearID = 2003
+   ...>      AND Salaries.teamID = Teams.teamID
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+playerID   salary      lgID  name         
+---------  ----------  ----  -------------
+rodrial01  22000000.0  AL    Texas Rangers
+rodrial01  22000000.0  AL    Texas Rangers
+rodrial01  22000000.0  AL    Texas Rangers
+sqlite> SELECT playerID, salary, Salaries.lgID, name
+FROM Salaries, Teams
+WHERE Salaries.yearID = 2003
+      AND Salaries.teamID = Teams.teamID
+      AND Teams.yearID = 2003
+ORDER BY salary
+DESC LIMIT 3;
+SELECT playerID, salary, Salaries.lgID, name
+   ...> FROM Salaries, Teams
+   ...> WHERE Salaries.yearID = 2003
+   ...>       AND Salaries.teamID = Teams.teamID
+   ...>       AND Teams.yearID = 2003
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+playerID   salary      lgID  name             
+---------  ----------  ----  -----------------
+rodrial01  22000000.0  AL    Texas Rangers    
+ramirma02  20000000.0  AL    Boston Red Sox   
+delgaca01  18700000.0  AL    Toronto Blue Jays
+sqlite> SELECT * FROM Master WHERE playerID = 'delgaca01';
+playerID   birthYear  birthMonth  birthDay  birthCountry  birthState  birthCity  deathYear  deathMonth  deathDay  deathCountry  deathState  deathCity  nameFirst  nameLast  nameGiven    weight  height  bats  throws  debut         finalGame      retroID   bbrefID  
+---------  ---------  ----------  --------  ------------  ----------  ---------  ---------  ----------  --------  ------------  ----------  ---------  ---------  --------  -----------  ------  ------  ----  ------  ------------  -------------  --------  ---------
+delgaca01  1972       6           25        P.R.          NULL        Aguadilla  NULL       NULL        NULL      NULL          NULL        NULL       Carlos     Delgado   Carlos Juan  215     75.0    L     R       749451600000  1241931600000  delgc001  delgaca01
+sqlite> .schema Master
+CREATE TABLE Master (
+playerID TEXT,
+birthYear INTEGER,
+birthMonth INTEGER,
+birthDay INTEGER,
+birthCountry TEXT,
+birthState TEXT,
+birthCity TEXT,
+deathYear INTEGER,
+deathMonth INTEGER,
+deathDay INTEGER,
+deathCountry TEXT,
+deathState TEXT,
+deathCity TEXT,
+nameFirst TEXT,
+nameLast TEXT,
+nameGiven TEXT,
+weight INTEGER,
+height REAL,
+bats TEXT,
+throws TEXT,
+debut NUMERIC,
+finalGame NUMERIC,
+retroID TEXT,
+bbrefID TEXT
+);
+CREATE INDEX Master_bbrefID on Master (bbrefID);
+CREATE INDEX Master_playerID on Master (playerID);
+CREATE UNIQUE INDEX Master_PrimaryKey on Master (playerID);
+CREATE INDEX Master_retroID on Master (retroID);
+sqlite> SELECT playerID, salary, Salaries.lgID, name, nameLast, nameGiven
+FROM Salaries, Teams, Master AS m
+WHERE Salaries.yearID = 2003
+      AND Salaries.teamID = Teams.teamID
+      AND Teams.yearID = 2003
+      AND Salaries.playerID = m.playerID
+ORDER BY salary
+DESC LIMIT 3;
+SELECT playerID, salary, Salaries.lgID, name, nameLast, nameGiven
+   ...> FROM Salaries, Teams, Master AS m
+   ...> WHERE Salaries.yearID = 2003
+   ...>       AND Salaries.teamID = Teams.teamID
+   ...>       AND Teams.yearID = 2003
+   ...>       AND Salaries.playerID = m.playerID
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+Parse error: ambiguous column name: playerID
+  SELECT playerID, salary, Salaries.lgID, name, nameLast, nameGiven FROM Salarie
+         ^--- error here
+sqlite> SELECT m.playerID, salary, Salaries.lgID, name, nameLast, nameGiven
+FROM Salaries, Teams, Master AS m
+WHERE Salaries.yearID = 2003
+      AND Salaries.teamID = Teams.teamID
+      AND Teams.yearID = 2003
+      AND Salaries.playerID = m.playerID
+ORDER BY salary
+DESC LIMIT 3;
+SELECT m.playerID, salary, Salaries.lgID, name, nameLast, nameGiven
+   ...> FROM Salaries, Teams, Master AS m
+   ...> WHERE Salaries.yearID = 2003
+   ...>       AND Salaries.teamID = Teams.teamID
+   ...>       AND Teams.yearID = 2003
+   ...>       AND Salaries.playerID = m.playerID
+   ...> ORDER BY salary
+   ...> DESC LIMIT 3;
+playerID   salary      lgID  name               nameLast   nameGiven         
+---------  ----------  ----  -----------------  ---------  ------------------
+rodrial01  22000000.0  AL    Texas Rangers      Rodriguez  Alexander Emmanuel
+ramirma02  20000000.0  AL    Boston Red Sox     Ramirez    Manuel Aristides  
+delgaca01  18700000.0  AL    Toronto Blue Jays  Delgado    Carlos Juan       
+sqlite> .schema SeriesPost
+CREATE TABLE SeriesPost (
+yearID INTEGER,
+round TEXT,
+teamIDwinner TEXT,
+lgIDwinner TEXT,
+teamIDloser TEXT,
+lgIDloser TEXT,
+wins INTEGER,
+losses INTEGER,
+ties INTEGER
+);
+CREATE UNIQUE INDEX SeriesPost_Index_4F4214D5_9891_4F3C on SeriesPost (yearID, round);
+sqlite> SELECT * FROM SeriesPost WHERE yearId = 2010;l
+   ...>  C-c C-c
+
+   ...> ^D
+yearID  round  teamIDwinner  lgIDwinner  teamIDloser  lgIDloser  wins  losses  ties
+------  -----  ------------  ----------  -----------  ---------  ----  ------  ----
+2010    ALCS   TEX           AL          NYA          AL         4     2       0   
+2010    ALDS1  TEX           AL          TBA          AL         3     2       0   
+2010    ALDS2  NYA           AL          MIN          AL         3     0       0   
+2010    NLCS   SFN           NL          PHI          NL         4     2       0   
+2010    NLDS1  PHI           NL          CIN          NL         3     0       0   
+2010    NLDS2  SFN           NL          ATL          NL         3     1       0   
+2010    WS     SFN           NL          TEX          AL         4     1       0   
+Parse error: near "l": syntax error
+  l 
+  ^--- error here
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 /Users/duncan/Data/lahman2013.sqlite
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> SELECT * FROM SeriesPost WHERE yearId = 2010;
+yearID  round  teamIDwinner  lgIDwinner  teamIDloser  lgIDloser  wins  losses  ties
+------  -----  ------------  ----------  -----------  ---------  ----  ------  ----
+2010    ALCS   TEX           AL          NYA          AL         4     2       0   
+2010    ALDS1  TEX           AL          TBA          AL         3     2       0   
+2010    ALDS2  NYA           AL          MIN          AL         3     0       0   
+2010    NLCS   SFN           NL          PHI          NL         4     2       0   
+2010    NLDS1  PHI           NL          CIN          NL         3     0       0   
+2010    NLDS2  SFN           NL          ATL          NL         3     1       0   
+2010    WS     SFN           NL          TEX          AL         4     1       0   
+sqlite> 

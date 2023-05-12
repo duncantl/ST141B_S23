@@ -88,3 +88,15 @@
 + [Day 10 Databases and SQL](Lectures/Day10/SQLiteSession)
   + [slides on relational databases, SQL](Lectures/Day10/dbms.html)
   
+  
+## Day 11 (Tue 5/9)
++ [slides 1](Lectures/Day10/dbms.html)  
++ [slides 2](Lectures/Day10/dbms2.html)    
++ [FANG example database](Lectures/Day10/fang.sqlite)      
++ [Day 11 Databases and SQL](Lectures/Day11/Session11)  
+
+## Day 12 (Tue 7/9)
++ [Joins on Tables](Lectures/Day10/joins.html)  
++ [Baseball Case Studies](Lectures/Day10/baseball.html)  
++ [Day 12 SQL Session](Lectures/Day12/SQL_Session12)  
+

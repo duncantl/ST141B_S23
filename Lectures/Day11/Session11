@@ -1,0 +1,59 @@
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> ls
+Outline   SQL            SQL~           cookies.sqlite      cookies.sqlite-wal  dbms.html~  dbms2.html~
+Outline~  SQLiteSession  baseball.html  cookies.sqlite-shm  dbms.html           dbms2.html  fang.sqlite
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 cookies.sqlite
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> .tables
+moz_cookies
+sqlite> SELECT COUNT(*) 
+   ...> FROM  moz_cookies;
+
+2098
+sqlite> SELECT datetime(expiry, 'unixepoch'), host FROM moz_cookies
+ORDER BY expiry DESC LIMIT 20;
+   ...> 9999-12-31 23:59:59|api-d8acc878.duosecurity.com
+9999-12-31 23:59:59|.peacocktv.com
+9999-12-31 23:59:59|api-d8acc878.duosecurity.com
+9999-12-31 23:59:59|checkout.getbread.com
+9999-12-31 12:00:00|.www.realtor.com
+9999-12-31 12:00:00|.poshmark.com
+3022-09-02 02:30:10|www.irishtimes.com
+3022-05-11 15:21:14|.bbc.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2123-03-30 04:42:27|.natashaskitchen.com
+2105-06-19 03:27:21|.sda.fyi
+2105-06-15 02:44:30|.sda.fyi
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+sqlite> SELECT datetime(expiry, 'unixepoch') AS dt, host FROM moz_cookies
+ORDER BY dt DESC LIMIT 20;
+   ...> 9999-12-31 23:59:59|api-d8acc878.duosecurity.com
+9999-12-31 23:59:59|.peacocktv.com
+9999-12-31 23:59:59|api-d8acc878.duosecurity.com
+9999-12-31 23:59:59|checkout.getbread.com
+9999-12-31 12:00:00|.www.realtor.com
+9999-12-31 12:00:00|.poshmark.com
+3022-09-02 02:30:10|www.irishtimes.com
+3022-05-11 15:21:14|.bbc.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2245-02-15 13:26:41|.dpmsrv.com
+2123-03-30 04:42:27|.natashaskitchen.com
+2105-06-19 03:27:21|.sda.fyi
+2105-06-15 02:44:30|.sda.fyi
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+2099-12-31 00:00:00|.epson.com
+sqlite> 
+ORDER BY dt DESC LIMIT 20;
