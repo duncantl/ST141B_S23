@@ -97,6 +97,7 @@
 
 ## Day 12 (Tue 7/9)
 + [Joins on Tables](Lectures/Day10/joins.html)  
++ [baseball database](https://ucdavis.app.box.com/folder/206515800849?s=ftwawz3ai28er9ds9zfka1rktwl9eylm)
 + [Baseball Case Studies](Lectures/Day10/baseball.html)  
 + [Day 12 SQL Session](Lectures/Day12/SQL_Session12)  
 
