@@ -1,0 +1,259 @@
+]0;Day10~/Classes/Davis/STA141B_22_23/Public/Lectures/Day10> sqlite3 ~/sta141b/Assignments/DBMS/stats.stackexchange.db 
+-- Loading resources from /Users/duncan/.sqliterc
+SQLite version 3.41.2 2023-03-22 11:56:21
+Enter ".help" for usage hints.
+sqlite> .schema Posts
+CREATE TABLE Posts(
+  Id INTEGER PRIMARY KEY,
+  PostTypeId INTEGER,
+  AcceptedAnswerId INTEGER DEFAULT NULL,
+  CreationDate TEXT,
+  Score INTEGER,
+  ViewCount INTEGER DEFAULT NULL,
+  Body TEXT,
+  OwnerUserId INTEGER,
+  LastActivityDate TEXT,
+  Title TEXT,
+  Tags TEXT,
+  AnswerCount INTEGER DEFAULT NULL,
+  CommentCount INTEGER DEFAULT NULL,
+  ContentLicense TEXT,
+  LastEditorDisplayName TEXT,
+  LastEditDate TEXT,
+  LastEditorUserId INTEGER DEFAULT NULL,
+  CommunityOwnedDate TEXT,
+  ParentId  INTEGER DEFAULT NULL,
+  OwnerDisplayName TEXT,
+  ClosedDate  TEXT,
+  FavoriteCount INTEGER DEFAULT NULL  
+);
+sqlite> .tables
+BadgeClassMap      LinkTypeMap        PostTypeIdMap      VoteTypeMap      
+Badges             PostHistory        Posts              Votes            
+CloseReasonMap     PostHistoryTypeId  TagPosts         
+Comments           PostLinks          Users            
+sqlite> select * FROM PostTypeIdMap
+   ...> ;
+id  value                                                       
+--  ------------------------------------------------------------
+1   Question                                                    
+2   Answer                                                      
+3   Orphaned tag wiki                                           
+4   Tag wiki excerpt                                            
+5   Tag wiki                                                    
+6   Moderator nomination                                        
+7   Wiki placeholder (seems to only be the election description)
+8   Privilege wiki                                              
+sqlite> select Id FROM Posts LIMIT 10;
+Id
+--
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+9 
+10
+11
+sqlite> select PostTypeId, Id FROM Posts WHERE Id = 10;
+PostTypeId  Id
+----------  --
+1           10
+sqlite> select Id FROM Posts WHERE PostTypeId = 1 LIMIT 10;
+Id
+--
+1 
+2 
+3 
+4 
+6 
+7 
+10
+11
+17
+21
+sqlite> # get the answers for question with Id = 11.
+sqlite> SELECT COUNT(*) WHERE ParentId = 11;
+Parse error: no such column: ParentId
+  SELECT COUNT(*) WHERE ParentId = 11;
+                        ^--- error here
+sqlite> 
+sqlite> SELECT COUNT(*) FROM Posts WHERE ParentId = 11;
+COUNT(*)
+--------
+1       
+sqlite> SELECT COUNT(*) AS num FROM Posts GROUP BY ParentId ORDER BY num DESC LIMIT 10;
+num   
+------
+207292
+153   
+80    
+78    
+47    
+46    
+38    
+37    
+34    
+32    
+sqlite> SELECT ParentId, COUNT(*) AS num FROM Posts GROUP BY ParentId ORDER BY num DESC LIMIT 10;
+ParentId  num   
+--------  ------
+          207292
+726       153   
+423       80    
+1337      78    
+5115      47    
+4551      46    
+125       38    
+73        37    
+41208     34    
+476424    32    
+sqlite> SELECT ParentId, COUNT(*) AS num FROM Posts GROUP BY ParentId Having num = 5 ORDER BY num DESC LIMIT 10;
+ParentId  num
+--------  ---
+606726    5  
+605017    5  
+604226    5  
+603023    5  
+600310    5  
+598715    5  
+597935    5  
+597414    5  
+596324    5  
+595360    5  
+sqlite> SELECT  Q.Id, A.Id, Q.PostTypeId, A.PostTypeId, A.CreationDate, Q.CreationDate
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> Id      Id      PostTypeId  PostTypeId  CreationDate             CreationDate           
+------  ------  ----------  ----------  -----------------------  -----------------------
+606726  606730  1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+606726  606731  1           2           2023-02-26T21:37:18.853  2023-02-26T21:08:19.183
+606726  606791  1           2           2023-02-27T14:23:37.373  2023-02-26T21:08:19.183
+606726  606801  1           2           2023-02-27T15:52:58.333  2023-02-26T21:08:19.183
+606726  .s606965  1           2           2023-03-01T02:59:15.750  2023-02-26T21:08:19.183
+sqlite> .schema Users
+CREATE TABLE Users(
+  Id INTEGER PRIMARY KEY,
+  Reputation INTEGER,
+  CreationDate TEXT,
+  DisplayName TEXT,
+  LastAccessDate TEXT, 
+  WebsiteUrl TEXT,
+  Location TEXT,
+  AboutMe TEXT,
+  Views INTEGER,
+  UpVotes INTEGER,
+  DownVotes INTEGER,
+  AccountId INTEGER DEFAULT NULL
+--  ,  ProfileImageUrl TEXT
+);
+sqlite> SELECT  Q.Id, A.Id, Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1, A.OwnerUserId, u.DisplayName, u.Reputation
+FROM Posts AS A, Posts AS Q, Users AS u
+WHERE Q.Id = A.ParentId
+  AND A.OwnerUserId  = u.Id
+  AND  Q.Id = 606726;
+   ...>    ...>    ...>    ...> Id      Id      PostTypeId  PostTypeId  t2                       t1                       OwnerUserId  DisplayName       Reputation
+------  ------  ----------  ----------  -----------------------  -----------------------  -----------  ----------------  ----------
+606726  606730  1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183  247274       Dave              45074     
+606726  606731  1           2           2023-02-26T21:37:18.853  2023-02-26T21:08:19.183  164061       Sextus Empiricus  59969     
+606726  606791  1           2           2023-02-27T14:23:37.373  2023-02-26T21:08:19.183  176202       Frans Rodenburg   10612     
+606726  606801  1           2           2023-02-27T15:52:58.333  2023-02-26T21:08:19.183  380972       Sergey Kitov      51        
+606726  606965  1           2           2023-03-01T02:59:15.750  2023-02-26T21:08:19.183  381090       Charles Elliott   1         
+sqlite> .schema Badges
+CREATE TABLE Badges (
+  Id INTEGER PRIMARY KEY,
+  UserId INTEGER,
+  Name TEXT,
+  Date TEXT,
+  Class INTEGER,
+  TagBased TEXT
+);
+sqlite> SELECT  Q.Id, A.Id, Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1, t2 - t1
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> Parse error: no such column: t2
+  peId, A.CreationDate AS t2, Q.CreationDate AS t1, t2 - t1 FROM Posts AS A, Pos
+                                      error here ---^
+sqlite> SELECT  Q.Id, A.Id, Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1 
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> Id      Id      PostTypeId  PostTypeId  t2                       t1                     
+------  ------  ----------  ----------  -----------------------  -----------------------
+606726  606730  1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+606726  606731  1           2           2023-02-26T21:37:18.853  2023-02-26T21:08:19.183
+606726  606791  1           2           2023-02-27T14:23:37.373  2023-02-26T21:08:19.183
+606726  606801  1           2           2023-02-27T15:52:58.333  2023-02-26T21:08:19.183
+606726  606965  1           2           2023-03-01T02:59:15.750  2023-02-26T21:08:19.183
+sqlite> SELECT  COUNT(Q.Id), A.Id, Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1 
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> COUNT(Q.Id)  Id      PostTypeId  PostTypeId  t2                       t1                     
+-----------  ------  ----------  ----------  -----------------------  -----------------------
+5            606730  1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+sqlite> SELECT  COUNT(Q.Id), COUNT(A.Id), Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1 
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> COUNT(Q.Id)  COUNT(A.Id)  PostTypeId  PostTypeId  t2                       t1                     
+-----------  -----------  ----------  ----------  -----------------------  -----------------------
+5            5            1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+sqlite> SELECT  COUNT(DISTINCT Q.Id), COUNT(A.Id), Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1 
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> COUNT(DISTINCT Q.Id)  COUNT(A.Id)  PostTypeId  PostTypeId  t2                       t1                     
+--------------------  -----------  ----------  ----------  -----------------------  -----------------------
+1                     5            1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+sqlite> SELECT  COUNT(DISTINCT Q.Id), COUNT(DISTINCT A.Id), Q.PostTypeId, A.PostTypeId, A.CreationDate AS t2, Q.CreationDate AS t1 
+FROM Posts AS A, Posts AS Q
+WHERE Q.Id = A.ParentId
+  AND  Q.Id = 606726;
+   ...>    ...>    ...> COUNT(DISTINCT Q.Id)  COUNT(DISTINCT A.Id)  PostTypeId  PostTypeId  t2                       t1                     
+--------------------  --------------------  ----------  ----------  -----------------------  -----------------------
+1                     5                     1           2           2023-02-26T21:36:59.640  2023-02-26T21:08:19.183
+sqlite> select * from TagPosts LIMIT 10;
+Id  Tag                     
+--  ------------------------
+1   bayesian                
+1   prior                   
+1   elicitation             
+2   distributions           
+2   normality-assumption    
+3   software                
+3   open-source             
+4   distributions           
+4   statistical-significance
+6   machine-learning        
+sqlite> SELECT Tags FROM Posts WHERE PostTypeId = 1 LIMIT 10;
+Tags                                               
+---------------------------------------------------
+<bayesian><prior><elicitation>                     
+<distributions><normality-assumption>              
+<software><open-source>                            
+<distributions><statistical-significance>          
+<machine-learning><pac-learning>                   
+<dataset><sample><population><teaching>            
+<ordinal-data><likert><scales><measurement>        
+<multivariable><interpolation>                     
+<anova><chi-squared-test><generalized-linear-model>
+<forecasting><population><demography><census>      
+sqlite> SELECT Id, Tags FROM Posts WHERE PostTypeId = 1 LIMIT 10;
+Id  Tags                                               
+--  ---------------------------------------------------
+1   <bayesian><prior><elicitation>                     
+2   <distributions><normality-assumption>              
+3   <software><open-source>                            
+4   <distributions><statistical-significance>          
+6   <machine-learning><pac-learning>                   
+7   <dataset><sample><population><teaching>            
+10  <ordinal-data><likert><scales><measurement>        
+11  <multivariable><interpolation>                     
+17  <anova><chi-squared-test><generalized-linear-model>
+21  <forecasting><population><demography><census>      
+sqlite> 
