@@ -95,9 +95,14 @@
 + [FANG example database](Lectures/Day10/fang.sqlite)      
 + [Day 11 Databases and SQL](Lectures/Day11/Session11)  
 
-## Day 12 (Tue 7/9)
+## Day 12 (Thu 5/11)
 + [Joins on Tables](Lectures/Day10/joins.html)  
 + [baseball database](https://ucdavis.app.box.com/folder/206515800849?s=ftwawz3ai28er9ds9zfka1rktwl9eylm)
 + [Baseball Case Studies](Lectures/Day10/baseball.html)  
 + [Day 12 SQL Session](Lectures/Day12/SQL_Session12)  
+
+## Day 12 (Tue 5/16)
++ [Day 13 SQL Session](Lectures/Day13/Day13SQLSession)  
++ [SQL Code for Self Join](Lectures/Day13/SelfJoingPosts.sql)
+
 
