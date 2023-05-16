@@ -101,8 +101,9 @@
 + [Baseball Case Studies](Lectures/Day10/baseball.html)  
 + [Day 12 SQL Session](Lectures/Day12/SQL_Session12)  
 
-## Day 12 (Tue 5/16)
+## Day 13 (Tue 5/16)
 + [Day 13 SQL Session](Lectures/Day13/Day13SQLSession)  
 + [SQL Code for Self Join](Lectures/Day13/SelfJoingPosts.sql)
++ [Example of Self Join to Compute Time/Year Difference](Lectures/Day13/SelfJoin_TimeDuration.md)
 
 
