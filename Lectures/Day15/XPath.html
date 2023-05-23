@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Scraping</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+<textarea id="source">
+
+class: center, middle
+
+# XPath Web Scraping
+### Duncan Temple Lang
+### STA141B Spring, 2023
+
+
+<div style="clear: both"/>
+
+---
+
+# XPath
+
++ Language to navigate a tree
++ Series of steps to make a path
+
++ Each step consist of
+  + direction/axis
+  + test - node name or type
+  + predicate - optional logical,
+    + within `[ ]` - "where" or "such that"
+
++ steps separated by `/`
+
+```
+/step1/step2/step3
+
+//ul[@class = 'repo-list']//a[starts-with(@title, 'Topic:')]
+
+/descendant-or-self::ul[@class = 'repo-list']/
+     descendant-or-self::a[starts-with(@title, 'Topic:')]
+```
+
+## Axes
+
+[Axes](https://www.w3schools.com/xml/xpath_axes.asp)
+
++  `//` - descendant-or-self
++  `..` - parent
++  `@xyz` - attribute named xyz
++  `.` - self
+
+
+## Predicate
+
++ usual compare operators
+   + `=`, `!=`, `>`, `<`, `<=`, ...
+
++ logical combinations - `and` & `or`
+
+---
+## XPath Functions
+
+[Functions][https://developer.mozilla.org/en-US/docs/Web/XPath/Functions]
+
++ Use in predicate
+
++ `starts-with(node, 'text to find')`
++ `contains(node, 'text to find')`
++ `normalize-space()`
++ `substring()`
++ `string-length()`
++ `position()`
+
+---
+
+# XML package
+
++ htmlParse()
++ getNodeSet()
++ xpathApply(), xpathSApply()
+
++ xmlName()
++ xmlGetAttr()
++ xmlAttrs()
+
++ xmlChildren(), `x[]`
++ xmlSize()
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
