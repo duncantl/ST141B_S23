@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Scraping</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+<textarea id="source">
+
+class: center, middle
+
+
+# Web Scraping
+# Overview and Case Studies
+### Duncan Temple Lang
+### STA141B Spring, 2023
+
+
+<div style="clear: both"/>
+
+<!-- <hr width="50%"/> -->
+
+---
+# Data from the Web
+
+Before scraping from individual Web pages, consider
+
++ Other sources of the data
+   + Download directly as CSV/TSV/FWF, Database, XML, JSON
+
++ Use API - Application Programming Interface
+    + structured requests & results
+
++ From Web Pages
+   + Dynamic Web page
+       + See if downloaded in background as JSON, ...
+   + Static Web Page
+       + Extract from HTML content
+
++ Legal issues of scraping data.
+
+---
+# Basic Sequence
+
++ Download content
+  + HTML
+  + XML
+  + JSON
+  + CSV
+
+
++ Parse content
+  + Into R data structures
+
++ Parsing
+  + simple - JSON, CSV
+  + Complex - XML, HTML
+
+---
+# HTTP Requests
+
++ Often can use most of R's regular functions that also read a file.
+
++ Specify a URL, e.g.,
+```
+read.csv("https://raw.githubusercontent.com/duncantl/ST141B_S23/main/Data/Sample.csv")
+readLines("https://raw.githubusercontent.com/duncantl/ST141B_S23/main/Data/Weblogs/eeyore.log",
+          n= 10)
+```
+
+---
+# More Control
+
++ Often need more control over the HTTP request.
+  + Send some credential/authentication information.
+  + Need to mimic what the browser is doing
+  + Cookie, request header, 
+  + POST rather than GET a request
+      + POST includes request content in the body of the request, not (just) in the URL
+
++ Need to use packages or advanced R functions
+   + R functions
+   + Various R packages 
+      + RCurl, curl2, httr, ...
+
+---
+# Formats
+
++ Combination of Data formats
+  + HTML - static Web pages
+  + JSON - Javascript Object Notation
+  + CSV - comma separated values
+  + XML - eXtensible Markup Language
+  + Protobuf - customized binary representation of data.
+     + less frequent.
+
++ Sometimes content is returned compressed, e.g., gzip format
+
++ Sometimes content is binary, e.g., PDF, PNG, ...
+
+---
+# Reading Formats
+### Various Packages
+
++ XML and HTML
+   + xml2, XML, format-specific packages
+
++ JSON
+   + jsonlite, RJSONIO, rjson - packages
+
++ protobuf 
+   + RProtoBuf package
+
+---
+# New Language - Domain Specific Language
+
++ JSON - standard, generic self-describing format
+   + packages read JSON to corresponding data structure
+   + slight difference in results for complex cases across packages
+      + try to simplify results in "intuitive" ways
+
++ XML/HTML
+   + generic tree/hierarchical structure
+      + nodes and child nodes, recursively.
+   + XML content is application/domain specific
+   + HTML - layout structure and content page-specific
+
++ Use XPath or CSS Selectors to select nodes within the tree.
+
+
+---
+# Static HTMLPages
+
++ Often scraping many pages from a search query on a particular Web site,
+  e.g., cragislist.com, stackoverflow.com, cybercoders.com
+  
++ Results organized for humans 
+  + page of results with links to page for each individual result
+  + link/button for Next Page 
+
+---
+# Tools to Explore Specific HTTP Requests
+
++ [Firefox Developer Tools](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/)
+
+<!--
++ HTTPS requests to get documents
++ JSON - parse into data structures in R 
++ Parse HTML
+  + XPath
+  + CSS Selectors
+-->
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
