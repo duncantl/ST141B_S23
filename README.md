@@ -107,3 +107,9 @@
 + [Example of Self Join to Compute Time/Year Difference](Lectures/Day13/SelfJoin_TimeDuration.md)
 + [Example of using SUM() to count the number of tuples in a particular category/logical condition](Lectures/Day13/CountingNumberInDifferentCategories_SingleTupleAnswer.md)
 + [Exploring, Debugging SQL and Joins](Lectures/Day13/HallOfFame_Colleges.md)
+
+
+## Day 14 (Thu 5/18)
++ [Web Scraping Introduction slides](Lectures/Day14/slides.html)
++ [R Session](Lectures/Day14/RSession_HTMLTable)
+    + Reading HTML Table - [Wikipedia's USA state populations](https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population)
