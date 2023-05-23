@@ -1,0 +1,2323 @@
+]0;Day14~/sta141b/Public/Lectures/Day14> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 9773 
+Time = 2023-05-18 11:17:26 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day14 
+1> u = "https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population"
+[17:35] 2> tt = readLines(u)
+Warning message:
+In readLines(u) :
+  incomplete final line found on 'https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population'
+[18:20] 3> class(tt)
+[1] "character"
+[18:29] 4> length(tt)
+[1] 4672
+[18:33] 5> head(tt)
+[1] "<!DOCTYPE html>"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+[2] "<html class=\"client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-enabled vector-feature-main-menu-pinned-disabled vector-feature-limited-width-enabled vector-feature-limited-width-content-enabled vector-feature-zebra-design-disabled\" lang=\"en\" dir=\"ltr\">"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+[3] "<head>"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+[4] "<meta charset=\"UTF-8\">"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+[5] "<title>List of U.S. states and territories by population - Wikipedia</title>"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+[6] "<script>document.documentElement.className=\"client-js vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-enabled vector-feature-main-menu-pinned-disabled vector-feature-limited-width-enabled vector-feature-limited-width-content-enabled vector-feature-zebra-design-disabled\";(function(){var cookie=document.cookie.match(/(?:^|; )enwikimwclientprefs=([^;]+)/);if(cookie){var featureName=cookie[1];document.documentElement.className=document.documentElement.className.replace(featureName+'-enabled',featureName+'-disabled');}}());RLCONF={\"wgBreakFrames\":false,\"wgSeparatorTransformTable\":[\"\",\"\"],\"wgDigitTransformTable\":[\"\",\"\"],\"wgDefaultDateFormat\":\"dmy\",\"wgMonthNames\":[\"\",\"January\",\"February\",\"March\",\"April\",\"May\",\"June\",\"July\",\"August\",\"September\",\"October\",\"November\",\"December\"],\"wgRequestId\":\"ad338346-77a6-4531-b7f0-a5c649ed8474\",\"wgCSPNonce\":false,"
+[18:42] 6> grep("California", tt)
+[1]  662  731 3969
+[20:13] 7> grep("39,029,342", tt)
+[1] 733
+[20:40] 8> readHTMLTable
+Error: object 'readHTMLTable' not found
+No suitable frames for recover()
+[20:40] 8> library(XML)
+[22:38] 9> doc = htmlParse(tt)
+[23:09] 10> class(doc)
+[1] "HTMLInternalDocument" "HTMLInternalDocument"
+[3] "XMLInternalDocument"  "XMLAbstractDocument" 
+[23:22] 11> typeof(doc)
+[1] "externalptr"
+[24:41] 12> tbl = readHTMLTable(doc)
+[25:16] 13> length(tbl)
+[1] 5
+[25:20] 14> class(tbl)
+[1] "list"
+[25:27] 15> sapply(tbl, class)
+                                                           NULL 
+                                                   "data.frame" 
+                                                           NULL 
+                                                   "data.frame" 
+Population of states, territories, divisions and region[14]\n\n 
+                                                   "data.frame" 
+                                                           NULL 
+                                                   "data.frame" 
+                                                           NULL 
+                                                   "data.frame" 
+[25:32] 16> sapply(tbl, nrow)
+                                                           NULL 
+                                                             62 
+                                                           NULL 
+                                                              8 
+Population of states, territories, divisions and region[14]\n\n 
+                                                             74 
+                                                           NULL 
+                                                              3 
+                                                           NULL 
+                                                             12 
+[25:40] 17> head(tbl[[1]])
+    V1                 V2                      V3
+1 Rank State or territory Census population[8][a]
+2 2022               2020     July 1, 2022 (est.)
+3    1                  1              California
+4    2                  2                   Texas
+5    3                  3                 Florida
+6    4                  4                New York
+                      V4                                    V5
+1 Change,2010–2020[8][a] House of Reps.from the 2022 elections
+2          April 1, 2020                         April 1, 2010
+3             39,029,342                            39,538,223
+4             30,029,572                            29,145,505
+5             22,244,823                            21,538,187
+6             19,677,151                            20,201,249
+                                                   V6
+1 Pop. per elec. vote, 2020[b]from the 2022 elections
+2                                                   %
+3                                          37,253,956
+4                                          25,145,561
+5                                          18,801,310
+6                                          19,378,102
+                       V7                          V8
+1 Census pop. per seat[a] % of the total U.S. pop.[c]
+2                    Abs.                       Seats
+3                   6.13%                   2,284,267
+4                  15.91%                   3,999,944
+5                  14.56%                   2,736,877
+6                   4.25%                     823,147
+                V9       V10     V11     V12     V13     V14     V15
+1 % of Elec. Coll.      <NA>    <NA>    <NA>    <NA>    <NA>    <NA>
+2                % From 2022    2010    2020    2010    <NA>    <NA>
+3               52    11.95% 732,189 760,350 702,905 11.800% 11.908%
+4               38     8.74% 728,638 766,987 698,488  8.698%  8.038%
+5               28     6.44% 717,940 769,221 696,345  6.428%  6.010%
+6               26     5.98% 721,473 776,971 717,707  6.029%  6.194%
+     V16
+1   <NA>
+2   <NA>
+3 10.04%
+4  7.43%
+5  5.58%
+6  5.20%
+[26:34] 18> head(tbl[[3]])
+                                                V1 V2        V3 V4
+1 State/federal district/territory/division/region  # 2020 pop.  #
+2                                    Massachusetts 15 7,029,917 14
+3                                      Connecticut 29 3,605,944 29
+4                                    New Hampshire 41 1,377,529 42
+5                                            Maine 42 1,362,359 41
+6                                     Rhode Island 43 1,097,379 43
+         V5 V6        V7 V8              V9       V10
+1 2010 pop.  # 2000 pop.  # 2010–2020change Geo. sort
+2 6,547,629 13 6,349,097 21            7.4%      NEng
+3 3,574,097 29 3,405,565 47            0.9%      NEng
+4 1,316,470 41 1,235,786 30            4.6%      NEng
+5 1,328,361 40 1,274,923 42            2.6%      NEng
+6 1,052,567 43 1,048,319 31            4.3%      NEng
+[26:53] 19> tbl = readHTMLTable(doc, which = 1, header = TRUE)
+[27:37] 20> head(tbl)
+    V1   V2                  V3            V4            V5
+1 2022 2020 July 1, 2022 (est.) April 1, 2020 April 1, 2010
+2    1    1          California    39,029,342    39,538,223
+3    2    2               Texas    30,029,572    29,145,505
+4    3    3             Florida    22,244,823    21,538,187
+5    4    4            New York    19,677,151    20,201,249
+6    5    5        Pennsylvania    12,972,008    13,002,700
+          V6     V7        V8 V9       V10     V11     V12     V13
+1          %   Abs.     Seats  % From 2022    2010    2020    2010
+2 37,253,956  6.13% 2,284,267 52    11.95% 732,189 760,350 702,905
+3 25,145,561 15.91% 3,999,944 38     8.74% 728,638 766,987 698,488
+4 18,801,310 14.56% 2,736,877 28     6.44% 717,940 769,221 696,345
+5 19,378,102  4.25%   823,147 26     5.98% 721,473 776,971 717,707
+6 12,702,379  2.36%   300,321 17     3.91% 684,353 764,865 705,688
+      V14     V15    V16
+1    <NA>    <NA>   <NA>
+2 11.800% 11.908% 10.04%
+3  8.698%  8.038%  7.43%
+4  6.428%  6.010%  5.58%
+5  6.029%  6.194%  5.20%
+6  3.881%  4.060%  3.53%
+[27:40] 21> grep("<table", tt, fixed = TRUE)
+[1]  682 2718 2746 4368 4398
+[31:13] 22> tbl.nodes = getNodeSet(doc, "//table")
+[31:51] 23> length(tbls.nodes)
+Error: object 'tbls.nodes' not found
+No suitable frames for recover()
+[31:51] 23> length(tbl.nodes)
+[1] 5
+[37:22] 24> tbl.nodes[[1]]
+<table class="wikitable sortable plainrowheaders" style="width:100%; text-align:right">
+  <tbody>
+    <tr style="vertical-align:middle"><th colspan="2">Rank
+</th>
+<th rowspan="2">State or territory
+</th>
+<th colspan="3"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census population</div><sup id="cite_ref-Census2020_8-0" class="reference"><a href="#cite_note-Census2020-8">[8]</a></sup><sup id="cite_ref-residentundercount_10-0" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Change,<br/>2010–2020</div><sup id="cite_ref-Census2020_8-1" class="reference"><a href="#cite_note-Census2020-8">[8]</a></sup><sup id="cite_ref-residentundercount_10-1" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;"><a href="/wiki/United_States_House_of_Representatives" title="United States House of Representatives">House of Reps.</a><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th>
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Pop. per elec. vote, 2020<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[b]</a></sup><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census pop. per seat</div><sup id="cite_ref-residentundercount_10-2" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of the total U.S. pop.<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[c]</a></sup></div>
+</th>
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of Elec. Coll.</div>
+</th></tr>
+    <tr><th>2022</th>
+<th>2020
+</th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">July 1, 2022 (est.)</div>
+</th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">April 1, 2020</div>
+</th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">April 1, 2010</div>
+</th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">%</div>
+</th>
+<th>Abs.</th>
+<th>Seats</th>
+<th>%</th>
+<th>From 2022</th>
+<th>2010
+</th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">2020</div></th>
+<th><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">2010</div>
+</th></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/23px-Flag_of_California.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/35px-Flag_of_California.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/45px-Flag_of_California.svg.png 2x" data-file-width="900" data-file-height="600"/> </span><a href="/wiki/California" title="California">California</a>
+</th>
+<td>39,029,342
+</td>
+<td>39,538,223
+</td>
+<td>37,253,956
+</td>
+<td data-sort-value="6.13%">6.13%
+</td>
+<td>2,284,267
+</td>
+<td style="text-align:center"><span data-sort-value="7001520000000000000♠">52</span>
+</td>
+<td>11.95%
+</td>
+<td>732,189
+</td>
+<td>760,350
+</td>
+<td>702,905
+</td>
+<td>11.800%
+</td>
+<td>11.908%
+</td>
+<td>10.04%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/23px-Flag_of_Texas.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/35px-Flag_of_Texas.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/45px-Flag_of_Texas.svg.png 2x" data-file-width="1080" data-file-height="720"/> </span><a href="/wiki/Texas" title="Texas">Texas</a>
+</th>
+<td>30,029,572
+</td>
+<td>29,145,505
+</td>
+<td>25,145,561
+</td>
+<td>15.91%
+</td>
+<td>3,999,944
+</td>
+<td style="text-align:center"><span data-sort-value="7001380000000000000♠">38</span>
+</td>
+<td>8.74%
+</td>
+<td>728,638
+</td>
+<td>766,987
+</td>
+<td>698,488
+</td>
+<td>8.698%
+</td>
+<td>8.038%
+</td>
+<td>7.43%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000300000000000000♠">3</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000300000000000000♠">3</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/23px-Flag_of_Florida.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/35px-Flag_of_Florida.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/45px-Flag_of_Florida.svg.png 2x" data-file-width="300" data-file-height="200"/> </span><a href="/wiki/Florida" title="Florida">Florida</a>
+</th>
+<td>22,244,823
+</td>
+<td>21,538,187
+</td>
+<td>18,801,310
+</td>
+<td>14.56%
+</td>
+<td>2,736,877
+</td>
+<td style="text-align:center"><span data-sort-value="7001280000000000000♠">28</span>
+</td>
+<td>6.44%
+</td>
+<td>717,940
+</td>
+<td>769,221
+</td>
+<td>696,345
+</td>
+<td>6.428%
+</td>
+<td>6.010%
+</td>
+<td>5.58%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/23px-Flag_of_New_York.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/35px-Flag_of_New_York.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/46px-Flag_of_New_York.svg.png 2x" data-file-width="900" data-file-height="450"/> </span><a href="/wiki/New_York_(state)" title="New York (state)">New York</a>
+</th>
+<td>19,677,151
+</td>
+<td>20,201,249
+</td>
+<td>19,378,102
+</td>
+<td>4.25%
+</td>
+<td>823,147
+</td>
+<td style="text-align:center"><span data-sort-value="7001260000000000000♠">26</span>
+</td>
+<td>5.98%
+</td>
+<td>721,473
+</td>
+<td>776,971
+</td>
+<td>717,707
+</td>
+<td>6.029%
+</td>
+<td>6.194%
+</td>
+<td>5.20%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000500000000000000♠">5</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000500000000000000♠">5</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/21px-Flag_of_Pennsylvania.svg.png" decoding="async" width="21" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/32px-Flag_of_Pennsylvania.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/41px-Flag_of_Pennsylvania.svg.png 2x" data-file-width="740" data-file-height="540"/> </span><a href="/wiki/Pennsylvania" title="Pennsylvania">Pennsylvania</a>
+</th>
+<td>12,972,008
+</td>
+<td>13,002,700
+</td>
+<td>12,702,379
+</td>
+<td>2.36%
+</td>
+<td>300,321
+</td>
+<td style="text-align:center"><span data-sort-value="7001170000000000000♠">17</span>
+</td>
+<td>3.91%
+</td>
+<td>684,353
+</td>
+<td>764,865
+</td>
+<td>705,688
+</td>
+<td>3.881%
+</td>
+<td>4.060%
+</td>
+<td>3.53%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000600000000000000♠">6</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000600000000000000♠">6</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Illinois.svg/23px-Flag_of_Illinois.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Illinois.svg/35px-Flag_of_Illinois.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Illinois.svg/46px-Flag_of_Illinois.svg.png 2x" data-file-width="500" data-file-height="300"/> </span><a href="/wiki/Illinois" title="Illinois">Illinois</a>
+</th>
+<td>12,582,032
+</td>
+<td>12,812,508
+</td>
+<td>12,830,632
+</td>
+<td data-sort-value="-0.14%">−0.14%
+</td>
+<td data-sort-value="-7,893">−18,124
+</td>
+<td style="text-align:center"><span data-sort-value="7001170000000000000♠">17</span>
+</td>
+<td>3.91%
+</td>
+<td>674,343
+</td>
+<td>753,677
+</td>
+<td>712,813
+</td>
+<td>3.824%
+</td>
+<td>4.101%
+</td>
+<td>3.53%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000700000000000000♠">7</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000700000000000000♠">7</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/25px-Flag_of_Ohio.svg.png" decoding="async" width="25" height="15" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/38px-Flag_of_Ohio.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/50px-Flag_of_Ohio.svg.png 2x" data-file-width="520" data-file-height="320"/> </span><a href="/wiki/Ohio" title="Ohio">Ohio</a>
+</th>
+<td>11,756,058
+</td>
+<td>11,799,448
+</td>
+<td>11,536,504
+</td>
+<td>2.28%
+</td>
+<td>262,944
+</td>
+<td style="text-align:center"><span data-sort-value="7001150000000000000♠">15</span>
+</td>
+<td>3.45%
+</td>
+<td>694,085
+</td>
+<td>786,630
+</td>
+<td>721,032
+</td>
+<td>3.521%
+</td>
+<td>3.688%
+</td>
+<td>3.16%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Georgia_%28U.S._state%29.svg/23px-Flag_of_Georgia_%28U.S._state%29.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Georgia_%28U.S._state%29.svg/35px-Flag_of_Georgia_%28U.S._state%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Georgia_%28U.S._state%29.svg/46px-Flag_of_Georgia_%28U.S._state%29.svg.png 2x" data-file-width="960" data-file-height="600"/> </span><a href="/wiki/Georgia_(U.S._state)" title="Georgia (U.S. state)">Georgia</a>
+</th>
+<td>10,912,876
+</td>
+<td>10,711,908
+</td>
+<td>9,687,653
+</td>
+<td>10.57%
+</td>
+<td>1,024,255
+</td>
+<td style="text-align:center"><span data-sort-value="7001140000000000000♠">14</span>
+</td>
+<td>3.22%
+</td>
+<td>669,494
+</td>
+<td>765,136
+</td>
+<td>691,975
+</td>
+<td>3.197%
+</td>
+<td>3.097%
+</td>
+<td>2.97%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Flag_of_North_Carolina.svg/23px-Flag_of_North_Carolina.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Flag_of_North_Carolina.svg/35px-Flag_of_North_Carolina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Flag_of_North_Carolina.svg/45px-Flag_of_North_Carolina.svg.png 2x" data-file-width="750" data-file-height="500"/> </span><a href="/wiki/North_Carolina" title="North Carolina">North Carolina</a>
+</th>
+<td>10,698,973
+</td>
+<td>10,439,388
+</td>
+<td>9,535,483
+</td>
+<td>9.48%
+</td>
+<td>903,905
+</td>
+<td style="text-align:center"><span data-sort-value="7001140000000000000♠">14</span>
+</td>
+<td>3.22%
+</td>
+<td>652,462
+</td>
+<td>745,671
+</td>
+<td>733,499
+</td>
+<td>3.116%
+</td>
+<td>3.048%
+</td>
+<td>2.97%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001100000000000000♠">10</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001100000000000000♠">10</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/23px-Flag_of_Michigan.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/35px-Flag_of_Michigan.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/45px-Flag_of_Michigan.svg.png 2x" data-file-width="685" data-file-height="457"/> </span><a href="/wiki/Michigan" title="Michigan">Michigan</a>
+</th>
+<td>10,034,113
+</td>
+<td>10,077,331
+</td>
+<td>9,883,640
+</td>
+<td>1.96%
+</td>
+<td>193,691
+</td>
+<td style="text-align:center"><span data-sort-value="7001130000000000000♠">13</span>
+</td>
+<td>2.99%
+</td>
+<td>671,822
+</td>
+<td>775,179
+</td>
+<td>705,974
+</td>
+<td>3.008%
+</td>
+<td>3.159%
+</td>
+<td>2.79%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001110000000000000♠">11</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001110000000000000♠">11</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_New_Jersey.svg/23px-Flag_of_New_Jersey.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_New_Jersey.svg/35px-Flag_of_New_Jersey.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_New_Jersey.svg/46px-Flag_of_New_Jersey.svg.png 2x" data-file-width="512" data-file-height="308"/> </span><a href="/wiki/New_Jersey" title="New Jersey">New Jersey</a>
+</th>
+<td>9,261,699
+</td>
+<td>9,288,994
+</td>
+<td>8,791,894
+</td>
+<td>5.65%
+</td>
+<td>497,100
+</td>
+<td style="text-align:center"><span data-sort-value="7001120000000000000♠">12</span>
+</td>
+<td>2.76%
+</td>
+<td>663,500
+</td>
+<td>774,083
+</td>
+<td>732,658
+</td>
+<td>2.772%
+</td>
+<td>2.810%
+</td>
+<td>2.60%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001120000000000000♠">12</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001120000000000000♠">12</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/47/Flag_of_Virginia.svg/23px-Flag_of_Virginia.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/47/Flag_of_Virginia.svg/35px-Flag_of_Virginia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/47/Flag_of_Virginia.svg/45px-Flag_of_Virginia.svg.png 2x" data-file-width="1365" data-file-height="910"/> </span><a href="/wiki/Virginia" title="Virginia">Virginia</a>
+</th>
+<td>8,683,619
+</td>
+<td>8,631,393
+</td>
+<td>8,001,024
+</td>
+<td>7.88%
+</td>
+<td>630,369
+</td>
+<td style="text-align:center"><span data-sort-value="7001110000000000000♠">11</span>
+</td>
+<td>2.53%
+</td>
+<td>663,953
+</td>
+<td>784,672
+</td>
+<td>727,366
+</td>
+<td>2.576%
+</td>
+<td>2.557%
+</td>
+<td>2.42%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001130000000000000♠">13</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001130000000000000♠">13</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/23px-Flag_of_Washington.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/35px-Flag_of_Washington.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/46px-Flag_of_Washington.svg.png 2x" data-file-width="1106" data-file-height="658"/> </span><a href="/wiki/Washington_(state)" title="Washington (state)">Washington</a>
+</th>
+<td>7,785,786
+</td>
+<td>7,705,281
+</td>
+<td>6,724,540
+</td>
+<td>14.58%
+</td>
+<td>980,741
+</td>
+<td style="text-align:center"><span data-sort-value="7001100000000000000♠">10</span>
+</td>
+<td>2.30%
+</td>
+<td>642,107
+</td>
+<td>770,528
+</td>
+<td>672,454
+</td>
+<td>2.300%
+</td>
+<td>2.149%
+</td>
+<td>2.23%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001140000000000000♠">14</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001140000000000000♠">14</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arizona.svg/23px-Flag_of_Arizona.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arizona.svg/35px-Flag_of_Arizona.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arizona.svg/45px-Flag_of_Arizona.svg.png 2x" data-file-width="900" data-file-height="600"/> </span><a href="/wiki/Arizona" title="Arizona">Arizona</a>
+</th>
+<td>7,359,197
+</td>
+<td>7,151,502
+</td>
+<td>6,392,017
+</td>
+<td>11.88%
+</td>
+<td>759,485
+</td>
+<td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<td>2.07%
+</td>
+<td>650,137
+</td>
+<td>794,611
+</td>
+<td>710,224
+</td>
+<td>2.134%
+</td>
+<td>2.043%
+</td>
+<td>2.04%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001150000000000000♠">15</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001160000000000000♠">16</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Tennessee.svg/23px-Flag_of_Tennessee.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Tennessee.svg/35px-Flag_of_Tennessee.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Tennessee.svg/46px-Flag_of_Tennessee.svg.png 2x" data-file-width="500" data-file-height="300"/> </span><a href="/wiki/Tennessee" title="Tennessee">Tennessee</a>
+</th>
+<td>7,051,339
+</td>
+<td>6,910,840
+</td>
+<td>6,346,105
+</td>
+<td>8.90%
+</td>
+<td>564,735
+</td>
+<td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<td>2.07%
+</td>
+<td>628,258
+</td>
+<td>767,871
+</td>
+<td>705,123
+</td>
+<td>2.062%
+</td>
+<td>2.029%
+</td>
+<td>2.04%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001160000000000000♠">16</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001150000000000000♠">15</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Massachusetts.svg/23px-Flag_of_Massachusetts.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Massachusetts.svg/35px-Flag_of_Massachusetts.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Massachusetts.svg/46px-Flag_of_Massachusetts.svg.png 2x" data-file-width="1500" data-file-height="900"/> </span><a href="/wiki/Massachusetts" title="Massachusetts">Massachusetts</a>
+</th>
+<td>6,981,974
+</td>
+<td>7,029,917
+</td>
+<td>6,547,629
+</td>
+<td>7.37%
+</td>
+<td>482,288
+</td>
+<td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<td>2.07%
+</td>
+<td>639,083
+</td>
+<td>781,102
+</td>
+<td>727,514
+</td>
+<td>2.098%
+</td>
+<td>2.093%
+</td>
+<td>2.04%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001170000000000000♠">17</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001170000000000000♠">17</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Flag_of_Indiana.svg/23px-Flag_of_Indiana.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Flag_of_Indiana.svg/35px-Flag_of_Indiana.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Flag_of_Indiana.svg/45px-Flag_of_Indiana.svg.png 2x" data-file-width="600" data-file-height="400"/> </span><a href="/wiki/Indiana" title="Indiana">Indiana</a>
+</th>
+<td>6,833,037
+</td>
+<td>6,785,528
+</td>
+<td>6,483,802
+</td>
+<td>4.65%
+</td>
+<td>301,726
+</td>
+<td style="text-align:center"><span data-sort-value="7000900000000000000♠">9</span>
+</td>
+<td>2.07%
+</td>
+<td>616,866
+</td>
+<td>753,948
+</td>
+<td>720,422
+</td>
+<td>2.025%
+</td>
+<td>2.073%
+</td>
+<td>2.04%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001180000000000000♠">18</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001190000000000000♠">19</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Flag_of_Missouri.svg/23px-Flag_of_Missouri.svg.png" decoding="async" width="23" height="13" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Flag_of_Missouri.svg/35px-Flag_of_Missouri.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Flag_of_Missouri.svg/46px-Flag_of_Missouri.svg.png 2x" data-file-width="2400" data-file-height="1400"/> </span><a href="/wiki/Missouri" title="Missouri">Missouri</a>
+</th>
+<td>6,177,957
+</td>
+<td>6,154,913
+</td>
+<td>5,988,927
+</td>
+<td>2.77%
+</td>
+<td>165,986
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td>1.84%
+</td>
+<td>615,491
+</td>
+<td>769,364
+</td>
+<td>721,694
+</td>
+<td>1.837%
+</td>
+<td>1.914%
+</td>
+<td>1.86%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001190000000000000♠">19</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001180000000000000♠">18</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Flag_of_Maryland.svg/23px-Flag_of_Maryland.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Flag_of_Maryland.svg/35px-Flag_of_Maryland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Flag_of_Maryland.svg/45px-Flag_of_Maryland.svg.png 2x" data-file-width="750" data-file-height="500"/> </span><a href="/wiki/Maryland" title="Maryland">Maryland</a>
+</th>
+<td>6,164,660
+</td>
+<td>6,177,224
+</td>
+<td>5,773,552
+</td>
+<td>6.99%
+</td>
+<td>403,672
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td>1.84%
+</td>
+<td>617,722
+</td>
+<td>772,153
+</td>
+<td>748,616
+</td>
+<td>1.844%
+</td>
+<td>1.845%
+</td>
+<td>1.86%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001200000000000000♠">20</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001200000000000000♠">20</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_Wisconsin.svg/23px-Flag_of_Wisconsin.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_Wisconsin.svg/35px-Flag_of_Wisconsin.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_Wisconsin.svg/45px-Flag_of_Wisconsin.svg.png 2x" data-file-width="300" data-file-height="200"/> </span><a href="/wiki/Wisconsin" title="Wisconsin">Wisconsin</a>
+</th>
+<td>5,892,539
+</td>
+<td>5,893,718
+</td>
+<td>5,686,986
+</td>
+<td>3.64%
+</td>
+<td>206,732
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td>1.84%
+</td>
+<td>589,372
+</td>
+<td>736,715
+</td>
+<td>710,873
+</td>
+<td>1.759%
+</td>
+<td>1.818%
+</td>
+<td>1.86%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001210000000000000♠">21</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001210000000000000♠">21</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/46/Flag_of_Colorado.svg/23px-Flag_of_Colorado.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/46/Flag_of_Colorado.svg/35px-Flag_of_Colorado.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/46/Flag_of_Colorado.svg/45px-Flag_of_Colorado.svg.png 2x" data-file-width="1800" data-file-height="1200"/> </span><a href="/wiki/Colorado" title="Colorado">Colorado</a>
+</th>
+<td>5,839,926
+</td>
+<td>5,773,714
+</td>
+<td>5,029,196
+</td>
+<td>14.8%
+</td>
+<td>744,518
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td>1.84%
+</td>
+<td>577,371
+</td>
+<td>721,714
+</td>
+<td>718,457
+</td>
+<td>1.723%
+</td>
+<td>1.608%
+</td>
+<td>1.86%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001220000000000000♠">22</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001220000000000000♠">22</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/23px-Flag_of_Minnesota.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/35px-Flag_of_Minnesota.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/46px-Flag_of_Minnesota.svg.png 2x" data-file-width="500" data-file-height="318"/> </span><a href="/wiki/Minnesota" title="Minnesota">Minnesota</a>
+</th>
+<td>5,717,184
+</td>
+<td>5,706,494
+</td>
+<td>5,303,925
+</td>
+<td>7.59%
+</td>
+<td>402,569
+</td>
+<td style="text-align:center"><span data-sort-value="7000800000000000000♠">8</span>
+</td>
+<td>1.84%
+</td>
+<td>570,649
+</td>
+<td>713,312
+</td>
+<td>662,991
+</td>
+<td>1.703%
+</td>
+<td>1.695%
+</td>
+<td>1.86%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001230000000000000♠">23</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001230000000000000♠">23</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Flag_of_South_Carolina.svg/23px-Flag_of_South_Carolina.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/69/Flag_of_South_Carolina.svg/35px-Flag_of_South_Carolina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/69/Flag_of_South_Carolina.svg/45px-Flag_of_South_Carolina.svg.png 2x" data-file-width="750" data-file-height="500"/> </span><a href="/wiki/South_Carolina" title="South Carolina">South Carolina</a>
+</th>
+<td>5,282,634
+</td>
+<td>5,118,425
+</td>
+<td>4,625,364
+</td>
+<td>10.66%
+</td>
+<td>493,061
+</td>
+<td style="text-align:center"><span data-sort-value="7000700000000000000♠">7</span>
+</td>
+<td>1.61%
+</td>
+<td>568,714
+</td>
+<td>731,204
+</td>
+<td>660,766
+</td>
+<td>1.528%
+</td>
+<td>1.478%
+</td>
+<td>1.67%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001240000000000000♠">24</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001240000000000000♠">24</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Alabama.svg/23px-Flag_of_Alabama.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Alabama.svg/35px-Flag_of_Alabama.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png 2x" data-file-width="600" data-file-height="400"/> </span><a href="/wiki/Alabama" title="Alabama">Alabama</a>
+</th>
+<td>5,074,296
+</td>
+<td>5,024,279
+</td>
+<td>4,779,736
+</td>
+<td>5.12%
+</td>
+<td>244,543
+</td>
+<td style="text-align:center"><span data-sort-value="7000700000000000000♠">7</span>
+</td>
+<td>1.61%
+</td>
+<td>558,253
+</td>
+<td>717,754
+</td>
+<td>682,819
+</td>
+<td>1.499%
+</td>
+<td>1.528%
+</td>
+<td>1.67%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001250000000000000♠">25</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001250000000000000♠">25</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_Louisiana.svg/23px-Flag_of_Louisiana.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_Louisiana.svg/35px-Flag_of_Louisiana.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_Louisiana.svg/46px-Flag_of_Louisiana.svg.png 2x" data-file-width="7040" data-file-height="4556"/> </span><a href="/wiki/Louisiana" title="Louisiana">Louisiana</a>
+</th>
+<td>4,590,241
+</td>
+<td>4,657,757
+</td>
+<td>4,533,372
+</td>
+<td>2.74%
+</td>
+<td>124,385
+</td>
+<td style="text-align:center"><span data-sort-value="7000600000000000000♠">6</span>
+</td>
+<td>1.38%
+</td>
+<td>582,220
+</td>
+<td>776,293
+</td>
+<td>755,562
+</td>
+<td>1.390%
+</td>
+<td>1.449%
+</td>
+<td>1.49%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001260000000000000♠">26</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001260000000000000♠">26</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Flag_of_Kentucky.svg/23px-Flag_of_Kentucky.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Flag_of_Kentucky.svg/35px-Flag_of_Kentucky.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Flag_of_Kentucky.svg/46px-Flag_of_Kentucky.svg.png 2x" data-file-width="950" data-file-height="500"/> </span><a href="/wiki/Kentucky" title="Kentucky">Kentucky</a>
+</th>
+<td>4,512,310
+</td>
+<td>4,505,836
+</td>
+<td>4,339,367
+</td>
+<td>3.84%
+</td>
+<td>166,469
+</td>
+<td style="text-align:center"><span data-sort-value="7000600000000000000♠">6</span>
+</td>
+<td>1.38%
+</td>
+<td>563,230
+</td>
+<td>750,973
+</td>
+<td>723,228
+</td>
+<td>1.345%
+</td>
+<td>1.387%
+</td>
+<td>1.49%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001270000000000000♠">27</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001270000000000000♠">27</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Oregon.svg/23px-Flag_of_Oregon.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Oregon.svg/35px-Flag_of_Oregon.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Oregon.svg/45px-Flag_of_Oregon.svg.png 2x" data-file-width="768" data-file-height="512"/> </span><a href="/wiki/Oregon" title="Oregon">Oregon</a>
+</th>
+<td>4,240,137
+</td>
+<td>4,237,256
+</td>
+<td>3,831,074
+</td>
+<td>10.60%
+</td>
+<td>406,182
+</td>
+<td style="text-align:center"><span data-sort-value="7000600000000000000♠">6</span>
+</td>
+<td>1.38%
+</td>
+<td>529,657
+</td>
+<td>706,209
+</td>
+<td>766,215
+</td>
+<td>1.265%
+</td>
+<td>1.225%
+</td>
+<td>1.49%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001280000000000000♠">28</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001280000000000000♠">28</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Oklahoma.svg/23px-Flag_of_Oklahoma.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Oklahoma.svg/35px-Flag_of_Oklahoma.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Flag_of_Oklahoma.svg/45px-Flag_of_Oklahoma.svg.png 2x" data-file-width="675" data-file-height="450"/> </span><a href="/wiki/Oklahoma" title="Oklahoma">Oklahoma</a>
+</th>
+<td>4,019,800
+</td>
+<td>3,959,353
+</td>
+<td>3,751,351
+</td>
+<td data-sort-value="5.54%">5.54%
+</td>
+<td>208,002
+</td>
+<td style="text-align:center"><span data-sort-value="7000500000000000000♠">5</span>
+</td>
+<td>1.15%
+</td>
+<td>565,622
+</td>
+<td>791,871
+</td>
+<td>750,270
+</td>
+<td>1.182%
+</td>
+<td>1.199%
+</td>
+<td>1.30%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001290000000000000♠">29</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001290000000000000♠">29</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_Connecticut.svg/19px-Flag_of_Connecticut.svg.png" decoding="async" width="19" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_Connecticut.svg/29px-Flag_of_Connecticut.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_Connecticut.svg/38px-Flag_of_Connecticut.svg.png 2x" data-file-width="330" data-file-height="260"/> </span><a href="/wiki/Connecticut" title="Connecticut">Connecticut</a>
+</th>
+<td>3,626,205
+</td>
+<td>3,605,944
+</td>
+<td>3,574,097
+</td>
+<td data-sort-value="0.891%">0.89%
+</td>
+<td>31,847
+</td>
+<td style="text-align:center"><span data-sort-value="7000500000000000000♠">5</span>
+</td>
+<td>1.15%
+</td>
+<td>515,135
+</td>
+<td>721,189
+</td>
+<td>714,819
+</td>
+<td>1.076%
+</td>
+<td>1.142%
+</td>
+<td>1.30%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001300000000000000♠">30</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001310000000000000♠">31</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Utah.svg/23px-Flag_of_Utah.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Utah.svg/35px-Flag_of_Utah.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Utah.svg/46px-Flag_of_Utah.svg.png 2x" data-file-width="1600" data-file-height="1000"/> </span><a href="/wiki/Utah" title="Utah">Utah</a>
+</th>
+<td>3,380,800
+</td>
+<td>3,271,616
+</td>
+<td>2,763,885
+</td>
+<td>18.37%
+</td>
+<td>507,731
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>545,269
+</td>
+<td>817,904
+</td>
+<td>690,971
+</td>
+<td>0.976%
+</td>
+<td>0.883%
+</td>
+<td>1.12%
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001310000000000000♠">31</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001300000000000000♠">30</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_Puerto_Rico.svg/23px-Flag_of_Puerto_Rico.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_Puerto_Rico.svg/35px-Flag_of_Puerto_Rico.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_Puerto_Rico.svg/45px-Flag_of_Puerto_Rico.svg.png 2x" data-file-width="900" data-file-height="600"/> </span><a href="/wiki/Puerto_Rico" title="Puerto Rico">Puerto Rico</a>
+</th>
+<td>3,221,789
+</td>
+<td>3,285,874
+</td>
+<td>3,725,789
+</td>
+<td data-sort-value="-11.8%">−11.81%
+</td>
+<td data-sort-value="-439,915">−439,915
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.981%
+</td>
+<td>1.191%
+</td>
+<td>—
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001320000000000000♠">32</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001320000000000000♠">32</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Iowa.svg/23px-Flag_of_Iowa.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Iowa.svg/35px-Flag_of_Iowa.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Iowa.svg/45px-Flag_of_Iowa.svg.png 2x" data-file-width="714" data-file-height="477"/> </span><a href="/wiki/Iowa" title="Iowa">Iowa</a>
+</th>
+<td>3,200,517
+</td>
+<td>3,190,369
+</td>
+<td>3,046,355
+</td>
+<td data-sort-value="4.73%">4.73%
+</td>
+<td>144,014
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>531,728
+</td>
+<td>797,592
+</td>
+<td>761,589
+</td>
+<td>0.952%
+</td>
+<td>0.974%
+</td>
+<td>1.12%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001330000000000000♠">33</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001330000000000000♠">33</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Nevada.svg/23px-Flag_of_Nevada.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Nevada.svg/35px-Flag_of_Nevada.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Flag_of_Nevada.svg/45px-Flag_of_Nevada.svg.png 2x" data-file-width="600" data-file-height="400"/> </span><a href="/wiki/Nevada" title="Nevada">Nevada</a>
+</th>
+<td>3,177,772
+</td>
+<td>3,104,614
+</td>
+<td>2,700,551
+</td>
+<td>14.96%
+</td>
+<td>404,063
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>517,436
+</td>
+<td>776,154
+</td>
+<td>675,138
+</td>
+<td>0.927%
+</td>
+<td>0.863%
+</td>
+<td>1.12%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001340000000000000♠">34</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001340000000000000♠">34</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/23px-Flag_of_Arkansas.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/35px-Flag_of_Arkansas.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/45px-Flag_of_Arkansas.svg.png 2x" data-file-width="450" data-file-height="300"/> </span><a href="/wiki/Arkansas" title="Arkansas">Arkansas</a>
+</th>
+<td>3,045,637
+</td>
+<td>3,011,524
+</td>
+<td>2,915,918
+</td>
+<td>3.28%
+</td>
+<td>95,606
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>501,921
+</td>
+<td>752,881
+</td>
+<td>728,980
+</td>
+<td>0.899%
+</td>
+<td>0.932%
+</td>
+<td>1.12%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001350000000000000♠">35</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001350000000000000♠">35</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/42/Flag_of_Mississippi.svg/23px-Flag_of_Mississippi.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/42/Flag_of_Mississippi.svg/35px-Flag_of_Mississippi.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/42/Flag_of_Mississippi.svg/46px-Flag_of_Mississippi.svg.png 2x" data-file-width="1200" data-file-height="720"/> </span><a href="/wiki/Mississippi" title="Mississippi">Mississippi</a>
+</th>
+<td>2,940,057
+</td>
+<td>2,961,279
+</td>
+<td>2,967,297
+</td>
+<td data-sort-value="-0.203%">−0.20%
+</td>
+<td data-sort-value="-6,018">−6,018
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>493,547
+</td>
+<td>740,320
+</td>
+<td>741,824
+</td>
+<td>0.884%
+</td>
+<td>0.948%
+</td>
+<td>1.12%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001360000000000000♠">36</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001360000000000000♠">36</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Kansas.svg/23px-Flag_of_Kansas.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Kansas.svg/35px-Flag_of_Kansas.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Kansas.svg/46px-Flag_of_Kansas.svg.png 2x" data-file-width="500" data-file-height="300"/> </span><a href="/wiki/Kansas" title="Kansas">Kansas</a>
+</th>
+<td>2,937,150
+</td>
+<td>2,937,880
+</td>
+<td>2,853,118
+</td>
+<td>2.97%
+</td>
+<td>84,762
+</td>
+<td style="text-align:center"><span data-sort-value="7000400000000000000♠">4</span>
+</td>
+<td>0.92%
+</td>
+<td>489,647
+</td>
+<td>734,470
+</td>
+<td>713,280
+</td>
+<td>0.877%
+</td>
+<td>0.912%
+</td>
+<td>1.12%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001370000000000000♠">37</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001370000000000000♠">37</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_New_Mexico.svg/23px-Flag_of_New_Mexico.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_New_Mexico.svg/35px-Flag_of_New_Mexico.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_New_Mexico.svg/45px-Flag_of_New_Mexico.svg.png 2x" data-file-width="1800" data-file-height="1200"/> </span><a href="/wiki/New_Mexico" title="New Mexico">New Mexico</a>
+</th>
+<td>2,113,344
+</td>
+<td>2,117,522
+</td>
+<td>2,059,179
+</td>
+<td>2.83%
+</td>
+<td>58,343
+</td>
+<td style="text-align:center"><span data-sort-value="7000300000000000000♠">3</span>
+</td>
+<td>0.69%
+</td>
+<td>423,504
+</td>
+<td>705,841
+</td>
+<td>686,393
+</td>
+<td>0.632%
+</td>
+<td>0.658%
+</td>
+<td>0.93%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001380000000000000♠">38</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001380000000000000♠">38</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Nebraska.svg/23px-Flag_of_Nebraska.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Nebraska.svg/35px-Flag_of_Nebraska.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Nebraska.svg/46px-Flag_of_Nebraska.svg.png 2x" data-file-width="600" data-file-height="360"/> </span><a href="/wiki/Nebraska" title="Nebraska">Nebraska</a>
+</th>
+<td>1,967,923
+</td>
+<td>1,961,504
+</td>
+<td>1,826,341
+</td>
+<td data-sort-value="7.5%">7.40%
+</td>
+<td>135,163
+</td>
+<td style="text-align:center"><span data-sort-value="7000300000000000000♠">3</span>
+</td>
+<td>0.69%
+</td>
+<td>392,301
+</td>
+<td>653,835
+</td>
+<td>608,780
+</td>
+<td>0.585%
+</td>
+<td>0.584%
+</td>
+<td>0.93%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001390000000000000♠">39</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001390000000000000♠">39</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_Idaho.svg/19px-Flag_of_Idaho.svg.png" decoding="async" width="19" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_Idaho.svg/29px-Flag_of_Idaho.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_Idaho.svg/38px-Flag_of_Idaho.svg.png 2x" data-file-width="3168" data-file-height="2496"/> </span><a href="/wiki/Idaho" title="Idaho">Idaho</a>
+</th>
+<td>1,939,033
+</td>
+<td>1,839,106
+</td>
+<td>1,567,582
+</td>
+<td>17.32%
+</td>
+<td>271,524
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>459,777
+</td>
+<td>919,553
+</td>
+<td>783,791
+</td>
+<td>0.549%
+</td>
+<td>0.501%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001400000000000000♠">40</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001400000000000000♠">40</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_West_Virginia.svg/23px-Flag_of_West_Virginia.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_West_Virginia.svg/35px-Flag_of_West_Virginia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/22/Flag_of_West_Virginia.svg/46px-Flag_of_West_Virginia.svg.png 2x" data-file-width="760" data-file-height="400"/> </span><a href="/wiki/West_Virginia" title="West Virginia">West Virginia</a>
+</th>
+<td>1,775,156
+</td>
+<td>1,793,716
+</td>
+<td>1,852,994
+</td>
+<td data-sort-value="-3.2%">−3.20%
+</td>
+<td data-sort-value="-59,278">−59,278
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>448,429
+</td>
+<td>896,858
+</td>
+<td>617,665
+</td>
+<td>0.535%
+</td>
+<td>0.592%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001410000000000000♠">41</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001410000000000000♠">41</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Flag_of_Hawaii.svg/23px-Flag_of_Hawaii.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Flag_of_Hawaii.svg/35px-Flag_of_Hawaii.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Flag_of_Hawaii.svg/46px-Flag_of_Hawaii.svg.png 2x" data-file-width="1200" data-file-height="600"/> </span><a href="/wiki/Hawaii" title="Hawaii">Hawaii</a>
+</th>
+<td>1,440,196
+</td>
+<td>1,455,271
+</td>
+<td>1,360,301
+</td>
+<td>6.98%
+</td>
+<td>94,970
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>363,818
+</td>
+<td>727,636
+</td>
+<td>680,151
+</td>
+<td>0.434%
+</td>
+<td>0.435%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001420000000000000♠">42</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001420000000000000♠">42</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_New_Hampshire.svg/23px-Flag_of_New_Hampshire.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_New_Hampshire.svg/35px-Flag_of_New_Hampshire.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/28/Flag_of_New_Hampshire.svg/45px-Flag_of_New_Hampshire.svg.png 2x" data-file-width="660" data-file-height="440"/> </span><a href="/wiki/New_Hampshire" title="New Hampshire">New Hampshire</a>
+</th>
+<td>1,395,231
+</td>
+<td>1,377,529
+</td>
+<td>1,316,470
+</td>
+<td>4.66%
+</td>
+<td>61,059
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>344,382
+</td>
+<td>688,765
+</td>
+<td>658,235
+</td>
+<td>0.411%
+</td>
+<td>0.421%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001430000000000000♠">43</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001430000000000000♠">43</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Maine.svg/19px-Flag_of_Maine.svg.png" decoding="async" width="19" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Maine.svg/29px-Flag_of_Maine.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Maine.svg/38px-Flag_of_Maine.svg.png 2x" data-file-width="6336" data-file-height="4992"/> </span><a href="/wiki/Maine" title="Maine">Maine</a>
+</th>
+<td>1,385,340
+</td>
+<td>1,362,359
+</td>
+<td>1,328,361
+</td>
+<td>2.56%
+</td>
+<td>33,998
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>340,590
+</td>
+<td>681,180
+</td>
+<td>664,181
+</td>
+<td>0.407%
+</td>
+<td>0.425%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001440000000000000♠">44</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001450000000000000♠">45</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_Montana.svg/23px-Flag_of_Montana.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_Montana.svg/35px-Flag_of_Montana.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_Montana.svg/45px-Flag_of_Montana.svg.png 2x" data-file-width="768" data-file-height="512"/> </span><a href="/wiki/Montana" title="Montana">Montana</a>
+</th>
+<td>1,122,867
+</td>
+<td>1,084,225
+</td>
+<td>989,415
+</td>
+<td>9.58%
+</td>
+<td>94,810
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>271,056
+</td>
+<td>542,113
+</td>
+<td>989,415
+</td>
+<td>0.324%
+</td>
+<td>0.316%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001450000000000000♠">45</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001440000000000000♠">44</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Rhode_Island.svg/19px-Flag_of_Rhode_Island.svg.png" decoding="async" width="19" height="17" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Rhode_Island.svg/30px-Flag_of_Rhode_Island.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Rhode_Island.svg/39px-Flag_of_Rhode_Island.svg.png 2x" data-file-width="660" data-file-height="580"/> </span><a href="/wiki/Rhode_Island" title="Rhode Island">Rhode Island</a>
+</th>
+<td>1,093,734
+</td>
+<td>1,097,379
+</td>
+<td>1,052,567
+</td>
+<td>4.26%
+</td>
+<td>44,812
+</td>
+<td style="text-align:center"><span data-sort-value="7000200000000000000♠">2</span>
+</td>
+<td>0.46%
+</td>
+<td>274,345
+</td>
+<td>548,690
+</td>
+<td>526,284
+</td>
+<td>0.328%
+</td>
+<td>0.336%
+</td>
+<td>0.74%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001460000000000000♠">46</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001460000000000000♠">46</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Flag_of_Delaware.svg/23px-Flag_of_Delaware.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Flag_of_Delaware.svg/35px-Flag_of_Delaware.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Flag_of_Delaware.svg/45px-Flag_of_Delaware.svg.png 2x" data-file-width="600" data-file-height="400"/> </span><a href="/wiki/Delaware" title="Delaware">Delaware</a>
+</th>
+<td>1,018,396
+</td>
+<td>989,948
+</td>
+<td>897,934
+</td>
+<td>10.25%
+</td>
+<td>92,014
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>329,983
+</td>
+<td>989,948
+</td>
+<td>897,934
+</td>
+<td>0.295%
+</td>
+<td>0.287%
+</td>
+<td>0.56%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001470000000000000♠">47</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001470000000000000♠">47</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_South_Dakota.svg/23px-Flag_of_South_Dakota.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_South_Dakota.svg/35px-Flag_of_South_Dakota.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_South_Dakota.svg/46px-Flag_of_South_Dakota.svg.png 2x" data-file-width="720" data-file-height="450"/> </span><a href="/wiki/South_Dakota" title="South Dakota">South Dakota</a>
+</th>
+<td>909,824
+</td>
+<td>886,667
+</td>
+<td>814,180
+</td>
+<td>8.90%
+</td>
+<td>72,487
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>295,556
+</td>
+<td>886,667
+</td>
+<td>814,180
+</td>
+<td>0.265%
+</td>
+<td>0.260%
+</td>
+<td>0.56%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001480000000000000♠">48</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001480000000000000♠">48</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Flag_of_North_Dakota.svg/20px-Flag_of_North_Dakota.svg.png" decoding="async" width="20" height="16" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Flag_of_North_Dakota.svg/31px-Flag_of_North_Dakota.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Flag_of_North_Dakota.svg/41px-Flag_of_North_Dakota.svg.png 2x" data-file-width="3300" data-file-height="2600"/> </span><a href="/wiki/North_Dakota" title="North Dakota">North Dakota</a>
+</th>
+<td>779,261
+</td>
+<td>779,094
+</td>
+<td>672,591
+</td>
+<td>15.83%
+</td>
+<td>106,503
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>259,698
+</td>
+<td>779,094
+</td>
+<td>672,591
+</td>
+<td>0.233%
+</td>
+<td>0.215%
+</td>
+<td>0.56%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001490000000000000♠">49</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001490000000000000♠">49</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Alaska.svg/21px-Flag_of_Alaska.svg.png" decoding="async" width="21" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Alaska.svg/33px-Flag_of_Alaska.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png 2x" data-file-width="1416" data-file-height="1000"/> </span><a href="/wiki/Alaska" title="Alaska">Alaska</a>
+</th>
+<td>733,583
+</td>
+<td>733,391
+</td>
+<td>710,231
+</td>
+<td>3.26%
+</td>
+<td>23,160
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>244,464
+</td>
+<td>733,391
+</td>
+<td>710,231
+</td>
+<td>0.219%
+</td>
+<td>0.227%
+</td>
+<td>0.56%
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001500000000000000♠">50</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001500000000000000♠">50</span>
+</td>
+<th scope="row" style="text-align:left"><span class="nowrap"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_District_of_Columbia.svg/23px-Flag_of_the_District_of_Columbia.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_District_of_Columbia.svg/35px-Flag_of_the_District_of_Columbia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_the_District_of_Columbia.svg/46px-Flag_of_the_District_of_Columbia.svg.png 2x" data-file-width="2000" data-file-height="1000"/> </span><a href="/wiki/Washington,_D.C." title="Washington, D.C.">District of Columbia</a></span>
+</th>
+<td>671,803
+</td>
+<td>689,545
+</td>
+<td>601,723
+</td>
+<td>14.60%
+</td>
+<td>87,822
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>229,848
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.206%
+</td>
+<td>0.192%
+</td>
+<td>0.56%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001510000000000000♠">51</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001510000000000000♠">51</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Vermont.svg/23px-Flag_of_Vermont.svg.png" decoding="async" width="23" height="14" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Vermont.svg/35px-Flag_of_Vermont.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Vermont.svg/46px-Flag_of_Vermont.svg.png 2x" data-file-width="800" data-file-height="480"/> </span><a href="/wiki/Vermont" title="Vermont">Vermont</a>
+</th>
+<td>647,064
+</td>
+<td>643,077
+</td>
+<td>625,741
+</td>
+<td data-sort-value="2.77%">2.77%
+</td>
+<td>17,336
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>214,359
+</td>
+<td>643,077
+</td>
+<td>625,741
+</td>
+<td>0.192%
+</td>
+<td>0.200%
+</td>
+<td>0.56%
+</td></tr>
+    <tr><td style="text-align:center"><span data-sort-value="7001520000000000000♠">52</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001520000000000000♠">52</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Wyoming.svg/22px-Flag_of_Wyoming.svg.png" decoding="async" width="22" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Wyoming.svg/33px-Flag_of_Wyoming.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Wyoming.svg/43px-Flag_of_Wyoming.svg.png 2x" data-file-width="1000" data-file-height="700"/> </span><a href="/wiki/Wyoming" title="Wyoming">Wyoming</a>
+</th>
+<td>581,381
+</td>
+<td>576,851
+</td>
+<td>563,626
+</td>
+<td>2.35%
+</td>
+<td>13,225
+</td>
+<td style="text-align:center"><span data-sort-value="7000100000000000000♠">1</span>
+</td>
+<td>0.23%
+</td>
+<td>192,284
+</td>
+<td>576,851
+</td>
+<td>563,626
+</td>
+<td>0.172%
+</td>
+<td>0.180%
+</td>
+<td>0.56%
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001530000000000000♠">53</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001530000000000000♠">53</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/07/Flag_of_Guam.svg/23px-Flag_of_Guam.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/07/Flag_of_Guam.svg/35px-Flag_of_Guam.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/07/Flag_of_Guam.svg/46px-Flag_of_Guam.svg.png 2x" data-file-width="7380" data-file-height="3960"/> </span><a href="/wiki/Guam" title="Guam">Guam</a><sup id="cite_ref-GUC2020_13-0" class="reference"><a href="#cite_note-GUC2020-13">[10]</a></sup></th>
+<td><abbr title="Not available">N/A</abbr>
+</td>
+<td>153,836
+</td>
+<td>159,358
+</td>
+<td data-sort-value="-3.5%">−3.47%
+</td>
+<td data-sort-value="-5,522">−5,522
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.046%
+</td>
+<td>0.051%
+</td>
+<td>—
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001540000000000000♠">54</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001540000000000000♠">54</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Flag_of_the_United_States_Virgin_Islands.svg/23px-Flag_of_the_United_States_Virgin_Islands.svg.png" decoding="async" width="23" height="15" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Flag_of_the_United_States_Virgin_Islands.svg/35px-Flag_of_the_United_States_Virgin_Islands.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Flag_of_the_United_States_Virgin_Islands.svg/45px-Flag_of_the_United_States_Virgin_Islands.svg.png 2x" data-file-width="1275" data-file-height="850"/> </span><a href="/wiki/United_States_Virgin_Islands" title="United States Virgin Islands">U.S. Virgin Islands</a><sup id="cite_ref-VIC2020_14-0" class="reference"><a href="#cite_note-VIC2020-14">[11]</a></sup></th>
+<td><abbr title="Not available">N/A</abbr>
+</td>
+<td>87,146
+</td>
+<td>106,405
+</td>
+<td data-sort-value="-18.1%">−18.10%
+</td>
+<td data-sort-value="-19,259">−19,259
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.026%
+</td>
+<td>0.034%
+</td>
+<td>—
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001550000000000000♠">55</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001550000000000000♠">55</span>
+</td>
+<th scope="row" style="text-align:left"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/8/87/Flag_of_American_Samoa.svg/23px-Flag_of_American_Samoa.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/8/87/Flag_of_American_Samoa.svg/35px-Flag_of_American_Samoa.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/8/87/Flag_of_American_Samoa.svg/46px-Flag_of_American_Samoa.svg.png 2x" data-file-width="1000" data-file-height="500"/> </span><a href="/wiki/American_Samoa" title="American Samoa">American Samoa</a><sup id="cite_ref-ASC2020_15-0" class="reference"><a href="#cite_note-ASC2020-15">[12]</a></sup></th>
+<td><abbr title="Not available">N/A</abbr>
+</td>
+<td>49,710
+</td>
+<td>55,519
+</td>
+<td data-sort-value="-10.5%">−10.46%
+</td>
+<td data-sort-value="-5,809">−5,809
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.015%
+</td>
+<td>0.018%
+</td>
+<td>—
+</td></tr>
+    <tr style="background:#f5f5d3"><td style="text-align:center"><span data-sort-value="7001560000000000000♠">56</span>
+</td>
+<td style="text-align:center"><span data-sort-value="7001560000000000000♠">56</span>
+</td>
+<th scope="row" style="text-align:left"><span class="nowrap"><span class="flagicon"><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_the_Northern_Mariana_Islands.svg/23px-Flag_of_the_Northern_Mariana_Islands.svg.png" decoding="async" width="23" height="12" class="thumbborder" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_the_Northern_Mariana_Islands.svg/35px-Flag_of_the_Northern_Mariana_Islands.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Flag_of_the_Northern_Mariana_Islands.svg/46px-Flag_of_the_Northern_Mariana_Islands.svg.png 2x" data-file-width="1100" data-file-height="550"/> </span><a href="/wiki/Northern_Mariana_Islands" title="Northern Mariana Islands">Northern Mariana Islands</a></span><sup id="cite_ref-MPC2020_16-0" class="reference"><a href="#cite_note-MPC2020-16">[13]</a></sup></th>
+<td><abbr title="Not available">N/A</abbr>
+</td>
+<td>47,329
+</td>
+<td>53,883
+</td>
+<td data-sort-value="-12.2%">−12.16%
+</td>
+<td data-sort-value="-6,554">−6,554
+</td>
+<td align="center">1*
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>0.014%
+</td>
+<td>0.017%
+</td>
+<td>—
+</td></tr>
+    <tr class="sortbottom" style="background:#d4d4cc"><td><span data-sort-value="7001870000000000000♠" style="display:none"/>—
+</td>
+<td><span data-sort-value="7001870000000000000♠" style="display:none"/>—
+</td>
+<td style="text-align:left"><b><a href="/wiki/Contiguous_United_States" title="Contiguous United States">Contiguous United States</a></b>
+</td>
+<td>331,113,778
+</td>
+<td>329,260,619
+</td>
+<td>306,675,006
+</td>
+<td>7.36%
+</td>
+<td>22,585,613
+</td>
+<td>432<br/>(+1*)
+</td>
+<td>99.31%
+</td>
+<td>627,163
+</td>
+<td>757,745
+</td>
+<td>709,896
+</td>
+<td>98.265%
+</td>
+<td>98.027%
+</td>
+<td>98.70%
+</td></tr>
+    <tr class="sortbottom" style="background:lightgrey"><td><span data-sort-value="7001820000000000000♠" style="display:none"/>—
+</td>
+<td><span data-sort-value="7001820000000000000♠" style="display:none"/>—
+</td>
+<td style="text-align:left"><b>The 50 states</b>
+</td>
+<td>332,615,754
+</td>
+<td>330,759,736
+</td>
+<td>308,143,815
+</td>
+<td>7.34%
+</td>
+<td>22,615,921
+</td>
+<td>435
+</td>
+<td>100%
+</td>
+<td>621,729
+</td>
+<td>755,796
+</td>
+<td>708,377
+</td>
+<td>98.713%
+</td>
+<td>98.497%
+</td>
+<td>99.44%
+</td></tr>
+    <tr class="sortbottom" style="background:#d4d4cc"><td><span data-sort-value="7001830000000000000♠" style="display:none"/>—
+</td>
+<td><span data-sort-value="7001830000000000000♠" style="display:none"/>—
+</td>
+<td style="text-align:left"><b>The 50 states and D.C.</b>
+</td>
+<td>333,287,557
+</td>
+<td>331,449,281
+</td>
+<td>308,745,538
+</td>
+<td>7.35%
+</td>
+<td>22,703,743
+</td>
+<td>435<br/>(+1*)
+</td>
+<td>100%
+</td>
+<td>619,531
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>98.918%
+</td>
+<td>98.689%
+</td>
+<td>100%
+</td></tr>
+    <tr class="sortbottom" style="background:#d6d6c3"><td><span data-sort-value="7001840000000000000♠" style="display:none"/>—
+</td>
+<td><span data-sort-value="7001840000000000000♠" style="display:none"/>—
+</td>
+<td style="text-align:left"><b>Total United States</b>
+</td>
+<td><abbr title="Not available">N/A</abbr>
+</td>
+<td>335,073,176
+</td>
+<td>312,846,492
+</td>
+<td>7.10%
+</td>
+<td>22,226,684
+</td>
+<td>435<br/>(+6*)
+</td>
+<td>100%
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>—
+</td>
+<td>100%
+</td>
+<td>100%
+</td>
+<td>—
+</td></tr>
+  </tbody>
+</table> 
+[37:31] 25> tnodes = getNodeSet(doc, "//table")[[1]]
+[43:05] 26> tbl = getNodeSet(doc, "//table")[[1]]
+[43:11] 27> names(tbl)
+  tbody 
+"tbody" 
+[43:24] 28> names(tbl[[1]])
+  tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr 
+"tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" 
+  tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr 
+"tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" 
+  tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr 
+"tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" 
+  tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr   tr 
+"tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" "tr" 
+  tr   tr   tr   tr   tr   tr 
+"tr" "tr" "tr" "tr" "tr" "tr" 
+[43:46] 29> tbl[[1]][[1]]
+<tr style="vertical-align:middle"><th colspan="2">Rank
+</th>
+<th rowspan="2">State or territory
+</th>
+<th colspan="3"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census population</div><sup id="cite_ref-Census2020_8-0" class="reference"><a href="#cite_note-Census2020-8">[8]</a></sup><sup id="cite_ref-residentundercount_10-0" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Change,<br/>2010–2020</div><sup id="cite_ref-Census2020_8-1" class="reference"><a href="#cite_note-Census2020-8">[8]</a></sup><sup id="cite_ref-residentundercount_10-1" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;"><a href="/wiki/United_States_House_of_Representatives" title="United States House of Representatives">House of Reps.</a><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th>
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Pop. per elec. vote, 2020<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[b]</a></sup><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census pop. per seat</div><sup id="cite_ref-residentundercount_10-2" class="reference"><a href="#cite_note-residentundercount-10">[a]</a></sup></th>
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of the total U.S. pop.<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[c]</a></sup></div>
+</th>
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of Elec. Coll.</div>
+</th></tr> 
+[43:58] 30> class(tbl[[1]][[1]])
+[1] "XMLInternalElementNode" "XMLInternalNode"       
+[3] "XMLAbstractNode"       
+[44:07] 31> xmlSize(tbl[[1]][[1]])
+[1] 17
+[44:27] 32> xmlName(tbl[[1]][[1]])
+[1] "tr"
+[44:32] 33> xmlAttrs(tbl[[1]][[1]])
+                  style 
+"vertical-align:middle" 
+[44:38] 34> tr1 = tbl[[1]][[1]]
+[44:56] 35> tr1[]
+Error in `[.XMLInternalNode`(tr1, ) : 
+  argument "i" is missing, with no default
+
+Enter a frame number, or 0 to exit   
+
+1: tr1[]
+2: `[.XMLInternalNode`(tr1, )
+
+Selection: -
+Enter an item from the menu, or 0 to exit
+Selection: 0
+[44:56] 35> xmlChildren(tr1)
+$th
+<th colspan="2">Rank
+</th> 
+
+$text
+
+ 
+
+$th
+<th rowspan="2">State or territory
+</th> 
+
+$text
+
+ 
+
+$th
+<th colspan="3">
+  <div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census population</div>
+  <sup id="cite_ref-Census2020_8-0" class="reference">
+    <a href="#cite_note-Census2020-8">[8]</a>
+  </sup>
+  <sup id="cite_ref-residentundercount_10-0" class="reference">
+    <a href="#cite_note-residentundercount-10">[a]</a>
+  </sup>
+</th> 
+
+$text
+
+ 
+
+$th
+<th colspan="2">
+  <div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Change,<br/>2010–2020</div>
+  <sup id="cite_ref-Census2020_8-1" class="reference">
+    <a href="#cite_note-Census2020-8">[8]</a>
+  </sup>
+  <sup id="cite_ref-residentundercount_10-1" class="reference">
+    <a href="#cite_note-residentundercount-10">[a]</a>
+  </sup>
+</th> 
+
+$text
+
+ 
+
+$th
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;"><a href="/wiki/United_States_House_of_Representatives" title="United States House of Representatives">House of Reps.</a><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th> 
+
+$text
+
+ 
+
+$th
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Pop. per elec. vote, 2020<sup id="cite_ref-11" class="reference"><a href="#cite_note-11">[b]</a></sup><br/><small>from the <a href="/wiki/2022_United_States_House_of_Representatives_elections" title="2022 United States House of Representatives elections">2022 elections</a></small></div>
+</th> 
+
+$text
+
+ 
+
+$th
+<th colspan="2">
+  <div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">Census pop. per seat</div>
+  <sup id="cite_ref-residentundercount_10-2" class="reference">
+    <a href="#cite_note-residentundercount-10">[a]</a>
+  </sup>
+</th> 
+
+$text
+
+ 
+
+$th
+<th colspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of the total U.S. pop.<sup id="cite_ref-12" class="reference"><a href="#cite_note-12">[c]</a></sup></div>
+</th> 
+
+$text
+
+ 
+
+$th
+<th rowspan="2"><div style="display: inline-block; line-height: 1.2em; padding: .1em 0;">% of Elec. Coll.</div>
+</th> 
+
+attr(,"class")
+[1] "XMLInternalNodeList" "XMLNodeList"        
+[45:38] 36> sapply(xmlChildren(tr1), xmlValue)
+                                                     th 
+                                               "Rank\n" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                                 "State or territory\n" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                              "Census population[8][a]" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                               "Change,2010–2020[8][a]" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+              "House of Reps.from the 2022 elections\n" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+"Pop. per elec. vote, 2020[b]from the 2022 elections\n" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                              "Census pop. per seat[a]" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                        "% of the total U.S. pop.[c]\n" 
+                                                   text 
+                                                   "\n" 
+                                                     th 
+                                   "% of Elec. Coll.\n" 
+[46:39] 37> tr3 = tbl[[1]][[3]]
+[47:09] 38> sapply(xmlChildren(tr3), xmlValue)
+             td            text              td            text 
+          "1\n"            "\n"           "1\n"            "\n" 
+             th            text              td            text 
+" California\n"            "\n"  "39,029,342\n"            "\n" 
+             td            text              td            text 
+ "39,538,223\n"            "\n"  "37,253,956\n"            "\n" 
+             td            text              td            text 
+      "6.13%\n"            "\n"   "2,284,267\n"            "\n" 
+             td            text              td            text 
+         "52\n"            "\n"      "11.95%\n"            "\n" 
+             td            text              td            text 
+    "732,189\n"            "\n"     "760,350\n"            "\n" 
+             td            text              td            text 
+    "702,905\n"            "\n"     "11.800%\n"            "\n" 
+             td            text              td 
+    "11.908%\n"            "\n"      "10.04%\n" 
+[47:13] 39> 
