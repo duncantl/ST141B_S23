@@ -1,0 +1,2413 @@
+]0;DBMS~/sta141b/Assignments/DBMS> ls
+'#Q23.R#'           Q23.R~              StackExchange.tex~             benQ23_dtl.R~             q21.R~
+ DBMSSpring23.md    Questions.md        StackExchangeSolutions.Rmd     downloads/                q23_2.sql
+ DBMSSpring23.md~   Questions.md~       StackExchangeSolutions.Rmd~    funs.R                    quesTotals.sql
+ IMDB/              SOSolutions.Rmd     StatsStackExchangeSearch.png   funs.R~                   quesTotals.sql~
+ Lahman/            SOSolutions.Rmd~    Wikipedia/                     hazan.sql                 stats.stackexchange
+ NewQuestions.md    StackExchange.aux   answers.Rmd                    hazan.sql~                stats.stackexchange.
+ NewQuestions.md~   StackExchange.log   answers.Rmd~                   lahman_1871-2022.sqlite   stats.stackexchange.Rds
+ PossibleData       StackExchange.out   benQ23.R                       q11.sql                   stats.stackexchange.db*
+ PossibleData~      StackExchange.pdf   benQ23.R~                      q11.sql~                  stats.stackexchange0.db*
+ Q23.R              StackExchange.tex   benQ23_dtl.R                   q21.R                     tmp.db*
+]0;DBMS~/sta141b/Assignments/DBMS> git add SOSolutions.Rmd 
+]0;DBMS~/sta141b/Assignments/DBMS> git commit -m "sample solutions"
+[main e923718] sample solutions
+ 1 file changed, 1778 insertions(+)
+ create mode 100644 Assignments/DBMS/SOSolutions.Rmd
+]0;DBMS~/sta141b/Assignments/DBMS> git push
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 14.86 KiB | 4.95 MiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.        
+To github.com:duncantl/STA141b_Spring23.git
+   b236dfa..e923718  main -> main
+]0;DBMS~/sta141b/Assignments/DBMS> git status .
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	#Q23.R#
+	.#Q23.R
+	DBMSSpring23.md
+	IMDB/
+	NewQuestions.md
+	PossibleData
+	Q23.R
+	Questions.md
+	StackExchange.tex
+	StackExchangeSolutions.Rmd
+	StatsStackExchangeSearch.png
+	Wikipedia/
+	answers.Rmd
+	benQ23.R
+	benQ23_dtl.R
+	funs.R
+	hazan.sql
+	lahman_1871-2022.sqlite
+	q11.sql
+	q21.R
+	q23_2.sql
+	quesTotals.sql
+	stats.stackexchange
+	stats.stackexchange.
+	stats.stackexchange.db
+	stats.stackexchange0.db
+	tmp.db
+
+nothing added to commit but untracked files present (use "git add" to track)
+]0;DBMS~/sta141b/Assignments/DBMS> git add StackExchange.tex
+]0;DBMS~/sta141b/Assignments/DBMS> git commit -m "2023 prompt"
+[main 8ec475e] 2023 prompt
+ 1 file changed, 246 insertions(+)
+ create mode 100644 Assignments/DBMS/StackExchange.tex
+]0;DBMS~/sta141b/Assignments/DBMS> git push
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 3.90 KiB | 3.90 MiB/s, done.
+Total 5 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.        
+To github.com:duncantl/STA141b_Spring23.git
+   e923718..8ec475e  main -> main
+]0;DBMS~/sta141b/Assignments/DBMS> cd ..
+]0;Assignments~/sta141b/Assignments> ls
+AdditionalQuestions.md~  DBMS/  FEC/  FEC.md~  Logs/  Solar/
+]0;Assignments~/sta141b/Assignments> rmb
+]0;Assignments~/sta141b/Assignments> ls
+DBMS/  FEC/  Logs/  Solar/
+]0;Assignments~/sta141b/Assignments> cd Logs/
+]0;Logs~/sta141b/Assignments/Logs> ls
+'#solutionNotes.R#'   SolutionScraps.md~   loginTypes   nico.Rmd     sampleMerged      solutionNotes.Rmd
+ GNUmakefile@         getCaptures.R@       logs.md      nico.Rmd~    scrap             solutionNotes.Rmd~
+ MergedAuth.log@      getUsedCode.R        logs.md~     old          scrap~            solutionNotes.R~
+ SolutionScraps.md    getUsedCode.R~       logs.pdf     outline.md   solutionNotes.R   solutionNotes.pdf
+]0;Logs~/sta141b/Assignments/Logs> git status . -uno
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit (use -u to show untracked files)
+]0;Logs~/sta141b/Assignments/Logs> git status  -uno .
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit (use -u to show untracked files)
+]0;Logs~/sta141b/Assignments/Logs> cd ..
+]0;Assignments~/sta141b/Assignments> cd Solar/
+]0;Solar~/sta141b/Assignments/Solar> git status  -uno .
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   Solutions.Rmd
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;Solar~/sta141b/Assignments/Solar> git diff Solutions.Rmd 
+diff --git a/Assignments/Solar/Solutions.Rmd b/Assignments/Solar/Solutions.Rmd
+index 07e5a31..474691e 100644
+--- a/Assignments/Solar/Solutions.Rmd
++++ b/Assignments/Solar/Solutions.Rmd
+@@ -1534,6 +1534,61 @@ At several locations, these values seem higher than at the next hour but also hi
+ than 11-12 at the other of the plot.
+ 
+ 
++
++## Check Monthly Data
++
++
++We'll start by checking "Monthly Statistics for Dew Point temperatures"
++for one location, Fairfield-San Francisco.
++We'll plot the minimum, maximum and daily average values on the same plot,
++using the date for the maximum for each month just so we can easily compare the values, not
++the precise days and hours:
++```{r}
++matplot(stat[[1]][[6]]$MaximumTime, stat[[1]][[6]][, c("Maximum", "Minimum", "Daily Avg")], type = "b")
++```
++This looks reasonable.
++
++We'll now do this for all 5 locations and the three Monthly tables for each location
++that have Maximum, Minimum and DailyAvg variables/columns.
++(The WindSpeed monthly table is quite different. 
++Also, the Dry Bulb temperatures table has additional columns tha we should also check.
++)
++
++We start by getting the names of the 3 tables and
++also simplifying the location names so we can display these on the overall plot to identify
++which row of plots corresponds to which location:
++```{r}
++monthlyDailyAvg = c("Monthly Statistics for Dew Point temperatures", "Monthly Statistics for Dry Bulb temperatures", 
++                    "Monthly Statistics for Wind Speed")
++
++locations = gsub("USA_CA_|.720576_TMYx.2007-2021", "", names(stat))
++locations = gsub("[0-9]+.*", "", locations)
++locations = gsub(".", " ", locations, fixed = TRUE)
++```
++
++And like we did before, we'll use par(mfrow) to make a grid of plots:
++```{r}
++par(mfrow = c(5, 3), mar = c(4, 2, 1, 0))
++invisible(mapply(function(x, id, row) {
++                     mapply(function(df, pos) {
++                         matplot(df$MaximumTime, df[, c("Maximum", "Minimum", "Daily Avg")], type = "b",
++                                 xlab = if(row == 1) gsub("Monthly Statistics for ", "", monthlyDailyAvg[pos]) else "",
++                                 main = if(pos == 1) id else "")
++                     }, x[monthlyDailyAvg], seq_along(x[monthlyDailyAvg]))
++                  }, stat, locations, seq_along(stat)))
++```
++We've added the location name as the title for the first plot on each row.
++We've also added the variable being displayed under the each plot in the first row.
++
++Again, all of these seem sensible.
++
++Note that these plots are very small in the PDF version.
++They are much more readable on the screen witin an R session.
++We can also spend more time to a) make the plot larger in Rmarkdown,
++b) reduce the margins for rows 2 and 3,
++c) remove the horizontal axes for rows 2 and 3.
++
++
+ ## Functions Used
+ 
+ The following is a frequency table of functions we called in
+]0;Solar~/sta141b/Assignments/Solar> git add Solutions.Rmd 
+]0;Solar~/sta141b/Assignments/Solar> git commit -m "additional content to validate the monthly results"
+[main 06227a6] additional content to validate the monthly results
+ 1 file changed, 55 insertions(+)
+]0;Solar~/sta141b/Assignments/Solar> git push
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 1.61 KiB | 1.61 MiB/s, done.
+Total 5 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.        
+To github.com:duncantl/STA141b_Spring23.git
+   8ec475e..06227a6  main -> main
+]0;Solar~/sta141b/Assignments/Solar> cd ..
+]0;Assignments~/sta141b/Assignments> ls
+DBMS/  FEC/  Logs/  Solar/
+]0;Assignments~/sta141b/Assignments> cd DBMS/
+]0;DBMS~/sta141b/Assignments/DBMS> ls
+'#Q23.R#'           Q23.R~              StackExchange.tex~             benQ23_dtl.R~             q21.R~
+ DBMSSpring23.md    Questions.md        StackExchangeSolutions.Rmd     downloads/                q23_2.sql
+ DBMSSpring23.md~   Questions.md~       StackExchangeSolutions.Rmd~    funs.R                    quesTotals.sql
+ IMDB/              SOSolutions.Rmd     StatsStackExchangeSearch.png   funs.R~                   quesTotals.sql~
+ Lahman/            SOSolutions.Rmd~    Wikipedia/                     hazan.sql                 stats.stackexchange
+ NewQuestions.md    StackExchange.aux   answers.Rmd                    hazan.sql~                stats.stackexchange.
+ NewQuestions.md~   StackExchange.log   answers.Rmd~                   lahman_1871-2022.sqlite   stats.stackexchange.Rds
+ PossibleData       StackExchange.out   benQ23.R                       q11.sql                   stats.stackexchange.db*
+ PossibleData~      StackExchange.pdf   benQ23.R~                      q11.sql~                  stats.stackexchange0.db*
+ Q23.R              StackExchange.tex   benQ23_dtl.R                   q21.R                     tmp.db*
+]0;DBMS~/sta141b/Assignments/DBMS> git status .
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	#Q23.R#
+	.#Q23.R
+	DBMSSpring23.md
+	IMDB/
+	NewQuestions.md
+	PossibleData
+	Q23.R
+	Questions.md
+	StackExchangeSolutions.Rmd
+	StatsStackExchangeSearch.png
+	Wikipedia/
+	answers.Rmd
+	benQ23.R
+	benQ23_dtl.R
+	funs.R
+	hazan.sql
+	lahman_1871-2022.sqlite
+	q11.sql
+	q21.R
+	q23_2.sql
+	quesTotals.sql
+	stats.stackexchange
+	stats.stackexchange.
+	stats.stackexchange.db
+	stats.stackexchange0.db
+	tmp.db
+
+nothing added to commit but untracked files present (use "git add" to track)
+]0;DBMS~/sta141b/Assignments/DBMS> open StatsStackExchangeSearch.png 
+]0;DBMS~/sta141b/Assignments/DBMS> git add StatsStackExchangeSearch.png 
+]0;DBMS~/sta141b/Assignments/DBMS> git commit -m "screenshot of stats.stackexchange search for Q9"
+[main 8bc37e6] screenshot of stats.stackexchange search for Q9
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 Assignments/DBMS/StatsStackExchangeSearch.png
+]0;DBMS~/sta141b/Assignments/DBMS> ls
+'#Q23.R#'           Q23.R~              StackExchange.tex~             benQ23_dtl.R~             q21.R~
+ DBMSSpring23.md    Questions.md        StackExchangeSolutions.Rmd     downloads/                q23_2.sql
+ DBMSSpring23.md~   Questions.md~       StackExchangeSolutions.Rmd~    funs.R                    quesTotals.sql
+ IMDB/              SOSolutions.Rmd     StatsStackExchangeSearch.png   funs.R~                   quesTotals.sql~
+ Lahman/            SOSolutions.Rmd~    Wikipedia/                     hazan.sql                 stats.stackexchange
+ NewQuestions.md    StackExchange.aux   answers.Rmd                    hazan.sql~                stats.stackexchange.
+ NewQuestions.md~   StackExchange.log   answers.Rmd~                   lahman_1871-2022.sqlite   stats.stackexchange.Rds
+ PossibleData       StackExchange.out   benQ23.R                       q11.sql                   stats.stackexchange.db*
+ PossibleData~      StackExchange.pdf   benQ23.R~                      q11.sql~                  stats.stackexchange0.db*
+ Q23.R              StackExchange.tex   benQ23_dtl.R                   q21.R                     tmp.db*
+]0;DBMS~/sta141b/Assignments/DBMS> ln -s ../Logs/GNUmakefile .
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |..                                                                                                                |   2%
+  ordinary text without R code
+
+  |....                                                                                                              |   4%
+label: unnamed-chunk-1
+Quitting from lines 63-70 (SOSolutions.Rmd) 
+Error in dbGetQuery(db, q) : could not find function "dbGetQuery"
+Calls: <Anonymous> ... withVisible -> eval_with_user_handlers -> eval -> eval
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |..                                                                                                                |   2%
+  ordinary text without R code
+
+  |....                                                                                                              |   4%
+label: unnamed-chunk-1
+Quitting from lines 62-63 (SOSolutions.Rmd) 
+Error in dbConnect(SQLite(), "stats.stackexchange.db") : 
+  could not find function "dbConnect"
+Calls: <Anonymous> ... withVisible -> eval_with_user_handlers -> eval -> eval
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |..                                                                                                                |   2%
+  ordinary text without R code
+
+  |....                                                                                                              |   4%
+label: unnamed-chunk-1
+  |......                                                                                                            |   5%
+  ordinary text without R code
+
+  |........                                                                                                          |   7%
+label: unnamed-chunk-2
+  |..........                                                                                                        |   9%
+  ordinary text without R code
+
+  |............                                                                                                      |  11%
+label: unnamed-chunk-3
+  |...............                                                                                                   |  13%
+  ordinary text without R code
+
+  |.................                                                                                                 |  15%
+label: unnamed-chunk-4 (with options) 
+List of 1
+ $ engine: chr "sql"
+
+Quitting from lines 106-111 (SOSolutions.Rmd) 
+Error: The 'connection' option (DBI connection) is required for sql chunks.
+recover called non-interactively; frames dumped, use debugger() to view
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |..                                                                                                                |   2%
+  ordinary text without R code
+
+  |....                                                                                                              |   4%
+label: unnamed-chunk-1
+  |......                                                                                                            |   6%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-2
+  |...........                                                                                                       |   9%
+  ordinary text without R code
+
+  |.............                                                                                                     |  11%
+label: unnamed-chunk-3
+  |...............                                                                                                   |  13%
+  ordinary text without R code
+
+  |.................                                                                                                 |  15%
+label: unnamed-chunk-4 (with options) 
+List of 1
+ $ engine: chr "sql"
+
+Quitting from lines 118-122 (SOSolutions.Rmd) 
+Error: The 'connection' option (DBI connection) is required for sql chunks.
+recover called non-interactively; frames dumped, use debugger() to view
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |..........                                                                                                        |   9%
+label: unnamed-chunk-1
+  |...............                                                                                                   |  13%
+  ordinary text without R code
+
+  |....................                                                                                              |  17%
+label: unnamed-chunk-2
+  |.........................                                                                                         |  22%
+  ordinary text without R code
+
+  |..............................                                                                                    |  26%
+label: unnamed-chunk-3
+  |...................................                                                                               |  30%
+  ordinary text without R code
+
+  |........................................                                                                          |  35%
+label: unnamed-chunk-4
+Quitting from lines 641-653 (SOSolutions.Rmd) 
+Error in sprintf(template, phrases, phrases) : object 'phrases' not found
+Calls: <Anonymous> ... withVisible -> eval_with_user_handlers -> eval -> eval -> sprintf
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-1
+  |..............                                                                                                    |  12%
+  ordinary text without R code
+
+  |..................                                                                                                |  16%
+label: unnamed-chunk-2
+  |.......................                                                                                           |  20%
+  ordinary text without R code
+
+  |...........................                                                                                       |  24%
+label: unnamed-chunk-3
+  |................................                                                                                  |  28%
+  ordinary text without R code
+
+  |....................................                                                                              |  32%
+label: unnamed-chunk-4
+  |.........................................                                                                         |  36%
+  ordinary text without R code
+
+  |..............................................                                                                    |  40%
+label: unnamed-chunk-5
+  |..................................................                                                                |  44%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-6
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |................................................................                                                  |  56%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+Quitting from lines 1079-1094 (SOSolutions.Rmd) 
+Error in (function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function 'dbGetQuery' for signature '"character", "missing"'
+Calls: <Anonymous> ... eval_with_user_handlers -> eval -> eval -> dbGetQuery -> <Anonymous>
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-1
+  |..............                                                                                                    |  12%
+  ordinary text without R code
+
+  |..................                                                                                                |  16%
+label: unnamed-chunk-2
+  |.......................                                                                                           |  20%
+  ordinary text without R code
+
+  |...........................                                                                                       |  24%
+label: unnamed-chunk-3
+  |................................                                                                                  |  28%
+  ordinary text without R code
+
+  |....................................                                                                              |  32%
+label: unnamed-chunk-4
+  |.........................................                                                                         |  36%
+  ordinary text without R code
+
+  |..............................................                                                                    |  40%
+label: unnamed-chunk-5
+  |..................................................                                                                |  44%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-6
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |................................................................                                                  |  56%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |....................................................................                                              |  60%
+  ordinary text without R code
+
+  |.........................................................................                                         |  64%
+label: unnamed-chunk-8
+  |..............................................................................                                    |  68%
+  ordinary text without R code
+
+  |..................................................................................                                |  72%
+label: unnamed-chunk-9
+  |.......................................................................................                           |  76%
+  ordinary text without R code
+
+  |...........................................................................................                       |  80%
+label: unnamed-chunk-10
+  |................................................................................................                  |  84%
+  ordinary text without R code
+
+  |....................................................................................................              |  88%
+label: unnamed-chunk-11
+Quitting from lines 1276-1277 (SOSolutions.Rmd) 
+Error in p$AcceptedAnswerId %in% c(p$Id, 0) : object 'p' not found
+Calls: <Anonymous> ... eval_with_user_handlers -> eval -> eval -> table -> %in%
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-1
+  |..............                                                                                                    |  12%
+  ordinary text without R code
+
+  |..................                                                                                                |  16%
+label: unnamed-chunk-2
+  |.......................                                                                                           |  20%
+  ordinary text without R code
+
+  |...........................                                                                                       |  24%
+label: unnamed-chunk-3
+  |................................                                                                                  |  28%
+  ordinary text without R code
+
+  |....................................                                                                              |  32%
+label: unnamed-chunk-4
+  |.........................................                                                                         |  36%
+  ordinary text without R code
+
+  |..............................................                                                                    |  40%
+label: unnamed-chunk-5
+  |..................................................                                                                |  44%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-6
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |................................................................                                                  |  56%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |....................................................................                                              |  60%
+  ordinary text without R code
+
+  |.........................................................................                                         |  64%
+label: unnamed-chunk-8
+  |..............................................................................                                    |  68%
+  ordinary text without R code
+
+  |..................................................................................                                |  72%
+label: unnamed-chunk-9
+  |.......................................................................................                           |  76%
+  ordinary text without R code
+
+  |...........................................................................................                       |  80%
+label: unnamed-chunk-10
+  |................................................................................................                  |  84%
+  ordinary text without R code
+
+  |....................................................................................................              |  88%
+label: unnamed-chunk-11 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |.........................................................................................................         |  92%
+  ordinary text without R code
+
+  |.............................................................................................................     |  96%
+label: unnamed-chunk-12
+  |..................................................................................................................| 100%
+  ordinary text without R code
+
+
+output file: SOSolutions.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS SOSolutions.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output SOSolutions.tex --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --highlight-style tango --pdf-engine pdflatex --variable graphics --variable 'geometry:margin=1in' 
+! Undefined control sequence.
+l.393 \Q
+          What's the most recent question (by date-time) in the Posts table? 
+
+Error: LaTeX failed to compile SOSolutions.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SOSolutions.log for more info.
+recover called non-interactively; frames dumped, use debugger() to view
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-1
+  |..............                                                                                                    |  12%
+  ordinary text without R code
+
+  |..................                                                                                                |  16%
+label: unnamed-chunk-2
+  |.......................                                                                                           |  20%
+  ordinary text without R code
+
+  |...........................                                                                                       |  24%
+label: unnamed-chunk-3
+  |................................                                                                                  |  28%
+  ordinary text without R code
+
+  |....................................                                                                              |  32%
+label: unnamed-chunk-4
+  |.........................................                                                                         |  36%
+  ordinary text without R code
+
+  |..............................................                                                                    |  40%
+label: unnamed-chunk-5
+  |..................................................                                                                |  44%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-6
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |................................................................                                                  |  56%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |....................................................................                                              |  60%
+  ordinary text without R code
+
+  |.........................................................................                                         |  64%
+label: unnamed-chunk-8
+  |..............................................................................                                    |  68%
+  ordinary text without R code
+
+  |..................................................................................                                |  72%
+label: unnamed-chunk-9
+  |.......................................................................................                           |  76%
+  ordinary text without R code
+
+  |...........................................................................................                       |  80%
+label: unnamed-chunk-10
+  |................................................................................................                  |  84%
+  ordinary text without R code
+
+  |....................................................................................................              |  88%
+label: unnamed-chunk-11 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |.........................................................................................................         |  92%
+  ordinary text without R code
+
+  |.............................................................................................................     |  96%
+label: unnamed-chunk-12
+  |..................................................................................................................| 100%
+  ordinary text without R code
+
+
+output file: SOSolutions.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS SOSolutions.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output SOSolutions.tex --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --highlight-style tango --pdf-engine pdflatex --variable graphics --variable 'geometry:margin=1in' 
+! LaTeX Error: Unicode character С (U+0421)
+               not set up for use with LaTeX.
+
+Error: LaTeX failed to compile SOSolutions.tex. See https://yihui.org/tinytex/r/#debugging for debugging tips. See SOSolutions.log for more info.
+recover called non-interactively; frames dumped, use debugger() to view
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |.....                                                                                                             |   4%
+  ordinary text without R code
+
+  |.........                                                                                                         |   8%
+label: unnamed-chunk-1
+  |..............                                                                                                    |  12%
+  ordinary text without R code
+
+  |..................                                                                                                |  16%
+label: unnamed-chunk-2
+  |.......................                                                                                           |  20%
+  ordinary text without R code
+
+  |...........................                                                                                       |  24%
+label: unnamed-chunk-3
+  |................................                                                                                  |  28%
+  ordinary text without R code
+
+  |....................................                                                                              |  32%
+label: unnamed-chunk-4
+  |.........................................                                                                         |  36%
+  ordinary text without R code
+
+  |..............................................                                                                    |  40%
+label: unnamed-chunk-5
+  |..................................................                                                                |  44%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-6
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |................................................................                                                  |  56%
+label: unnamed-chunk-7 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |....................................................................                                              |  60%
+  ordinary text without R code
+
+  |.........................................................................                                         |  64%
+label: unnamed-chunk-8
+  |..............................................................................                                    |  68%
+  ordinary text without R code
+
+  |..................................................................................                                |  72%
+label: unnamed-chunk-9
+  |.......................................................................................                           |  76%
+  ordinary text without R code
+
+  |...........................................................................................                       |  80%
+label: unnamed-chunk-10
+  |................................................................................................                  |  84%
+  ordinary text without R code
+
+  |....................................................................................................              |  88%
+label: unnamed-chunk-11 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |.........................................................................................................         |  92%
+  ordinary text without R code
+
+  |.............................................................................................................     |  96%
+label: unnamed-chunk-12
+  |..................................................................................................................| 100%
+  ordinary text without R code
+
+
+output file: SOSolutions.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS SOSolutions.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output SOSolutions.tex --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --highlight-style tango --pdf-engine xelatex --variable graphics --variable 'geometry:margin=1in' 
+
+Output created: SOSolutions.pdf
+]0;DBMS~/sta141b/Assignments/DBMS> open SOSolutions.pdf 
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |...                                                                                                               |   3%
+  ordinary text without R code
+
+  |.......                                                                                                           |   6%
+label: unnamed-chunk-1
+  |..........                                                                                                        |   9%
+  ordinary text without R code
+
+  |..............                                                                                                    |  12%
+label: unnamed-chunk-2
+  |.................                                                                                                 |  15%
+  ordinary text without R code
+
+  |.....................                                                                                             |  18%
+label: unnamed-chunk-3
+  |........................                                                                                          |  21%
+  ordinary text without R code
+
+  |............................                                                                                      |  24%
+label: unnamed-chunk-4
+  |...............................                                                                                   |  27%
+  ordinary text without R code
+
+  |...................................                                                                               |  30%
+label: unnamed-chunk-5
+  |......................................                                                                            |  33%
+  ordinary text without R code
+
+  |.........................................                                                                         |  36%
+label: unnamed-chunk-6
+  |.............................................                                                                     |  39%
+  ordinary text without R code
+
+  |................................................                                                                  |  42%
+label: unnamed-chunk-7
+  |....................................................                                                              |  45%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-8
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |..............................................................                                                    |  55%
+label: unnamed-chunk-9
+Quitting from lines 683-687 (SOSolutions.Rmd) 
+Error in ggplot(tmp) : could not find function "ggplot"
+Calls: <Anonymous> ... withVisible -> eval_with_user_handlers -> eval -> eval
+
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |...                                                                                                               |   3%
+  ordinary text without R code
+
+  |.......                                                                                                           |   6%
+label: unnamed-chunk-1
+  |..........                                                                                                        |   9%
+  ordinary text without R code
+
+  |..............                                                                                                    |  12%
+label: unnamed-chunk-2
+  |.................                                                                                                 |  15%
+  ordinary text without R code
+
+  |.....................                                                                                             |  18%
+label: unnamed-chunk-3
+  |........................                                                                                          |  21%
+  ordinary text without R code
+
+  |............................                                                                                      |  24%
+label: unnamed-chunk-4
+  |...............................                                                                                   |  27%
+  ordinary text without R code
+
+  |...................................                                                                               |  30%
+label: unnamed-chunk-5
+  |......................................                                                                            |  33%
+  ordinary text without R code
+
+  |.........................................                                                                         |  36%
+label: unnamed-chunk-6
+  |.............................................                                                                     |  39%
+  ordinary text without R code
+
+  |................................................                                                                  |  42%
+label: unnamed-chunk-7
+  |....................................................                                                              |  45%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-8
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |..............................................................                                                    |  55%
+label: unnamed-chunk-9
+  |..................................................................                                                |  58%
+  ordinary text without R code
+
+  |.....................................................................                                             |  61%
+label: unnamed-chunk-10 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |.........................................................................                                         |  64%
+  ordinary text without R code
+
+  |............................................................................                                      |  67%
+label: unnamed-chunk-11
+  |...............................................................................                                   |  70%
+  ordinary text without R code
+
+  |...................................................................................                               |  73%
+label: unnamed-chunk-12
+  |......................................................................................                            |  76%
+  ordinary text without R code
+
+  |..........................................................................................                        |  79%
+label: unnamed-chunk-13
+  |.............................................................................................                     |  82%
+  ordinary text without R code
+
+  |.................................................................................................                 |  85%
+label: unnamed-chunk-14
+  |....................................................................................................              |  88%
+  ordinary text without R code
+
+  |........................................................................................................          |  91%
+label: unnamed-chunk-15 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |...........................................................................................................       |  94%
+  ordinary text without R code
+
+  |...............................................................................................................   |  97%
+label: unnamed-chunk-16
+  |..................................................................................................................| 100%
+  ordinary text without R code
+
+
+output file: SOSolutions.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS SOSolutions.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output SOSolutions.tex --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --highlight-style tango --pdf-engine xelatex --variable graphics --variable 'geometry:margin=1in' 
+
+Output created: SOSolutions.pdf
+]0;DBMS~/sta141b/Assignments/DBMS> open SOSolutions.pdf 
+]0;DBMS~/sta141b/Assignments/DBMS> make SOSolutions.pdf
+Rscript -e "rmarkdown::render(\"SOSolutions.Rmd\", \"pdf_document\")"
+
+
+processing file: SOSolutions.Rmd
+  |...                                                                                                               |   3%
+  ordinary text without R code
+
+  |.......                                                                                                           |   6%
+label: unnamed-chunk-1
+  |..........                                                                                                        |   9%
+  ordinary text without R code
+
+  |..............                                                                                                    |  12%
+label: unnamed-chunk-2
+  |.................                                                                                                 |  15%
+  ordinary text without R code
+
+  |.....................                                                                                             |  18%
+label: unnamed-chunk-3
+  |........................                                                                                          |  21%
+  ordinary text without R code
+
+  |............................                                                                                      |  24%
+label: unnamed-chunk-4
+  |...............................                                                                                   |  27%
+  ordinary text without R code
+
+  |...................................                                                                               |  30%
+label: unnamed-chunk-5
+  |......................................                                                                            |  33%
+  ordinary text without R code
+
+  |.........................................                                                                         |  36%
+label: unnamed-chunk-6
+  |.............................................                                                                     |  39%
+  ordinary text without R code
+
+  |................................................                                                                  |  42%
+label: unnamed-chunk-7
+  |....................................................                                                              |  45%
+  ordinary text without R code
+
+  |.......................................................                                                           |  48%
+label: unnamed-chunk-8
+  |...........................................................                                                       |  52%
+  ordinary text without R code
+
+  |..............................................................                                                    |  55%
+label: unnamed-chunk-9
+  |..................................................................                                                |  58%
+  ordinary text without R code
+
+  |.....................................................................                                             |  61%
+label: unnamed-chunk-10 (with options) 
+List of 2
+ $ show: logi FALSE
+ $ echo: logi FALSE
+
+  |.........................................................................                                         |  64%
+  ordinary text without R code
+
+  |............................................................................                                      |  67%
+label: unnamed-chunk-11
+  |...............................................................................                                   |  70%
+  ordinary text without R code
+
+  |...................................................................................                               |  73%
+label: unnamed-chunk-12
+  |......................................................................................                            |  76%
+  ordinary text without R code
+
+  |..........................................................................................                        |  79%
+label: unnamed-chunk-13
+  |.............................................................................................                     |  82%
+  ordinary text without R code
+
+  |.................................................................................................                 |  85%
+label: unnamed-chunk-14
+  |....................................................................................................              |  88%
+  ordinary text without R code
+
+  |........................................................................................................          |  91%
+label: unnamed-chunk-15 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |...........................................................................................................       |  94%
+  ordinary text without R code
+
+  |...............................................................................................................   |  97%
+label: unnamed-chunk-16
+  |..................................................................................................................| 100%
+  ordinary text without R code
+
+
+output file: SOSolutions.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS SOSolutions.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output SOSolutions.tex --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/duncan/Rpackages4/rmarkdown/rmarkdown/lua/latex-div.lua --self-contained --highlight-style tango --pdf-engine xelatex --variable graphics --variable 'geometry:margin=1in' 
+
+Output created: SOSolutions.pdf
+]0;DBMS~/sta141b/Assignments/DBMS> open SOSolutions.pdf 
+]0;DBMS~/sta141b/Assignments/DBMS> cd
+]0;duncan~> cd sta141b/Public/Lectures/
+]0;Lectures~/sta141b/Public/Lectures> ls
+Day1/   Day11/  Day13/  Day15/  Day17/  Day19/  Day20/  Day4/  Day6/  Day8/  slides.html
+Day10/  Day12/  Day14/  Day16/  Day18/  Day2/   Day3/   Day5/  Day7/  Day9/
+]0;Lectures~/sta141b/Public/Lectures> cd Day14
+]0;Day14~/sta141b/Public/Lectures/Day14> ls
+slides.html  slides.html~
+]0;Day14~/sta141b/Public/Lectures/Day14> git status slides.html
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	slides.html
+
+nothing added to commit but untracked files present (use "git add" to track)
+]0;Day14~/sta141b/Public/Lectures/Day14> open slides.html
+]0;Day14~/sta141b/Public/Lectures/Day14> git add slides.html
+]0;Day14~/sta141b/Public/Lectures/Day14> git commit -m "Day14 slides"
+[main dae6b76] Day14 slides
+ 1 file changed, 178 insertions(+)
+ create mode 100644 Lectures/Day14/slides.html
+]0;Day14~/sta141b/Public/Lectures/Day14> locate post.sh
+/Users/duncan/Books/NextLevelComputationalReasoning/SampleCode/github/myScripts/Project_HiC/HiC-Pro.post.sh
+/Users/duncan/Books/NextLevelComputationalReasoning/SampleCode/github/myScripts/Project_HiC/hicpro.post.sh
+/Users/duncan/Sites/cgi-bin/post.sh
+]0;Day14~/sta141b/Public/Lectures/Day14> cd ../Day15
+]0;Day15~/sta141b/Public/Lectures/Day15> git add XPath.html  ghFuns.R
+]0;Day15~/sta141b/Public/Lectures/Day15> git commit -m " for searching github"
+[main 40f2e15]  for searching github
+ 2 files changed, 169 insertions(+)
+ create mode 100644 Lectures/Day15/XPath.html
+ create mode 100644 Lectures/Day15/ghFuns.R
+]0;Day15~/sta141b/Public/Lectures/Day15> git push
+Enumerating objects: 8, done.
+Counting objects: 100% (8/8), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.11 KiB | 2.11 MiB/s, done.
+Total 6 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.        
+To github.com:duncantl/ST141B_S23.git
+   b9c688d..40f2e15  main -> main
+]0;Day15~/sta141b/Public/Lectures/Day15> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 76548 
+Time = 2023-05-23 11:06:00 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day15 
+1> library(RCurl)
+[06:03] 2> z = getForm("https://github.com/search",
+            q = "R URL encode", type = "repositories",
+            .opts = list(followlocation = TRUE,
+                         verbose = TRUE,
+                         httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")))
++ + + + *   Trying 192.30.255.112:443...
+* Connected to github.com (192.30.255.112) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R%20URL%20encode&type=repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8]
+* Using Stream ID: 1 (easy handle 0x10678c200)
+> GET /search?q=R%20URL%20encode&type=repositories HTTP/2
+Host: github.com
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 23 May 2023 18:06:22 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"aacb5ada18e3060b40362fee7759159a"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=4PLnZQSFTKNfY1w%2B5sOtgzGYODY%2FKpBz2v3xG0EaE8kmm4wysQlgsrFXIY3stbgZB3goaneHaK%2F6vy3l24UKhysckDqPDWPg185yT1we7ciumF44asxhzwnc5WuDLPyQFKO%2F46WK0tf5nZ026TMSzENSPRMhTyr8dwjIqZuHX5HgOSWtmCj8Saj3jiFlREHngLiY4unYVwqrwoh0wuizhaC33sgJd2%2Bi0eINBHANiEF7kRYimcre7tcnP1%2FtXVMt%2B%2FaeBVjpL0GrZc9HIcyUGA%3D%3D--CUoROQWcb1T67IkP--X8pn8OMHzZa1R43zt9qqEQ%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.641036822.1684865182; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:06:22 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:06:22 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: C2E2:25CE:CF12311:D934E64:646D009E
+< 
+* Connection #0 to host github.com left intact
+[06:23] 3> z = getForm("https://github.com/search",
+            q = "R URL encode", type = "repositories",
+            .opts = list(followlocation = TRUE,
+                         verbose = FALSE,
+                         httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")))
++ + + + [13:43] 4> class(z)
+[1] "character"
+[14:38] 5> length(z)
+[1] 1
+[14:42] 6> nchar(z)
+[1] 154521
+[15:08] 7> grepl("mllg", z)
+[1] TRUE
+[15:55] 8> library(XML)
+[26:26] 9> doc = htmlParse(z)
+[26:27] 10> a = getNodeSet(doc, "//a[contains(., 'mllg/base64')]")
+[29:19] 11> length(a)
+[1] 1
+[29:20] 12> a
+[[1]]
+<a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:3,&quot;click_id&quot;:69953146,&quot;result&quot;:{&quot;id&quot;:69953146,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk2OTk1MzE0Ng==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/mllg/base64url&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="ec240dcc6f139317d7f9d27acf454dfa285edcecf41b242df64fb9373ca8bdfd" href="/mllg/base64url">mllg/base64<em>url</em></a> 
+
+attr(,"class")
+[1] "XMLNodeSet"
+[29:26] 13> xmlParent(a)
+Error in (function (classes, fdef, mtable)  : 
+  unable to find an inherited method for function ‘xmlParent’ for signature ‘"XMLNodeSet"’
+
+Enter a frame number, or 0 to exit   
+
+1: xmlParent(a)
+2: (function (classes, fdef, mtable) 
+{
+    methods <- .findInheritedM
+
+Selection: 0
+[29:26] 13> xmlParent(a[[1]])
+<div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:3,&quot;click_id&quot;:69953146,&quot;result&quot;:{&quot;id&quot;:69953146,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk2OTk1MzE0Ng==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/mllg/base64url&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="ec240dcc6f139317d7f9d27acf454dfa285edcecf41b242df64fb9373ca8bdfd" href="/mllg/base64url">mllg/base64<em>url</em></a>
+
+      </div> 
+[29:39] 14> a = getNodeSet(doc, "//a[contains(., 'mllg/base64')]/ancestor::li")
+[31:52] 15> length(a)
+[1] 1
+[31:55] 16> a[[1]]
+<li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:3,&quot;click_id&quot;:69953146,&quot;result&quot;:{&quot;id&quot;:69953146,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk2OTk1MzE0Ng==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/mllg/base64url&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="ec240dcc6f139317d7f9d27acf454dfa285edcecf41b242df64fb9373ca8bdfd" href="/mllg/base64url">mllg/base64<em>url</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Fast and <em>url</em>-safe base64 <em>encoder</em> and decoder for <em>R</em>
+      </p>
+
+    <div>
+        <div>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:cran,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/cran" title="Topic: cran" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  cran
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64" title="Topic: base64" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base32,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base32" title="Topic: base32" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base32
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64url,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64url" title="Topic: base64url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64url
+</a>
+        </div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/mllg/base64url/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              11
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #555555"/>
+  <span itemprop="programmingLanguage">C</span>
+</span>
+
+          </div>
+
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2020-01-11T00:16:31Z" class="no-wrap">Jan 11, 2020</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li> 
+[32:01] 17> xmlParent(a[[1]])
+<ul class="repo-list"><li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:1,&quot;click_id&quot;:25160745,&quot;result&quot;:{&quot;id&quot;:25160745,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnkyNTE2MDc0NQ==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/aoles/shinyURL&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="50c59da7d430ea6e1bd3e182d5a1852389ea0b648784f88475973c6799b69d80" href="/aoles/shinyURL">aoles/shiny<em>URL</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        <g-emoji class="g-emoji" alias="link" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f517.png">🔗</g-emoji> Save and restore the state of Shiny app's widgets by <em>encoding</em> them in an <em>URL</em> query string
+      </p>
+
+    <div>
+        <div>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:shiny,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/shiny" title="Topic: shiny" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  shiny
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:bookmarks,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/bookmarks" title="Topic: bookmarks" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  bookmarks
+</a>
+        </div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/aoles/shinyURL/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              82
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #198CE7"/>
+  <span itemprop="programmingLanguage">R</span>
+</span>
+
+          </div>
+
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2016-08-08T13:25:50Z" class="no-wrap">Aug 8, 2016</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:2,&quot;click_id&quot;:68285583,&quot;result&quot;:{&quot;id&quot;:68285583,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk2ODI4NTU4Mw==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/bt/rust_urlencoding&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="164206dae4c7b41dd9cead56e19ff8e942e2c76e73e7c52b8a0ca9b840559d17" href="/bt/rust_urlencoding">bt/<em>rust</em>_<em>urlencoding</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        A Rust library for doing <em>URL</em> percentage <em>encoding</em>.
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/bt/rust_urlencoding/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              27
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #dea584"/>
+  <span itemprop="programmingLanguage">Rust</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            MIT license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2020-06-05T11:42:51Z" class="no-wrap">Jun 5, 2020</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:3,&quot;click_id&quot;:69953146,&quot;result&quot;:{&quot;id&quot;:69953146,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk2OTk1MzE0Ng==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/mllg/base64url&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="ec240dcc6f139317d7f9d27acf454dfa285edcecf41b242df64fb9373ca8bdfd" href="/mllg/base64url">mllg/base64<em>url</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Fast and <em>url</em>-safe base64 <em>encoder</em> and decoder for <em>R</em>
+      </p>
+
+    <div>
+        <div>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:cran,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/cran" title="Topic: cran" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  cran
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64" title="Topic: base64" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base32,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base32" title="Topic: base32" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base32
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64url,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64url" title="Topic: base64url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64url
+</a>
+        </div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/mllg/base64url/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              11
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #555555"/>
+  <span itemprop="programmingLanguage">C</span>
+</span>
+
+          </div>
+
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2020-01-11T00:16:31Z" class="no-wrap">Jan 11, 2020</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:4,&quot;click_id&quot;:12933098,&quot;result&quot;:{&quot;id&quot;:12933098,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnkxMjkzMzA5OA==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/thebigredgeek/angular-rison&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="29af0850ae8034224e64ebf79358fc0393c283a15357e556664f6e1ecfd51b18" href="/thebigredgeek/angular-rison">thebigredgeek/angular-<em>rison</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Rison <em>URL</em> Object <em>encoding</em> service for Angular. <em>Encode</em> infinite-depth javascript objects into a <em>url</em>-friendly string
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/thebigredgeek/angular-rison/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              14
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #f1e05a"/>
+  <span itemprop="programmingLanguage">JavaScript</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            MIT license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2022-06-26T08:56:07Z" class="no-wrap">Jun 26, 2022</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:5,&quot;click_id&quot;:86840822,&quot;result&quot;:{&quot;id&quot;:86840822,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk4Njg0MDgyMg==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/Locustv2/yii2-encode-url-rule&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="b4ca1280e230abb32a3cec043bbfd88ccf15c848eafc0faa8ce0c430962a8024" href="/Locustv2/yii2-encode-url-rule">Locustv2/yii2-<em>encode</em>-<em>url</em>-rule</a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Makes the <em>encoding</em> of query parameters easier when creating <em>urls</em>
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/Locustv2/yii2-encode-url-rule/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              5
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #4F5D95"/>
+  <span itemprop="programmingLanguage">PHP</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            BSD-3-Clause license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2017-03-31T17:21:39Z" class="no-wrap">Mar 31, 2017</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:6,&quot;click_id&quot;:3854455,&quot;result&quot;:{&quot;id&quot;:3854455,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnkzODU0NDU1&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/extemporalgenome/radix64&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="87e5da0b99a432d527f5a2ec532af2728c781a68e176bc3bc36955ad0db28a8a" href="/extemporalgenome/radix64">extemporalgenome/<em>radix64</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        <em>URL</em>-safe compact fixed-width integer <em>encoding</em>
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/extemporalgenome/radix64/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              8
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #00ADD8"/>
+  <span itemprop="programmingLanguage">Go</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            BSD-3-Clause license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2021-08-31T14:42:34Z" class="no-wrap">Aug 31, 2021</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:7,&quot;click_id&quot;:78257055,&quot;result&quot;:{&quot;id&quot;:78257055,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk3ODI1NzA1NQ==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/StephenCleary/UniformResourceIdentifiers&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="8eebf2b5faacb747e28cfb6e3c6e4ce7d6e8c6709b80a2901c80f17777114e8f" href="/StephenCleary/UniformResourceIdentifiers">StephenCleary/Uniform<em>Resource</em>Identifiers</a>
+
+      </div>
+
+        <div class="d-flex flex-items-center flex-justify-end flex-shrink-0 flex-auto">
+          <details id="funding-links-modal-StephenCleary-UniformResourceIdentifiers" data-view-component="true" class="details-reset details-overlay details-overlay-dark d-inline-block float-left"><summary icon="heart" id="sponsor-button" title="Sponsor StephenCleary/UniformResourceIdentifiers" aria-label="Sponsor StephenCleary/UniformResourceIdentifiers" data-view-component="true" class="btn-sm btn"><svg aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-heart icon-sponsor mr-1 color-fg-sponsors"><path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"/></svg>
+      Sponsor
+</summary><details-dialog aria-label="Sponsor dialog" class="anim-fade-in fast Box Box--overlay d-flex flex-column" src="/StephenCleary/UniformResourceIdentifiers/funding_links?fragment=1" preload=""><div class="Box-header">
+      <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog" data-close-dialog="">
+        <svg aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg></button>
+      <h3 class="Box-title">
+        Sponsor StephenCleary/UniformResourceIdentifiers
+      </h3>
+    </div>
+    <div class="overflow-auto">
+      <include-fragment><svg aria-label="Loading..." style="box-sizing: content-box; color: var(--color-icon-primary);" width="64" height="64" viewbox="0 0 16 16" fill="none" data-view-component="true" class="my-3 mx-auto d-block anim-rotate"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></include-fragment></div>
+  </details-dialog></details></div>
+    </div>
+
+      <p class="mb-1">
+        Standard-compliant URI <em>encoders</em> and parsers
+      </p>
+
+    <div>
+        <div>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url" title="Topic: url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:c-sharp,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/c-sharp" title="Topic: c-sharp" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  c-sharp
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri" title="Topic: uri" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url-parser,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url-parser" title="Topic: url-parser" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url-parser
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri-parser,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri-parser" title="Topic: uri-parser" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri-parser
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url-encoder,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url-encoder" title="Topic: url-encoder" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url-encoder
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri-normalize,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri-normalize" title="Topic: uri-normalize" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri-normalize
+</a>
+        </div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/StephenCleary/UniformResourceIdentifiers/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              6
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #178600"/>
+  <span itemprop="programmingLanguage">C#</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            MIT license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2021-09-26T13:52:39Z" class="no-wrap">Sep 26, 2021</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:8,&quot;click_id&quot;:43640697,&quot;result&quot;:{&quot;id&quot;:43640697,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnk0MzY0MDY5Nw==&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/simonpercic/ResponseEcho&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="11b9d7ecab007d0e86d19c37eba4bd3c3e206c4e9204bb508eabc9c426d86614" href="/simonpercic/ResponseEcho">simonpercic/<em>ResponseEcho</em></a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Java Spring web app that receives an <em>encoded</em> network response info via <em>URL</em> params. It then decodes, unpacks and displ…
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/simonpercic/ResponseEcho/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              33
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #b07219"/>
+  <span itemprop="programmingLanguage">Java</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            MIT license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2021-12-11T12:01:00Z" class="no-wrap">Dec 11, 2021</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:9,&quot;click_id&quot;:2636702,&quot;result&quot;:{&quot;id&quot;:2636702,&quot;global_relay_id&quot;:&quot;MDEwOlJlcG9zaXRvcnkyNjM2NzAy&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/pp19dd/RLE-URL-Encoder---Decoder&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="f41a148f39a1e39f6fa4adf172e6a2f08c74b4df25ea27f76482246f2ea75480" href="/pp19dd/RLE-URL-Encoder---Decoder">pp19dd/RLE-<em>URL</em>-Encoder---Decoder</a>
+
+      </div>
+
+    </div>
+
+      <p class="mb-1">
+        Tiny PHP and JavaScript library that decodes/<em>encodes</em> (and shrinks) long query strings (ie: country checkboxes) with s…
+      </p>
+
+    <div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/pp19dd/RLE-URL-Encoder---Decoder/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              6
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #4F5D95"/>
+  <span itemprop="programmingLanguage">PHP</span>
+</span>
+
+          </div>
+
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2011-10-24T16:33:12Z" class="no-wrap">Oct 24, 2011</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+      
+ <li class="repo-list-item hx_hit-repo d-flex flex-justify-start py-4 public source">
+  <div class="flex-shrink-0 mr-2">
+      <svg style="color: #6a737d" aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z"/></svg></div>
+
+  <div class="mt-n1 flex-auto">
+    <div class="d-flex">
+      <div class="f4 text-normal">
+        <a class="v-align-middle" data-hydro-click="{&quot;event_type&quot;:&quot;search_result.click&quot;,&quot;payload&quot;:{&quot;page_number&quot;:1,&quot;per_page&quot;:10,&quot;query&quot;:&quot;R URL encode&quot;,&quot;result_position&quot;:10,&quot;click_id&quot;:508772625,&quot;result&quot;:{&quot;id&quot;:508772625,&quot;global_relay_id&quot;:&quot;R_kgDOHlNBEQ&quot;,&quot;model_name&quot;:&quot;Repository&quot;,&quot;url&quot;:&quot;https://github.com/marcoradocchia/qr-rs&quot;},&quot;originating_url&quot;:&quot;https://github.com/search?q=R%20URL%20encode&amp;type=repositories&quot;,&quot;user_id&quot;:null}}" data-hydro-click-hmac="aeb3f980641c134f71d74037178acb9d315ceaa58e0dac949b68264f7f889e22" href="/marcoradocchia/qr-rs">marcoradocchia/qr-<em>rs</em></a>
+
+      </div>
+
+        <div class="d-flex flex-items-center flex-justify-end flex-shrink-0 flex-auto">
+          <details id="funding-links-modal-marcoradocchia-qr-rs" data-view-component="true" class="details-reset details-overlay details-overlay-dark d-inline-block float-left"><summary icon="heart" id="sponsor-button" title="Sponsor marcoradocchia/qr-rs" aria-label="Sponsor marcoradocchia/qr-rs" data-view-component="true" class="btn-sm btn"><svg aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-heart icon-sponsor mr-1 color-fg-sponsors"><path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"/></svg>
+      Sponsor
+</summary><details-dialog aria-label="Sponsor dialog" class="anim-fade-in fast Box Box--overlay d-flex flex-column" src="/marcoradocchia/qr-rs/funding_links?fragment=1" preload=""><div class="Box-header">
+      <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog" data-close-dialog="">
+        <svg aria-hidden="true" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"/></svg></button>
+      <h3 class="Box-title">
+        Sponsor marcoradocchia/qr-rs
+      </h3>
+    </div>
+    <div class="overflow-auto">
+      <include-fragment><svg aria-label="Loading..." style="box-sizing: content-box; color: var(--color-icon-primary);" width="64" height="64" viewbox="0 0 16 16" fill="none" data-view-component="true" class="my-3 mx-auto d-block anim-rotate"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke"/><path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg></include-fragment></div>
+  </details-dialog></details></div>
+    </div>
+
+      <p class="mb-1">
+        A CLI utility to <em>encode</em> <em>URLs</em> or text into QR codes in various formats and colors.
+      </p>
+
+    <div>
+        <div>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:rust,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/rust" title="Topic: rust" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  rust
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:command-line,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/command-line" title="Topic: command-line" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  command-line
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/url" title="Topic: url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:text,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/text" title="Topic: text" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  text
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qr-code,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qr-code" title="Topic: qr-code" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qr-code
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:rust-lang,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/rust-lang" title="Topic: rust-lang" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  rust-lang
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qr,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qr" title="Topic: qr" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qr
+</a>
+            <a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qrcode-generator,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qrcode-generator" title="Topic: qrcode-generator" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qrcode-generator
+</a>
+        </div>
+
+      <div class="d-flex flex-wrap text-small color-fg-muted">
+
+          <div class="mr-3">
+            <a class="Link--muted" href="/marcoradocchia/qr-rs/stargazers">
+              <svg aria-label="star" role="img" height="16" viewbox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-star"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg>
+              30
+            </a>
+          </div>
+
+          <div class="mr-3">
+            <span class="">
+  <span class="repo-language-color" style="background-color: #dea584"/>
+  <span itemprop="programmingLanguage">Rust</span>
+</span>
+
+          </div>
+
+          <div class="mr-3">
+            GPL-3.0 license
+          </div>
+
+          <div class="mr-3">
+            Updated <relative-time datetime="2022-07-20T12:53:02Z" class="no-wrap">Jul 20, 2022</relative-time></div>
+
+      </div>
+    </div>
+  </div>
+</li>
+
+  </ul> 
+[32:54] 18> //ul[@class = 'repo-list']//a[starts-with(@title, 'Topic:')]
+Error: unexpected '/' in "/"
+No suitable frames for recover()
+[32:54] 18> getNodeSet(doc, "//ul[@class = 'repo-list']//a[starts-with(@title, 'Topic:')]")
+[[1]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a> 
+
+[[2]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:shiny,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/shiny" title="Topic: shiny" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  shiny
+</a> 
+
+[[3]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:bookmarks,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/bookmarks" title="Topic: bookmarks" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  bookmarks
+</a> 
+
+[[4]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:cran,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/cran" title="Topic: cran" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  cran
+</a> 
+
+[[5]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a> 
+
+[[6]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64" title="Topic: base64" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64
+</a> 
+
+[[7]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base32,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base32" title="Topic: base32" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base32
+</a> 
+
+[[8]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:base64url,repository_id:69953146,repository_nwo:mllg/base64url,repository_public:true,repository_is_fork:false" href="/topics/base64url" title="Topic: base64url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  base64url
+</a> 
+
+[[9]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url" title="Topic: url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url
+</a> 
+
+[[10]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:c-sharp,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/c-sharp" title="Topic: c-sharp" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  c-sharp
+</a> 
+
+[[11]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri" title="Topic: uri" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri
+</a> 
+
+[[12]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url-parser,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url-parser" title="Topic: url-parser" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url-parser
+</a> 
+
+[[13]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri-parser,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri-parser" title="Topic: uri-parser" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri-parser
+</a> 
+
+[[14]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url-encoder,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/url-encoder" title="Topic: url-encoder" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url-encoder
+</a> 
+
+[[15]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:uri-normalize,repository_id:78257055,repository_nwo:StephenCleary/UniformResourceIdentifiers,repository_public:true,repository_is_fork:false" href="/topics/uri-normalize" title="Topic: uri-normalize" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  uri-normalize
+</a> 
+
+[[16]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:rust,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/rust" title="Topic: rust" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  rust
+</a> 
+
+[[17]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:command-line,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/command-line" title="Topic: command-line" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  command-line
+</a> 
+
+[[18]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:url,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/url" title="Topic: url" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  url
+</a> 
+
+[[19]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:text,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/text" title="Topic: text" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  text
+</a> 
+
+[[20]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qr-code,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qr-code" title="Topic: qr-code" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qr-code
+</a> 
+
+[[21]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:rust-lang,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/rust-lang" title="Topic: rust-lang" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  rust-lang
+</a> 
+
+[[22]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qr,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qr" title="Topic: qr" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qr
+</a> 
+
+[[23]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:qrcode-generator,repository_id:508772625,repository_nwo:marcoradocchia/qr-rs,repository_public:true,repository_is_fork:false" href="/topics/qrcode-generator" title="Topic: qrcode-generator" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  qrcode-generator
+</a> 
+
+attr(,"class")
+[1] "XMLNodeSet"
+[40:10] 19> tp = getNodeSet(doc, "//ul[@class = 'repo-list']//a[starts-with(@title, 'Topic:')]")
+[43:14] 20> tp[[1]]
+<a data-ga-click="Topic, search results" data-octo-click="topic_click" data-octo-dimensions="topic:r,repository_id:25160745,repository_nwo:aoles/shinyURL,repository_public:true,repository_is_fork:false" href="/topics/r" title="Topic: r" data-view-component="true" class="topic-tag topic-tag-link f6 px-2 mx-0">
+  r
+</a> 
+[43:17] 21> sapply(tp, xmlGetAttr, "title")
+ [1] "Topic: r"                "Topic: shiny"           
+ [3] "Topic: bookmarks"        "Topic: cran"            
+ [5] "Topic: r"                "Topic: base64"          
+ [7] "Topic: base32"           "Topic: base64url"       
+ [9] "Topic: url"              "Topic: c-sharp"         
+[11] "Topic: uri"              "Topic: url-parser"      
+[13] "Topic: uri-parser"       "Topic: url-encoder"     
+[15] "Topic: uri-normalize"    "Topic: rust"            
+[17] "Topic: command-line"     "Topic: url"             
+[19] "Topic: text"             "Topic: qr-code"         
+[21] "Topic: rust-lang"        "Topic: qr"              
+[23] "Topic: qrcode-generator"
+[43:37] 22> gsub("Topic: ", "", sapply(tp, xmlGetAttr, "title"))
+ [1] "r"                "shiny"            "bookmarks"       
+ [4] "cran"             "r"                "base64"          
+ [7] "base32"           "base64url"        "url"             
+[10] "c-sharp"          "uri"              "url-parser"      
+[13] "uri-parser"       "url-encoder"      "uri-normalize"   
+[16] "rust"             "command-line"     "url"             
+[19] "text"             "qr-code"          "rust-lang"       
+[22] "qr"               "qrcode-generator"
+[43:45] 23> tp = getNodeSet(doc, "//ul[@class = 'repo-list']//a[starts-with(@title, 'Topic:')]/@title")
+[44:15] 24> tp
+[[1]]
+     title 
+"Topic: r" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[2]]
+         title 
+"Topic: shiny" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[3]]
+             title 
+"Topic: bookmarks" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[4]]
+        title 
+"Topic: cran" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[5]]
+     title 
+"Topic: r" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[6]]
+          title 
+"Topic: base64" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[7]]
+          title 
+"Topic: base32" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[8]]
+             title 
+"Topic: base64url" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[9]]
+       title 
+"Topic: url" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[10]]
+           title 
+"Topic: c-sharp" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[11]]
+       title 
+"Topic: uri" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[12]]
+              title 
+"Topic: url-parser" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[13]]
+              title 
+"Topic: uri-parser" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[14]]
+               title 
+"Topic: url-encoder" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[15]]
+                 title 
+"Topic: uri-normalize" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[16]]
+        title 
+"Topic: rust" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[17]]
+                title 
+"Topic: command-line" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[18]]
+       title 
+"Topic: url" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[19]]
+        title 
+"Topic: text" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[20]]
+           title 
+"Topic: qr-code" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[21]]
+             title 
+"Topic: rust-lang" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[22]]
+      title 
+"Topic: qr" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+[[23]]
+                    title 
+"Topic: qrcode-generator" 
+attr(,"class")
+[1] "XMLAttributeValue"
+
+attr(,"class")
+[1] "XMLNodeSet"
+[44:16] 25> unlist(tp)
+                    title                     title 
+               "Topic: r"            "Topic: shiny" 
+                    title                     title 
+       "Topic: bookmarks"             "Topic: cran" 
+                    title                     title 
+               "Topic: r"           "Topic: base64" 
+                    title                     title 
+          "Topic: base32"        "Topic: base64url" 
+                    title                     title 
+             "Topic: url"          "Topic: c-sharp" 
+                    title                     title 
+             "Topic: uri"       "Topic: url-parser" 
+                    title                     title 
+      "Topic: uri-parser"      "Topic: url-encoder" 
+                    title                     title 
+   "Topic: uri-normalize"             "Topic: rust" 
+                    title                     title 
+    "Topic: command-line"              "Topic: url" 
+                    title                     title 
+            "Topic: text"          "Topic: qr-code" 
+                    title                     title 
+       "Topic: rust-lang"               "Topic: qr" 
+                    title 
+"Topic: qrcode-generator" 
+[44:22] 26> getNodeSet(doc, "//a[contains(., 'Next')]")
+[[1]]
+<a class="next_page" rel="next" href="/search?p=2&amp;q=R+URL+encode&amp;type=Repositories">Next</a> 
+
+attr(,"class")
+[1] "XMLNodeSet"
+[46:47] 27> getNodeSet(doc, "//a[contains(., 'Next')]/@href")[[1]]
+                                          href 
+"/search?p=2&q=R+URL+encode&type=Repositories" 
+attr(,"class")
+[1] "XMLAttributeValue"
+[47:40] 28> baseURL = "https://github.com/search"
+[47:51] 29> nxt = getNodeSet(doc, "//a[contains(., 'Next')]/@href")[[1]]
+[47:57] 30> nxt
+                                          href 
+"/search?p=2&q=R+URL+encode&type=Repositories" 
+attr(,"class")
+[1] "XMLAttributeValue"
+[47:58] 31> nextURL = getRelativeURL(nxt, baseURL)
+[48:12] 32> nextURL
+[1] "https://github.com/search?p=2&q=R+URL+encode&type=Repositories"
+[48:13] 33>    z2 = getURLContent(nextURL,
+                  followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))
++ + + *   Trying 192.30.255.113:443...
+* Connected to github.com (192.30.255.113) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?p=2&q=R+URL+encode&type=Repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8]
+* Using Stream ID: 1 (easy handle 0x119822200)
+> GET /search?p=2&q=R+URL+encode&type=Repositories HTTP/2
+Host: github.com
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 23 May 2023 18:48:57 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"23dfb3dad16b422c1d1996c56dcb3df0"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=UAS0V1Zyr0%2FgsgPKi9DxubBZKPGPA4hFKm9i%2FxcO64TS6Do8JtyfQ%2FtQepO1IkLeIcy4a3OUkMvLxD8NSVxY4AX0%2FwwZGd04%2BnuDTRi6FQDLoTUf7kFX0%2BAfUoARbsyOP7qjHArIP6TUL4aeOZ7tokJgrAYoG53RgN6PDmKLs5W3dBkp5rB6Ag%2Bebl8nbmkSEnjwJQjINbTlSw8ozG3HpTGdLNtXHT0h303%2F1sSUIxQCVUmlt6cE8ZJ993ZxXREx7t%2FWWkGTxipnPU3FiTWnSg%3D%3D--dho36fu56Or%2FnM04--ZX5QA5il87wewX%2F%2B8Tg3Tw%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.649846847.1684867737; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:48:57 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:48:57 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: EB44:33FD:D122C01:DBAAF1D:646D0A98
+< 
+* Connection #0 to host github.com left intact
+[48:57] 34> grepl("syarig", z2)
+[1] FALSE
+[49:20] 35> v1 = getURLContent("https://github.com/search?q=R%20URL%20encode&type=repositories",
+                  followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))
+
++ + + *   Trying 192.30.255.113:443...
+* Connected to github.com (192.30.255.113) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R%20URL%20encode&type=repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8]
+* Using Stream ID: 1 (easy handle 0x105fa5a00)
+> GET /search?q=R%20URL%20encode&type=repositories HTTP/2
+Host: github.com
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 23 May 2023 18:55:10 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"9f1aabf35d74a3387f3d2f487500226f"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=ost0kz3skanY28Im3Xn7OGRaQxRz78mnd%2BVxkcD2xBiRUD%2BIiUl%2Bb0%2FK95o%2BXIPcAjl%2B836LQ4nYzs2uq7bwb3qmtCEoYfTyBVmFW0EXH3fMP%2BiomeZQNL%2FJY9ELzTIarX2i8Cao17zhOvXE8%2BVsPPJOW6QDMJp%2BzQlDRpyfxZwNpfUO3Z4TlJmtKaU2DqE6IAleDOuLc7EseiUP%2BN0MdpnclGCOU6WGtzQTB2b0LJcb3%2Bymne2sqPnpY%2BJh6VwTVk9zHGHam5U0r6JsOXXU4Q%3D%3D--bYdTzI%2BnSZyUlCGh--NP%2B0kNgIV1JDxcaY0cPqQQ%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.899100197.1684868110; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:55:10 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:55:10 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: EFF6:33FD:D14CC0F:DBD69D3:646D0C0E
+< 
+* Connection #0 to host github.com left intact
+[55:10] 36> [55:10] 36> v2 = getForm("https://github.com/search",
+            q = "R URL encode", type = "repositories",
+            .opts = list(followlocation = TRUE,
+                         verbose = TRUE,
+                         httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8")))
++ + + + *   Trying 192.30.255.113:443...
+* Connected to github.com (192.30.255.113) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R%20URL%20encode&type=repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8]
+* Using Stream ID: 1 (easy handle 0x105f77e00)
+> GET /search?q=R%20URL%20encode&type=repositories HTTP/2
+Host: github.com
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 23 May 2023 18:55:19 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"ed64451cb70d202dec51744c2cded6de"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=nQrUFo%2BLNrikFAN6oLyo8ProrIcXZi%2BV5%2F2%2BY4EZR%2BQky8J67Ay8FG4hSOJuYvLHUsc6atruS0%2FXW%2FXhk99okh8vMBu%2F9x4u%2FSIaPtf1SOW6rPBKFqoSg%2BMdNtuv%2B5pLT%2BgEKBqYBrQuSzA91eBoAML220QB%2Bb770oT%2BO1Wic%2BnARlJ9bPtpP9ypzbIFsGwp7CnUnCfG%2F2haFEz5qrv80gbnJqWCKjsc1IKA2qHjDh0ohfe1R90Fo2BeFOWLIMmesp2X%2F30uu%2BjGkH0hKM6KQg%3D%3D--TsX9G%2FnUQzLy%2FR8Q--f926QSuyw7a2oDXaWjur6w%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.1791506145.1684868118; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:55:18 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:55:18 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: F01B:25CE:D073AFF:DAA38B2:646D0C16
+< 
+* Connection #0 to host github.com left intact
+[55:19] 37> nchar(v1)
+[1] 154521
+[55:24] 38> nchar(v2)
+[1] 154521
+[55:26] 39> v1 == v2
+[1] FALSE
+[55:30] 40> all.equal(v1,v2)
+[1] "1 string mismatch"
+[55:46] 41> v3 = getURLContent("https://github.com/search?q=R URL decode&type=repositories",                   followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))
+
++ + * Closing connection -1
+Error in function (type, msg, asError = TRUE)  : 
+
+Enter a frame number, or 0 to exit   
+
+1: getURLContent("https://github.com/search?q=R URL decode&type=repo
+2: curlPerform(url = url, curl = curl, .opts = .opts)
+3: function (type, msg, asError = TRUE) 
+{
+    if (!is.character(type)
+4: fun(structure(list(message = msg, call = sys.call()), class = c(t
+
+Selection: Enter an item from the menu, or 0 to exit
+Selection: 0
+[55:46] 41> v3 = getURLContent("https://github.com/search?q=R URL decode",                   followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))
+
++ + * Closing connection -1
+Error in function (type, msg, asError = TRUE)  : 
+
+Enter a frame number, or 0 to exit   
+
+1: getURLContent("https://github.com/search?q=R URL decode", followl
+2: curlPerform(url = url, curl = curl, .opts = .opts)
+3: function (type, msg, asError = TRUE) 
+{
+    if (!is.character(type)
+4: fun(structure(list(message = msg, call = sys.call()), class = c(t
+
+Selection: Enter an item from the menu, or 0 to exit
+Selection: 0
+[55:46] 41> v3 = getURLContent("https://github.com/search?q=R+URL+decode",                   followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))
+
++ + *   Trying 192.30.255.112:443...
+* Connected to github.com (192.30.255.112) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R+URL+decode]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8]
+* Using Stream ID: 1 (easy handle 0x11b84f000)
+> GET /search?q=R+URL+decode HTTP/2
+Host: github.com
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 23 May 2023 18:58:40 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"4eddcc2368f67fcc06cdca7edaedb32d"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=xeWKKOVy5bhgxD76rm7Vp1yFX5%2B8ymPH1eQ92MLeTtco%2FdpTNZ1bmmIvUw1WvY2kwPzNmUqQmitiUXRz%2Fq1H9EsnjYEgnuVNg1%2BVjbjtaJ0pIP9I2wap%2Bs1GAu2aFgDR6OjIWJabhzTeQhJS0lDgjIs0sJ78Ob63F3rGCmGiuicqNT0vk0bMB32hXF9Wx7JUqL%2BRMjlngR02lK2MwdnwY9Ij9hwcJd%2FsyQ0Grc%2BISNKGYQUDDnpHTyhbZIUso0Gvrb7CZJDJ6zvg3iHGwRUgPA%3D%3D--2EPa7KwVFvzA3liH--X81RBxQo8SknBgg8BODn8A%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.518243744.1684868320; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:58:40 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 23 May 2024 18:58:40 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: F37E:56F2:5C04CEA:60D4AB8:646D0CDF
+< 
+* Connection #0 to host github.com left intact
+[58:44] 42> [58:44] 42> v3 = getURLContent("https://github.com/search?q=R+URL+decode",                   followlocation = TRUE,
+                  verbose = TRUE,
+                  httpheader = c(Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"))

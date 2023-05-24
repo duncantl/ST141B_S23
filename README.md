@@ -113,3 +113,13 @@
 + [Web Scraping Introduction slides](Lectures/Day14/slides.html)
 + [R Session](Lectures/Day14/RSession_HTMLTable)
     + Reading HTML Table - [Wikipedia's USA state populations](https://en.wikipedia.org/wiki/List_of_U.S._states_and_territories_by_population)
+
+
+## Day 15 (Thu 5/23)
+
+github.com/search via HTML
+
++ [R Session](Lectures/Day15/Day15RSession)
++ [Firefox Developer Tools](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html)
++ [Initial code to scrape github.com/search](ghFuns.R)
++ [Brief notes on XPath](Lectures/Day15/XPath.html)
