@@ -11,8 +11,6 @@ function(query, max = -1)
     doc = htmlParse(p1)
     ans = getPageResults(doc)
 
-    ans = list()
-
     while((max < 0 || length(ans) < max) &&
             length(nxtURL <- getNextURL(doc))) {
         Sys.sleep(1)
@@ -37,9 +35,15 @@ function(doc)
 procResult =
 function(x)
 {
+    stars = xpathSApply(x, ".//a[contains(@href, '/stargazers')]", xmlValue, trim = TRUE)
+
+    repos = getNodeSet(x, ".//a[contains(@data-hydro-click, 'https://github.com/')]/@href ")[[1]]
+    
     list(tags = xpathSApply(x, ".//a[starts-with(@title, 'Topic:')]", xmlValue, trim = TRUE),
          language = xpathSApply(x, ".//span[@itemprop = 'programmingLanguage']", xmlValue),
          date = getNodeSet(x, ".//relative-time/@datetime")[[1]],
+         stars = as.integer(stars),
+         repository = repos,
          description = xpathSApply(x, ".//p[@class = 'mb-1']", xmlValue, trim = TRUE))
     
 }
