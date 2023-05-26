@@ -123,3 +123,14 @@ github.com/search via HTML
 + [Firefox Developer Tools](https://firefox-source-docs.mozilla.org/devtools-user/network_monitor/request_details/index.html)
 + [Initial code to scrape github.com/search](ghFuns.R)
 + [Brief notes on XPath](Lectures/Day15/XPath.html)
+
+
+## Day 16 (Thu 5/25)
+
+github.com/search via HTML
+
++ [R Session](Lectures/Day16/Day16RSession)
++ [Functions to scrape github.com/search](../Day15/ghFuns.R)
+   + general approach code scraping search results and processing pages of results
+   + ` results = ghSearch("R URL decode")`
++ [XPath Axes](https://www.w3schools.com/xml/xpath_axes.asp)
