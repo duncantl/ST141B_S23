@@ -1,11 +1,11 @@
 ghSearch =
-function(query, max = -1)
+function(ghSearchQuery, max = -1)
 {
     acceptHeader = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
     p1 = getForm("https://github.com/search",
-                q = query, type= "repositories",
+                q = ghSearchQuery, type= "repositories",
                 .opts = list(followlocation = TRUE,
-                             verbose = TRUE,
+                             verbose = FALSE,
                          httpheader = c(Accept = acceptHeader)))
 
     doc = htmlParse(p1)
@@ -15,7 +15,7 @@ function(query, max = -1)
             length(nxtURL <- getNextURL(doc))) {
         Sys.sleep(1)
         page = getURLContent(nxtURL,
-                             verbose = TRUE,
+                             verbose = FALSE,
                              httpheader = c(Accept = acceptHeader))
 
         doc = htmlParse(page)
@@ -33,6 +33,14 @@ function(doc)
 }
 
 procResult =
+    #
+    # √ repos link
+    # √ description
+    # √ tags
+    # √ number of stars
+    # √ programming language
+    # √ date
+    #
 function(x)
 {
     stars = xpathSApply(x, ".//a[contains(@href, '/stargazers')]", xmlValue, trim = TRUE)
@@ -42,7 +50,7 @@ function(x)
     list(tags = xpathSApply(x, ".//a[starts-with(@title, 'Topic:')]", xmlValue, trim = TRUE),
          language = xpathSApply(x, ".//span[@itemprop = 'programmingLanguage']", xmlValue),
          date = getNodeSet(x, ".//relative-time/@datetime")[[1]],
-         stars = as.integer(stars),
+         stars = mkNumber(stars),
          repository = repos,
          description = xpathSApply(x, ".//p[@class = 'mb-1']", xmlValue, trim = TRUE))
     
@@ -57,4 +65,28 @@ function(doc)
         return(character())
 
     getRelativeURL(xmlGetAttr(nxt[[1]], "href"), "https://github.com/search")    
+}
+
+
+mkNumber =
+    # convert to an integer, handling values such as
+    #  18.1k
+    #  18k
+function(x)
+{
+    fac = ""
+
+    if(grepl("[mk]$", x, ignore.case = TRUE)) {
+        fac = tolower(substring(x, nchar(x)))
+        x = substring(x, 1, nchar(x) - 1)
+    }
+
+    val = as.numeric(x)
+
+    if(fac != "") {
+        scale = c(k = 1000, m = 1e6)
+        val = val * scale[fac]
+    }
+
+    val
 }
