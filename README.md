@@ -134,3 +134,9 @@ github.com/search via HTML
    + general approach code scraping search results and processing pages of results
    + ` results = ghSearch("R URL decode")`
 + [XPath Axes](https://www.w3schools.com/xml/xpath_axes.asp)
+
+
+
+## github.com/search
+
++ [Description of ghFuns.R and the steps involved](Lectures/Day15/GithubSearch.md)
