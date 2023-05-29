@@ -1,12 +1,16 @@
+library(XML)
+library(RCurl)
+
 ghSearch =
-function(ghSearchQuery, max = -1)
+function(ghSearchQuery, max = -1, verbose = TRUE)
 {
     acceptHeader = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
     p1 = getForm("https://github.com/search",
                 q = ghSearchQuery, type= "repositories",
                 .opts = list(followlocation = TRUE,
-                             verbose = FALSE,
-                         httpheader = c(Accept = acceptHeader)))
+                             verbose = verbose,
+                             httpheader = c(Accept = acceptHeader)))
+    
 
     doc = htmlParse(p1)
     ans = getPageResults(doc)
@@ -15,7 +19,7 @@ function(ghSearchQuery, max = -1)
             length(nxtURL <- getNextURL(doc))) {
         Sys.sleep(1)
         page = getURLContent(nxtURL,
-                             verbose = FALSE,
+                             verbose = verbose,
                              httpheader = c(Accept = acceptHeader))
 
         doc = htmlParse(page)
@@ -44,6 +48,8 @@ procResult =
 function(x)
 {
     stars = xpathSApply(x, ".//a[contains(@href, '/stargazers')]", xmlValue, trim = TRUE)
+    if(length(stars) == 0)
+        stars = NA
 
     repos = getNodeSet(x, ".//a[contains(@data-hydro-click, 'https://github.com/')]/@href ")[[1]]
     
