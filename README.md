@@ -140,3 +140,10 @@ github.com/search via HTML
 ## github.com/search
 
 + [Description of ghFuns.R and the steps involved](Lectures/Day15/GithubSearch.md)
+
+## Day 17 Tue 5/30
+
++ [Notes and code from class](Lectures/Day18/README.md)
++ [JSON version of github searc ghFuns.R](Lectures/Day18/ghJSON.R)
++ [R Session](Lectures/Day18/RSession)
+

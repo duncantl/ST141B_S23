@@ -1,0 +1,2698 @@
+]0;Day18~/Classes/Davis/STA141B_22_23/Public/Lectures/Day18> R
+
+R Under development (unstable) (2022-12-18 r83472) -- "Unsuffered Consequences"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin22.2.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+PID = 81237 
+Time = 2023-05-30 10:49:13 
+Dir = /Users/duncan/Classes/Davis/STA141B_22_23/Public/Lectures/Day18 
+1> library(RCurl)
+[49:18] 2> j = getURLContent("https://github.com/search?q=R%20URL%20decode&type=repositories",
+                  followlocation = TRUE, verbose = TRUE)
++ *   Trying 192.30.255.113:443...
+* Connected to github.com (192.30.255.113) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R%20URL%20decode&type=repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x129881000)
+> GET /search?q=R%20URL%20decode&type=repositories HTTP/2
+Host: github.com
+accept: */*
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 30 May 2023 17:50:08 GMT
+< content-type: text/html; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+< etag: W/"dbfd59145721b08be35c5aee7cc7cd5f"
+< cache-control: max-age=0, private, must-revalidate
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< set-cookie: _gh_sess=4m9vLJAirYbmrQtn5h7qNdUjtqaPO8V%2FZ7EglN08IjVqCCEL6iPD8G%2FBVYsWEy4Se1Ay6gtPNFx7zyqKwN%2Bxc54q7slpI3%2BEKXjYWp66wVaP%2BIkNWOyC%2FyaCwvtH0ha4e%2FiZ5ncwYJFBXHwOoY6eS9FAg50N65LYQ1ATnyUGu63vOLpDuOYU3Erht7dCTxivgyJL1jeYU4%2BPoGfSdWWmeuvUqWU7TdBKrz6RUzeU6KAF%2FhCA7rx7YsfH7oCQVwgEylYeYJXfVomfcpXZIoDFpQ%3D%3D--duUQDlx65hBtKtIt--HEfSQmTDYicxvqk89oWVpQ%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax
+< set-cookie: _octo=GH1.1.225370726.1685469008; Path=/; Domain=github.com; Expires=Thu, 30 May 2024 17:50:08 GMT; Secure; SameSite=Lax
+< set-cookie: logged_in=no; Path=/; Domain=github.com; Expires=Thu, 30 May 2024 17:50:08 GMT; HttpOnly; Secure; SameSite=Lax
+< accept-ranges: bytes
+< x-github-request-id: DD96:7AE8:20DFABB:2287F8A:64763750
+< 
+* Connection #0 to host github.com left intact
+[50:09] 3> gh.cookie = readLines("cookie")[1]
+[54:28] 4> gh.cookie
+[1] "_gh_sess=JNj2TT%2BkZ5syFukaXsuJxttwcATdxtcp8%2Fpq927hzsbTUBC3Txkv1m3zGpzRUqDg8wTEKLDFsNPRcbZHuODOaCeKjuW4U%2BKowa7GZ9UZ11dCuYs5uk2wdz8VW6DbU%2BGbKTL9PLSrWftalc36fcbRQm8I6kFTzY6CjLV8qXpEhyfRYsSb8aC%2F8AnBUGlVVvEjqJ4e8QFSaEyGmDXWN%2FVWpEpihNIhXzNqlifEzMWVFpRlyO%2FYzCq1tmBMstVYcBX2ROEd5lj2hGNwu%2FsftalvlTU%2F414pXY87vK%2FMiONm5g8u7jUPHQL%2ByI0NbhPckm1qj4jlJNEzENRd7wYBp5aprf2JDUmJc%2F5Dc8yUCIq7Dt52a2V%2Fsy45WqnN02d2jwwJ1YKQ5fQcBfr1Ydv3u9nkAm8XuHix%2FL%2FJLJMuxYa%2BvvBV8nDO%2FQJ7Mtsfq8mwm3xQtXGfNmzwKo%2BOcutaLQ%3D%3D--tkysDwysgtgG19kA--veTDskhjyvNRg3WkIz%2FB3Q%3D%3D; _octo=GH1.1.1733817281.1685334525; logged_in=yes; preferred_color_mode=light; tz=America%2FLos_Angeles; _device_id=c073eb76c9c2451de0739c80a2163a6d; user_session=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; __Host-user_session_same_site=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; tz=America%2FLos_Angeles; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; dotcom_user=duncantl; has_recent_activity=1"
+[54:31] 5> j = getURLContent("https://github.com/search?q=R%20URL%20decode&type=repositories",
+                  followlocation = TRUE, verbose = TRUE, cookie = gh.cookie)
++ *   Trying 192.30.255.112:443...
+* Connected to github.com (192.30.255.112) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+*  start date: Feb 14 00:00:00 2023 GMT
+*  expire date: Mar 14 23:59:59 2024 GMT
+*  subjectAltName: host "github.com" matched cert's "github.com"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /search?q=R%20URL%20decode&type=repositories]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: github.com]
+* h2h3 [accept: */*]
+* h2h3 [cookie: _gh_sess=JNj2TT%2BkZ5syFukaXsuJxttwcATdxtcp8%2Fpq927hzsbTUBC3Txkv1m3zGpzRUqDg8wTEKLDFsNPRcbZHuODOaCeKjuW4U%2BKowa7GZ9UZ11dCuYs5uk2wdz8VW6DbU%2BGbKTL9PLSrWftalc36fcbRQm8I6kFTzY6CjLV8qXpEhyfRYsSb8aC%2F8AnBUGlVVvEjqJ4e8QFSaEyGmDXWN%2FVWpEpihNIhXzNqlifEzMWVFpRlyO%2FYzCq1tmBMstVYcBX2ROEd5lj2hGNwu%2FsftalvlTU%2F414pXY87vK%2FMiONm5g8u7jUPHQL%2ByI0NbhPckm1qj4jlJNEzENRd7wYBp5aprf2JDUmJc%2F5Dc8yUCIq7Dt52a2V%2Fsy45WqnN02d2jwwJ1YKQ5fQcBfr1Ydv3u9nkAm8XuHix%2FL%2FJLJMuxYa%2BvvBV8nDO%2FQJ7Mtsfq8mwm3xQtXGfNmzwKo%2BOcutaLQ%3D%3D--tkysDwysgtgG19kA--veTDskhjyvNRg3WkIz%2FB3Q%3D%3D; _octo=GH1.1.1733817281.1685334525; logged_in=yes; preferred_color_mode=light; tz=America%2FLos_Angeles; _device_id=c073eb76c9c2451de0739c80a2163a6d; user_session=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; __Host-user_session_same_site=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; tz=America%2FLos_Angeles; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; dotcom_user=duncantl; has_recent_activity=1]
+* Using Stream ID: 1 (easy handle 0x10903f800)
+> GET /search?q=R%20URL%20decode&type=repositories HTTP/2
+Host: github.com
+accept: */*
+cookie: _gh_sess=JNj2TT%2BkZ5syFukaXsuJxttwcATdxtcp8%2Fpq927hzsbTUBC3Txkv1m3zGpzRUqDg8wTEKLDFsNPRcbZHuODOaCeKjuW4U%2BKowa7GZ9UZ11dCuYs5uk2wdz8VW6DbU%2BGbKTL9PLSrWftalc36fcbRQm8I6kFTzY6CjLV8qXpEhyfRYsSb8aC%2F8AnBUGlVVvEjqJ4e8QFSaEyGmDXWN%2FVWpEpihNIhXzNqlifEzMWVFpRlyO%2FYzCq1tmBMstVYcBX2ROEd5lj2hGNwu%2FsftalvlTU%2F414pXY87vK%2FMiONm5g8u7jUPHQL%2ByI0NbhPckm1qj4jlJNEzENRd7wYBp5aprf2JDUmJc%2F5Dc8yUCIq7Dt52a2V%2Fsy45WqnN02d2jwwJ1YKQ5fQcBfr1Ydv3u9nkAm8XuHix%2FL%2FJLJMuxYa%2BvvBV8nDO%2FQJ7Mtsfq8mwm3xQtXGfNmzwKo%2BOcutaLQ%3D%3D--tkysDwysgtgG19kA--veTDskhjyvNRg3WkIz%2FB3Q%3D%3D; _octo=GH1.1.1733817281.1685334525; logged_in=yes; preferred_color_mode=light; tz=America%2FLos_Angeles; _device_id=c073eb76c9c2451de0739c80a2163a6d; user_session=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; __Host-user_session_same_site=FBa54lL7A8JWfj35X7kooSUenQVsdJpOGkHkCanMwJpsfrGc; tz=America%2FLos_Angeles; color_mode=%7B%22color_mode%22%3A%22auto%22%2C%22light_theme%22%3A%7B%22name%22%3A%22light%22%2C%22color_mode%22%3A%22light%22%7D%2C%22dark_theme%22%3A%7B%22name%22%3A%22dark%22%2C%22color_mode%22%3A%22dark%22%7D%7D; dotcom_user=duncantl; has_recent_activity=1
+
+* old SSL session ID is stale, removing
+< HTTP/2 200 
+< server: GitHub.com
+< date: Tue, 30 May 2023 17:54:50 GMT
+< content-type: text/plain; charset=utf-8
+< vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame
+< cache-control: max-age=300, private
+< etag: W/"666f2f0ffa60a1295e8962457c8a4781"
+< set-cookie: has_recent_activity=1; path=/; expires=Tue, 30 May 2023 18:54:49 GMT; secure; HttpOnly; SameSite=Lax
+< set-cookie: _gh_sess=Uev5ZNYkJTX0zTJK4pgOQvyEdxD%2BpfHZWitnYVU0cdyy1aP8O%2FIhrKmFzOAIopiQnbz6pXRALWcTMKhH3bEdW5XhWdTxgQUAWJERcQSnAdtlc8KJltvtiv%2FSGXV8MGqViskyB20k50gvc2q87ic7k40b3jzUve6ZGwSNGm236xwsC0n1DN%2BhCqAbdLjN729IMg0SBb7EirhEAfzcdNDJRqypD%2Fklf6VUgjXV3a2LeDKV7vAyf%2B685b0or5Q1prGlCLbIJkNg4qM%2BpaoIAHq1a358OCkC3MxEFEUhcQMFr9rBxU8lUqNRVRYiCvpMpZ6LT6ABRzvaOPbBCBgCpB6vE9NVVYETmImsfQqLnEQ1magj%2BHsxKpBldFrxoo7kIomKjlQKRapgDU3mUSPonwx%2F%2F%2FmLZ%2FK6QMCqngIlEnyBgUhQy3X1GjCFFXL90NtU25c6efqd%2BTh%2BiuXqaioxhw%3D%3D--egDZRNspt%2F3MafTQ--4WnUt4xj8616wptS%2FavHzA%3D%3D; path=/; secure; HttpOnly; SameSite=Lax
+< strict-transport-security: max-age=31536000; includeSubdomains; preload
+< x-frame-options: deny
+< x-content-type-options: nosniff
+< x-xss-protection: 0
+< referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
+< content-security-policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com objects-origin.githubusercontent.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com cdn.optimizely.com logx.optimizely.com/v1/events *.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ wss://*.actions.githubusercontent.com github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com objects-origin.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+< vary: Accept-Encoding, Accept, X-Requested-With
+< x-github-request-id: E239:785C:6B2415:6FEDEF:64763869
+< 
+* Connection #0 to host github.com left intact
+[54:50] 6> class(j)
+[1] "character"
+[55:24] 7> length(j)
+[1] 1
+[55:30] 8> nchar(j)
+[1] 11469
+[55:35] 9> substring(j, 1, 1000)
+[1] "{\"payload\":{\"header_redesign_enabled\":false,\"results\":[{\"id\":\"69953146\",\"archived\":false,\"color\":\"#555555\",\"followers\":11,\"has_funding_file\":false,\"hl_name\":\"mllg/base64<em>url</em>\",\"hl_trunc_description\":\"Fast and <em>url</em>-safe base64 encoder and <em>decoder</em> for <em>R</em>\",\"language\":\"C\",\"mirror\":false,\"owned_by_organization\":false,\"public\":true,\"repo\":{\"repository\":{\"id\":69953146,\"name\":\"base64url\",\"owner_id\":1260920,\"owner_login\":\"mllg\",\"updated_at\":\"2020-01-11T00:16:31.650Z\",\"has_issues\":true}},\"sponsorable\":false,\"topics\":[\"cran\",\"r\",\"base64\",\"base32\",\"base64url\"],\"type\":\"Public\",\"help_wanted_issues_count\":0,\"good_first_issue_issues_count\":0,\"starred_by_current_user\":false},{\"id\":\"21823674\",\"archived\":false,\"color\":\"#f1e05a\",\"followers\":3,\"has_funding_file\":false,\"hl_name\":\"shaneosullivan/react-<em>url</em>-decoder\",\"hl_trunc_description\":\"A simple example of a <em>URL</em> <em>decoder</em> application, using ReactJS\",\"language\":\"JavaScript\",\"mirror\":false,\"owned_by_org"
+attr(,"Content-Type")
+[1] "text/plain"    "charset=utf-8"
+[55:49] 10> library(RJSONIO)
+[57:09] 11> d = fromJSON(j)
+[58:02] 12> class(d)
+[1] "list"
+[58:12] 13> length(d)
+[1] 3
+[58:22] 14> names(d)
+[1] "payload" "title"   "locale" 
+[58:24] 15> sapply(d, length)
+payload   title  locale 
+     13       1       1 
+[00:08] 16> names(d$payload)
+ [1] "header_redesign_enabled" "results"                
+ [3] "type"                    "page"                   
+ [5] "page_count"              "elapsed_millis"         
+ [7] "errors"                  "result_count"           
+ [9] "facets"                  "protected_org_logins"   
+[11] "topics"                  "query_id"               
+[13] "csrf_tokens"            
+[00:26] 17> length(d$payload$results)
+[1] 10
+[01:02] 18> d$payload$results[[1]]
+$id
+[1] "69953146"
+
+$archived
+[1] FALSE
+
+$color
+[1] "#555555"
+
+$followers
+[1] 11
+
+$has_funding_file
+[1] FALSE
+
+$hl_name
+[1] "mllg/base64<em>url</em>"
+
+$hl_trunc_description
+[1] "Fast and <em>url</em>-safe base64 encoder and <em>decoder</em> for <em>R</em>"
+
+$language
+[1] "C"
+
+$mirror
+[1] FALSE
+
+$owned_by_organization
+[1] FALSE
+
+$public
+[1] TRUE
+
+$repo
+$repo$repository
+$repo$repository$id
+[1] 69953146
+
+$repo$repository$name
+[1] "base64url"
+
+$repo$repository$owner_id
+[1] 1260920
+
+$repo$repository$owner_login
+[1] "mllg"
+
+$repo$repository$updated_at
+[1] "2020-01-11T00:16:31.650Z"
+
+$repo$repository$has_issues
+[1] TRUE
+
+
+
+$sponsorable
+[1] FALSE
+
+$topics
+[1] "cran"      "r"         "base64"    "base32"    "base64url"
+
+$type
+[1] "Public"
+
+$help_wanted_issues_count
+[1] 0
+
+$good_first_issue_issues_count
+[1] 0
+
+$starred_by_current_user
+[1] FALSE
+
+[01:24] 19> u = "https://dashboard.waterdata.usgs.gov/service/cwis/1.0/odata/CurrentConditions?$top=15000&$filter=(AccessLevelCode eq 'P') and (1 eq 1 and true) and (SiteTypeCode in ('ST','ST-CA','ST-DCH','ST-TS')) and (ParameterCode in ('30208','30209','50042','50050','50051','72137','72138','72139','72177','72243','74072','81395','99060','99061','00056','00058','00059','00060','00061'))&$select=AgencyCode,SiteNumber,SiteName,SiteTypeCode,Latitude,Longitude,CurrentConditionID,ParameterCode,TimeLocal,TimeZoneCode,Value,ValueFlagCode,RateOfChangeUnitPerHour,StatisticStatusCode,FloodStageStatusCode&$orderby=SiteNumber,AgencyCode,ParameterCode,TimeLocal desc&caller=National Water Dashboard default"
+[14:38] 20> zz = getURLContent(u, verbose = TRUE)
+* Closing connection -1
+Error in function (type, msg, asError = TRUE)  : 
+
+Enter a frame number, or 0 to exit   
+
+1: getURLContent(u, verbose = TRUE)
+2: curlPerform(url = url, curl = curl, .opts = .opts)
+3: function (type, msg, asError = TRUE) 
+{
+    if (!is.character(type)
+4: fun(structure(list(message = msg, call = sys.call()), class = c(t
+
+Selection: 0
+[14:38] 20> u0 = "https://dashboard.waterdata.usgs.gov/service/cwis/1.0/odata/CurrentConditions?$top=15000&$filter=(AccessLevelCode eq 'P') and (1 eq 1 and true) and (SiteTypeCode in ('ST','ST-CA','ST-DCH','ST-TS')) and (ParameterCode in ('30208','30209','50042','50050','50051','72137','72138','72139','72177','72243','74072','81395','99060','99061','00056','00058','00059','00060','00061'))&$select=AgencyCode,SiteNumber,SiteName,SiteTypeCode,Latitude,Longitude,CurrentConditionID,ParameterCode,TimeLocal,TimeZoneCode,Value,ValueFlagCode,RateOfChangeUnitPerHour,StatisticStatusCode,FloodStageStatusCode&$orderby=SiteNumber,AgencyCode,ParameterCode,TimeLocal desc&caller=National Water Dashboard default"
+[16:05] 21> params = getFormParams(u0)
+[16:35] 22> params
+                                                                                                                                                                                                                                                                                   $top 
+                                                                                                                                                                                                                                                                                "15000" 
+                                                                                                                                                                                                                                                                                $filter 
+"(AccessLevelCode eq 'P') and (1 eq 1 and true) and (SiteTypeCode in ('ST','ST-CA','ST-DCH','ST-TS')) and (ParameterCode in ('30208','30209','50042','50050','50051','72137','72138','72139','72177','72243','74072','81395','99060','99061','00056','00058','00059','00060','00061'))" 
+                                                                                                                                                                                                                                                                                $select 
+                                                                          "AgencyCode,SiteNumber,SiteName,SiteTypeCode,Latitude,Longitude,CurrentConditionID,ParameterCode,TimeLocal,TimeZoneCode,Value,ValueFlagCode,RateOfChangeUnitPerHour,StatisticStatusCode,FloodStageStatusCode" 
+                                                                                                                                                                                                                                                                               $orderby 
+                                                                                                                                                                                                                                   "SiteNumber,AgencyCode,ParameterCode,TimeLocal desc" 
+                                                                                                                                                                                                                                                                                 caller 
+                                                                                                                                                                                                                                                     "National Water Dashboard default" 
+[16:57] 23> tt = getForm("https://dashboard.waterdata.usgs.gov/service/cwis/1.0/odata/CurrentConditions",
+            .params = params, .opts = list(verbose = TRUE))
++ *   Trying 137.227.233.178:443...
+* Connected to dashboard.waterdata.usgs.gov (137.227.233.178) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+* ALPN: server did not agree on a protocol. Uses default.
+* Server certificate:
+*  subject: C=US; ST=Virginia; L=Reston; O=U.S. Geological Survey; CN=*.waterdata.usgs.gov
+*  start date: Oct 12 00:00:00 2022 GMT
+*  expire date: Nov  7 23:59:59 2023 GMT
+*  subjectAltName: host "dashboard.waterdata.usgs.gov" matched cert's "*.waterdata.usgs.gov"
+*  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+*  SSL certificate verify ok.
+> GET /service/cwis/1.0/odata/CurrentConditions?%24top=15000&%24filter=%28AccessLevelCode%20eq%20%27P%27%29%20and%20%281%20eq%201%20and%20true%29%20and%20%28SiteTypeCode%20in%20%28%27ST%27%2C%27ST-CA%27%2C%27ST-DCH%27%2C%27ST-TS%27%29%29%20and%20%28ParameterCode%20in%20%28%2730208%27%2C%2730209%27%2C%2750042%27%2C%2750050%27%2C%2750051%27%2C%2772137%27%2C%2772138%27%2C%2772139%27%2C%2772177%27%2C%2772243%27%2C%2774072%27%2C%2781395%27%2C%2799060%27%2C%2799061%27%2C%2700056%27%2C%2700058%27%2C%2700059%27%2C%2700060%27%2C%2700061%27%29%29&%24select=AgencyCode%2CSiteNumber%2CSiteName%2CSiteTypeCode%2CLatitude%2CLongitude%2CCurrentConditionID%2CParameterCode%2CTimeLocal%2CTimeZoneCode%2CValue%2CValueFlagCode%2CRateOfChangeUnitPerHour%2CStatisticStatusCode%2CFloodStageStatusCode&%24orderby=SiteNumber%2CAgencyCode%2CParameterCode%2CTimeLocal%20desc&caller=National%20Water%20Dashboard%20default HTTP/1.1
+Host: dashboard.waterdata.usgs.gov
+Accept: */*
+
+* old SSL session ID is stale, removing
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Date: Tue, 30 May 2023 18:21:30 GMT
+< X-XSS-Protection: 1; mode=block
+< Strict-Transport-Security: max-age=31536000; includeSubDomains; preload;
+< Cache-Control: no-cache
+< Pragma: no-cache
+< Content-Type: application/json; odata.metadata=minimal
+< Expires: -1
+< OData-Version: 4.0
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET
+< Access-Control-Allow-Headers: Content-Type
+< X-Frame-Options: ALLOW-FROM https://tableau.usgs.gov/
+< Transfer-Encoding: chunked
+< 
+* Connection #0 to host dashboard.waterdata.usgs.gov left intact
+[21:31] 24> grep("SAN JOAQUIN", tt)
+integer(0)
+[22:22] 25> grep("SAN JOAQUIN", tt, ignore.case = TRUE)
+[1] 1
+[22:26] 26> u0 
+[1] "https://dashboard.waterdata.usgs.gov/service/cwis/1.0/odata/CurrentConditions?$top=15000&$filter=(AccessLevelCode eq 'P') and (1 eq 1 and true) and (SiteTypeCode in ('ST','ST-CA','ST-DCH','ST-TS')) and (ParameterCode in ('30208','30209','50042','50050','50051','72137','72138','72139','72177','72243','74072','81395','99060','99061','00056','00058','00059','00060','00061'))&$select=AgencyCode,SiteNumber,SiteName,SiteTypeCode,Latitude,Longitude,CurrentConditionID,ParameterCode,TimeLocal,TimeZoneCode,Value,ValueFlagCode,RateOfChangeUnitPerHour,StatisticStatusCode,FloodStageStatusCode&$orderby=SiteNumber,AgencyCode,ParameterCode,TimeLocal desc&caller=National Water Dashboard default"
+[29:09] 27> d = fromJSON(tt)
+[29:41] 28> length(d)
+[1] 2
+[29:43] 29> names(d)
+[1] "@odata.context" "value"         
+[29:44] 30> sapply(d, length)
+@odata.context          value 
+             1           8783 
+[29:50] 31> d$value[[1]]
+$AgencyCode
+[1] "USGS"
+
+$SiteNumber
+[1] "01010000"
+
+$SiteName
+[1] "St. John River at Ninemile Bridge, Maine"
+
+$SiteTypeCode
+[1] "ST"
+
+$Latitude
+[1] 46.70056
+
+$Longitude
+[1] -69.71556
+
+$CurrentConditionID
+[1] 65330
+
+$ParameterCode
+[1] "00060"
+
+$TimeLocal
+[1] "2023-05-30T14:00:00Z"
+
+$TimeZoneCode
+[1] "EDT"
+
+$Value
+[1] 637
+
+$ValueFlagCode
+NULL
+
+$RateOfChangeUnitPerHour
+[1] -8
+
+$StatisticStatusCode
+[1] "P0_10"
+
+$FloodStageStatusCode
+[1] "NOFLOOD"
+
+[29:58] 32> z = getURLContent("https://stackoverflow.com/questions/tagged/r", verbose = TRUE, followlocation = TRUE)
+*   Trying 151.101.1.69:443...
+* Connected to stackoverflow.com (151.101.1.69) port 443 (#0)
+* ALPN: offers h2
+* ALPN: offers http/1.1
+*  CAfile: p/etc/ssl/cert.pem
+*  CApath: none
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=*.stackexchange.com
+*  start date: May 22 19:13:39 2023 GMT
+*  expire date: Aug 20 19:13:38 2023 GMT
+*  subjectAltName: host "stackoverflow.com" matched cert's "stackoverflow.com"
+*  issuer: C=US; O=Let's Encrypt; CN=R3
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multiplexing
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* h2h3 [:method: GET]
+* h2h3 [:path: /questions/tagged/r]
+* h2h3 [:scheme: https]
+* h2h3 [:authority: stackoverflow.com]
+* h2h3 [accept: */*]
+* Using Stream ID: 1 (easy handle 0x1052b0400)
+> GET /questions/tagged/r HTTP/2
+Host: stackoverflow.com
+accept: */*
+
+< HTTP/2 403 
+< server: Varnish
+< retry-after: 0
+< content-type: text/html
+< accept-ranges: bytes
+< date: Tue, 30 May 2023 18:58:51 GMT
+< via: 1.1 varnish
+< x-served-by: cache-bur-kbur8200070-BUR
+< x-cache: MISS
+< x-cache-hits: 0
+< x-timer: S1685473132.808593,VS0,VE1
+< x-dns-prefetch-control: off
+< content-length: 1948
+< 
+* Connection #0 to host stackoverflow.com left intact
+Error: 
+
+Enter a frame number, or 0 to exit   
+
+1: getURLContent("https://stackoverflow.com/questions/tagged/r", ver
+2: stop.if.HTTP.error(http.header, header$value())
+
+Selection: 0
+[29:58] 32> doc = htmlParse("~/Santiago.html")
+Error in htmlParse("~/Santiago.html") : 
+  could not find function "htmlParse"
+No suitable frames for recover()
+[29:58] 32> library(XML
++ )
+[01:44] 33> doc = htmlParse("~/Santiago.html")
+[01:45] 34> getNodeSet(doc, "//a")
+[[1]]
+<a href="#" class="s-topbar--menu-btn js-left-sidebar-toggle" role="menuitem" aria-haspopup="true" aria-controls="left-sidebar" aria-expanded="false">
+  <span/>
+</a> 
+
+[[2]]
+<a href="https://stackoverflow.com/" class="s-topbar--logo js-gps-track" data-gps-track="top_nav.click({is_current:false, location:5, destination:8})">
+					<span class="-img _glyph">Stack Overflow</span>
+				</a> 
+
+[[3]]
+<a href="https://stackoverflow.co/" class="s-navigation--item js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:7})" data-ga="[&quot;top navigation&quot;,&quot;about menu click&quot;,null,null,null]">About</a> 
+
+[[4]]
+<a href="#" class="s-navigation--item js-gps-track js-products-menu" aria-controls="products-popover" data-controller="s-popover" data-action="s-popover#toggle" data-s-popover-placement="bottom" data-s-popover-toggle-class="is-selected" data-gps-track="top_nav.products.click({location:5, destination:1})" data-ga="[&quot;top navigation&quot;,&quot;products menu click&quot;,null,null,null]" aria-expanded="false">
+						Products
+					</a> 
+
+[[5]]
+<a href="https://stackoverflow.com/teams" class="s-navigation--item js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:7})" data-ga="[&quot;top navigation&quot;,&quot;learn more - teams&quot;,null,null,null]">For Teams</a> 
+
+[[6]]
+<a href="https://stackoverflow.com/questions" class="bar-sm p6 d-block h:bg-black-100 js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:2})" data-ga="[&quot;top navigation&quot;,&quot;public qa submenu click&quot;,null,null,null]">
+							<span class="fs-body1 d-block">Stack Overflow</span>
+							<span class="fs-caption d-block fc-light">Public questions &amp; answers</span>
+						</a> 
+
+[[7]]
+<a href="https://stackoverflow.com/teams" class="bar-sm p6 d-block h:bg-black-100 js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:3})" data-ga="[&quot;top navigation&quot;,&quot;teams submenu click&quot;,null,null,null]">
+							<span class="fs-body1 d-block">Stack Overflow for Teams</span>
+							<span class="fs-caption d-block fc-light">Where developers &amp; technologists share private knowledge with coworkers</span>
+						</a> 
+
+[[8]]
+<a href="https://stackoverflow.co/talent" class="bar-sm p6 d-block h:bg-black-100 js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:5})" data-ga="[&quot;top navigation&quot;,&quot;talent submenu click&quot;,null,null,null]">
+							<span class="fs-body1 d-block">Talent</span>
+							<span class="fs-caption d-block fc-light">
+								Build your employer brand
+							</span>
+						</a> 
+
+[[9]]
+<a href="https://stackoverflow.co/advertising" class="bar-sm p6 d-block h:bg-black-100 js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:6})" data-ga="[&quot;top navigation&quot;,&quot;advertising submenu click&quot;,null,null,null]">
+							<span class="fs-body1 d-block">Advertising</span>
+							<span class="fs-caption d-block fc-light">Reach developers &amp; technologists worldwide</span>
+						</a> 
+
+[[10]]
+<a href="https://stackoverflow.co/" class="fc-light d-block py6 px6 h:fc-black-800 js-gps-track" data-gps-track="top_nav.products.click({location:5, destination:7})" data-ga="[&quot;top navigation&quot;,&quot;about submenu click&quot;,null,null,null]">About the company</a> 
+
+[[11]]
+<a href="https://stackoverflow.com/">current community</a> 
+
+[[12]]
+<a href="https://stackoverflow.com/" class="current-site-link site-link js-gps-track d-flex gs8 gsx" data-id="1" data-gps-track="site_switcher.click({ item_type:3 })">
+        <div class="favicon favicon-stackoverflow site-icon flex--item" title="Stack Overflow"/>
+        <span class="flex--item fl1">
+            Stack Overflow
+        </span>
+    </a> 
+
+[[13]]
+<a href="https://stackoverflow.com/help" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:14 })">help</a> 
+
+[[14]]
+<a href="https://chat.stackoverflow.com/?tab=site&amp;host=stackoverflow.com" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a> 
+
+[[15]]
+<a href="https://meta.stackoverflow.com/" class=" site-link js-gps-track d-flex gs8 gsx" data-id="552" data-gps-track="site.switch({ target_site:552, item_type:3 }),site_switcher.click({ item_type:4 })">
+        <div class="favicon favicon-stackoverflowmeta site-icon flex--item" title="Meta Stack Overflow"/>
+        <span class="flex--item fl1">
+            Meta Stack Overflow
+        </span>
+    </a> 
+
+[[16]]
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2ftagged%2fr" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a> 
+
+[[17]]
+<a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2ftagged%2fr" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:11 })">log in</a> 
+
+[[18]]
+<a href="https://stackexchange.com/sites">more stack exchange communities</a> 
+
+[[19]]
+<a href="https://stackoverflow.blog/" class="float-right">company blog</a> 
+
+[[20]]
+<a href="https://stackoverflow.com/users/login?ssrc=head&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2ftagged%2fr" class="s-topbar--item s-topbar--item__unset s-btn s-btn__filled ws-nowrap js-gps-track" role="menuitem" rel="nofollow" data-gps-track="login.click" data-ga="[&quot;top navigation&quot;,&quot;login button click&quot;,null,null,null]">Log in</a> 
+
+[[21]]
+<a href="https://stackoverflow.com/users/signup?ssrc=head&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2ftagged%2fr" class="s-topbar--item s-topbar--item__unset ml4 s-btn s-btn__primary ws-nowrap" role="menuitem" rel="nofollow" data-ga="[&quot;sign up&quot;,&quot;Sign Up Navigation&quot;,&quot;Header&quot;,null,null]">Sign up</a> 
+
+[[22]]
+<a href="https://stackoverflow.com/" class="pl8 js-gps-track nav-links--link" data-gps-track="top_nav.click({is_current: false, location:5, destination:8})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+            <div class="d-flex ai-center">
+                <div class="flex--item truncate">
+                    Home
+                </div>
+            </div>
+    </a> 
+
+[[23]]
+<a id="nav-questions" href="https://stackoverflow.com/questions" class="pl8 js-gps-track nav-links--link -link__with-icon" data-gps-track="top_nav.click({is_current: true, location:5, destination:1})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+<svg aria-hidden="true" class="svg-icon iconGlobe" width="18" height="18" viewbox="0 0 18 18"><path d="M9 1C4.64 1 1 4.64 1 9c0 4.36 3.64 8 8 8 4.36 0 8-3.64 8-8 0-4.36-3.64-8-8-8ZM8 15.32a6.46 6.46 0 0 1-4.3-2.74 6.46 6.46 0 0 1-.93-5.01L7 11.68v.8c0 .88.12 1.32 1 1.32v1.52Zm5.72-2c-.2-.66-1-1.32-1.72-1.32h-1v-2c0-.44-.56-1-1-1H6V7h1c.44 0 1-.56 1-1V5h2c.88 0 1.4-.72 1.4-1.6v-.33a6.45 6.45 0 0 1 3.83 4.51 6.45 6.45 0 0 1-1.51 5.73v.01Z"/></svg><span class="-link--channel-name">Questions</span>
+    </a> 
+
+[[24]]
+<a id="nav-tags" href="https://stackoverflow.com/tags" class=" js-gps-track nav-links--link" data-gps-track="top_nav.click({is_current: false, location:5, destination:2})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+            <div class="d-flex ai-center">
+                <div class="flex--item truncate">
+                    Tags
+                </div>
+            </div>
+    </a> 
+
+[[25]]
+<a id="nav-users" href="https://stackoverflow.com/users" class=" js-gps-track nav-links--link" data-gps-track="top_nav.click({is_current: false, location:5, destination:3})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+            <div class="d-flex ai-center">
+                <div class="flex--item truncate">
+                    Users
+                </div>
+            </div>
+    </a> 
+
+[[26]]
+<a id="nav-companies" href="https://stackoverflow.com/jobs/companies?so_medium=stackoverflow&amp;so_source=SiteNav" class=" js-gps-track nav-links--link" data-gps-track="top_nav.click({is_current: false, location:5, destination:12})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+            <div class="d-flex ai-center">
+                <div class="flex--item truncate">
+                    Companies
+                </div>
+            </div>
+    </a> 
+
+[[27]]
+<a href="javascript:void(0)" class="s-link p12 fc-black-500 h:fc-black-800 js-gps-track js-collectives-navcta-toggle" role="button" aria-controls="popover-discover-collectives" data-controller="s-popover" data-action="s-popover#toggle" data-s-popover-placement="top" data-s-popover-toggle-class="is-selected" data-gps-track="top_nav.click({is_current:false, location:5, destination:17})" aria-expanded="false">
+                                            <svg aria-hidden="true" class="svg-icon iconInfoSm" width="14" height="14" viewbox="0 0 14 14"><path d="M7 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1Zm1 10V6H6v5h2Zm0-6V3H6v2h2Z"/></svg></a> 
+
+[[28]]
+<a class="themed subcommunity-avatar subcommunity-twilio s-avatar s-avatar__24 mr2 va-text-top js-community-tag bs-sm" style="-webkit-mask-image: linear-gradient(to left, rgba(0,0,0, 0.85), rgba(0,0,0, 0.2)); mask-image: linear-gradient(to left, rgba(0,0,0, 0.85), rgba(0,0,0, 0.2));" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/twilio" aria-describedby="--stacks-s-tooltip-kxw7rezt"/> 
+
+[[29]]
+<a class="themed subcommunity-avatar subcommunity-wso2 s-avatar s-avatar__24 mr2 va-text-top js-community-tag bs-sm" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/wso2" aria-describedby="--stacks-s-tooltip-gpbamgi3"/> 
+
+[[30]]
+<a class="themed subcommunity-avatar subcommunity-google-cloud s-avatar s-avatar__24 mr2 va-text-top js-community-tag bs-sm" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/google-cloud" aria-describedby="--stacks-s-tooltip-zxba6nxd"/> 
+
+[[31]]
+<a class="themed subcommunity-avatar subcommunity-azure s-avatar s-avatar__24 mr2 va-text-top js-community-tag bs-sm" style="-webkit-mask-image: linear-gradient(to right, rgba(0,0,0, 0.85), rgba(0,0,0, 0.2)); mask-image: linear-gradient(to right, rgba(0,0,0, 0.85), rgba(0,0,0, 0.2));" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/azure" aria-describedby="--stacks-s-tooltip-73eel2a3"/> 
+
+[[32]]
+<a href="https://stackoverflow.com/collectives?utm_source=so-owned&amp;utm_medium=side-bar&amp;utm_campaign=coso-promo&amp;utm_content=learn-more" class="w100 s-btn s-btn__primary s-btn__xs  mt16">Learn more about Collectives</a> 
+
+[[33]]
+<a id="nav-collective-discover" href="https://stackoverflow.com/collectives" class="pl8 ai-center js-collectives-navcta-toggle d-none js-gps-track nav-links--link -link__with-icon" data-gps-track="top_nav.click({is_current: false, location:5, destination:18})" aria-controls="" data-controller="" data-s-popover-placement="right" aria-current="false" data-s-popover-auto-show="true" data-s-popover-hide-on-outside-click="never">
+<svg aria-hidden="true" class="mt-auto fc-orange-400 svg-icon iconStarVerified" width="18" height="18" viewbox="0 0 18 18"><path d="M9.86.89a1.14 1.14 0 0 0-1.72 0l-.5.58c-.3.35-.79.48-1.23.33l-.72-.25a1.14 1.14 0 0 0-1.49.85l-.14.76c-.1.45-.45.8-.9.9l-.76.14c-.67.14-1.08.83-.85 1.49l.25.72c.15.44.02.92-.33 1.23l-.58.5a1.14 1.14 0 0 0 0 1.72l.58.5c.35.3.48.79.33 1.23l-.25.72c-.23.66.18 1.35.85 1.49l.76.14c.45.1.8.45.9.9l.14.76c.14.67.83 1.08 1.49.85l.72-.25c.44-.15.92-.02 1.23.33l.5.58c.46.52 1.26.52 1.72 0l.5-.58c.3-.35.79-.48 1.23-.33l.72.25c.66.23 1.35-.18 1.49-.85l.14-.76c.1-.45.45-.8.9-.9l.76-.14c.67-.14 1.08-.83.85-1.49l-.25-.72c-.15-.44-.02-.92.33-1.23l.58-.5c.52-.46.52-1.26 0-1.72l-.58-.5c-.35-.3-.48-.79-.33-1.23l.25-.72a1.14 1.14 0 0 0-.85-1.49l-.76-.14c-.45-.1-.8-.45-.9-.9l-.14-.76a1.14 1.14 0 0 0-1.49-.85l-.72.25c-.44.15-.92.02-1.23-.33l-.5-.58Zm-.49 2.67L10.6 6.6c.05.15.19.24.34.25l3.26.22c.36.03.5.48.23.71l-2.5 2.1a.4.4 0 0 0-.14.4l.8 3.16a.4.4 0 0 1-.6.44L9.2 12.13a.4.4 0 0 0-.42 0l-2.77 1.74a.4.4 0 0 1-.6-.44l.8-3.16a.4.4 0 0 0-.13-.4l-2.5-2.1a.4.4 0 0 1 .22-.7l3.26-.23a.4.4 0 0 0 .34-.25l1.22-3.03a.4.4 0 0 1 .74 0Z"/></svg><span class="-link--channel-name">Explore Collectives</span>
+    </a> 
+
+[[34]]
+<a href="javascript:void(0)" class="s-link p12 fc-black-500 h:fc-black-800 js-gps-track" role="button" aria-controls="popover-teams-create-cta" data-controller="s-popover" data-action="s-popover#toggle" data-s-popover-placement="bottom-start" data-s-popover-toggle-class="is-selected" data-gps-track="teams.create.left-sidenav.click({ Action: ShowInfo })" data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav show teams info&quot;,null,null,null]" aria-expanded="false">
+                <svg aria-hidden="true" class="svg-icon iconInfoSm" width="14" height="14" viewbox="0 0 14 14"><path d="M7 1a6 6 0 1 1 0 12A6 6 0 0 1 7 1Zm1 10V6H6v5h2Zm0-6V3H6v2h2Z"/></svg></a> 
+
+[[35]]
+<a href="https://stackoverflowteams.com/teams/create/free?utm_source=so-owned&amp;utm_medium=side-bar&amp;utm_campaign=campaign-38&amp;utm_content=cta" class="pl8 js-gps-track nav-links--link" title="Stack Overflow for Teams is a private, secure spot for your organization's questions and answers." data-gps-track="teams.create.left-sidenav.click({ Action: FreemiumTeamsCreateClick })" data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav team click&quot;,&quot;stackoverflow.com/teams/create/free&quot;,null,null]">
+            <div class="d-flex ai-center">
+                <div class="flex--item s-avatar va-middle bg-orange-400">
+                    <div class="s-avatar--letter mtn1">
+                        <svg aria-hidden="true" class="svg-icon iconBriefcaseSm" width="14" height="14" viewbox="0 0 14 14"><path d="M4 3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1h.5c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5h-7A1.5 1.5 0 0 1 2 10.5v-5C2 4.67 2.67 4 3.5 4H4V3Zm5 1V3H5v1h4Z"/></svg></div>
+                    <svg aria-hidden="true" class="native s-avatar--badge svg-icon iconShieldXSm" width="9" height="10" viewbox="0 0 9 10"><path fill="var(--white)" d="M0 1.84 4.5 0 9 1.84v3.17C9 7.53 6.3 10 4.5 10 2.7 10 0 7.53 0 5.01V1.84Z"/><path fill="var(--black-500)" d="M1 2.5 4.5 1 8 2.5v2.51C8 7.34 5.34 9 4.5 9 3.65 9 1 7.34 1 5.01V2.5Zm2.98 3.02L3.2 7h2.6l-.78-1.48a.4.4 0 0 1 .15-.38c.34-.24.73-.7.73-1.14 0-.71-.5-1.23-1.41-1.23-.92 0-1.39.52-1.39 1.23 0 .44.4.9.73 1.14.12.08.18.23.15.38Z"/></svg></div>
+                <div class="flex--item pl6">
+                    Create free Team
+                </div>
+            </div>
+        </a> 
+
+[[36]]
+<a href="https://stackoverflow.com/collectives" class="js-gps-track s-btn s-btn__primary s-btn__xs" data-gps-track="top_nav.click({is_current:false, location:5, destination:18})">
+                    Learn more about Collectives
+                </a> 
+
+[[37]]
+<a href="https://stackoverflow.co/teams" class="js-gps-track s-btn s-btn__primary s-btn__xs" data-gps-track="teams.create.left-sidenav.click({ Action: CtaClick })" data-ga="[&quot;teams left navigation - anonymous&quot;,&quot;left nav cta&quot;,&quot;stackoverflow.com/teams&quot;,null,null]">
+                    Learn more about Teams
+                </a> 
+
+[[38]]
+<a href="https://stackoverflow.com/questions/ask" class="ws-nowrap s-btn s-btn__primary">
+        Ask Question
+    </a> 
+
+[[39]]
+<a title="Tag wiki" href="https://stackoverflow.com/tags/r/info">Learn more…</a> 
+
+[[40]]
+<a title="Top answerers and askers in this tag" href="https://stackoverflow.com/tags/r/topusers">Top users</a> 
+
+[[41]]
+<a title="Common, alternate spellings or phrasings for this tag" href="https://stackoverflow.com/tags/r/synonyms">Synonyms (3)</a> 
+
+[[42]]
+<a class="s-btn s-btn__muted s-btn__outlined s-btn__sm d-flex is-selected" data-nav-value="Newest" href="https://stackoverflow.com/questions/tagged/r?tab=Newest" data-shortcut="N" aria-current="page">
+                            <div class="flex--item">Newest</div>
+                        </a> 
+
+[[43]]
+<a class="s-btn s-btn__muted s-btn__outlined s-btn__sm d-flex" data-nav-value="Active" href="https://stackoverflow.com/questions/tagged/r?tab=Active" data-shortcut="A">
+                            <div class="flex--item">Active</div>
+                        </a> 
+
+[[44]]
+<a class="s-btn s-btn__muted s-btn__outlined s-btn__sm d-flex uql-nav--expanded-item" data-nav-value="Bounties" href="https://stackoverflow.com/questions/tagged/r?tab=Bounties" data-shortcut="E">
+                            <div class="flex--item">Bountied</div>
+                                <div class="s-badge s-badge__bounty s-badge__bounty s-badge__sm lh-xs ml4 px4 flex--item">9</div>
+                        </a> 
+
+[[45]]
+<a class="s-btn s-btn__muted s-btn__outlined s-btn__sm d-flex uql-nav--expanded-item" data-nav-value="Unanswered" href="https://stackoverflow.com/questions/tagged/r?tab=Unanswered" data-shortcut="U">
+                            <div class="flex--item">Unanswered</div>
+                        </a> 
+
+[[46]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=Bounties" class="s-block-link s-block-link__left" data-shortcut="">
+                                        Bountied
+                                            <span class="s-badge s-badge__bounty s-badge__bounty s-badge__sm lh-xs px4">9</span>
+                                    </a> 
+
+[[47]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=Unanswered" class="s-block-link s-block-link__left" data-shortcut="">
+                                        Unanswered
+                                    </a> 
+
+[[48]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=Frequent" class="s-block-link s-block-link__left" data-shortcut="F">
+                                        Frequent
+                                    </a> 
+
+[[49]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=Votes" class="s-block-link s-block-link__left" data-shortcut="V">
+                                        Score
+                                    </a> 
+
+[[50]]
+<a href="https://stackoverflow.com/questions/76367776/afexmixed-is-pulling-wrong-column-and-not-using-formula-i-have-set-to-call" class="s-link">Afex:mixed() is pulling wrong column and not using formula I have set to call</a> 
+
+[[51]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-ri974pnc"/> 
+
+[[52]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[53]]
+<a href="https://stackoverflow.com/questions/tagged/mixed-models" class="post-tag flex--item mt0 js-tagname-mixed-models" title="show questions tagged 'mixed-models'" aria-label="show questions tagged 'mixed-models'" rel="tag" aria-labelledby="tag-mixed-models-tooltip-container">mixed-models</a> 
+
+[[54]]
+<a href="https://stackoverflow.com/users/20766913/swats15" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="20766913">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/f64e68970b7c66429932861e8176b11b.png" alt="swats15's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[55]]
+<a href="https://stackoverflow.com/users/20766913/swats15" class="flex--item">swats15</a> 
+
+[[56]]
+<a href="https://stackoverflow.com/questions/76367752/error-running-knitr-kable-with-pdf-output-after-updating-rstudio" class="s-link">error running knitr kable with .pdf output after updating Rstudio</a> 
+
+[[57]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-sgu8mlw2"/> 
+
+[[58]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[59]]
+<a href="https://stackoverflow.com/questions/tagged/r-markdown" class="post-tag flex--item mt0 js-tagname-r-markdown" title="show questions tagged 'r-markdown'" aria-label="show questions tagged 'r-markdown'" rel="tag" aria-labelledby="tag-r-markdown-tooltip-container">r-markdown</a> 
+
+[[60]]
+<a href="https://stackoverflow.com/questions/tagged/rstudio" class="post-tag flex--item mt0 js-tagname-rstudio" title="show questions tagged 'rstudio'" aria-label="show questions tagged 'rstudio'" rel="tag" aria-labelledby="tag-rstudio-tooltip-container">rstudio</a> 
+
+[[61]]
+<a href="https://stackoverflow.com/questions/tagged/knitr" class="post-tag flex--item mt0 js-tagname-knitr" title="show questions tagged 'knitr'" aria-label="show questions tagged 'knitr'" rel="tag" aria-labelledby="tag-knitr-tooltip-container">knitr</a> 
+
+[[62]]
+<a href="https://stackoverflow.com/users/15547128/jos%c3%a9-carlos" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="15547128">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/60573fbbac6828c2afce1caa47f66a34.png" alt="José Carlos's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[63]]
+<a href="https://stackoverflow.com/users/15547128/jos%c3%a9-carlos" class="flex--item">José Carlos</a> 
+
+[[64]]
+<a href="https://stackoverflow.com/questions/76367630/how-can-i-create-a-grouped-bar-plot-with-two-variables-and-dodge-position-in-g" class="s-link">How can I create a grouped bar plot with two variables and 'dodge' position in ggplot2? [duplicate]</a> 
+
+[[65]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-9oxl5vz6"/> 
+
+[[66]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[67]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[68]]
+<a href="https://stackoverflow.com/users/21988042/prakhars" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21988042">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/FMa5O.jpg" alt="PrakharS's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[69]]
+<a href="https://stackoverflow.com/users/21988042/prakhars" class="flex--item">PrakharS</a> 
+
+[[70]]
+<a href="https://stackoverflow.com/questions/76367540/creating-or-finding-a-method-to-add-a-sequence-of-numbers-depending-on-a-given-v" class="s-link">Creating or finding a method to add a sequence of numbers depending on a given value in R</a> 
+
+[[71]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-jtmb8u7e"/> 
+
+[[72]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[73]]
+<a href="https://stackoverflow.com/users/18798800/stevoo-p13" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="18798800">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/c0cd203307954e1b33ff6748e3b41094.png" alt="stevoo_p13's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[74]]
+<a href="https://stackoverflow.com/users/18798800/stevoo-p13" class="flex--item">stevoo_p13</a> 
+
+[[75]]
+<a href="https://stackoverflow.com/questions/76367527/r-using-the-r-officer-how-do-i-display-3-images-side-by-side" class="s-link">R Using the R officer how do I display 3 images side by side?</a> 
+
+[[76]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-mau9x54l"/> 
+
+[[77]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[78]]
+<a href="https://stackoverflow.com/questions/tagged/officer" class="post-tag flex--item mt0 js-tagname-officer" title="show questions tagged 'officer'" aria-label="show questions tagged 'officer'" rel="tag" aria-labelledby="tag-officer-tooltip-container">officer</a> 
+
+[[79]]
+<a href="https://stackoverflow.com/users/5943539/jerryn" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="5943539">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/ptjbp.jpg" alt="JerryN's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[80]]
+<a href="https://stackoverflow.com/users/5943539/jerryn" class="flex--item">JerryN</a> 
+
+[[81]]
+<a href="https://stackoverflow.com/questions/76367510/fix-tidyquant-tq-get-returning-null-for-currency-trading-pairs" class="s-link">Fix tidyquant tq_get returning NULL for currency trading pairs</a> 
+
+[[82]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-6i8mvhx5"/> 
+
+[[83]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[84]]
+<a href="https://stackoverflow.com/questions/tagged/tidyquant" class="post-tag flex--item mt0 js-tagname-tidyquant" title="show questions tagged 'tidyquant'" aria-label="show questions tagged 'tidyquant'" rel="tag" aria-labelledby="tag-tidyquant-tooltip-container">tidyquant</a> 
+
+[[85]]
+<a href="https://stackoverflow.com/users/21987914/user21987914" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21987914">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/f2f851e699f9dc4a1fb9b5b4938e86fc.png" alt="user21987914's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[86]]
+<a href="https://stackoverflow.com/users/21987914/user21987914" class="flex--item">user21987914</a> 
+
+[[87]]
+<a href="https://stackoverflow.com/questions/76367491/in-r-how-to-set-up-two-secondary-y-axis-with-different-scales-using-facet-wrap" class="s-link">In R, how to set up two secondary y-axis with different scales using facet_wrap?</a> 
+
+[[88]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-r9n6kjmo"/> 
+
+[[89]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[90]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[91]]
+<a href="https://stackoverflow.com/questions/tagged/axis" class="post-tag flex--item mt0 js-tagname-axis" title="show questions tagged 'axis'" aria-label="show questions tagged 'axis'" rel="tag" aria-labelledby="tag-axis-tooltip-container">axis</a> 
+
+[[92]]
+<a href="https://stackoverflow.com/questions/tagged/facet-wrap" class="post-tag flex--item mt0 js-tagname-facet-wrap" title="show questions tagged 'facet-wrap'" aria-label="show questions tagged 'facet-wrap'" rel="tag" aria-labelledby="tag-facet-wrap-tooltip-container">facet-wrap</a> 
+
+[[93]]
+<a href="https://stackoverflow.com/users/9653254/jin-w-kim" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="9653254">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/cUJQU.jpg" alt="Jin.W.Kim's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[94]]
+<a href="https://stackoverflow.com/users/9653254/jin-w-kim" class="flex--item">Jin.W.Kim</a> 
+
+[[95]]
+<a href="https://stackoverflow.com/questions/76367398/a-factor-column-used-for-hive-partitioning-in-write-dataset-becomes-a-chr-colu" class="s-link">A factor column used for Hive Partitioning in write_dataset() becomes a chr column in open_dataset()</a> 
+
+[[96]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-5evuj2i3"/> 
+
+[[97]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[98]]
+<a href="https://stackoverflow.com/questions/tagged/apache-arrow" class="post-tag flex--item mt0 js-tagname-apache-arrow" title="show questions tagged 'apache-arrow'" aria-label="show questions tagged 'apache-arrow'" rel="tag" aria-labelledby="tag-apache-arrow-tooltip-container">apache-arrow</a> 
+
+[[99]]
+<a href="https://stackoverflow.com/users/603776/james" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="603776">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/9iZDG.png" alt="James's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[100]]
+<a href="https://stackoverflow.com/users/603776/james" class="flex--item">James</a> 
+
+[[101]]
+<a href="https://stackoverflow.com/questions/76367326/how-can-i-create-new-columns-with-developmental-stage-duration-based-on-previous" class="s-link">How can I create new columns with developmental stage duration based on previous columns in r?</a> 
+
+[[102]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-rflfm69d"/> 
+
+[[103]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[104]]
+<a href="https://stackoverflow.com/users/16808647/abby-l" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="16808647">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/picture" alt="Abby L's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[105]]
+<a href="https://stackoverflow.com/users/16808647/abby-l" class="flex--item">Abby L</a> 
+
+[[106]]
+<a href="https://stackoverflow.com/questions/76367162/looking-for-an-easier-way-to-do-it-in-r" class="s-link">Looking for an easier way to do it in R</a> 
+
+[[107]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-aqzewva0"/> 
+
+[[108]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[109]]
+<a href="https://stackoverflow.com/questions/tagged/group-by" class="post-tag flex--item mt0 js-tagname-group-by" title="show questions tagged 'group-by'" aria-label="show questions tagged 'group-by'" rel="tag" aria-labelledby="tag-group-by-tooltip-container">group-by</a> 
+
+[[110]]
+<a href="https://stackoverflow.com/questions/tagged/mean" class="post-tag flex--item mt0 js-tagname-mean" title="show questions tagged 'mean'" aria-label="show questions tagged 'mean'" rel="tag" aria-labelledby="tag-mean-tooltip-container">mean</a> 
+
+[[111]]
+<a href="https://stackoverflow.com/questions/tagged/lubridate" class="post-tag flex--item mt0 js-tagname-lubridate" title="show questions tagged 'lubridate'" aria-label="show questions tagged 'lubridate'" rel="tag" aria-labelledby="tag-lubridate-tooltip-container">lubridate</a> 
+
+[[112]]
+<a href="https://stackoverflow.com/questions/tagged/mutate" class="post-tag flex--item mt0 js-tagname-mutate" title="show questions tagged 'mutate'" aria-label="show questions tagged 'mutate'" rel="tag" aria-labelledby="tag-mutate-tooltip-container">mutate</a> 
+
+[[113]]
+<a href="https://stackoverflow.com/users/9611905/alexia-k-boston" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="9611905">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/2c663b7cbd80beaa568d6edb6b88559b.png" alt="Alexia k Boston's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[114]]
+<a href="https://stackoverflow.com/users/9611905/alexia-k-boston" class="flex--item">Alexia k Boston</a> 
+
+[[115]]
+<a href="https://stackoverflow.com/questions/76366992/how-to-line-up-ui-elements-using-style-argument-in-shiny-app-that-uses-bslib-5" class="s-link">How to line up ui elements using style argument in shiny app that uses bslib 5</a> 
+
+[[116]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-xukeumyj"/> 
+
+[[117]]
+<a href="https://stackoverflow.com/questions/tagged/css" class="post-tag flex--item mt0 js-tagname-css" title="show questions tagged 'css'" aria-label="show questions tagged 'css'" rel="tag" aria-labelledby="tag-css-tooltip-container">css</a> 
+
+[[118]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[119]]
+<a href="https://stackoverflow.com/questions/tagged/shiny" class="post-tag flex--item mt0 js-tagname-shiny" title="show questions tagged 'shiny'" aria-label="show questions tagged 'shiny'" rel="tag" aria-labelledby="tag-shiny-tooltip-container">shiny</a> 
+
+[[120]]
+<a href="https://stackoverflow.com/questions/tagged/bslib" class="post-tag flex--item mt0 js-tagname-bslib" title="show questions tagged 'bslib'" aria-label="show questions tagged 'bslib'" rel="tag" aria-labelledby="tag-bslib-tooltip-container">bslib</a> 
+
+[[121]]
+<a href="https://stackoverflow.com/users/19803766/ifoxfoot" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="19803766">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/6b2034089c630ebbe83c671a69b06355.png" alt="ifoxfoot's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[122]]
+<a href="https://stackoverflow.com/users/19803766/ifoxfoot" class="flex--item">ifoxfoot</a> 
+
+[[123]]
+<a href="https://stackoverflow.com/questions/76366984/getting-glibcxx-3-4-30-not-found-error-in-rstudio-after-creating-new-r-environ" class="s-link">Getting 'GLIBCXX_3.4.30 not found' error in RStudio after creating new R environment with mamba on Ubuntu 20.04 - How to fix it?</a> 
+
+[[124]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-wof4t3b4"/> 
+
+[[125]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[126]]
+<a href="https://stackoverflow.com/questions/tagged/anaconda" class="post-tag flex--item mt0 js-tagname-anaconda" title="show questions tagged 'anaconda'" aria-label="show questions tagged 'anaconda'" rel="tag" aria-labelledby="tag-anaconda-tooltip-container">anaconda</a> 
+
+[[127]]
+<a href="https://stackoverflow.com/questions/tagged/rstudio" class="post-tag flex--item mt0 js-tagname-rstudio" title="show questions tagged 'rstudio'" aria-label="show questions tagged 'rstudio'" rel="tag" aria-labelledby="tag-rstudio-tooltip-container">rstudio</a> 
+
+[[128]]
+<a href="https://stackoverflow.com/questions/tagged/conda" class="post-tag flex--item mt0 js-tagname-conda" title="show questions tagged 'conda'" aria-label="show questions tagged 'conda'" rel="tag" aria-labelledby="tag-conda-tooltip-container">conda</a> 
+
+[[129]]
+<a href="https://stackoverflow.com/questions/tagged/mamba" class="post-tag flex--item mt0 js-tagname-mamba" title="show questions tagged 'mamba'" aria-label="show questions tagged 'mamba'" rel="tag" aria-labelledby="tag-mamba-tooltip-container">mamba</a> 
+
+[[130]]
+<a href="https://stackoverflow.com/users/21941916/zeke" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21941916">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/94b269f590cde5b306f03f743c5cff83.png" alt="Zeke's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[131]]
+<a href="https://stackoverflow.com/users/21941916/zeke" class="flex--item">Zeke</a> 
+
+[[132]]
+<a href="https://stackoverflow.com/questions/76366976/quarto-pandoc-cant-find-source-of-pandoc-error-pandoc-exe-cannot-decode" class="s-link">Quarto / pandoc: Can't find source of pandoc error -- pandoc.exe: Cannot decode byte '\x93'</a> 
+
+[[133]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-acbas7yz"/> 
+
+[[134]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[135]]
+<a href="https://stackoverflow.com/questions/tagged/rstudio" class="post-tag flex--item mt0 js-tagname-rstudio" title="show questions tagged 'rstudio'" aria-label="show questions tagged 'rstudio'" rel="tag" aria-labelledby="tag-rstudio-tooltip-container">rstudio</a> 
+
+[[136]]
+<a href="https://stackoverflow.com/questions/tagged/pandoc" class="post-tag flex--item mt0 js-tagname-pandoc" title="show questions tagged 'pandoc'" aria-label="show questions tagged 'pandoc'" rel="tag" aria-labelledby="tag-pandoc-tooltip-container">pandoc</a> 
+
+[[137]]
+<a href="https://stackoverflow.com/questions/tagged/quarto" class="post-tag flex--item mt0 js-tagname-quarto" title="show questions tagged 'quarto'" aria-label="show questions tagged 'quarto'" rel="tag" aria-labelledby="tag-quarto-tooltip-container">quarto</a> 
+
+[[138]]
+<a href="https://stackoverflow.com/users/1873697/user101089" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="1873697">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/125fefb76359bb49c33ad85d72c3df0a.png" alt="user101089's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[139]]
+<a href="https://stackoverflow.com/users/1873697/user101089" class="flex--item">user101089</a> 
+
+[[140]]
+<a href="https://stackoverflow.com/questions/76366910/how-to-save-mlr3-resample-object-results-to-disk" class="s-link">How to save mlr3 resample object results to disk</a> 
+
+[[141]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-f6srwt4y"/> 
+
+[[142]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[143]]
+<a href="https://stackoverflow.com/questions/tagged/machine-learning" class="post-tag flex--item mt0 js-tagname-machine-learning" title="show questions tagged 'machine-learning'" aria-label="show questions tagged 'machine-learning'" rel="tag" aria-labelledby="tag-machine-learning-tooltip-container">machine-learning</a> 
+
+[[144]]
+<a href="https://stackoverflow.com/questions/tagged/serialization" class="post-tag flex--item mt0 js-tagname-serialization" title="show questions tagged 'serialization'" aria-label="show questions tagged 'serialization'" rel="tag" aria-labelledby="tag-serialization-tooltip-container">serialization</a> 
+
+[[145]]
+<a href="https://stackoverflow.com/questions/tagged/mlr3" class="post-tag flex--item mt0 js-tagname-mlr3" title="show questions tagged 'mlr3'" aria-label="show questions tagged 'mlr3'" rel="tag" aria-labelledby="tag-mlr3-tooltip-container">mlr3</a> 
+
+[[146]]
+<a href="https://stackoverflow.com/questions/tagged/resample" class="post-tag flex--item mt0 js-tagname-resample" title="show questions tagged 'resample'" aria-label="show questions tagged 'resample'" rel="tag" aria-labelledby="tag-resample-tooltip-container">resample</a> 
+
+[[147]]
+<a href="https://stackoverflow.com/users/21987456/yodi" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21987456">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_002.png" alt="Yodi's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[148]]
+<a href="https://stackoverflow.com/users/21987456/yodi" class="flex--item">Yodi</a> 
+
+[[149]]
+<a href="https://stackoverflow.com/questions/76366809/how-to-evaluate-the-definite-integral-for-the-region-defined-by-x22y-12" class="s-link">How to evaluate the definite integral for the region defined by (x+2)^2+(y-1)^2&gt;4 and (x+2)^2+(y-1)^2&lt;4 [closed]</a> 
+
+[[150]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-blwq2spb"/> 
+
+[[151]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[152]]
+<a href="https://stackoverflow.com/questions/tagged/region" class="post-tag flex--item mt0 js-tagname-region" title="show questions tagged 'region'" aria-label="show questions tagged 'region'" rel="tag" aria-labelledby="tag-region-tooltip-container">region</a> 
+
+[[153]]
+<a href="https://stackoverflow.com/users/21978721/ratcha-neekon" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21978721">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_005.png" alt="ratcha neekon's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[154]]
+<a href="https://stackoverflow.com/users/21978721/ratcha-neekon" class="flex--item">ratcha neekon</a> 
+
+[[155]]
+<a href="https://stackoverflow.com/questions/76366747/simulate-new-data-based-on-existing-data-of-people-nested-within-groups-in-r" class="s-link">Simulate new data based on existing data of people nested within groups in r</a> 
+
+[[156]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-l4kyxuvb"/> 
+
+[[157]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[158]]
+<a href="https://stackoverflow.com/questions/tagged/statistics" class="post-tag flex--item mt0 js-tagname-statistics" title="show questions tagged 'statistics'" aria-label="show questions tagged 'statistics'" rel="tag" aria-labelledby="tag-statistics-tooltip-container">statistics</a> 
+
+[[159]]
+<a href="https://stackoverflow.com/questions/tagged/simulation" class="post-tag flex--item mt0 js-tagname-simulation" title="show questions tagged 'simulation'" aria-label="show questions tagged 'simulation'" rel="tag" aria-labelledby="tag-simulation-tooltip-container">simulation</a> 
+
+[[160]]
+<a href="https://stackoverflow.com/users/5849205/chagag" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="5849205">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/0c7e3a03164eec8eb59d181919e6b8ea.png" alt="chagag's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[161]]
+<a href="https://stackoverflow.com/users/5849205/chagag" class="flex--item">chagag</a> 
+
+[[162]]
+<a href="https://stackoverflow.com/questions/76366695/themeaxis-line-element-segmentcolor-green-error-in-element-segmentco" class="s-link">theme(axis.line
+ = element_segment(color = "Green")): Error in element_segment(color = 
+"Green") : could not find function "element_segment"</a> 
+
+[[163]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-ailf6vv6"/> 
+
+[[164]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[165]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[166]]
+<a href="https://stackoverflow.com/questions/tagged/tidyverse" class="post-tag flex--item mt0 js-tagname-tidyverse" title="show questions tagged 'tidyverse'" aria-label="show questions tagged 'tidyverse'" rel="tag" aria-labelledby="tag-tidyverse-tooltip-container">tidyverse</a> 
+
+[[167]]
+<a href="https://stackoverflow.com/users/21767262/wizardofozi" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="21767262">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/HT9Id.jpg" alt="WizardOfOzi's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[168]]
+<a href="https://stackoverflow.com/users/21767262/wizardofozi" class="flex--item">WizardOfOzi</a> 
+
+[[169]]
+<a href="https://stackoverflow.com/questions/76366598/how-do-you-parse-a-custom-format-string-into-columns-of-a-r-dataframe" class="s-link">How do you parse a custom format string into columns of a R dataframe?</a> 
+
+[[170]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-byhb8tgn"/> 
+
+[[171]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[172]]
+<a href="https://stackoverflow.com/questions/tagged/dplyr" class="post-tag flex--item mt0 js-tagname-dplyr" title="show questions tagged 'dplyr'" aria-label="show questions tagged 'dplyr'" rel="tag" aria-labelledby="tag-dplyr-tooltip-container">dplyr</a> 
+
+[[173]]
+<a href="https://stackoverflow.com/questions/tagged/tidyr" class="post-tag flex--item mt0 js-tagname-tidyr" title="show questions tagged 'tidyr'" aria-label="show questions tagged 'tidyr'" rel="tag" aria-labelledby="tag-tidyr-tooltip-container">tidyr</a> 
+
+[[174]]
+<a href="https://stackoverflow.com/questions/tagged/stringr" class="post-tag flex--item mt0 js-tagname-stringr" title="show questions tagged 'stringr'" aria-label="show questions tagged 'stringr'" rel="tag" aria-labelledby="tag-stringr-tooltip-container">stringr</a> 
+
+[[175]]
+<a href="https://stackoverflow.com/users/21942637/matt" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21942637">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/photo.png" alt="matt's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[176]]
+<a href="https://stackoverflow.com/users/21942637/matt" class="flex--item">matt</a> 
+
+[[177]]
+<a href="https://stackoverflow.com/questions/76366591/how-can-i-convert-an-r-dataframe-or-sf-file-to-shapefile-or-geopackage-to-view-i" class="s-link">How can I convert an R dataframe or sf file to shapefile or geopackage to view in ArcGIS?</a> 
+
+[[178]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-q8de0871"/> 
+
+[[179]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[180]]
+<a href="https://stackoverflow.com/questions/tagged/maps" class="post-tag flex--item mt0 js-tagname-maps" title="show questions tagged 'maps'" aria-label="show questions tagged 'maps'" rel="tag" aria-labelledby="tag-maps-tooltip-container">maps</a> 
+
+[[181]]
+<a href="https://stackoverflow.com/questions/tagged/arcgis" class="post-tag flex--item mt0 js-tagname-arcgis" title="show questions tagged 'arcgis'" aria-label="show questions tagged 'arcgis'" rel="tag" aria-labelledby="tag-arcgis-tooltip-container">arcgis</a> 
+
+[[182]]
+<a href="https://stackoverflow.com/questions/tagged/shapefile" class="post-tag flex--item mt0 js-tagname-shapefile" title="show questions tagged 'shapefile'" aria-label="show questions tagged 'shapefile'" rel="tag" aria-labelledby="tag-shapefile-tooltip-container">shapefile</a> 
+
+[[183]]
+<a href="https://stackoverflow.com/questions/tagged/geopackage" class="post-tag flex--item mt0 js-tagname-geopackage" title="show questions tagged 'geopackage'" aria-label="show questions tagged 'geopackage'" rel="tag" aria-labelledby="tag-geopackage-tooltip-container">geopackage</a> 
+
+[[184]]
+<a href="https://stackoverflow.com/users/21987163/olivia-bergmann" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21987163">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed.png" alt="Olivia Bergmann's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[185]]
+<a href="https://stackoverflow.com/users/21987163/olivia-bergmann" class="flex--item">Olivia Bergmann</a> 
+
+[[186]]
+<a href="https://stackoverflow.com/questions/76366531/r-two-way-repeated-meausre-anova-with-counterbalanced-data-set-from-within-subj" class="s-link">R: Two-Way Repeated-Meausre ANOVA with counterbalanced data set from within-subject design</a> 
+
+[[187]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-cuwyhzfn"/> 
+
+[[188]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[189]]
+<a href="https://stackoverflow.com/questions/tagged/anova" class="post-tag flex--item mt0 js-tagname-anova" title="show questions tagged 'anova'" aria-label="show questions tagged 'anova'" rel="tag" aria-labelledby="tag-anova-tooltip-container">anova</a> 
+
+[[190]]
+<a href="https://stackoverflow.com/questions/tagged/two-way" class="post-tag flex--item mt0 js-tagname-two-way" title="show questions tagged 'two-way'" aria-label="show questions tagged 'two-way'" rel="tag" aria-labelledby="tag-two-way-tooltip-container">two-way</a> 
+
+[[191]]
+<a href="https://stackoverflow.com/users/21984404/john" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21984404">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/74b695ca0180c7d90d4efccbea3f5ce8.png" alt="John's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[192]]
+<a href="https://stackoverflow.com/users/21984404/john" class="flex--item">John</a> 
+
+[[193]]
+<a href="https://stackoverflow.com/questions/76366516/is-there-an-r-function-in-pivot-wider-to-spread-out-list-columns-data-from-a-piv" class="s-link">Is there an R function in pivot wider to spread out list-columns data from a pivoted dataset?</a> 
+
+[[194]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-b6eta2ij"/> 
+
+[[195]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[196]]
+<a href="https://stackoverflow.com/questions/tagged/list" class="post-tag flex--item mt0 js-tagname-list" title="show questions tagged 'list'" aria-label="show questions tagged 'list'" rel="tag" aria-labelledby="tag-list-tooltip-container">list</a> 
+
+[[197]]
+<a href="https://stackoverflow.com/users/21986962/levane07" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986962">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/79918965f444863149c481698c34e4c9.png" alt="levane07's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[198]]
+<a href="https://stackoverflow.com/users/21986962/levane07" class="flex--item">levane07</a> 
+
+[[199]]
+<a href="https://stackoverflow.com/questions/76366512/how-to-select-rows-in-which-there-is-more-than-1-value-across-columns" class="s-link">how to select rows in which there is more than 1 value across columns</a> 
+
+[[200]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-8u3xjecl"/> 
+
+[[201]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[202]]
+<a href="https://stackoverflow.com/questions/tagged/dataframe" class="post-tag flex--item mt0 js-tagname-dataframe" title="show questions tagged 'dataframe'" aria-label="show questions tagged 'dataframe'" rel="tag" aria-labelledby="tag-dataframe-tooltip-container">dataframe</a> 
+
+[[203]]
+<a href="https://stackoverflow.com/questions/tagged/dplyr" class="post-tag flex--item mt0 js-tagname-dplyr" title="show questions tagged 'dplyr'" aria-label="show questions tagged 'dplyr'" rel="tag" aria-labelledby="tag-dplyr-tooltip-container">dplyr</a> 
+
+[[204]]
+<a href="https://stackoverflow.com/questions/tagged/filter" class="post-tag flex--item mt0 js-tagname-filter" title="show questions tagged 'filter'" aria-label="show questions tagged 'filter'" rel="tag" aria-labelledby="tag-filter-tooltip-container">filter</a> 
+
+[[205]]
+<a href="https://stackoverflow.com/questions/tagged/rbind" class="post-tag flex--item mt0 js-tagname-rbind" title="show questions tagged 'rbind'" aria-label="show questions tagged 'rbind'" rel="tag" aria-labelledby="tag-rbind-tooltip-container">rbind</a> 
+
+[[206]]
+<a href="https://stackoverflow.com/users/20743292/rheabedi1" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="20743292">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/e50f7c25f62960d8d8e163922d1df2aa.png" alt="rheabedi1's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[207]]
+<a href="https://stackoverflow.com/users/20743292/rheabedi1" class="flex--item">rheabedi1</a> 
+
+[[208]]
+<a href="https://stackoverflow.com/questions/76366484/r-rbind-and-display-multiple-plot" class="s-link">R rbind and display multiple plot()</a> 
+
+[[209]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-l94ntbw0"/> 
+
+[[210]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[211]]
+<a href="https://stackoverflow.com/questions/tagged/list" class="post-tag flex--item mt0 js-tagname-list" title="show questions tagged 'list'" aria-label="show questions tagged 'list'" rel="tag" aria-labelledby="tag-list-tooltip-container">list</a> 
+
+[[212]]
+<a href="https://stackoverflow.com/questions/tagged/plot" class="post-tag flex--item mt0 js-tagname-plot" title="show questions tagged 'plot'" aria-label="show questions tagged 'plot'" rel="tag" aria-labelledby="tag-plot-tooltip-container">plot</a> 
+
+[[213]]
+<a href="https://stackoverflow.com/questions/tagged/lapply" class="post-tag flex--item mt0 js-tagname-lapply" title="show questions tagged 'lapply'" aria-label="show questions tagged 'lapply'" rel="tag" aria-labelledby="tag-lapply-tooltip-container">lapply</a> 
+
+[[214]]
+<a href="https://stackoverflow.com/questions/tagged/cowplot" class="post-tag flex--item mt0 js-tagname-cowplot" title="show questions tagged 'cowplot'" aria-label="show questions tagged 'cowplot'" rel="tag" aria-labelledby="tag-cowplot-tooltip-container">cowplot</a> 
+
+[[215]]
+<a href="https://stackoverflow.com/users/3135514/bison2178" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="3135514">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/9251285d3241e4a51107bd644eba4222.png" alt="bison2178's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[216]]
+<a href="https://stackoverflow.com/users/3135514/bison2178" class="flex--item">bison2178</a> 
+
+[[217]]
+<a href="https://stackoverflow.com/questions/76366444/unexpected-syntax-error-after-loading-reticulate-package" class="s-link">Unexpected syntax error after loading reticulate package</a> 
+
+[[218]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-lx2xo26k"/> 
+
+[[219]]
+<a href="https://stackoverflow.com/questions/tagged/python" class="post-tag flex--item mt0 js-tagname-python" title="show questions tagged 'python'" aria-label="show questions tagged 'python'" rel="tag" aria-labelledby="tag-python-tooltip-container">python</a> 
+
+[[220]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[221]]
+<a href="https://stackoverflow.com/questions/tagged/reticulate" class="post-tag flex--item mt0 js-tagname-reticulate" title="show questions tagged 'reticulate'" aria-label="show questions tagged 'reticulate'" rel="tag" aria-labelledby="tag-reticulate-tooltip-container">reticulate</a> 
+
+[[222]]
+<a href="https://stackoverflow.com/users/13825420/fra-silver" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="13825420">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/d212452a5d01102ff50de495030eceb6.png" alt="Fra_Silver's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[223]]
+<a href="https://stackoverflow.com/users/13825420/fra-silver" class="flex--item">Fra_Silver</a> 
+
+[[224]]
+<a href="https://stackoverflow.com/questions/76366356/r-gsub-encounters-encoding-error-after-update-from-r-4-2-1-to-r-4-3-0" class="s-link">R gsub encounters encoding error after update from R 4.2.1 to R 4.3.0</a> 
+
+[[225]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-0jy0x6jn"/> 
+
+[[226]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[227]]
+<a href="https://stackoverflow.com/questions/tagged/string" class="post-tag flex--item mt0 js-tagname-string" title="show questions tagged 'string'" aria-label="show questions tagged 'string'" rel="tag" aria-labelledby="tag-string-tooltip-container">string</a> 
+
+[[228]]
+<a href="https://stackoverflow.com/users/5940920/mattu" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="5940920">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/dfd1620ef5beb9fa9554d34e8e9cec17.png" alt="mattu's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[229]]
+<a href="https://stackoverflow.com/users/5940920/mattu" class="flex--item">mattu</a> 
+
+[[230]]
+<a href="https://stackoverflow.com/questions/76366354/plotting-values-on-an-asci-file-how-to-link-values-ot-cells-and-turn-missing-da" class="s-link">Plotting values on an ASCI file; how to link values ot cells and turn missing data into NA</a> 
+
+[[231]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-6e228u27"/> 
+
+[[232]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[233]]
+<a href="https://stackoverflow.com/questions/tagged/raster" class="post-tag flex--item mt0 js-tagname-raster" title="show questions tagged 'raster'" aria-label="show questions tagged 'raster'" rel="tag" aria-labelledby="tag-raster-tooltip-container">raster</a> 
+
+[[234]]
+<a href="https://stackoverflow.com/questions/tagged/matching" class="post-tag flex--item mt0 js-tagname-matching" title="show questions tagged 'matching'" aria-label="show questions tagged 'matching'" rel="tag" aria-labelledby="tag-matching-tooltip-container">matching</a> 
+
+[[235]]
+<a href="https://stackoverflow.com/users/14830657/nick-schafstall" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="14830657">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed.jpg" alt="Nick Schafstall's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[236]]
+<a href="https://stackoverflow.com/users/14830657/nick-schafstall" class="flex--item">Nick Schafstall</a> 
+
+[[237]]
+<a href="https://stackoverflow.com/questions/76366266/cannot-load-package-dependencies-required-for-survminer-package" class="s-link">Cannot load package dependencies required for survminer package</a> 
+
+[[238]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-2tf9vmos"/> 
+
+[[239]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[240]]
+<a href="https://stackoverflow.com/questions/tagged/dependencies" class="post-tag flex--item mt0 js-tagname-dependencies" title="show questions tagged 'dependencies'" aria-label="show questions tagged 'dependencies'" rel="tag" aria-labelledby="tag-dependencies-tooltip-container">dependencies</a> 
+
+[[241]]
+<a href="https://stackoverflow.com/questions/tagged/install.packages" class="post-tag flex--item mt0 js-tagname-installûpackages" title="show questions tagged 'install.packages'" aria-label="show questions tagged 'install.packages'" rel="tag" aria-labelledby="tag-install.packages-tooltip-container">install.packages</a> 
+
+[[242]]
+<a href="https://stackoverflow.com/questions/tagged/survminer" class="post-tag flex--item mt0 js-tagname-survminer" title="show questions tagged 'survminer'" aria-label="show questions tagged 'survminer'" rel="tag" aria-labelledby="tag-survminer-tooltip-container">survminer</a> 
+
+[[243]]
+<a href="https://stackoverflow.com/users/10971319/bethan-r" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="10971319">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/3d72f7778940e3b621b821b56f6faa1a.png" alt="Bethan R's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[244]]
+<a href="https://stackoverflow.com/users/10971319/bethan-r" class="flex--item">Bethan R</a> 
+
+[[245]]
+<a href="https://stackoverflow.com/questions/76366258/error-when-using-lapply-error-in-str2langx-text131-unexpected-symbol" class="s-link">Error when using lapply: Error in str2lang(x) : &lt;text&gt;:1:31: unexpected symbol</a> 
+
+[[246]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-zhwdc7ob"/> 
+
+[[247]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[248]]
+<a href="https://stackoverflow.com/questions/tagged/linear-regression" class="post-tag flex--item mt0 js-tagname-linear-regression" title="show questions tagged 'linear-regression'" aria-label="show questions tagged 'linear-regression'" rel="tag" aria-labelledby="tag-linear-regression-tooltip-container">linear-regression</a> 
+
+[[249]]
+<a href="https://stackoverflow.com/questions/tagged/lapply" class="post-tag flex--item mt0 js-tagname-lapply" title="show questions tagged 'lapply'" aria-label="show questions tagged 'lapply'" rel="tag" aria-labelledby="tag-lapply-tooltip-container">lapply</a> 
+
+[[250]]
+<a href="https://stackoverflow.com/users/19642403/francobattiato" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="19642403">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_003.png" alt="FrancoBattiato's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[251]]
+<a href="https://stackoverflow.com/users/19642403/francobattiato" class="flex--item">FrancoBattiato</a> 
+
+[[252]]
+<a href="https://stackoverflow.com/questions/76366254/how-to-append-results-from-a-repeated-function" class="s-link">How to append results from a repeated function?</a> 
+
+[[253]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-ru3ups9w"/> 
+
+[[254]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[255]]
+<a href="https://stackoverflow.com/questions/tagged/dataframe" class="post-tag flex--item mt0 js-tagname-dataframe" title="show questions tagged 'dataframe'" aria-label="show questions tagged 'dataframe'" rel="tag" aria-labelledby="tag-dataframe-tooltip-container">dataframe</a> 
+
+[[256]]
+<a href="https://stackoverflow.com/questions/tagged/function" class="post-tag flex--item mt0 js-tagname-function" title="" aria-label="show questions tagged 'function'" rel="tag" aria-labelledby="tag-function-tooltip-container">function</a> 
+
+[[257]]
+<a href="https://stackoverflow.com/questions/tagged/loops" class="post-tag flex--item mt0 js-tagname-loops" title="show questions tagged 'loops'" aria-label="show questions tagged 'loops'" rel="tag" aria-labelledby="tag-loops-tooltip-container">loops</a> 
+
+[[258]]
+<a href="https://stackoverflow.com/questions/tagged/repeat" class="post-tag flex--item mt0 js-tagname-repeat" title="show questions tagged 'repeat'" aria-label="show questions tagged 'repeat'" rel="tag" aria-labelledby="tag-repeat-tooltip-container">repeat</a> 
+
+[[259]]
+<a href="https://stackoverflow.com/users/15283041/victor-nielsen" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="15283041">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/d70f3ee05d55bd142eb8c3b9f0fa25c0.png" alt="Victor Nielsen's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[260]]
+<a href="https://stackoverflow.com/users/15283041/victor-nielsen" class="flex--item">Victor Nielsen</a> 
+
+[[261]]
+<a href="https://stackoverflow.com/questions/76366225/presenting-sorted-values-in-geom-bar" class="s-link">Presenting sorted values in geom_bar</a> 
+
+[[262]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-8pmfhdsy"/> 
+
+[[263]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[264]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[265]]
+<a href="https://stackoverflow.com/questions/tagged/geom-bar" class="post-tag flex--item mt0 js-tagname-geom-bar" title="show questions tagged 'geom-bar'" aria-label="show questions tagged 'geom-bar'" rel="tag" aria-labelledby="tag-geom-bar-tooltip-container">geom-bar</a> 
+
+[[266]]
+<a href="https://stackoverflow.com/users/13433109/stars" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="13433109">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/7147d34167674b0bfa9be648b01bdde0.png" alt="Stars's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[267]]
+<a href="https://stackoverflow.com/users/13433109/stars" class="flex--item">Stars</a> 
+
+[[268]]
+<a href="https://stackoverflow.com/questions/76366223/r-markdown-error-in-indlx-as-logicallocal-as-logicalnow-unable-t" class="s-link">R Markdown: Error in inDL(x, as.logical(local), as.logical(now), ...) : unable to load shared object</a> 
+
+[[269]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-xqu5wnhs"/> 
+
+[[270]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[271]]
+<a href="https://stackoverflow.com/questions/tagged/r-markdown" class="post-tag flex--item mt0 js-tagname-r-markdown" title="show questions tagged 'r-markdown'" aria-label="show questions tagged 'r-markdown'" rel="tag" aria-labelledby="tag-r-markdown-tooltip-container">r-markdown</a> 
+
+[[272]]
+<a href="https://stackoverflow.com/questions/tagged/rstudio" class="post-tag flex--item mt0 js-tagname-rstudio" title="show questions tagged 'rstudio'" aria-label="show questions tagged 'rstudio'" rel="tag" aria-labelledby="tag-rstudio-tooltip-container">rstudio</a> 
+
+[[273]]
+<a href="https://stackoverflow.com/users/21986848/moritzhatkbm" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986848">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/08dd5f159893aa27e9d47e33c0f10e2a.png" alt="moritzhatkbm's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[274]]
+<a href="https://stackoverflow.com/users/21986848/moritzhatkbm" class="flex--item">moritzhatkbm</a> 
+
+[[275]]
+<a href="https://stackoverflow.com/questions/76365973/sending-code-from-sublime-text-3-to-r-gui-only-sometimes-works" class="s-link">Sending code from Sublime Text 3 to R Gui only sometimes works</a> 
+
+[[276]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-xrl1x494"/> 
+
+[[277]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[278]]
+<a href="https://stackoverflow.com/questions/tagged/sublimetext3" class="post-tag flex--item mt0 js-tagname-sublimetext3" title="show questions tagged 'sublimetext3'" aria-label="show questions tagged 'sublimetext3'" rel="tag" aria-labelledby="tag-sublimetext3-tooltip-container">sublimetext3</a> 
+
+[[279]]
+<a href="https://stackoverflow.com/users/7562715/dthorbur" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="7562715">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/2080762f7dd97696c9c0c473740b35d3.png" alt="dthorbur's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[280]]
+<a href="https://stackoverflow.com/users/7562715/dthorbur" class="flex--item">dthorbur</a> 
+
+[[281]]
+<a href="https://stackoverflow.com/questions/76365858/how-to-merge-two-polygon-elements-into-one" class="s-link">How to merge two polygon elements into one?</a> 
+
+[[282]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-scexze8c"/> 
+
+[[283]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[284]]
+<a href="https://stackoverflow.com/questions/tagged/shapefile" class="post-tag flex--item mt0 js-tagname-shapefile" title="show questions tagged 'shapefile'" aria-label="show questions tagged 'shapefile'" rel="tag" aria-labelledby="tag-shapefile-tooltip-container">shapefile</a> 
+
+[[285]]
+<a href="https://stackoverflow.com/questions/tagged/sf" class="post-tag flex--item mt0 js-tagname-sf" title="show questions tagged 'sf'" aria-label="show questions tagged 'sf'" rel="tag" aria-labelledby="tag-sf-tooltip-container">sf</a> 
+
+[[286]]
+<a href="https://stackoverflow.com/users/4889002/sa%c3%afd-maanan" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="4889002">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/QU9TB.jpg" alt="Saïd Maanan's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[287]]
+<a href="https://stackoverflow.com/users/4889002/sa%c3%afd-maanan" class="flex--item">Saïd Maanan</a> 
+
+[[288]]
+<a href="https://stackoverflow.com/questions/76365839/discrete-choice-analysis-in-r-or-r-studio" class="s-link">Discrete choice analysis in R or R studio</a> 
+
+[[289]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-gcc1jucg"/> 
+
+[[290]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[291]]
+<a href="https://stackoverflow.com/questions/tagged/statistics" class="post-tag flex--item mt0 js-tagname-statistics" title="show questions tagged 'statistics'" aria-label="show questions tagged 'statistics'" rel="tag" aria-labelledby="tag-statistics-tooltip-container">statistics</a> 
+
+[[292]]
+<a href="https://stackoverflow.com/questions/tagged/data-analysis" class="post-tag flex--item mt0 js-tagname-data-analysis" title="show questions tagged 'data-analysis'" aria-label="show questions tagged 'data-analysis'" rel="tag" aria-labelledby="tag-data-analysis-tooltip-container">data-analysis</a> 
+
+[[293]]
+<a href="https://stackoverflow.com/questions/tagged/discrete" class="post-tag flex--item mt0 js-tagname-discrete" title="show questions tagged 'discrete'" aria-label="show questions tagged 'discrete'" rel="tag" aria-labelledby="tag-discrete-tooltip-container">discrete</a> 
+
+[[294]]
+<a href="https://stackoverflow.com/users/21986385/valchev" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986385">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/2bec737d194fbe42eb9b47dc8926287f.png" alt="valchev's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[295]]
+<a href="https://stackoverflow.com/users/21986385/valchev" class="flex--item">valchev</a> 
+
+[[296]]
+<a href="https://stackoverflow.com/questions/76365830/how-can-i-interpret-knn-clustering-using-fnn-package-in-r-for-analyzing-football" class="s-link">How can I interpret KNN clustering using FNN package in R for analyzing football passes?</a> 
+
+[[297]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-q6jzfyls"/> 
+
+[[298]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[299]]
+<a href="https://stackoverflow.com/questions/tagged/coordinates" class="post-tag flex--item mt0 js-tagname-coordinates" title="show questions tagged 'coordinates'" aria-label="show questions tagged 'coordinates'" rel="tag" aria-labelledby="tag-coordinates-tooltip-container">coordinates</a> 
+
+[[300]]
+<a href="https://stackoverflow.com/questions/tagged/knn" class="post-tag flex--item mt0 js-tagname-knn" title="show questions tagged 'knn'" aria-label="show questions tagged 'knn'" rel="tag" aria-labelledby="tag-knn-tooltip-container">knn</a> 
+
+[[301]]
+<a href="https://stackoverflow.com/users/21986368/rk31" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986368">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_007.png" alt="RK31's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[302]]
+<a href="https://stackoverflow.com/users/21986368/rk31" class="flex--item">RK31</a> 
+
+[[303]]
+<a href="https://stackoverflow.com/questions/76365627/save-txt-file-with-error-condition-specific" class="s-link">Save txt file with error, condition specific</a> 
+
+[[304]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-zkmzkzvj"/> 
+
+[[305]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[306]]
+<a href="https://stackoverflow.com/questions/tagged/try-catch" class="post-tag flex--item mt0 js-tagname-try-catch" title="show questions tagged 'try-catch'" aria-label="show questions tagged 'try-catch'" rel="tag" aria-labelledby="tag-try-catch-tooltip-container">try-catch</a> 
+
+[[307]]
+<a href="https://stackoverflow.com/users/4309821/joe-crozier" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="4309821">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/picture_003" alt="Joe Crozier's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[308]]
+<a href="https://stackoverflow.com/users/4309821/joe-crozier" class="flex--item">Joe Crozier</a> 
+
+[[309]]
+<a href="https://stackoverflow.com/questions/76365624/calculate-the-total-lengths-of-the-segments-intersect-each-of-some-polygons" class="s-link">Calculate the total lengths of the segments intersect each of some polygons</a> 
+
+[[310]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-swa7ptlh"/> 
+
+[[311]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[312]]
+<a href="https://stackoverflow.com/questions/tagged/raster" class="post-tag flex--item mt0 js-tagname-raster" title="show questions tagged 'raster'" aria-label="show questions tagged 'raster'" rel="tag" aria-labelledby="tag-raster-tooltip-container">raster</a> 
+
+[[313]]
+<a href="https://stackoverflow.com/questions/tagged/sf" class="post-tag flex--item mt0 js-tagname-sf" title="show questions tagged 'sf'" aria-label="show questions tagged 'sf'" rel="tag" aria-labelledby="tag-sf-tooltip-container">sf</a> 
+
+[[314]]
+<a href="https://stackoverflow.com/users/19814561/nobugsincode" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="19814561">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_004.png" alt="nobugsincode's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[315]]
+<a href="https://stackoverflow.com/users/19814561/nobugsincode" class="flex--item">nobugsincode</a> 
+
+[[316]]
+<a href="https://stackoverflow.com/questions/76365514/plotting-quadrat-counts-as-an-intensity-map-in-r" class="s-link">Plotting quadrat counts as an intensity map in R</a> 
+
+[[317]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-zu19sndd"/> 
+
+[[318]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[319]]
+<a href="https://stackoverflow.com/questions/tagged/spatstat" class="post-tag flex--item mt0 js-tagname-spatstat" title="show questions tagged 'spatstat'" aria-label="show questions tagged 'spatstat'" rel="tag" aria-labelledby="tag-spatstat-tooltip-container">spatstat</a> 
+
+[[320]]
+<a href="https://stackoverflow.com/users/21986143/fritz" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986143">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/118a0645fa50f1c0cb6ccfa65dedc6c6.png" alt="Fritz's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[321]]
+<a href="https://stackoverflow.com/users/21986143/fritz" class="flex--item">Fritz</a> 
+
+[[322]]
+<a href="https://stackoverflow.com/questions/76365460/how-to-apply-several-functions-on-each-data-frame-in-a-list-of-data-frames-in-r" class="s-link">How to apply several functions on each data frame in a list of data frames in R?</a> 
+
+[[323]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-nqknr47r"/> 
+
+[[324]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[325]]
+<a href="https://stackoverflow.com/questions/tagged/loops" class="post-tag flex--item mt0 js-tagname-loops" title="show questions tagged 'loops'" aria-label="show questions tagged 'loops'" rel="tag" aria-labelledby="tag-loops-tooltip-container">loops</a> 
+
+[[326]]
+<a href="https://stackoverflow.com/questions/tagged/lapply" class="post-tag flex--item mt0 js-tagname-lapply" title="show questions tagged 'lapply'" aria-label="show questions tagged 'lapply'" rel="tag" aria-labelledby="tag-lapply-tooltip-container">lapply</a> 
+
+[[327]]
+<a href="https://stackoverflow.com/users/20165603/starski" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="20165603">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/b410b43e54cc65270085ed7858038d8b.png" alt="starski's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[328]]
+<a href="https://stackoverflow.com/users/20165603/starski" class="flex--item">starski</a> 
+
+[[329]]
+<a href="https://stackoverflow.com/questions/76365455/how-can-i-merge-3-datasets-in-r-without-creating-duplicates" class="s-link">How can I merge 3 datasets in R without creating duplicates? [duplicate]</a> 
+
+[[330]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-8mpqt4v2"/> 
+
+[[331]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[332]]
+<a href="https://stackoverflow.com/questions/tagged/merge" class="post-tag flex--item mt0 js-tagname-merge" title="show questions tagged 'merge'" aria-label="show questions tagged 'merge'" rel="tag" aria-labelledby="tag-merge-tooltip-container">merge</a> 
+
+[[333]]
+<a href="https://stackoverflow.com/questions/tagged/data-preprocessing" class="post-tag flex--item mt0 js-tagname-data-preprocessing" title="" aria-label="show questions tagged 'data-preprocessing'" rel="tag" aria-labelledby="tag-data-preprocessing-tooltip-container">data-preprocessing</a> 
+
+[[334]]
+<a href="https://stackoverflow.com/users/20610279/antonio-alaia" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="20610279">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/58f67fac51617ae2b9a9f6d1228efa25.png" alt="Antonio Alaia's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[335]]
+<a href="https://stackoverflow.com/users/20610279/antonio-alaia" class="flex--item">Antonio Alaia</a> 
+
+[[336]]
+<a href="https://stackoverflow.com/questions/76365437/why-are-these-two-r-snippets-providing-differing-probabilities" class="s-link">Why are these two R snippets providing differing probabilities?</a> 
+
+[[337]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-l3oas7jo"/> 
+
+[[338]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[339]]
+<a href="https://stackoverflow.com/questions/tagged/vector" class="post-tag flex--item mt0 js-tagname-vector" title="show questions tagged 'vector'" aria-label="show questions tagged 'vector'" rel="tag" aria-labelledby="tag-vector-tooltip-container">vector</a> 
+
+[[340]]
+<a href="https://stackoverflow.com/questions/tagged/concatenation" class="post-tag flex--item mt0 js-tagname-concatenation" title="show questions tagged 'concatenation'" aria-label="show questions tagged 'concatenation'" rel="tag" aria-labelledby="tag-concatenation-tooltip-container">concatenation</a> 
+
+[[341]]
+<a href="https://stackoverflow.com/questions/tagged/string-matching" class="post-tag flex--item mt0 js-tagname-string-matching" title="show questions tagged 'string-matching'" aria-label="show questions tagged 'string-matching'" rel="tag" aria-labelledby="tag-string-matching-tooltip-container">string-matching</a> 
+
+[[342]]
+<a href="https://stackoverflow.com/users/15229123/nick" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="15229123">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_002.jpg" alt="nick's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[343]]
+<a href="https://stackoverflow.com/users/15229123/nick" class="flex--item">nick</a> 
+
+[[344]]
+<a href="https://stackoverflow.com/questions/76365426/does-stringrs-regex-engine-translate-a-z-into-abcdefghijklmnopqrstuvwyz" class="s-link">Does stringr's regex engine translate [a-z] into abcdefghijklmnopqrstuvwyz?</a> 
+
+[[345]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-ycozw8ly"/> 
+
+[[346]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[347]]
+<a href="https://stackoverflow.com/questions/tagged/stringr" class="post-tag flex--item mt0 js-tagname-stringr" title="show questions tagged 'stringr'" aria-label="show questions tagged 'stringr'" rel="tag" aria-labelledby="tag-stringr-tooltip-container">stringr</a> 
+
+[[348]]
+<a href="https://stackoverflow.com/users/14511362/dcurrie27" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="14511362">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/O9ZZZ.jpg" alt="dcurrie27's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[349]]
+<a href="https://stackoverflow.com/users/14511362/dcurrie27" class="flex--item">dcurrie27</a> 
+
+[[350]]
+<a href="https://stackoverflow.com/questions/76365406/how-can-i-arrange-a-bar-plot-using-ggplot2-based-on-the-distribution-proportions" class="s-link">How can I arrange a bar plot using ggplot2 based on the distribution proportions of variables?</a> 
+
+[[351]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-lixjuiim"/> 
+
+[[352]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[353]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[354]]
+<a href="https://stackoverflow.com/users/21986138/alice-chen" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986138">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/picture_002" alt="Alice Chen's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[355]]
+<a href="https://stackoverflow.com/users/21986138/alice-chen" class="flex--item">Alice Chen</a> 
+
+[[356]]
+<a href="https://stackoverflow.com/questions/76365357/improve-web-scraping-speed-using-parallel-processing-in-r" class="s-link">Improve web scraping speed using parallel processing in R</a> 
+
+[[357]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-j8rufeyu"/> 
+
+[[358]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[359]]
+<a href="https://stackoverflow.com/questions/tagged/foreach" class="post-tag flex--item mt0 js-tagname-foreach" title="show questions tagged 'foreach'" aria-label="show questions tagged 'foreach'" rel="tag" aria-labelledby="tag-foreach-tooltip-container">foreach</a> 
+
+[[360]]
+<a href="https://stackoverflow.com/questions/tagged/parallel-processing" class="post-tag flex--item mt0 js-tagname-parallel-processing" title="show questions tagged 'parallel-processing'" aria-label="show questions tagged 'parallel-processing'" rel="tag" aria-labelledby="tag-parallel-processing-tooltip-container">parallel-processing</a> 
+
+[[361]]
+<a href="https://stackoverflow.com/questions/tagged/rselenium" class="post-tag flex--item mt0 js-tagname-rselenium" title="show questions tagged 'rselenium'" aria-label="show questions tagged 'rselenium'" rel="tag" aria-labelledby="tag-rselenium-tooltip-container">rselenium</a> 
+
+[[362]]
+<a href="https://stackoverflow.com/users/4411570/frodo" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="4411570">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/851da57a8979d9b582c2ab37795011fd.jpeg" alt="Frodo's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[363]]
+<a href="https://stackoverflow.com/users/4411570/frodo" class="flex--item">Frodo</a> 
+
+[[364]]
+<a href="https://stackoverflow.com/questions/76365326/iterate-over-multiple-files-in-data-wrangling-pipeline" class="s-link">Iterate over multiple files in data wrangling pipeline</a> 
+
+[[365]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-gz65dcxi"/> 
+
+[[366]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[367]]
+<a href="https://stackoverflow.com/questions/tagged/iteration" class="post-tag flex--item mt0 js-tagname-iteration" title="show questions tagged 'iteration'" aria-label="show questions tagged 'iteration'" rel="tag" aria-labelledby="tag-iteration-tooltip-container">iteration</a> 
+
+[[368]]
+<a href="https://stackoverflow.com/questions/tagged/data-wrangling" class="post-tag flex--item mt0 js-tagname-data-wrangling" title="show questions tagged 'data-wrangling'" aria-label="show questions tagged 'data-wrangling'" rel="tag" aria-labelledby="tag-data-wrangling-tooltip-container">data-wrangling</a> 
+
+[[369]]
+<a href="https://stackoverflow.com/users/9607199/ryan-garnett" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="9607199">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/AEl9V.jpg" alt="Ryan Garnett's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[370]]
+<a href="https://stackoverflow.com/users/9607199/ryan-garnett" class="flex--item">Ryan Garnett</a> 
+
+[[371]]
+<a href="https://stackoverflow.com/questions/76365278/bar-plot-with-dates-on-x-axis-issue" class="s-link">Bar Plot with dates on x-axis issue</a> 
+
+[[372]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-uac1321y"/> 
+
+[[373]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[374]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[375]]
+<a href="https://stackoverflow.com/questions/tagged/bar-chart" class="post-tag flex--item mt0 js-tagname-bar-chart" title="show questions tagged 'bar-chart'" aria-label="show questions tagged 'bar-chart'" rel="tag" aria-labelledby="tag-bar-chart-tooltip-container">bar-chart</a> 
+
+[[376]]
+<a href="https://stackoverflow.com/questions/tagged/axis" class="post-tag flex--item mt0 js-tagname-axis" title="show questions tagged 'axis'" aria-label="show questions tagged 'axis'" rel="tag" aria-labelledby="tag-axis-tooltip-container">axis</a> 
+
+[[377]]
+<a href="https://stackoverflow.com/users/15573456/romina" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="15573456">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/e5e982292e0743ba0cd481dd9e3df4c2.png" alt="romina's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[378]]
+<a href="https://stackoverflow.com/users/15573456/romina" class="flex--item">romina</a> 
+
+[[379]]
+<a href="https://stackoverflow.com/questions/76365274/table-joins-with-conditional-fuzzy-string-matching-in-r" class="s-link">Table joins with conditional "fuzzy" string matching in R</a> 
+
+[[380]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-eposj9ns"/> 
+
+[[381]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[382]]
+<a href="https://stackoverflow.com/questions/tagged/string" class="post-tag flex--item mt0 js-tagname-string" title="show questions tagged 'string'" aria-label="show questions tagged 'string'" rel="tag" aria-labelledby="tag-string-tooltip-container">string</a> 
+
+[[383]]
+<a href="https://stackoverflow.com/questions/tagged/dplyr" class="post-tag flex--item mt0 js-tagname-dplyr" title="show questions tagged 'dplyr'" aria-label="show questions tagged 'dplyr'" rel="tag" aria-labelledby="tag-dplyr-tooltip-container">dplyr</a> 
+
+[[384]]
+<a href="https://stackoverflow.com/questions/tagged/fuzzyjoin" class="post-tag flex--item mt0 js-tagname-fuzzyjoin" title="show questions tagged 'fuzzyjoin'" aria-label="show questions tagged 'fuzzyjoin'" rel="tag" aria-labelledby="tag-fuzzyjoin-tooltip-container">fuzzyjoin</a> 
+
+[[385]]
+<a href="https://stackoverflow.com/users/21986050/droseracapensis" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21986050">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/fb32cf50953f15ae2e01697082136629.png" alt="droseraCapensis's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[386]]
+<a href="https://stackoverflow.com/users/21986050/droseracapensis" class="flex--item">droseraCapensis</a> 
+
+[[387]]
+<a href="https://stackoverflow.com/questions/76365101/issues-converting-datetime-using-posixct-in-r" class="s-link">Issues converting datetime using POSIXct in R</a> 
+
+[[388]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-9cz0wetz"/> 
+
+[[389]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[390]]
+<a href="https://stackoverflow.com/questions/tagged/datetime" class="post-tag flex--item mt0 js-tagname-datetime" title="show questions tagged 'datetime'" aria-label="show questions tagged 'datetime'" rel="tag" aria-labelledby="tag-datetime-tooltip-container">datetime</a> 
+
+[[391]]
+<a href="https://stackoverflow.com/questions/tagged/posixct" class="post-tag flex--item mt0 js-tagname-posixct" title="show questions tagged 'posixct'" aria-label="show questions tagged 'posixct'" rel="tag" aria-labelledby="tag-posixct-tooltip-container">posixct</a> 
+
+[[392]]
+<a href="https://stackoverflow.com/users/7343044/andy" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="7343044">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/fcdcfebc2d34ef5863da90e447d7e321.png" alt="Andy's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[393]]
+<a href="https://stackoverflow.com/users/7343044/andy" class="flex--item">Andy</a> 
+
+[[394]]
+<a href="https://stackoverflow.com/questions/76365074/how-to-highlight-a-region-in-a-shapefile-map" class="s-link">How to highlight a region in a shapefile map?</a> 
+
+[[395]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-z9tzkk9l"/> 
+
+[[396]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[397]]
+<a href="https://stackoverflow.com/questions/tagged/shapefile" class="post-tag flex--item mt0 js-tagname-shapefile" title="show questions tagged 'shapefile'" aria-label="show questions tagged 'shapefile'" rel="tag" aria-labelledby="tag-shapefile-tooltip-container">shapefile</a> 
+
+[[398]]
+<a href="https://stackoverflow.com/users/4889002/sa%c3%afd-maanan" class="s-avatar s-avatar__16 s-user-card--avatar js-user-hover-target" data-user-id="4889002">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/QU9TB.jpg" alt="Saïd Maanan's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[399]]
+<a href="https://stackoverflow.com/users/4889002/sa%c3%afd-maanan" class="flex--item">Saïd Maanan</a> 
+
+[[400]]
+<a href="https://stackoverflow.com/questions/76364993/time-series-line-graph-for-categorical-data-in-r" class="s-link">Time series line graph for categorical data in R</a> 
+
+[[401]]
+<a class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__24 mr2 va-text-top js-community-tag d-inline-block mtn4 sm:mtn6 mb2" style="" data-controller="s-tooltip" href="https://stackoverflow.com/collectives/r-language" aria-describedby="--stacks-s-tooltip-10hwc51r"/> 
+
+[[402]]
+<a href="https://stackoverflow.com/questions/tagged/r" class="post-tag flex--item mt0 js-tagname-r" title="show questions tagged 'r'" aria-label="show questions tagged 'r'" rel="tag" aria-labelledby="tag-r-tooltip-container">r</a> 
+
+[[403]]
+<a href="https://stackoverflow.com/questions/tagged/ggplot2" class="post-tag flex--item mt0 js-tagname-ggplot2" title="show questions tagged 'ggplot2'" aria-label="show questions tagged 'ggplot2'" rel="tag" aria-labelledby="tag-ggplot2-tooltip-container">ggplot2</a> 
+
+[[404]]
+<a href="https://stackoverflow.com/questions/tagged/time-series" class="post-tag flex--item mt0 js-tagname-time-series" title="show questions tagged 'time-series'" aria-label="show questions tagged 'time-series'" rel="tag" aria-labelledby="tag-time-series-tooltip-container">time-series</a> 
+
+[[405]]
+<a href="https://stackoverflow.com/questions/tagged/linegraph" class="post-tag flex--item mt0 js-tagname-linegraph" title="show questions tagged 'linegraph'" aria-label="show questions tagged 'linegraph'" rel="tag" aria-labelledby="tag-linegraph-tooltip-container">linegraph</a> 
+
+[[406]]
+<a href="https://stackoverflow.com/questions/tagged/timeserieschart" class="post-tag flex--item mt0 js-tagname-timeserieschart" title="show questions tagged 'timeserieschart'" aria-label="show questions tagged 'timeserieschart'" rel="tag" aria-labelledby="tag-timeserieschart-tooltip-container">timeserieschart</a> 
+
+[[407]]
+<a href="https://stackoverflow.com/users/21985729/priscilla-raj" class="s-avatar s-avatar__16 s-user-card--avatar" data-user-id="21985729">        <div class="gravatar-wrapper-16">
+            <img src="Santiago_files/unnamed_006.png" alt="Priscilla Raj's user avatar" class="s-avatar--image" width="16" height="16"/></div>
+</a> 
+
+[[408]]
+<a href="https://stackoverflow.com/users/21985729/priscilla-raj" class="flex--item">Priscilla Raj</a> 
+
+[[409]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;pagesize=15" title="Show 15 items per page" class="s-pagination--item">15</a> 
+
+[[410]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;pagesize=30" title="Show 30 items per page" class="s-pagination--item">30</a> 
+
+[[411]]
+<a href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;pagesize=50" title="Show 50 items per page" class="s-pagination--item is-selected" aria-current="true">50</a> 
+
+[[412]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=2&amp;pagesize=50" rel="" title="Go to page 2">2</a> 
+
+[[413]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=3&amp;pagesize=50" rel="" title="Go to page 3">3</a> 
+
+[[414]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=4&amp;pagesize=50" rel="" title="Go to page 4">4</a> 
+
+[[415]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=5&amp;pagesize=50" rel="" title="Go to page 5">5</a> 
+
+[[416]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=9811&amp;pagesize=50" rel="" title="Go to page 9811">9811</a> 
+
+[[417]]
+<a class="s-pagination--item js-pagination-item" href="https://stackoverflow.com/questions/tagged/r?tab=newest&amp;page=2&amp;pagesize=50" rel="next" title="Go to page 2"> Next</a> 
+
+[[418]]
+<a href="https://stackoverflow.com/collectives/r-language" class="js-gps-track" data-gps-track="subcommunity_link.click({ subcommunity_user_type: 0, subcommunity_slug: r-language, link_source: 1 })">
+                <span class="themed subcommunity-topic-avatar subcommunity-topic-r-language bg-theme-primary btr-sm  p12 d-flex ai-center h:bs-md">
+                    <span class="flex--item">
+                        <div class="themed subcommunity-topic-avatar subcommunity-topic-r-language s-avatar s-avatar__32 mr6"/>
+                    </span>
+                    <span class="flex--item fl1">
+                        <span class="d-block fs-body2 fc-white">R Language</span>
+                        <span class="d-block fs-caption fc-black-050">Collective</span>
+                    </span>
+                    
+                    <span class="s-btn s-btn__outlined fc-white bc-white h:bg-theme-primary-500 f:bg-theme-primary-500">See more</span>
+                </span>
+            </a> 
+
+[[419]]
+<a href="https://stackoverflow.com/collectives"><svg aria-hidden="true" class="va-text-bottom svg-icon iconHelpSm" width="14" height="14" viewbox="0 0 14 14"><path d="M7 1C3.74 1 1 3.77 1 7c0 3.26 2.77 6 6 6 3.27 0 6-2.73 6-6s-2.73-6-6-6Zm1.06 9.06c-.02.63-.48 1.02-1.1 1-.57-.02-1.03-.43-1.01-1.06.02-.63.5-1.04 1.08-1.02.6.02 1.05.45 1.03 1.08Zm.73-3.07-.47.3c-.2.15-.36.36-.44.6a3.6 3.6 0 0 0-.08.65c0 .04-.03.14-.16.14h-1.4c-.14 0-.16-.09-.16-.13-.01-.5.11-.99.36-1.42A4.6 4.6 0 0 1 7.7 6.07c.15-.1.21-.21.3-.33.18-.2.28-.47.28-.74.01-.67-.53-1.14-1.18-1.14-.9 0-1.18.7-1.18 1.46H4.2c0-1.17.31-1.92.98-2.36a3.5 3.5 0 0 1 1.83-.44c.88 0 1.58.16 2.2.62.58.42.88 1.02.88 1.82 0 .5-.17.9-.43 1.24-.15.2-.44.47-.86.79h-.01Z"/></svg> This tag is in a collective:</a> 
+
+[[420]]
+<a href="https://stackoverflow.blog/2023/05/29/more-on-our-ai-future-building-course-recommendations-and-a-new-data-platform/?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;The Overflow Blog&quot;,&quot;https://stackoverflow.blog/2023/05/29/more-on-our-ai-future-building-course-recommendations-and-a-new-data-platform/&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 1, position: 0 })">More on our AI future: building course recommendations and a new data platform</a> 
+
+[[421]]
+<a href="https://stackoverflow.blog/2023/05/30/this-product-could-help-build-a-more-equitable-workplace-ep-575/?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;The Overflow Blog&quot;,&quot;https://stackoverflow.blog/2023/05/30/this-product-could-help-build-a-more-equitable-workplace-ep-575/&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 1, position: 1 })">This product could help build a more equitable workplace (Ep. 575)</a> 
+
+[[422]]
+<a href="https://meta.stackexchange.com/questions/389262/ai-ml-tool-examples-part-3-title-drafting-assistant?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/389262/ai-ml-tool-examples-part-3-title-drafting-assistant&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 3, position: 2 })">AI/ML Tool examples part 3 - Title-Drafting Assistant</a> 
+
+[[423]]
+<a href="https://meta.stackexchange.com/questions/389359/we-are-graduating-the-updated-button-styling-for-vote-arrows?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackexchange.com/questions/389359/we-are-graduating-the-updated-button-styling-for-vote-arrows&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 3, position: 3 })">We are graduating the updated button styling for vote arrows</a> 
+
+[[424]]
+<a href="https://meta.stackoverflow.com/questions/424716/we-are-graduating-the-related-questions-using-machine-learning-experiment?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackoverflow.com/questions/424716/we-are-graduating-the-related-questions-using-machine-learning-experiment&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 6, position: 4 })">We are graduating the "Related questions using Machine Learning" experiment</a> 
+
+[[425]]
+<a href="https://meta.stackoverflow.com/questions/418968/the-connect-tag-is-being-burninated?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackoverflow.com/questions/418968/the-connect-tag-is-being-burninated&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 6, position: 5 })">The [connect] tag is being burninated</a> 
+
+[[426]]
+<a href="https://meta.stackoverflow.com/questions/421831/temporary-policy-chatgpt-is-banned?cb=1" class="js-gps-track" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackoverflow.com/questions/421831/temporary-policy-chatgpt-is-banned&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 6, position: 6 })">Temporary policy: ChatGPT is banned</a> 
+
+[[427]]
+<a href="https://meta.stackoverflow.com/questions/424638/stack-overflow-will-be-testing-a-title-drafting-assistant-and-we-d-like-your-in?cb=1" class="js-gps-track" title="Stack Overflow will be testing a title-drafting assistant, and we’d like your involvement" data-ga="[&quot;community bulletin board&quot;,&quot;Featured on Meta&quot;,&quot;https://meta.stackoverflow.com/questions/424638/stack-overflow-will-be-testing-a-title-drafting-assistant-and-we-d-like-your-in&quot;,null,null]" data-gps-track="communitybulletin.click({ priority: 6, position: 7 })">Stack Overflow will be testing a title-drafting assistant, and we’d like your...</a> 
+
+[[428]]
+<a href="https://stackoverflow.com/questions/tagged/r+ggplot2" class="post-tag no-tag-menu" title="show questions tagged 'r ggplot2'" aria-label="show questions tagged 'r ggplot2'" rel="tag">ggplot2</a> 
+
+[[429]]
+<a href="https://stackoverflow.com/questions/tagged/r+dataframe" class="post-tag no-tag-menu" title="show questions tagged 'r dataframe'" aria-label="show questions tagged 'r dataframe'" rel="tag">dataframe</a> 
+
+[[430]]
+<a href="https://stackoverflow.com/questions/tagged/r+dplyr" class="post-tag no-tag-menu" title="show questions tagged 'r dplyr'" aria-label="show questions tagged 'r dplyr'" rel="tag">dplyr</a> 
+
+[[431]]
+<a href="https://stackoverflow.com/questions/tagged/r+shiny" class="post-tag no-tag-menu" title="show questions tagged 'r shiny'" aria-label="show questions tagged 'r shiny'" rel="tag">shiny</a> 
+
+[[432]]
+<a href="https://stackoverflow.com/questions/tagged/r+plot" class="post-tag no-tag-menu" title="show questions tagged 'r plot'" aria-label="show questions tagged 'r plot'" rel="tag">plot</a> 
+
+[[433]]
+<a href="https://stackoverflow.com/questions/tagged/r+data.table" class="post-tag no-tag-menu" title="show questions tagged 'r data.table'" aria-label="show questions tagged 'r data.table'" rel="tag">data.table</a> 
+
+[[434]]
+<a href="https://stackoverflow.com/questions/tagged/r+tidyverse" class="post-tag no-tag-menu" title="show questions tagged 'r tidyverse'" aria-label="show questions tagged 'r tidyverse'" rel="tag">tidyverse</a> 
+
+[[435]]
+<a href="https://stackoverflow.com/questions/tagged/r+loops" class="post-tag no-tag-menu" title="show questions tagged 'r loops'" aria-label="show questions tagged 'r loops'" rel="tag">loops</a> 
+
+[[436]]
+<a href="https://stackoverflow.com/questions/tagged/r+function" class="post-tag no-tag-menu" title="show questions tagged 'r function'" aria-label="show questions tagged 'r function'" rel="tag">function</a> 
+
+[[437]]
+<a href="https://stackoverflow.com/questions/tagged/r+for-loop" class="post-tag no-tag-menu" title="show questions tagged 'r for-loop'" aria-label="show questions tagged 'r for-loop'" rel="tag">for-loop</a> 
+
+[[438]]
+<a href="https://stackoverflow.com/questions/tagged/r+matrix" class="post-tag no-tag-menu" title="show questions tagged 'r matrix'" aria-label="show questions tagged 'r matrix'" rel="tag">matrix</a> 
+
+[[439]]
+<a href="https://stackoverflow.com/questions/tagged/r+r-markdown" class="post-tag no-tag-menu" title="show questions tagged 'r r-markdown'" aria-label="show questions tagged 'r r-markdown'" rel="tag">r-markdown</a> 
+
+[[440]]
+<a href="https://stackoverflow.com/questions/tagged/r+list" class="post-tag no-tag-menu" title="show questions tagged 'r list'" aria-label="show questions tagged 'r list'" rel="tag">list</a> 
+
+[[441]]
+<a href="https://stackoverflow.com/questions/tagged/r+regex" class="post-tag no-tag-menu" title="show questions tagged 'r regex'" aria-label="show questions tagged 'r regex'" rel="tag">regex</a> 
+
+[[442]]
+<a href="https://stackoverflow.com/questions/tagged/r+rstudio" class="post-tag no-tag-menu" title="show questions tagged 'r rstudio'" aria-label="show questions tagged 'r rstudio'" rel="tag">rstudio</a> 
+
+[[443]]
+<a href="https://stackoverflow.com/questions/tagged/r+time-series" class="post-tag no-tag-menu" title="show questions tagged 'r time-series'" aria-label="show questions tagged 'r time-series'" rel="tag">time-series</a> 
+
+[[444]]
+<a href="https://stackoverflow.com/questions/tagged/r+statistics" class="post-tag no-tag-menu" title="show questions tagged 'r statistics'" aria-label="show questions tagged 'r statistics'" rel="tag">statistics</a> 
+
+[[445]]
+<a href="https://stackoverflow.com/questions/tagged/r+python" class="post-tag no-tag-menu" title="show questions tagged 'r python'" aria-label="show questions tagged 'r python'" rel="tag">python</a> 
+
+[[446]]
+<a href="https://stackoverflow.com/questions/tagged/r+string" class="post-tag no-tag-menu" title="show questions tagged 'r string'" aria-label="show questions tagged 'r string'" rel="tag">string</a> 
+
+[[447]]
+<a href="https://stackoverflow.com/questions/tagged/r+date" class="post-tag no-tag-menu" title="show questions tagged 'r date'" aria-label="show questions tagged 'r date'" rel="tag">date</a> 
+
+[[448]]
+<a href="https://stackoverflow.com/questions/tagged/r+subset" class="post-tag no-tag-menu" title="show questions tagged 'r subset'" aria-label="show questions tagged 'r subset'" rel="tag">subset</a> 
+
+[[449]]
+<a href="https://stackoverflow.com/questions/tagged/r+knitr" class="post-tag no-tag-menu" title="show questions tagged 'r knitr'" aria-label="show questions tagged 'r knitr'" rel="tag">knitr</a> 
+
+[[450]]
+<a href="https://stackoverflow.com/questions/tagged/r+regression" class="post-tag no-tag-menu" title="show questions tagged 'r regression'" aria-label="show questions tagged 'r regression'" rel="tag">regression</a> 
+
+[[451]]
+<a href="https://stackoverflow.com/questions/tagged/r+if-statement" class="post-tag no-tag-menu" title="show questions tagged 'r if-statement'" aria-label="show questions tagged 'r if-statement'" rel="tag">if-statement</a> 
+
+[[452]]
+<a href="https://stackoverflow.com/questions/tagged/r+csv" class="post-tag no-tag-menu" title="show questions tagged 'r csv'" aria-label="show questions tagged 'r csv'" rel="tag">csv</a> 
+
+[[453]]
+<a href="#" class="show-more js-show-more js-gps-track" data-gps-track="related_tags.click({ item_type:2 })">
+            more related tags
+        </a> 
+
+[[454]]
+<a href="https://stackexchange.com/questions?tab=hot" class="js-gps-track s-link s-link__inherit" data-gps-track="posts_hot_network.click({ item_type:1, location:9 })">
+            Hot Network Questions
+        </a> 
+
+[[455]]
+<a href="https://gaming.stackexchange.com/questions/402982/what-is-the-time-difference-between-botw-and-totk" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:41 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    What is the time difference between BOTW and TOTK?
+                </a> 
+
+[[456]]
+<a href="https://cseducators.stackexchange.com/questions/7743/what-is-a-real-world-example-of-a-for-loop" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:678 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    What is a real-world example of a for-loop?
+                </a> 
+
+[[457]]
+<a href="https://physics.stackexchange.com/questions/765961/can-we-understand-from-basic-qed-why-is-the-photon-electrically-neutral" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:151 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Can we understand from basic QED, why is the photon electrically neutral?
+                </a> 
+
+[[458]]
+<a href="https://ell.stackexchange.com/questions/336980/i-d-rather-come-or-go-with-you" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:481 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    I’d rather come or go with you
+                </a> 
+
+[[459]]
+<a href="https://rpg.stackexchange.com/questions/206521/can-a-firbolg-standing-behind-a-wall-see-without-being-seen" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:122 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Can a Firbolg standing behind a wall see without being seen?
+                </a> 
+
+[[460]]
+<a href="https://bicycles.stackexchange.com/questions/88973/can-large-bike-size-will-be-solved-by-replacing-the-crank-arm-with-a-longer-leng" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:126 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Can large bike size will be solved by replacing the crank arm with a longer length?
+                </a> 
+
+[[461]]
+<a href="https://politics.stackexchange.com/questions/79755/are-there-any-countries-or-states-which-have-fully-embraced-price-gouging-during" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:475 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Are there any countries or states which have fully embraced price gouging during emergencies?
+                </a> 
+
+[[462]]
+<a href="https://worldbuilding.stackexchange.com/questions/246634/what-is-the-longest-bridge-that-a-bronze-age-society-could-put-together" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:579 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    What is the longest bridge that a Bronze Age society could put together?
+                </a> 
+
+[[463]]
+<a href="https://physics.stackexchange.com/questions/766001/why-do-capacitors-in-series-have-same-charge" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:151 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Why do capacitors in series have same charge?
+                </a> 
+
+[[464]]
+<a href="https://cseducators.stackexchange.com/questions/7757/non-native-speakers-struggle-to-come-up-with-decent-variable-names-and-function" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:678 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Non-native speakers struggle to come up with decent variable names and function names
+                </a> 
+
+[[465]]
+<a href="https://law.stackexchange.com/questions/92772/are-legislators-ever-asked-to-explain-their-intent-in-supreme-court-cases" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:617 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Are legislators ever asked to explain their intent in Supreme Court cases?
+                </a> 
+
+[[466]]
+<a href="https://philosophy.stackexchange.com/questions/99597/is-there-a-system-of-logic-which-denies-dni" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:265 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Is there a system of logic which denies DNI?
+                </a> 
+
+[[467]]
+<a href="https://politics.stackexchange.com/questions/79748/why-is-deploying-nuclear-weapons-in-belarus-seen-as-a-problem-and-how-would-thi" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:475 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Why is deploying nuclear weapons in Belarus seen as a problem, and how would this help Russia?
+                </a> 
+
+[[468]]
+<a href="https://english.stackexchange.com/questions/608213/idiom-for-two-people-who-seem-vastly-different-from-the-outside-but-actually-sha" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:97 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Idiom for two people who seem vastly different from the outside but actually share many similarities
+                </a> 
+
+[[469]]
+<a href="https://blender.stackexchange.com/questions/293936/reduce-dimension-of-armature" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:502 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Reduce dimension of armature
+                </a> 
+
+[[470]]
+<a href="https://diy.stackexchange.com/questions/273275/porch-light-has-a-white-wire-but-switch-has-2-black-wires-is-it-a-neutral" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:73 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Porch light has a white wire, but switch has 2 black wires, is it a neutral?
+                </a> 
+
+[[471]]
+<a href="https://superuser.com/questions/1786488/terminal-is-not-fully-functional-warning-with-less-but-not-with-more-whic" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:3 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    "Terminal is not fully functional" warning with 'less' but not with 'more' (which is also 'less')
+                </a> 
+
+[[472]]
+<a href="https://codereview.stackexchange.com/questions/285241/onlogn-sorting-algorithms-in-c" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:196 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    O(NlogN) sorting algorithms in C++
+                </a> 
+
+[[473]]
+<a href="https://dsp.stackexchange.com/questions/87999/what-would-be-an-example-of-something-digital-which-isnt-electronic" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:295 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    What would be an example of something digital which isn't electronic?
+                </a> 
+
+[[474]]
+<a href="https://physics.stackexchange.com/questions/766081/would-an-adhesive-surface-have-more-air-resistance" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:151 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Would an adhesive surface have more air resistance?
+                </a> 
+
+[[475]]
+<a href="https://physics.stackexchange.com/questions/766117/schr%c3%b6dinger-equation-in-qft" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:151 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Schrödinger equation in QFT
+                </a> 
+
+[[476]]
+<a href="https://puzzling.stackexchange.com/questions/121006/variant-of-abby-and-bob-and-3-numbers-on-the-blackboard" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:559 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Variant of Abby and Bob and 3 numbers on the blackboard
+                </a> 
+
+[[477]]
+<a href="https://codegolf.stackexchange.com/questions/261321/logarithmic-incrementation" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:200 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Logarithmic Incrementation
+                </a> 
+
+[[478]]
+<a href="https://worldbuilding.stackexchange.com/questions/246640/where-do-forge-worms-live-outside-of-forges" class="js-gps-track question-hyperlink mb0" data-gps-track="site.switch({ item_type:9, target_site:579 }); posts_hot_network.click({ item_type:2, location:9 })">
+                    Where do forge-worms live outside of forges?
+                </a> 
+
+[[479]]
+<a href="https://stackoverflow.com/feeds/tag?tagnames=r&amp;sort=newest" title="The 30 newest r questions">
+            <svg aria-hidden="true" class="fc-orange-400 svg-icon iconRss" width="18" height="18" viewbox="0 0 18 18"><path d="M3 1a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H3Zm0 1.5c6.9 0 12.5 5.6 12.5 12.5H13C13 9.55 8.45 5 3 5V2.5Zm0 5c4.08 0 7.5 3.41 7.5 7.5H8c0-2.72-2.28-5-5-5V7.5Zm0 5c1.36 0 2.5 1.14 2.5 2.5H3v-2.5Z"/></svg>
+            Newest r questions feed
+        </a> 
+
+[[480]]
+<a class="s-modal--close s-btn s-btn__muted js-modal-close js-last-tabbable" href="#" aria-label="Close">
+                <svg aria-hidden="true" class="svg-icon iconClearSm" width="14" height="14" viewbox="0 0 14 14"><path d="M12 3.41 10.59 2 7 5.59 3.41 2 2 3.41 5.59 7 2 10.59 3.41 12 7 8.41 10.59 12 12 10.59 8.41 7 12 3.41Z"/></svg></a> 
+
+[[481]]
+<a href="https://stackoverflow.com/" aria-label="Stack Overflow">
+  <svg aria-hidden="true" class="native svg-icon iconLogoGlyphMd" width="32" height="37" viewbox="0 0 32 37">
+    <path d="M26 33v-9h4v13H0V24h4v9h22Z" fill="#BCBBBB"/>
+    <path d="m21.5 0-2.7 2 9.9 13.3 2.7-2L21.5 0ZM26 18.4 13.3 7.8l2.1-2.5 12.7 10.6-2.1 2.5ZM9.1 15.2l15 7 1.4-3-15-7-1.4 3Zm14 10.79.68-2.95-16.1-3.35L7 23l16.1 2.99ZM23 30H7v-3h16v3Z" fill="#F48024"/>
+  </svg>
+</a> 
+
+[[482]]
+<a href="https://stackoverflow.com/" class="js-gps-track" data-gps-track="footer.click({ location: 5, link: 15})">Stack Overflow</a> 
+
+[[483]]
+<a href="https://stackoverflow.com/questions" class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 16})">Questions</a> 
+
+[[484]]
+<a href="https://stackoverflow.com/help" class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 3 })">Help</a> 
+
+[[485]]
+<a href="https://stackoverflow.co/" class="js-gps-track" data-gps-track="footer.click({ location: 5, link: 19 })">Products</a> 
+
+[[486]]
+<a href="https://stackoverflow.co/teams" class="js-gps-track -link" data-ga="[&quot;teams traffic&quot;,&quot;footer - site nav&quot;,&quot;stackoverflow.com/teams&quot;,null,{&quot;dimension4&quot;:&quot;teams&quot;}]" data-gps-track="footer.click({ location: 5, link: 29 })">Teams</a> 
+
+[[487]]
+<a href="https://stackoverflow.co/advertising" class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 21 })">Advertising</a> 
+
+[[488]]
+<a href="https://stackoverflow.co/collectives" class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 40 })">Collectives</a> 
+
+[[489]]
+<a href="https://stackoverflow.co/talent" class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 20 })">Talent</a> 
+
+[[490]]
+<a class="js-gps-track" data-gps-track="footer.click({ location: 5, link: 1 })" href="https://stackoverflow.co/">Company</a> 
+
+[[491]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 1 })" href="https://stackoverflow.co/">About</a> 
+
+[[492]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 27 })" href="https://stackoverflow.co/company/press">Press</a> 
+
+[[493]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 9 })" href="https://stackoverflow.co/company/work-here">Work Here</a> 
+
+[[494]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 7 })" href="https://stackoverflow.com/legal">Legal</a> 
+
+[[495]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 8 })" href="https://stackoverflow.com/legal/privacy-policy">Privacy Policy</a> 
+
+[[496]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 37 })" href="https://stackoverflow.com/legal/terms-of-service">Terms of Service</a> 
+
+[[497]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 13 })" href="https://stackoverflow.co/company/contact">Contact Us</a> 
+
+[[498]]
+<a class="js-gps-track -link js-cookie-settings" data-gps-track="footer.click({ location: 5, link: 38 })" href="#" data-consent-popup-loader="footer">Cookie Settings</a> 
+
+[[499]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link: 39 })" href="https://stackoverflow.com/legal/cookie-policy">Cookie Policy</a> 
+
+[[500]]
+<a href="https://stackexchange.com/" data-gps-track="footer.click({ location: 5, link: 30 })">Stack Exchange Network</a> 
+
+[[501]]
+<a href="https://stackexchange.com/sites#technology" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Technology
+                                </a> 
+
+[[502]]
+<a href="https://stackexchange.com/sites#culturerecreation" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Culture &amp; recreation
+                                </a> 
+
+[[503]]
+<a href="https://stackexchange.com/sites#lifearts" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Life &amp; arts
+                                </a> 
+
+[[504]]
+<a href="https://stackexchange.com/sites#science" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Science
+                                </a> 
+
+[[505]]
+<a href="https://stackexchange.com/sites#professional" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Professional
+                                </a> 
+
+[[506]]
+<a href="https://stackexchange.com/sites#business" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Business
+                                </a> 
+
+[[507]]
+<a href="https://api.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    API
+                                </a> 
+
+[[508]]
+<a href="https://data.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 24 })">
+                                    Data
+                                </a> 
+
+[[509]]
+<a class="js-gps-track -link" data-gps-track="footer.click({ location: 5, link:4 })" href="https://stackoverflow.blog/?blb=1">Blog</a> 
+
+[[510]]
+<a href="https://www.facebook.com/officialstackoverflow/" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 31 })">Facebook</a> 
+
+[[511]]
+<a href="https://twitter.com/stackoverflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 32 })">Twitter</a> 
+
+[[512]]
+<a href="https://linkedin.com/company/stack-overflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 33 })">LinkedIn</a> 
+
+[[513]]
+<a href="https://www.instagram.com/thestackoverflow" class="-link js-gps-track" data-gps-track="footer.click({ location: 5, link: 36 })">Instagram</a> 
+
+[[514]]
+<a href="https://stackoverflow.com/help/licensing">CC BY-SA</a> 
+
+attr(,"class")
+[1] "XMLNodeSet"
+[02:01] 35> u = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=62.394,8.848,-177.008,-7.028&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1"
+[18:48] 36> xx = getURLContent(u, followlocation = TRUE)
+[18:52] 37> attributes(x)
+Error: object 'x' not found
+No suitable frames for recover()
+[18:52] 37> attributes(xx)
+$`Content-Type`
+[1] "application/json"
+
+[18:59] 38> z = fromJSON(xx)
+[19:07] 39> names(z)
+   [1] "full_count" "version"    "306cca05"   "306cbf17"  
+   [5] "30815bdc"   "3081c979"   "30817019"   "308184c1"  
+   [9] "308164f9"   "3081da47"   "3081d794"   "3081de4e"  
+  [13] "308126a1"   "3081b96f"   "308203a7"   "30817a8e"  
+  [17] "308179db"   "3081a85f"   "3081d845"   "3081fbdd"  
+  [21] "30817772"   "3081d6c0"   "3081d5b7"   "3081f54e"  
+  [25] "3081cfa6"   "3081fbaa"   "308217f3"   "30814604"  
+  [29] "3081b022"   "308208e4"   "308174b4"   "308208d6"  
+  [33] "3081d1d1"   "3080f9c5"   "3081d1b3"   "3082136b"  
+  [37] "3081e91c"   "30818980"   "30818a62"   "308209ff"  
+  [41] "308213f0"   "3081912f"   "3081926b"   "3081fe16"  
+  [45] "3081fe14"   "308193fb"   "3081e410"   "308216ef"  
+  [49] "30818209"   "308195bb"   "3081e2b0"   "308197be"  
+  [53] "30820a5d"   "30819b82"   "3081df0e"   "3082080d"  
+  [57] "3081f3b8"   "3081dd4d"   "3081ec31"   "3081a5eb"  
+  [61] "30820cdb"   "30821169"   "3081ed94"   "3081fa37"  
+  [65] "308210eb"   "3081c9c0"   "3081eec6"   "30820731"  
+  [69] "30821156"   "308207d3"   "3081bc94"   "3081bc99"  
+  [73] "30820d04"   "3082056c"   "30812e42"   "3081f92a"  
+  [77] "3081f7e8"   "30821b48"   "3081bf8a"   "3081cce1"  
+  [81] "3081cde0"   "3081c262"   "3081f6d3"   "3081cdf9"  
+  [85] "30820753"   "3081c3cd"   "3081482e"   "3081c13a"  
+  [89] "308163f9"   "3081ae90"   "3081d573"   "3081d6a9"  
+  [93] "3081ea78"   "3081c823"   "3082112d"   "308124a4"  
+  [97] "3081ea36"   "3081e67b"   "3081b2b4"   "3081d178"  
+ [101] "3081b7fb"   "3081c00e"   "308148b6"   "308212fd"  
+ [105] "3081e0f6"   "308214a7"   "30812b9d"   "30820487"  
+ [109] "30820a5e"   "30818038"   "30820f54"   "3081ef20"  
+ [113] "3081f2d8"   "3080a7b2"   "308213cb"   "30805d4c"  
+ [117] "308213d5"   "3081e797"   "30816c9c"   "30812594"  
+ [121] "3081c0e6"   "3081f8b3"   "3081e7fe"   "308097f5"  
+ [125] "3081f819"   "30806e64"   "3081c03a"   "30820722"  
+ [129] "3081e86a"   "3081e9e2"   "3081e3f3"   "3081feb4"  
+ [133] "3082012a"   "3081b0d7"   "3081ea4f"   "3081d800"  
+ [137] "3082175d"   "308165be"   "3081ac3d"   "308201d3"  
+ [141] "308201d5"   "3081b8c9"   "30814695"   "3081fa73"  
+ [145] "3081cd52"   "3081440a"   "3081ebdc"   "3081fb47"  
+ [149] "3081ce60"   "3081b4db"   "3081b4bb"   "3081f664"  
+ [153] "3081ecf5"   "3080fc14"   "3081b38f"   "3081d070"  
+ [157] "3082165c"   "3081df73"   "30819ea0"   "308215d8"  
+ [161] "3081f38b"   "30820a74"   "3081a095"   "3082063f"  
+ [165] "30821b0b"   "3081ee60"   "30820c41"   "3081a2d1"  
+ [169] "3081ef49"   "30820cfe"   "3080cc0d"   "3081a7b7"  
+ [173] "3081c856"   "3082171a"   "3081d925"   "3081d856"  
+ [177] "3081284e"   "30820703"   "3081d4eb"   "30819787"  
+ [181] "3081d1c0"   "30821fd8"   "30821eb6"   "3080f30c"  
+ [185] "308161e2"   "308138d5"   "3082015f"   "308205d4"  
+ [189] "3081fcf3"   "30821480"   "30818dc7"   "30816d22"  
+ [193] "308198d3"   "3081aafd"   "308207ff"   "30820d28"  
+ [197] "3081e1c1"   "3081864e"   "30820af9"   "3080a77c"  
+ [201] "308200c1"   "3081fdaa"   "3081d99f"   "3081997d"  
+ [205] "3081ff28"   "30820597"   "308201b0"   "3081f7eb"  
+ [209] "3081e386"   "3081d53d"   "30821c7f"   "3081e358"  
+ [213] "30820e2e"   "30809bd6"   "30820785"   "30819576"  
+ [217] "30821130"   "3081d68d"   "3081d693"   "3081f528"  
+ [221] "3081ac52"   "3081ac23"   "3081f50b"   "3081f403"  
+ [225] "3080c351"   "3081fcf0"   "308215c6"   "3082103a"  
+ [229] "3081df24"   "30815486"   "3082043c"   "3081dccf"  
+ [233] "3081dcfa"   "3081f028"   "30816483"   "3081fd50"  
+ [237] "307fca77"   "3081211f"   "30816a6b"   "3081f4af"  
+ [241] "30817ca5"   "308156af"   "30821aa7"   "3081fd82"  
+ [245] "3081f812"   "3081db17"   "30804431"   "3081c4c0"  
+ [249] "30819c35"   "3081ea77"   "308212c2"   "3081c2de"  
+ [253] "3081e6e0"   "308204b7"   "3081cf91"   "3081faf9"  
+ [257] "308210f2"   "3081bd5d"   "3081734e"   "308205f1"  
+ [261] "3081f8c0"   "3081b3b3"   "30815cb9"   "3081bd14"  
+ [265] "3081cc46"   "30810c00"   "30820018"   "3081b6c1"  
+ [269] "308172d7"   "30821d31"   "3081290a"   "3081b654"  
+ [273] "3081b64b"   "30820bf0"   "30818c96"   "308213c0"  
+ [277] "3081ef92"   "3081cf09"   "3081b165"   "3081d387"  
+ [281] "3081f9d4"   "30820373"   "3081afa7"   "30821ad0"  
+ [285] "30820e0a"   "3081e41e"   "30819462"   "3081f57b"  
+ [289] "3081e46d"   "3081e45e"   "3081edfc"   "308218d7"  
+ [293] "308191bb"   "30815bde"   "3081ff00"   "3081e3ca"  
+ [297] "30820de5"   "3081b194"   "30816635"   "3080e532"  
+ [301] "30818ab6"   "3082261f"   "3082192b"   "3081cf36"  
+ [305] "3081ccc7"   "3081cd26"   "3081e11f"   "3081e4ff"  
+ [309] "3082210d"   "3081a80a"   "3081e9ea"   "30821d12"  
+ [313] "3081edfe"   "3081a154"   "308201cf"   "30821295"  
+ [317] "3081fd6c"   "30820141"   "3081e076"   "3081fb5c"  
+ [321] "308201fd"   "3081d45c"   "3081ee8b"   "3080f07c"  
+ [325] "308144b3"   "3081fe75"   "3081b0bb"   "30820793"  
+ [329] "3081ce5c"   "3082069b"   "3081fba0"   "3080eaf0"  
+ [333] "3080ea32"   "3082102e"   "3081ec6e"   "3081fa92"  
+ [337] "3081d554"   "308194dc"   "30813a98"   "308159e4"  
+ [341] "3081c641"   "3080534d"   "3081fabb"   "3080e3db"  
+ [345] "3080eeb2"   "3081af73"   "30821c7a"   "307fc07c"  
+ [349] "308107ae"   "3081cdd2"   "30809bef"   "308089e2"  
+ [353] "30820dbe"   "30821413"   "30808949"   "3081f7c2"  
+ [357] "30818f3e"   "30808139"   "3082008e"   "30816d45"  
+ [361] "308100e9"   "3081faf5"   "30821432"   "3081cf88"  
+ [365] "3082191e"   "3080ff9c"   "3080ff7e"   "3080f69d"  
+ [369] "30821b15"   "30808fa7"   "3081eccf"   "3080693e"  
+ [373] "3081ff03"   "3080f6db"   "30808fbf"   "308174e7"  
+ [377] "3081d32e"   "308142d8"   "3080f66c"   "30813c89"  
+ [381] "30810aa2"   "30807b9d"   "30821e2a"   "30808f97"  
+ [385] "3081bd48"   "30815ba8"   "308208ce"   "30807d9b"  
+ [389] "3080f9c9"   "3081c724"   "30805a6b"   "3080fa94"  
+ [393] "3081a3b2"   "3081b9b6"   "30821022"   "30814ff0"  
+ [397] "30820198"   "30821bf8"   "30820ea8"   "308203f9"  
+ [401] "30821d71"   "3081fd5f"   "3081ea57"   "3081fc7a"  
+ [405] "307fe256"   "30816f52"   "30820af6"   "3081ee96"  
+ [409] "3081fd95"   "308222bf"   "30815f40"   "3080cf2b"  
+ [413] "30820165"   "3080ba59"   "3081a055"   "30804893"  
+ [417] "3081dd96"   "3081dd8f"   "3081de94"   "3080a9b7"  
+ [421] "30821349"   "3082112a"   "30821241"   "3080b561"  
+ [425] "3080bf16"   "30821644"   "30820626"   "307fe094"  
+ [429] "308150da"   "30819e4f"   "3081d81c"   "3080d86e"  
+ [433] "3081d803"   "30807250"   "3081c81e"   "30815862"  
+ [437] "3081e218"   "3080db7b"   "30820f5e"   "30820e4f"  
+ [441] "308214ca"   "3080a02e"   "3081cd2d"   "30820a42"  
+ [445] "30805f0f"   "3081ec2d"   "30814b6f"   "3081c5de"  
+ [449] "30807057"   "3080a703"   "30810cc0"   "30821c68"  
+ [453] "308204f5"   "3080a52f"   "3081d8d3"   "3081156f"  
+ [457] "3081f802"   "30806440"   "30821728"   "3080d792"  
+ [461] "3081b8e9"   "30815ee6"   "3080cbc4"   "308165f4"  
+ [465] "3080dd32"   "30817217"   "3080a8c5"   "308186ad"  
+ [469] "3081c715"   "3080e49a"   "30811027"   "30807535"  
+ [473] "3081e6dc"   "30802819"   "3080a42a"   "3081ffa7"  
+ [477] "3080e5a8"   "3080e874"   "3081ec6d"   "30804291"  
+ [481] "3081edf8"   "3080f149"   "3080f29a"   "3080f493"  
+ [485] "30805988"   "30820ec2"   "308121f4"   "30818f7c"  
+ [489] "30808335"   "3080bd34"   "3080f815"   "3081fe13"  
+ [493] "3081d3de"   "308221c6"   "30814b45"   "30821cd3"  
+ [497] "3081c157"   "308206d2"   "3081fb78"   "30821fac"  
+ [501] "3081ef33"   "3081e4a2"   "3081d7f1"   "30818a2a"  
+ [505] "3081e9aa"   "308212b5"   "308214d5"   "3081efc9"  
+ [509] "3081e49d"   "30818b5c"   "30820aee"   "30819992"  
+ [513] "308211f5"   "30820e41"   "3080690b"   "30817313"  
+ [517] "3080b51f"   "3080c452"   "3081399b"   "30812a9f"  
+ [521] "30820841"   "308129e7"   "30821c22"   "3081be57"  
+ [525] "30816d97"   "30817eca"   "30819758"   "308155e9"  
+ [529] "308155af"   "30819daa"   "3081fd4f"   "30819fa8"  
+ [533] "30820a8f"   "3081a6c7"   "30817b09"   "3081fed1"  
+ [537] "3081fece"   "30818964"   "30819097"   "30819408"  
+ [541] "30819438"   "30818223"   "308159a3"   "3081b24c"  
+ [545] "308167af"   "30817347"   "30821d88"   "3081b99e"  
+ [549] "3081f9ef"   "3081bb7d"   "30814964"   "3081ff88"  
+ [553] "308208f9"   "308208f2"   "3081ad45"   "308200a1"  
+ [557] "3081aecf"   "3081ffdc"   "3081fb59"   "3081426e"  
+ [561] "3081b137"   "3081b1bb"   "3081ebfa"   "3081de88"  
+ [565] "3081f3a2"   "308075fb"   "3080fb56"   "3081f605"  
+ [569] "3081e7a9"   "3081d394"   "3080f491"   "3081eac1"  
+ [573] "3081e014"   "30821987"   "3081ceb0"   "3081ec06"  
+ [577] "3081df49"   "3081f38d"   "3081ea22"   "3081e9f9"  
+ [581] "3081d72e"   "30820e65"   "3081e9e1"   "3082176b"  
+ [585] "30820e93"   "3081e8cc"   "308059a0"   "30805ee5"  
+ [589] "3081d911"   "3081ea3c"   "3081dba3"   "30804f21"  
+ [593] "3081d454"   "3080edf2"   "3080c8b5"   "3081ea2f"  
+ [597] "3081d556"   "3081ea23"   "3081d65b"   "30820fc7"  
+ [601] "307fe519"   "3081f79b"   "30800a1a"   "3081f76e"  
+ [605] "3081f806"   "3081f1c8"   "3082071a"   "307fecbb"  
+ [609] "30821b24"   "308210b9"   "3081ee7e"   "3081ed8b"  
+ [613] "30820f95"   "3081f2f2"   "3081ecda"   "30821450"  
+ [617] "3081267e"   "3081ecb3"   "3081cb9a"   "3081c27d"  
+ [621] "3081eca1"   "308082b0"   "3081ec89"   "3081e08c"  
+ [625] "30802c29"   "307fc9a7"   "3081ecf9"   "3081e5d2"  
+ [629] "30820d30"   "3081f883"   "3081e1db"   "30810f4e"  
+ [633] "3081caf0"   "30814282"   "3080db6b"   "3081d281"  
+ [637] "3081dd4e"   "3081e8ac"   "30812e38"   "3080b5de"  
+ [641] "30805603"   "3081d9ba"   "3081c64b"   "308104ee"  
+ [645] "3081cf02"   "3081ecee"   "3081e1e5"   "30813f74"  
+ [649] "3082100b"   "30808c4d"   "30804908"   "3081d583"  
+ [653] "308205f7"   "3081e9ce"   "3082023c"   "30821d6f"  
+ [657] "3080c5b5"   "3082074a"   "308220ba"   "3081df21"  
+ [661] "30818264"   "30820f14"   "30821c1c"   "308187b2"  
+ [665] "3081e67d"   "3081f417"   "30806fe0"   "3081e9ad"  
+ [669] "3081ef02"   "30813424"   "3081e2b6"   "3081cbcb"  
+ [673] "3082045e"   "3081a5d8"   "308159f6"   "30815768"  
+ [677] "308194be"   "3081413a"   "308121c0"   "308208d3"  
+ [681] "308185bf"   "308173b5"   "3081f199"   "30819079"  
+ [685] "3081e691"   "308175e1"   "3081f07f"   "3081f1db"  
+ [689] "308183d7"   "3081ef25"   "3082244e"   "30821420"  
+ [693] "3082104f"   "3081ed6f"   "308182db"   "30819240"  
+ [697] "3081e8da"   "3082119d"   "3081f1c0"   "3081fe82"  
+ [701] "30818b47"   "308187f6"   "3081eb7b"   "3081fea9"  
+ [705] "3081eb2e"   "3081eb09"   "3081ead3"   "3081e7ea"  
+ [709] "3081fea1"   "3081e71c"   "308211cf"   "3081ec61"  
+ [713] "3081e6f8"   "308211e9"   "30818cbf"   "3081f04a"  
+ [717] "30818cae"   "3081e709"   "3081ec38"   "3081ec1f"  
+ [721] "308213ad"   "3081f042"   "30818c25"   "30821396"  
+ [725] "308179bf"   "3081ebef"   "3081faf3"   "3081d1ad"  
+ [729] "3081d15a"   "3081d0cc"   "3081b393"   "30820dbc"  
+ [733] "3081f649"   "3081b5a1"   "3081ce90"   "3081f69c"  
+ [737] "3081b656"   "3081ce04"   "3081f6dd"   "3081cc73"  
+ [741] "3081d3f0"   "3081ace4"   "3081d52a"   "3081d4c3"  
+ [745] "3081fb75"   "3081d460"   "3081d446"   "3081d432"  
+ [749] "3081cc3b"   "3081f5bb"   "3081f5fb"   "3081b1e6"  
+ [753] "3081b218"   "3081c5e1"   "3081c73c"   "3081c705"  
+ [757] "3081c65f"   "3081c604"   "3081c522"   "3081c0ea"  
+ [761] "3081c3e2"   "3081f8d7"   "3081c37c"   "3081f8bf"  
+ [765] "3081f89c"   "3081f9cb"   "3081fa42"   "3081fa38"  
+ [769] "3081cbc4"   "30820d4a"   "3081fa0f"   "3081ca80"  
+ [773] "3081ca22"   "3081bad4"   "3081f543"   "3081c8d8"  
+ [777] "3081c84d"   "3081c7fa"   "30821582"   "30819d11"  
+ [781] "3081df58"   "3081f382"   "3081deb6"   "3081a0d6"  
+ [785] "3081a0f5"   "3081de14"   "3082161a"   "30820edb"  
+ [789] "30820fad"   "30819441"   "3081f21a"   "30819548"  
+ [793] "3081959f"   "308214e2"   "308197ec"   "3081f311"  
+ [797] "30820a60"   "3081d9bd"   "30820e78"   "3081f4d7"  
+ [801] "3081d8fb"   "3081d8bb"   "3081d8b6"   "3081da04"  
+ [805] "3081aae7"   "3081ab47"   "3081d768"   "3081dc2e"  
+ [809] "30820aa0"   "30820abd"   "3081a3b4"   "3081dbd0"  
+ [813] "30819326"   "3081f498"   "308216de"   "30820204"  
+ [817] "3081021c"   "3080a74a"   "3080d2ca"   "308067b7"  
+ [821] "30811098"   "3080b64d"   "3080a213"   "3080e1f0"  
+ [825] "3080a2cb"   "30811b6f"   "3080f708"   "308111e0"  
+ [829] "308072ed"   "3081424f"   "3080ea11"   "30812e29"  
+ [833] "30820306"   "30815364"   "308201b7"   "308200ed"  
+ [837] "3080950a"   "3080a858"   "3081544d"   "3080d008"  
+ [841] "308206ac"   "3080fca0"   "308100e2"   "3080b31b"  
+ [845] "3081152a"   "3080704f"   "308089ef"   "308201f5"  
+ [849] "3080a792"   "3080d0ce"   "30804e7e"   "3080a7c9"  
+ [853] "3080c704"   "30805c90"   "30813e6c"   "30816321"  
+ [857] "30810353"   "308117a2"   "3080c142"   "3080c110"  
+ [861] "308204b6"   "3080fa73"   "3082048b"   "308058c4"  
+ [865] "3082073e"   "3080f5b9"   "307fd16b"   "30808a13"  
+ [869] "3080ffbd"   "30810832"   "308125a1"   "308128e6"  
+ [873] "3081065f"   "308203b8"   "308163df"   "30808df5"  
+ [877] "30813c5c"   "3080616f"   "30804223"   "30815b65"  
+ [881] "30812c9f"   "308088e5"   "3080f7c9"   "30810274"  
+ [885] "3080bd58"   "308200f2"   "308078fb"   "308119dd"  
+ [889] "3080c86f"   "30812b37"   "3080f1e4"   "3081a89e"  
+ [893] "3081943a"   "3081c708"   "308195b5"   "3080badd"  
+ [897] "3081561e"   "3081c577"   "3081b6fc"   "3081932c"  
+ [901] "3081b5c9"   "30817af1"   "3081fae5"   "30817804"  
+ [905] "308086e6"   "3081e1bc"   "3080f1a7"   "30806bea"  
+ [909] "30809f7c"   "30820523"   "3082108b"   "3081a042"  
+ [913] "30819cdf"   "30810cad"   "3081bc3b"   "308131b2"  
+ [917] "3081f563"   "3082009e"   "3081e99e"   "3080c6e9"  
+ [921] "3081b1a0"   "308153ce"   "30814eba"   "3081a5fe"  
+ [925] "308136ad"   "3081dc31"   "3081bd9a"   "3081faa2"  
+ [929] "3081e432"   "308215ca"   "308223cf"   "3080d797"  
+ [933] "3081fcfa"   "308170a8"   "30820105"   "30819488"  
+ [937] "3081e2d1"   "3081d8ee"   "3082166c"   "30820ad9"  
+ [941] "3081fbff"   "3081e55e"   "3081eff3"   "3081fc0b"  
+ [945] "30815e07"   "30818f54"   "30821da7"   "3081f735"  
+ [949] "3081c2f4"   "30819f74"   "3081ae58"   "3081fdb1"  
+ [953] "3081ee1e"   "3081a988"   "3082147d"   "30820f48"  
+ [957] "3081e7e8"   "308214fd"   "3081d634"   "3080a2b8"  
+ [961] "30816344"   "3081456b"   "3081a6ad"   "3081f736"  
+ [965] "3081d73b"   "3081fc43"   "3081a931"   "3081a86b"  
+ [969] "3081a849"   "3082140e"   "3081d718"   "3081a9db"  
+ [973] "3081a9fa"   "308201be"   "3081fc57"   "308199fa"  
+ [977] "30820324"   "3081cd02"   "3081d598"   "3080647c"  
+ [981] "30819c4d"   "3081f0e6"   "30819da8"   "3081cc6b"  
+ [985] "3081fd5b"   "30820133"   "30815932"   "3081e9b5"  
+ [989] "308196ae"   "30819755"   "3081cdaa"   "3081579e"  
+ [993] "3081cda0"   "3081f56c"   "30820809"   "3081e7db"  
+ [997] "30820aa3"   "308150c9"   "30820ff9"   "3081fca3"  
+[1001] "3081a524"   "30807e23"   "3081106b"   "3081fd3c"  
+[1005] "30819ef5"   "3081cc55"   "308205d1"   "3081cc50"  
+[1009] "30815449"   "3081d613"   "3081e856"   "30819fcd"  
+[1013] "3081e849"   "30821027"   "3081fd1d"   "308206ee"  
+[1017] "3081e7f0"   "308205e2"   "3081fd00"   "3081d9d4"  
+[1021] "3081f9bc"   "3082078b"   "3081baf8"   "3081e00f"  
+[1025] "3081f97f"   "3081f363"   "3081bc0e"   "3081df85"  
+[1029] "30820719"   "30820bec"   "3081e0a7"   "3081c672"  
+[1033] "3081d942"   "30821527"   "3081ba78"   "3081ba63"  
+[1037] "3081e055"   "30820bf4"   "3081b9ca"   "30820e7b"  
+[1041] "30820664"   "308129c7"   "3081c0f8"   "3081dcd8"  
+[1045] "3081c0cf"   "30821c4b"   "3081dacc"   "3081c03d"  
+[1049] "3080c4cb"   "3081f459"   "3081c270"   "30821c04"  
+[1053] "3081c3ae"   "3081dc74"   "3081f959"   "3081f3cf"  
+[1057] "3081c4ca"   "3081de46"   "308215e5"   "3081c513"  
+[1061] "3081da80"   "3082073c"   "3081f925"   "3081dd70"  
+[1065] "3081dd88"   "3081bfa6"   "3082023a"   "3081c4b1"  
+[1069] "308201f7"   "308098c5"   "3081d833"   "3081f4fe"  
+[1073] "308207da"   "3081b0ae"   "3081e42a"   "30821ad1"  
+[1077] "3081b2a9"   "30820f87"   "3081185b"   "3081af42"  
+[1081] "3080f844"   "3081c825"   "30814057"   "30821773"  
+[1085] "3081ac50"   "30820e61"   "3081d75d"   "30821778"  
+[1089] "3081ae46"   "3081d7c5"   "3081d7b1"   "30813e93"  
+[1093] "308201e4"   "3081f508"   "30820f4f"   "3081fa9f"  
+[1097] "30821e11"   "30821e13"   "3081b6c7"   "3081b757"  
+[1101] "3081fabf"   "3081c731"   "3081b825"   "3081b859"  
+[1105] "3081b836"   "3081b5f2"   "30820bc7"   "3081e19d"  
+[1109] "3081b44b"   "3081f7b3"   "30813d43"   "3081b381"  
+[1113] "3082268e"   "30820f7a"   "3081f4ec"   "3081c78b"  
+[1117] "3081d8a6"   "30820b98"   "3081c75e"   "308184b3"  
+[1121] "3081ff95"   "308172cd"   "3080235d"   "30818390"  
+[1125] "3081fe72"   "30816068"   "308179af"   "3081d362"  
+[1129] "3081eed2"   "308183a5"   "30800a79"   "308179f5"  
+[1133] "308185d8"   "3081fe18"   "308046d2"   "3081781a"  
+[1137] "30816a28"   "30804fb0"   "3081ce5b"   "3080fb0d"  
+[1141] "30821080"   "3081f59c"   "30817b08"   "308036b5"  
+[1145] "3081fe73"   "30817441"   "30821153"   "30820917"  
+[1149] "30816ffc"   "30818f92"   "3081f58e"   "3081d467"  
+[1153] "3081d4bc"   "3082094d"   "30817e68"   "30820062"  
+[1157] "30820335"   "3081d4a2"   "30815a9a"   "30802739"  
+[1161] "30819485"   "3081ebab"   "3081943b"   "3081ebc4"  
+[1165] "3081edd0"   "308193df"   "3080ee78"   "3081ce01"  
+[1169] "30820d7d"   "3081eedc"   "30819524"   "3081e9eb"  
+[1173] "30821218"   "308170a4"   "3081d392"   "308205a3"  
+[1177] "308192f3"   "3081882d"   "3081ebd5"   "30818021"  
+[1181] "30817b15"   "30817643"   "3080fee9"   "3081841e"  
+[1185] "3081ef83"   "308103e1"   "30819264"   "30820522"  
+[1189] "3081f618"   "3082001b"   "3081ffac"   "3081fe0e"  
+[1193] "3081d12c"   "3081f5e7"   "30820873"   "30808b96"  
+[1197] "30812999"   "30817290"   "3081aa0c"   "30820499"  
+[1201] "30817ba6"   "3082182f"   "3081dada"   "30815f5e"  
+[1205] "30813d57"   "30809bb5"   "30818b2a"   "3081b7e9"  
+[1209] "3081e51a"   "30803931"   "3081ba05"   "30819b72"  
+[1213] "308061e6"   "3081bf7c"   "308204f6"   "30819dc8"  
+[1217] "3081fba5"   "308202e4"   "30821373"   "30816139"  
+[1221] "30818928"   "3081d935"   "3081c85d"   "30821283"  
+[1225] "308217df"   "3081cc3d"   "30820c5c"   "308218fc"  
+[1229] "308218ac"   "3081f195"   "308222a7"   "3081f6fe"  
+[1233] "30821bda"   "308206bc"   "3081d299"   "3081ea4d"  
+[1237] "30821838"   "3081ef34"   "3080da7f"   "3081e9fe"  
+[1241] "30820c58"   "3081e245"   "30821735"   "3081ffb5"  
+[1245] "3081a476"   "3081f6a8"   "308219e6"   "3081d74f"  
+[1249] "3081d57d"   "3081b5b3"   "3081bbc4"   "30817154"  
+[1253] "30815a9b"   "3081dd38"   "3081e955"   "3081af35"  
+[1257] "30820414"   "308201eb"   "3081c030"   "3081fad2"  
+[1261] "3081bd08"   "30810cd7"   "3081cded"   "30817bc9"  
+[1265] "3081cffe"   "3081d29b"   "3081c495"   "3082077f"  
+[1269] "3081de3a"   "30815de6"   "308208ca"   "3080e3d1"  
+[1273] "3081e78b"   "3081efad"   "30820a73"   "3081f4ff"  
+[1277] "3081f5c1"   "3081e053"   "3081ab84"   "30820591"  
+[1281] "3081a132"   "30820867"   "3081eecb"   "3081586d"  
+[1285] "3081c10a"   "308153cf"   "30808533"   "3080bfb8"  
+[1289] "30820648"   "3081d831"   "3081b324"   "3081b01a"  
+[1293] "30821ea7"   "3081ec9e"   "3080d7f7"   "3082186b"  
+[1297] "3081f5bc"   "3081f23d"   "3081fb2d"   "3080975a"  
+[1301] "3081b284"   "3081f21e"   "3081ee0c"   "30812b1a"  
+[1305] "3081f24b"   "3081bcc7"   "30809ad6"   "30820d05"  
+[1309] "30816216"   "3081f7a8"   "3081fef8"   "3081e330"  
+[1313] "30820b67"   "3081c83a"   "3081d006"   "30814054"  
+[1317] "3081b07e"   "3081f255"   "3081447f"   "30802782"  
+[1321] "3080ab11"   "30817a33"   "3081f2fa"   "3081bf84"  
+[1325] "3080aa57"   "3081dd8b"   "3081c66a"   "30820bea"  
+[1329] "3081f7e9"   "3081b9a4"   "3081c643"   "3081ff8c"  
+[1333] "3080065b"   "3081b9db"   "3081d0fa"   "308208c0"  
+[1337] "3081c6ba"   "3081697e"   "30801007"   "3081e12d"  
+[1341] "30820f3e"   "3081375e"   "3081d14a"   "3081ed3c"  
+[1345] "3081ed43"   "3080fce2"   "3080aeac"   "3081bbf6"  
+[1349] "30817603"   "30820454"   "3081d1a9"   "3081d9be"  
+[1353] "3081edd9"   "3082116e"   "3081bf62"   "3082155f"  
+[1357] "30821563"   "308001f8"   "30820cfb"   "30811f87"  
+[1361] "3081ba96"   "3080ad3b"   "3081da7e"   "3081baab"  
+[1365] "308203b4"   "308180f9"   "3081fae3"   "3081e2a0"  
+[1369] "308202c4"   "30816f64"   "30818033"   "3081f28f"  
+[1373] "3081d8db"   "30817fd3"   "308202c5"   "3081b36c"  
+[1377] "30820b86"   "3081e2e2"   "30820cff"   "30817f7d"  
+[1381] "3081f7bc"   "30820856"   "3081b452"   "3081f4ee"  
+[1385] "3081d1be"   "3081b485"   "30817e96"   "3081ee93"  
+[1389] "3081f2d7"   "3081bfce"   "3081d2be"   "3081f7ce"  
+[1393] "3081b784"   "30820f46"   "3081c6d7"   "3081f5c6"  
+[1397] "3081f2e7"   "3081fabd"   "3081bff9"   "30813b45"  
+[1401] "3081c71c"   "3081ece3"   "3081dd26"   "308214dc"  
+[1405] "3081f2bb"   "3081f2bc"   "30820c72"   "3080be8c"  
+[1409] "3081a18a"   "3081fd07"   "30820a93"   "3081e7ed"  
+[1413] "30815183"   "308209eb"   "308167f0"   "3081e7a7"  
+[1417] "3081db95"   "3081d1d8"   "3081e795"   "3081c4d2"  
+[1421] "3081cc32"   "30819fd4"   "3081ce85"   "30817333"  
+[1425] "30806ee1"   "30810d9e"   "3082041d"   "3082076e"  
+[1429] "3081bdda"   "3081a0fe"   "3081a150"   "3081c37b"  
+[1433] "3081e71d"   "3081ced9"   "3081259a"   "30812165"  
+[1437] "3081d16e"   "308173c7"   "3081a527"   "3081cad7"  
+[1441] "3080e066"   "30816d1e"   "3081ef3a"   "3081f174"  
+[1445] "3081fe74"   "30814e3d"   "30820eff"   "30820052"  
+[1449] "30816cbb"   "308206fa"   "3081f134"   "30815dc2"  
+[1453] "3081de90"   "3082139f"   "3081a3a8"   "3081cb3e"  
+[1457] "30821a36"   "30821007"   "3081db67"   "3080e0c4"  
+[1461] "3081d177"   "3081eeec"   "3081e911"   "30815757"  
+[1465] "30820735"   "30820a14"   "308199ac"   "3081f6d0"  
+[1469] "30819a3a"   "30819296"   "30810b14"   "3081d544"  
+[1473] "3080ed93"   "308054f4"   "30820a22"   "3081e9d4"  
+[1477] "3080c5b9"   "30815902"   "3081c2d0"   "3081f07d"  
+[1481] "3082006b"   "3081c32f"   "3081f6cf"   "3081e971"  
+[1485] "3081ea15"   "3081e96e"   "3081e95c"   "308191d1"  
+[1489] "3081f8a1"   "3081e887"   "30819d2f"   "30819f4f"  
+[1493] "3081fe2c"   "3080e5ac"   "30821983"   "3081903e"  
+[1497] "30820103"   "30820d6b"   "3081d59e"   "3081f6df"  
+[1501] "3081562a"   "308206e9"   "stats"     
+[19:10] 40> z[[1]]
+[1] 16661
+[19:14] 41> z[[2]]
+[1] 4
+[19:18] 42> z[[1501]]
+[[1]]
+[1] "A4E35F"
+
+[[2]]
+[1] 45.94
+
+[[3]]
+[1] -128.42
+
+[[4]]
+[1] 332
+
+[[5]]
+[1] 36000
+
+[[6]]
+[1] 476
+
+[[7]]
+[1] ""
+
+[[8]]
+[1] "F-KHQM2"
+
+[[9]]
+[1] "A339"
+
+[[10]]
+[1] "N414DZ"
+
+[[11]]
+[1] 1685474326
+
+[[12]]
+[1] "LAX"
+
+[[13]]
+[1] "HND"
+
+[[14]]
+[1] "DL7"
+
+[[15]]
+[1] 0
+
+[[16]]
+[1] 0
+
+[[17]]
+[1] "DAL7"
+
+[[18]]
+[1] 0
+
+[[19]]
+[1] "DAL"
+
+[19:40] 43> 
