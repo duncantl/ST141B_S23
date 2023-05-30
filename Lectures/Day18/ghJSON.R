@@ -8,7 +8,6 @@ function(query, cookie, maxPages = -1, verbose = FALSE)
                    .opts = list(followlocation = TRUE, verbose = verbose, cookie = cookie,
                                 httpheader = c(Accept = "application/json")))
 
-#browser()       
        tmp = fromJSON(j)
 
        ans = c(ans, tmp$payload$results)
