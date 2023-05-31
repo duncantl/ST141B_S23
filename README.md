@@ -143,7 +143,7 @@ github.com/search via HTML
 
 ## Day 17 Tue 5/30
 
-+ [Notes and code from class](Lectures/Day18/README.md)
-+ [JSON version of github searc ghFuns.R](Lectures/Day18/ghJSON.R)
-+ [R Session](Lectures/Day18/RSession)
++ [Notes and code from class](Lectures/Day17/README.md)
++ [JSON version of github searc ghFuns.R](Lectures/Day17/ghJSON.R)
++ [R Session](Lectures/Day17/RSession)
 
