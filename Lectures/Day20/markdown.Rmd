@@ -1,0 +1,26 @@
+
+The code  is in myFuns.R and runScript.R
+to compute the actual timings and save the results in RDS files.
+We then load them in the markdown and create the plots, etc.
+without having to run the code to time the computations.
+
+```{r}
+source("myFuns.R")
+tm1 = readRDS("tm1.rds")
+tm2 = readRDS("tm2.rds")
+tmv = readRDS("tmv.rds")
+```
+
+The definition fo URLdecode.v1 is 
+```{r}
+URLdecode.v1
+```
+
+
+Show the code from runScript.R but don't run it.
+
+```{r,eval = FALSE}
+tm1 = sapply(words, function(x) system.time(fun1(x)))
+tm2 = sapply(words, function(x) system.time(fun2(x))) 
+tmv = sapply(words, function(x) system.time(funv(x)))
+```

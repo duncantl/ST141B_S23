@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>R Programming - Data Types, Preallocation, Concatenation, Vectorization</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# R Programming - Data Types, Preallocation, Concatenation, Vectorization
+
+
+### Duncan Temple Lang
+
+<div style="clear: both"/>
+
+---
+# Lessons from Last Class
+
++ Avoid
+  + unnecessary computations
+  + repeated/redundant computing of the same thing
+  + concatenation
+      + Do preallocate vectors and fill existing elements.
+
++ Debug code to find out what it is doing.
+   + step through computations and examine variables
+
+
+---
+# `for`-loops versus **Vectorization**
+
++ riverdist package 
+
++ `removemicrosegs()` function
+
+```r
+for(j in problems) {
+  connectedto <- whoconnected(seg = j, rivers = rivers)
+  for(jj in connectedto) {
+    for(jjj in connectedto) {
+         if(jj != jjj && !any(whoconnected( jj, rivers) == jjj)) {
+             rivers <- connectsegs(connect = jj, connectto = jjj, rivers = rivers,
+                                    calcconnections = FALSE)
+         }
+    }
+  }
+}
+```
+
++ rivers$connnections - 7784 x 7784 matrix
+  + number of iterations 471,637,666,304
+    + 4 x 10<sup>11</sup> `>` ~ 470 billion
+
+---
+
+```
+connectedto <- whoconnected(seg = j, rivers = rivers)
+```
++ returns a vector of indices
+
+
+```
+!any(whoconnected( jj, rivers) == jjj)
+```
++ checks if jjj is not in vector returned by `whoconnected()`
+
+
+---
+# Improvements
+
++ `!any(whoconnected(jj, rivers) == jjj)`
+
++ both jj and jjj are single integer scalars/values
+
++ whoconnected(jj, rivers) - vector of integers
+   + `whoconnected(jj, rivers) == jjj` compares all of these to jjj
+
++ really corresponds to `is.na(rivers$connections[jj, jjj])`
+
++ many redundant computations
+
+---
+# Step Back to See Bigger Picture
+
++ improve local computation 
+```
+!any(whoconnected( jj, rivers) == jjj))
+is.na(rivers$connections[jj, jjj])
+```
+
++ But want to remove entire scalar operations.
+  + Remove nested loops - jj and jjj
+
+---
+# Vectorize & Remove nested loops - jj and jjj
+
+1. For each pair of indices in `connectedto` (jj and jjj)
+   + see if `rivers$connections[jj, jjj]` is `NA`
+   + one pair at a time
+
+1. Vectorize - compute `rivers$connections[  IndexMatrix2D ]`
+    + all pairs in one call
+    + IndexMatrix2D needs to be 2 column matrix `[ jj, jjj]`
+
+1. Create IndexMatrix2D
+```r
+    n = length(connectedto)
+    gr = cbind(rep(connectedto, n), rep(connectedto, each = n))
+              # drop the rows where the two values are the same.
+    gr = gr[ - (((1:n) -1 )*n + 1:n), ]
+```
+
+1. Compute rows of pairs of indices not connected
+```r
+   w = is.na(rivers$connections[  gr ])
+   gr[w,]
+```
+
+---
+```
+whoNotConnected2 =
+function(connectedto, rivers)
+{
+    n = length(connectedto)
+    #    gr = as.matrix(expand.grid(connectedto, connectedto))
+    gr = cbind(rep(connectedto, n), rep(connectedto, each = n))
+    # drop the rows where the two values are the same.
+    # Not using gr[,1] == gr[,2] since we know where they are by construction.
+    gr = gr[ - (((1:n) -1 )*n + 1:n), ]
+    w = is.na(rivers$connections[  gr ])
+    gr[w,]
+}
+```
+
+---
+# Alternative Way to Create 2-D Matrix
+
+```r
+   gr = as.matrix(expand.grid(connectedto, connectedto))
+```
+
+
+---
+# Substitute
+```r
+  for(jj in connectedto) {
+    for(jjj in connectedto) {
+         if(jj != jjj && !any(whoconnected( jj, rivers) == jjj)) {
+             rivers <- connectsegs(connect = jj, connectto = jjj, rivers = rivers,
+                                    calcconnections = FALSE)
+         }
+    }
+  }
+```
+
+
+
+```r
+tmp = whoNotConnected2(connectedto, rivers)
+for(i in seq_len(nrow(tmp))) 
+  rivers <- connectsegs(connect = tmp[i, 1], connectto = tmp[i, 2],
+                           rivers = rivers, calcconnections = FALSE)
+```
+
+---
+# String Operations
+## Question
+
+I have a 2-column data.frame with 18+ million rows. The cells are populated with alphanumeric strings.
+I need to append a new column with each row composed of the pasting of the sorted composition of that row, e.g.
+```
+columnA      columnB     newColumn
+asj123       cgyy562     asj123_cgyy562
+hdsahvu      baoiw25     baoiw25_hdsahvu
+ttsq         adkeoje     adkeoje_ttsq
+isdii        zoosd21     isdii_zoosd21
+```
+I tried to do it row-wise, but it is taking too long
+
+---
+# Probable Row-wise approach
+
+```r
+slow =
+function(z)
+{
+   ans = character(nrow(z))  # preallocation √
+   for(i in 1:nrow(z))  {
+       ans[i] = if(z[i, 1] < z[i, 2]) 
+                     paste0(z[i,1], "_", z[i,2])
+                else
+                     paste0(z[i,2], "_", z[i,1])
+   }
+   ans
+}
+```
+
++ N scalar comparisons `z[i,1] < z[i, 2]`
++ N calls to `paste0()`
+
+---
+## Alternative Approach
+
++ At least try to change so make only one call paste0(), maybe 2 calls.
+   + Determine which rows have `z[i, 1] < z[i, 2]` 
+      + `w` as TRUE/FALSE vector.
+   + Swap the pairs for those rows and one call to paste
+```r
+tmp = z[!w, 1]
+z[!w, 1] = z[!w, 2]
+z[!w, 2] = tmp
+paste0(z[,1], "_", z[,2])
+```
+
+   + Or 2 calls to paste - 1 for each group
+```
+ans[w] = paste0(z[w, 1], z[w, 2])
+ans[!w] = paste0(z[!w, 1], z[!w, 2])
+```
+
+---
+# How to compute `w`
+
++ for() loop
+
++ or vectorized - `z[, 1] < z[,2]`
+
++  1 call to `<`
+
++ Time both implementations
+
+---
+# Single call to paste() after swap rows 
+```r
+mkCol1 =
+function(z)
+{
+    # Make a new copy of z so we can swap some of the pairs row-wise
+    tmp = z[, c("a", "b")]
+    w = z$a >= z$b
+    
+    tmp2 = tmp$a[w]
+    tmp$a[w] = tmp$b[w]
+    tmp$b[w] = tmp2
+
+    z$c = paste(tmp$a,  tmp$b, sep = "_")
+    z
+}
+```
+
+---
+# Two calls to paste()
+
+```
+mkCol2 =
+function(z)
+{
+    w = z$a < z$b
+    z$c = "" 
+    z$c[w] = paste(z$a[w], z$b[w], sep = "_")
+    z$c[!w] = paste(z$b[!w], z$a[!w], sep = "_")   
+    z
+}
+```
+
+---
+# Timings
+
+```
+z = readRDS("words.rds")
+source("orderedWords.R")
+tm1 = system.time(x <- mkCol1(z))
+tm2 = system.time(y <- mkCol2(z))
+stopifnot(identical(x, y))
+```
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script src="remark-toc/index.js">     </script>   
+    <script>
+     var slideshow = remark.create();
+//     var toc = require('remark-toc');
+//     slideshow.use(toc);
+    </script>
+  </body>
+</html>
