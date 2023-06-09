@@ -32,12 +32,14 @@ if(FALSE) {
     system.time(z <- data.frame(a = mkString(N), b = mkString(N)))
 
     # 15.75 seconds
+    # 7.842 in optimized R , then 9.179
     
     system.time({
         tmp = mkString(2*N)
         z = data.frame(a = tmp[1:N], b = tmp[(N+1):(2*N) ])
     })
     # 18.558 seconds
+    # 9.265 in optimized R
 
     
     system.time({
@@ -45,6 +47,10 @@ if(FALSE) {
     })    
 
     # 17.262 seconds.
+    # 8.248 in optimized R
 
+    system.time(replicate(2, mkString(N)))
+    # 8.377  in optimized R, but 7.842 to make two vectors and data.frame() in first version.
+    # High variance, but more like 10 seconds.
 
 }

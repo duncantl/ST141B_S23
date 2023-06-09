@@ -147,3 +147,23 @@ github.com/search via HTML
 + [JSON version of github searc ghFuns.R](Lectures/Day17/ghJSON.R)
 + [R Session](Lectures/Day17/RSession)
 
+
+# Day 19
+
++ [slides](Lectures/Day19/Outline.html)
+
+
+# Day 20 
++ [slides on vectorization](Lectures/Day20/slides.html)
++ [Example of combining pairs of words](Lectures/Day20/orderedWords.R) in data.frame based on 
+  alphabetical order
+    + [sample words in RDS files](Lectures/Day20/words.rds)
++ [Vectorized creation of sample words](Lectures/Day20/)
++ Organizing Markdown 
+   + example of doing timing computations in a [script](Lectures/Day20/runScript.R)
+     and saving the timing results to  file and
+	 then reading these in the Rmarkdown document
+	 in order to plot them, etc.
+   + and having the functions in a separate file, e.g., URLdecodeFuns.R 
+     and using `source()` in the Rmarkdown  to read and define the functins.
+   + the [Rmarkdown example](Lectures/Day20/markdown.Rmd)
