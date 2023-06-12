@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>R Programming - Data Types, Preallocation, Vectorization</title>
+    <title>R Programming - Data Types, Preallocation, Concatenation, Vectorization</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -21,7 +21,7 @@
 
 class: center, middle
 
-# R Programming - Data Types, Preallocation, Vectorization
+# R Programming - Data Types, Preallocation, Concatenation, Vectorization
 
 
 ### Duncan Temple Lang
@@ -50,7 +50,9 @@ ________________________________
   + indexed by position
   + can have names on the elements
 <pre>
-  a    b    cd   ef   xyz   ....
+__________________________________
+| a  | b  | cd | ef | xyz | ....
+__________________________________
 __________________________________
 | x1 | x2 | x3 | x4 | x5  | ...  |
 __________________________________
@@ -61,8 +63,10 @@ __________________________________
 
 + homogeneous types for each element
 
-+ when we combine vectors of different types, R coerces to common type
++ when we combine vectors of different types, R coerces to "lowest" common type
    + logical `<` integer `<` numeric `<` character `<` complex
+
+
 ```r
 c(TRUE, FALSE, TRUE)         # logical
 c(TRUE, 1L)                  # integer
@@ -87,6 +91,28 @@ list(1:2, 3:10)  # a list with 2 elements each of length 2 and 8
 ```
 
 ---
+# `[` and `[[`
+
+
+---
+# Subsetting
+
+1. index/position
+1. negative index/position - omit
+1. names of elements
+1. logical
+1. 
+
+---
+# *apply()
+
++ lapply() - always returns a list.
++ sapply() - simplify after lapply().
++ vapply() - vector lapply() - specify expected type of each element.
++ tapply() - table lapply() - group by. Simplfies.
++ mapply() - SIMPLIFY = TRUE/FALSE
+
+---
 # data.frame
 
 + list of columns
@@ -97,6 +123,7 @@ list(1:2, 3:10)  # a list with 2 elements each of length 2 and 8
     + factor ?
     + list
 
++ Column - list with each element a matrix of different dimension
 ```r
 d = data.frame(a = 2*1:10, y = rnorm(10))
 d$matrix = lapply(d$a, function(n) matrix(rnorm(n*n), n, n))
