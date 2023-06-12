@@ -184,7 +184,7 @@ github.com/search via HTML
 + Start of riverdist package and removemicrosegs() function
    and removing for(jj ...)  for(jjj ...) nested loops.
     + See [slides](Lectures/Day19/Outline.html)
-    + and [slides](Lectures/Day20/slides.html)	
+    + and also [slides from Day 20](Lectures/Day20/slides.html).
 
 # Day 20 Thu 6/8
 + riverdist package and removemicrosegs() function
@@ -193,7 +193,7 @@ github.com/search via HTML
 + [Example of combining pairs of words](Lectures/Day20/orderedWords.R) in data.frame based on 
   alphabetical order
     + [sample words in RDS files](Lectures/Day20/words.rds)
-+ [Vectorized creation of sample words](Lectures/Day20/)
++ [Vectorized creation of sample words](Lectures/Day20/mkWords.R)
 + Organizing Markdown 
    + example of doing timing computations in a [script](Lectures/Day20/runScript.R)
      and saving the timing results to  file and
