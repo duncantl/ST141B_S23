@@ -159,8 +159,9 @@ github.com/search via HTML
     + [outline of implementations](Lectures/Day18/email.md)
     + [R functions](Lectures/Day18/email.R)
     + Data/examples
-       + [Individual email with body and attachment](Lectures/Day18/Example of email with attachment.eml)
-   	   + [Multiple emails in single file, no attachments](Lectures/Day18/2023-May.txt)
+       + [Individual email with body and attachment](Lectures/Day18/ExamplEmailWithAttachment.eml)
+   	   + [Multiple emails in single file, no attachments](Lectures/Day18/2023-May.txt) from R-help
+            mailing list archives.
 
 
 # Day 19 Tue 6/6
