@@ -147,13 +147,47 @@ github.com/search via HTML
 + [JSON version of github searc ghFuns.R](Lectures/Day17/ghJSON.R)
 + [R Session](Lectures/Day17/RSession)
 
+## Day 18 Thu 6/1
 
-# Day 19
++ Call graphs for StackOverflow functions
+  + [Search page results only](Lectures/Day18/SOCallGraphSearchResults.png)
+  + [Question/Answer pages only](Lectures/Day18/SOCallGraphQA.png)
+
++ Writing functions 
+  + [General guidelines and principles](Lectures/Day18/README.md)
+  + email messages
+    + [outline of implementations](Lectures/Day18/email.md)
+    + [R functions](Lectures/Day18/email.R)
+    + Data/examples
+       + [Individual email with body and attachment](Lectures/Day18/Example of email with attachment.eml)
+   	   + [Multiple emails in single file, no attachments](Lectures/Day18/2023-May.txt)
+
+
+# Day 19 Tue 6/6
 
 + [slides](Lectures/Day19/Outline.html)
++ R essentials
+   + Vectors and lists
+   + apply() functions
+   + subsetting
+   + preallocation/not concatenating
++ Run times for URLdecode implementations
+  + [run time for utils::URLdecode() - quadratic function.](utilsURLDecodeCompTimeFit2.png)
+  + [Extrapolation to 600K](utilsURLdecodeCompTimeFitExtrapolation.png)
+  + [run times for original, preallocated and vectorized versions](Runtimes2.png)
+  + [run times for preallocated and vectorized versions only](Runtimes3.png) for more detail.
+  + Note, these were run on a slow, debugging version of R (compiled was not optimized.)
++ Avoding redundant computations
+  + [riverdist package](https://github.com/mbtyers/riverdist) and the whoconnected() function.
+  + See [slides](Lectures/Day19/Outline.html)
++ Start of riverdist package and removemicrosegs() function
+   and removing for(jj ...)  for(jjj ...) nested loops.
+    + See [slides](Lectures/Day19/Outline.html)
+    + and [slides](Lectures/Day20/slides.html)	
 
-
-# Day 20 
+# Day 20 Thu 6/8
++ riverdist package and removemicrosegs() function
+   + remove for(jj ...)  for(jjj ...) nested loops.
 + [slides on vectorization](Lectures/Day20/slides.html)
 + [Example of combining pairs of words](Lectures/Day20/orderedWords.R) in data.frame based on 
   alphabetical order
