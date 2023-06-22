@@ -1,7 +1,8 @@
 # Essential lines of code from Rsession_Day3
 # We'll turn them into functions.
 
-ll = readLines("NCBIQuery.txt")
+dir = "../../Data/NCBI"
+ll = readLines(file.path(dir, "NCBIQuery.txt"))
 
 starts = which(substring(ll, 1, 7) == "Query #")
 ends = which(substring(ll, 1, nchar("Alignments:")) == "Alignments:")
@@ -19,5 +20,23 @@ ans = read.fwf(con, widths)
 
 h = read.fwf(textConnection(tt[2]), widths)
 names(ans) = trimws(as.character(h))
+
+
+
+
+###############
+
+ans = c()
+for(i in 1:length(x)) {
+    tmp =  doSomething(x[i])
+    ans[i] = tmp
+}
+
+ans = sapply(x, doSomething)
+
+
+
+
+
 
 

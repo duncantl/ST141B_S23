@@ -6600,4 +6600,5 @@ Selection: 0
 4                                                     "GET /stat141/ HTTP/1.1" 200 4176 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
 5           "GET /stat141/Class.css HTTP/1.1" 200 1973 "http://eeyore.ucdavis.edu/stat141/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
 6       "GET /stat141/OmegaTech.css HTTP/1.1" 200 5221 "http://eeyore.ucdavis.edu/stat141/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36"
-[29:43] 114> 
+[29:43] 114> getwd()
+[10:32] 115> 

@@ -26,7 +26,7 @@ This will throw us into the debugger to explore the "call stack" when an error o
 I set this in my .Rprofile  so it is always on. 
 If I don't want to debug, I have that option and can just exit the debugger.
 
-With this set, we run the command again and now enter the debugg
+With this set, we run the command again and now enter the debugger
 ```
 tbls = readNCBITables("NCBIQuery.txt")
 ```
@@ -68,8 +68,9 @@ Sure enough, we changed the code and now have
 
     names(ans) = trimws(vars)
 ```
-So we are referring to vars but now have headers. We need to finish off 
-create vars by combining the values from the two elements of headers.
+So we are referring to vars but now have the variable named headers. 
+This comes from funs2.R.  We need to finish off 
+creating vars by combining the values from the two elements of headers.
 
 So this was just an "unfinished code" problem.
 

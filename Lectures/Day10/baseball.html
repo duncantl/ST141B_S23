@@ -347,6 +347,37 @@ WHERE yearID = 2003
                    LIMIT 3);
 ```
 
+
+
+---
+# Has the distribution of home runs for players increased over the years?
+
++ Maximum number of home runs by a single player?
+
++ Total number of home runs by all players?
+
++ See Batting table
+--
+
+```sql
+SELECT yearID, MAX(HR) AS maxHR
+FROM Batting
+GROUP BY yearID
+ORDER BY maxHR DESC;
+```
+
+---
+# Total number of Home Runs by Year
+
++ Add up all the home runs for each year
+
+```sql
+SELECT yearID, SUM(HR) AS maxHR
+FROM Batting
+GROUP BY yearID
+ORDER BY maxHR DESC;
+```
+
 ---
 # What team *won* the World Series each year?
 
@@ -395,7 +426,9 @@ ALWC
 NLWC 
 ```
 
---
+---
+# What team *won* the World Series each year? ctd.
+
 + Simple approach with only SeriesPost table
 
 ```sql
@@ -480,34 +513,6 @@ ORDER BY s.yearID DESC;
 + Think of the Cartesian Product of tuples and then the WHERE filtering/subsetting
   the tuples
 
----
-# Has the distribution of home runs for players increased over the years?
-
-+ Maximum number of home runs by a single player?
-
-+ Total number of home runs by all players?
-
-+ See Batting table
---
-
-```sql
-SELECT yearID, MAX(HR) AS maxHR
-FROM Batting
-GROUP BY yearID
-ORDER BY maxHR DESC;
-```
-
----
-# Total number of Home Runs by Year
-
-+ Add up all the home runs for each year
-
-```sql
-SELECT yearID, SUM(HR) AS maxHR
-FROM Batting
-GROUP BY yearID
-ORDER BY maxHR DESC;
-```
 
 
 ---
@@ -566,15 +571,93 @@ ORDER BY s.yearID DESC, payroll DESC;
 ```
 
 ---
+# Alternative: Use Subquery
+
++ Compute the payroll by year and team, as before
++ Join result with Teams
+  + same constraints
+     + yearIDs match
+     + teamIDs match
+
+```sql
+SELECT t.name, payroll, s.yearID
+FROM (
+       SELECT SUM(salary) AS payroll, yearID, teamID
+        FROM Salaries
+        GROUP BY teamID, yearID
+     ) AS s, Teams AS t
+WHERE s.yearID = t.yearID
+  AND t.teamID = s.teamID
+GROUP BY s.teamID, s.yearID
+ORDER BY s.yearID DESC, payroll DESC;
+```
+
++ May be easier to think in two steps
++ Non-nested is slightly shorter.
+
+---
 # Challenge
 
-+ Add a column indicating whether won the world series or not
++ Add a column indicating whether the team won the world series or not in that year.
 
 
-<!--
+--
++ Join with SeriesPost table
 
-     Not correct Red Sox counted 3 times.
-     
+---
+# Attempt
+
++ Not correct Red Sox counted 9 times in 2013.
+
+```sql
+SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID, p.teamIDwinner
+FROM Salaries AS s
+LEFT JOIN Teams AS t
+     ON s.yearID = t.yearID
+     AND t.teamID = s.teamID
+LEFT JOIN SeriesPost AS p
+     ON p.yearID = s.yearID
+GROUP BY s.teamID, s.yearID
+ORDER BY s.yearID DESC, payroll DESC;
+```
+
+---
+# Debugging Attempt
+
++ How did we know we were wrong?
+
++ Add
+```sql
+ HAVING s.yearID = 2013 AND t.teamID = 'BOS'
+```
+  to see only the Boston Red Sox
+
++  Number without joining on SeriesPost - 151530000
++  Number when joining on SeriesPost - 1363770000.0
+
++ How did we get a factor of 9?
+
+---
+# Debugging Attempt continued
+
++ Examine the tuples from SeriesPost for 2013
+
+```sql
+SELECT * FROM
+SeriesPost
+WHERE yearID = 2013;
+```
+
++ Our JOIN has a tuple for each of these.
+
++ What do we need to restrict to
+   + `teamIDwinner = teamID` ?
+   + `teamIDloser = teamID` ?
+   + `teamIDwinner = teamID  OR  teamIDloser = teamID` ?
+   + `round = 'WS'`
+
+---
+   
 ```sql
 SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID, p.teamIDwinner
 FROM Salaries AS s
@@ -584,14 +667,23 @@ LEFT JOIN Teams AS t
 LEFT JOIN SeriesPost AS p
      ON p.teamIDwinner = s.teamID
      AND p.yearID = s.yearID
+     AND p.round = 'WS'
 GROUP BY s.teamID, s.yearID
 ORDER BY s.yearID DESC, payroll DESC;
      ```
 
 
+
+
+
+
+
+     
+
  , NOT IS NULL(p.teamIDWinner)
      
-SELECT t.name, SUM(s.salary) AS payroll, s.yearID, t.teamID, p.teamIDwinner = t.teamID
+SELECT t.name, SUM(s.salary) AS payroll, s.yearID,
+       t.teamID, NOT p.teamIDwinner IS NULL, p.teamIDwinner = t.teamID
 FROM Salaries AS s
 LEFT JOIN Teams AS t
      ON s.yearID = t.yearID
@@ -601,12 +693,15 @@ LEFT JOIN SeriesPost AS p
      AND p.yearID = s.yearID
      AND p.round = 'WS'
 GROUP BY s.teamID, s.yearID
-ORDER BY s.yearID DESC, payroll DESC;     
+ORDER BY s.yearID DESC, payroll DESC
+LIMIT 10;     
 
 
      SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, SeriesPost as p WHERE s.yearID = '2013' AND s.teamID = 'BOS' and s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;
 
-SELECT s.yearId, s.teamID, name, SUM(salary) FROM Salaries AS s, Teams AS t, SeriesPost as p WHERE s.yearID = '2013' AND d s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;     
+     SELECT s.yearId, s.teamID, name, SUM(salary)
+     FROM Salaries AS s, Teams AS t, SeriesPost as p
+     WHERE s.yearID = '2013' AND d s.teamID = t.teamID  AND s.yearID = t.yearID AND p.yearID = s.yearID AND p.round = 'WS' GROUP BY s.yearId, s.teamID;     
 
      SELECT s.yearId, s.teamID, name, SUM(salary) AS payroll
      FROM Salaries AS s, Teams AS t, SeriesPost as p

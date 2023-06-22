@@ -818,4 +818,7 @@ Enter a frame number, or 0 to exit
 9: doWithOneRestart(return(expr), restart)
 
 Selection: 0
-> 
+> q()
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> n
+bash: n: command not found
+]0;NCBI~/Classes/Davis/STA141B_22_23/Public/Data/NCBI> 
